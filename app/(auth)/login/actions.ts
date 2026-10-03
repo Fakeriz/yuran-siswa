@@ -25,5 +25,5 @@ export async function login(_previous: LoginState, formData: FormData): Promise<
   }
 
   const profile = await getProfile();
-  redirect(profile?.peran === "orang_tua" ? "/orangtua" : "/");
+  redirect(profile?.peran === "orang_tua" ? "/orangtua" : profile?.peran === "admin" ? "/admin" : profile?.peran === "staff" ? "/staff" : "/");
 }

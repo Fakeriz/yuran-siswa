@@ -50,3 +50,95 @@ export async function approveParentLink(linkId: string, approve: boolean): Promi
     return { ok: false, error: "Pengajuan gagal diperbarui. Silakan coba lagi." };
   }
 }
+
+async function adminSession() {
+  const profile = await getProfile();
+  if (profile?.peran !== "admin") throw new Error("Admin required");
+  return { profile, db: await createClient({ readOnly: false }) };
+}
+
+export async function saveStudent(input: { id?: string; nama: string; grup: string; kelas: string; yuran_per_bulan: number; is_active: boolean }): Promise<Result> {
+  try {
+    const { db } = await adminSession();
+    if (!input.nama.trim() || !input.grup.trim() || !input.kelas.trim() || !Number.isFinite(input.yuran_per_bulan) || input.yuran_per_bulan < 0 || typeof input.is_active !== "boolean") return { ok: false, error: "Isi data siswa dan yuran yang valid." };
+    const row = { nama: input.nama.trim(), grup: input.grup.trim(), kelas: input.kelas.trim(), yuran_per_bulan: input.yuran_per_bulan, is_active: input.is_active };
+    const query = input.id ? db.from("students").update(row).eq("id", input.id) : db.from("students").insert(row);
+    const { data, error } = await query.select("id").maybeSingle();
+    return error || !data ? { ok: false, error: "Data siswa gagal disimpan." } : { ok: true };
+  } catch { return { ok: false, error: "Data siswa tidak dapat disimpan. Akses admin diperlukan." }; }
+}
+
+export async function deleteStudent(id: string): Promise<Result> {
+  try {
+    const { db } = await adminSession();
+    // Preserve payment history: students with records should be deactivated instead.
+    const history = await db.from("payments").select("id").eq("student_id", id).limit(1);
+    if (history.error || history.data?.length) return { ok: false, error: "Siswa memiliki riwayat pembayaran. Nonaktifkan siswa untuk menjaga riwayat." };
+    const { data, error } = await db.from("students").delete().eq("id", id).select("id").maybeSingle();
+    return error || !data ? { ok: false, error: "Siswa gagal dihapus. Anda dapat menonaktifkannya." } : { ok: true };
+  } catch { return { ok: false, error: "Siswa tidak dapat dihapus." }; }
+}
+
+export async function linkChild(parentId: string, studentId: string): Promise<Result> {
+  try {
+    const { db, profile } = await adminSession();
+    const parent = await db.from("profiles").select("peran").eq("id", parentId).maybeSingle();
+    if (parent.error || parent.data?.peran !== "orang_tua") return { ok: false, error: "Pilih akun orang tua." };
+    const { error } = await db.from("parent_students").upsert({ parent_id: parentId, student_id: studentId, status: "approved", approved_by: profile.id }, { onConflict: "parent_id,student_id" });
+    return error ? { ok: false, error: "Anak gagal dihubungkan." } : { ok: true };
+  } catch { return { ok: false, error: "Anak tidak dapat dihubungkan." }; }
+}
+
+export async function unlinkChild(linkId: string): Promise<Result> {
+  try {
+    const { db } = await adminSession();
+    const { data, error } = await db.from("parent_students").delete().eq("id", linkId).select("id").maybeSingle();
+    return error || !data ? { ok: false, error: "Hubungan anak gagal dilepas." } : { ok: true };
+  } catch { return { ok: false, error: "Hubungan anak tidak dapat dilepas." }; }
+}
+
+export async function createAccount(input: { nama: string; email: string; password: string; peran: "staff" | "orang_tua" }): Promise<Result> {
+  try {
+    const { db } = await adminSession();
+    if (!input.nama.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.email.trim()) || input.password.length < 8 || !["staff", "orang_tua"].includes(input.peran)) return { ok: false, error: "Isi nama, email, peran, dan kata sandi minimal 8 karakter." };
+    const { createAuthAdmin } = await import("../supabase/auth-admin");
+    const authAdmin = createAuthAdmin();
+    const { data, error } = await authAdmin.createUser({ email: input.email.trim(), password: input.password, email_confirm: true });
+    if (error || !data.user) return { ok: false, error: "Akun gagal dibuat. Periksa email yang digunakan." };
+    try {
+      const result = await db.from("profiles").insert({ id: data.user.id, nama: input.nama.trim(), peran: input.peran });
+      if (result.error) throw new Error("Profile failed");
+    } catch {
+      try {
+        const cleanup = await authAdmin.deleteUser(data.user.id);
+        if (cleanup.error) throw new Error("Cleanup failed");
+        return { ok: false, error: "Profil gagal dibuat. Akun baru telah dibatalkan." };
+      } catch {
+        return { ok: false, error: "Profil gagal dibuat; akun Auth perlu diperiksa admin sebelum mencoba lagi." };
+      }
+    }
+    return { ok: true };
+  } catch { return { ok: false, error: "Layanan pembuatan akun belum tersedia." }; }
+}
+
+async function allRows<T>(query: { range: (from: number, to: number) => PromiseLike<{ data: T[] | null; error: unknown }> }): Promise<T[]> {
+  const rows: T[] = [];
+  for (let from = 0; ; from += 500) {
+    const { data, error } = await query.range(from, from + 499);
+    if (error) throw new Error("Data admin tidak dapat dimuat.");
+    rows.push(...(data ?? []));
+    if (!data || data.length < 500) return rows;
+  }
+}
+
+export async function listAdminData() {
+  const { db } = await adminSession();
+  const [students, profiles, links, groups, payments] = await Promise.all([
+    allRows(db.from("students").select("id, nama, grup, kelas, yuran_per_bulan, is_active").order("nama").order("id")),
+    allRows(db.from("profiles").select("id, nama, peran").order("nama").order("id")),
+    allRows(db.from("parent_students").select("id, parent_id, student_id, status, approved_by").order("id")),
+    allRows(db.from("staff_groups").select("staff_id, grup").order("grup").order("staff_id")),
+    allRows(db.from("payments").select("id, student_id, bulan, tahun, jumlah, kwitansi_drive_file_id").is("kwitansi_drive_file_id", null).order("tahun", { ascending: false }).order("bulan", { ascending: false }).order("id")),
+  ]);
+  return { students, profiles, links, groups, payments };
+}

@@ -78,3 +78,23 @@ export async function recordPayment(input: {
     return { ok: false, error: "Pembayaran gagal dicatat. Silakan coba lagi." };
   }
 }
+
+export async function uploadKwitansi(paymentId: string, file: File): Promise<{ ok: true } | { ok: false; error: string }> {
+  try {
+    const profile = await getProfile();
+    if (profile?.peran !== "admin") return { ok: false, error: "Hanya admin yang boleh mengunggah kwitansi." };
+    if (!paymentId || !(file instanceof File) || !file.size || file.size > 10 * 1024 * 1024 ||
+        (!file.type.startsWith("image/") && file.type !== "application/pdf") || /\.exe$/i.test(file.name)) {
+      return { ok: false, error: "Pilih pembayaran dan file gambar/PDF maksimal 10 MB." };
+    }
+    const db = await createClient({ readOnly: false });
+    const { data: payment, error } = await db.from("payments").select("id, student_id, bulan, tahun").eq("id", paymentId).maybeSingle();
+    if (error || !payment) return { ok: false, error: "Pembayaran tidak ditemukan." };
+    const extension = file.type === "application/pdf" ? "pdf" : file.type.slice(6).replace(/[^a-z0-9]/gi, "");
+    const name = `${payment.student_id}_${payment.tahun}-${String(payment.bulan).padStart(2, "0")}_kwitansi_${crypto.randomUUID()}.${extension}`;
+    const id = await uploadFile(Buffer.from(await file.arrayBuffer()), name, file.type);
+    const result = await db.from("payments").update({ kwitansi_drive_file_id: id }).eq("id", paymentId).select("id").maybeSingle();
+    if (result.error || !result.data) return { ok: false, error: "Kwitansi gagal disimpan pada pembayaran." };
+    return { ok: true };
+  } catch { return { ok: false, error: "Upload kwitansi gagal. Silakan coba lagi." }; }
+}

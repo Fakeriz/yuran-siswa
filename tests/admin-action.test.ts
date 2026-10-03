@@ -57,3 +57,40 @@ it("does not claim success when an approval updates no row", async () => {
   m.single.mockResolvedValueOnce({ data: { student_id: "child" }, error: null }).mockResolvedValueOnce({ data: null, error: null });
   expect(await approveParentLink("link", true)).toMatchObject({ ok: false });
 });
+
+it("denies student mutations to parents", async () => {
+  m.profile.mockResolvedValue({ id: "parent", peran: "orang_tua" });
+  const { saveStudent } = await import("../lib/actions/admin");
+  expect(await saveStudent({ nama: "Ali", kelas: "1", grup: "A", yuran_per_bulan: 100, is_active: true })).toMatchObject({ ok: false });
+  expect(m.from).not.toHaveBeenCalled();
+});
+it("admin updates a student using only permitted fields", async () => {
+  const { saveStudent } = await import("../lib/actions/admin");
+  expect(await saveStudent({ id: "child", nama: "Ali", kelas: "1", grup: "A", yuran_per_bulan: 100, is_active: false })).toEqual({ ok: true });
+  expect(m.update).toHaveBeenCalledWith({ nama: "Ali", kelas: "1", grup: "A", yuran_per_bulan: 100, is_active: false });
+});
+
+const authAdminMock = vi.hoisted(() => ({ createUser: vi.fn(), deleteUser: vi.fn() }));
+vi.mock("../lib/supabase/auth-admin", () => ({ createAuthAdmin: () => authAdminMock }));
+it("creates a staff Auth account and profile using the admin session", async () => {
+  authAdminMock.createUser.mockResolvedValue({ data: { user: { id: "new-staff" } }, error: null });
+  const insert = vi.fn().mockResolvedValue({ error: null });
+  m.from.mockReturnValue({ insert });
+  const { createAccount } = await import("../lib/actions/admin");
+  expect(await createAccount({ nama: "Staff", email: "staff@example.com", password: "password123", peran: "staff" })).toEqual({ ok: true });
+  expect(insert).toHaveBeenCalledWith({ id: "new-staff", nama: "Staff", peran: "staff" });
+});
+it("rolls back the new Auth account if profile creation throws", async () => {
+  authAdminMock.createUser.mockResolvedValue({ data: { user: { id: "new-staff" } }, error: null });
+  authAdminMock.deleteUser.mockResolvedValue({ error: null });
+  m.from.mockReturnValue({ insert: vi.fn().mockRejectedValue(new Error("network")) });
+  const { createAccount } = await import("../lib/actions/admin");
+  expect(await createAccount({ nama: "Staff", email: "staff@example.com", password: "password123", peran: "staff" })).toMatchObject({ ok: false });
+  expect(authAdminMock.deleteUser).toHaveBeenCalledWith("new-staff");
+});
+it("does not call privileged Auth for a non-admin", async () => {
+  m.profile.mockResolvedValue({ id: "staff", peran: "staff" });
+  const { createAccount } = await import("../lib/actions/admin");
+  expect(await createAccount({ nama: "Staff", email: "staff@example.com", password: "password123", peran: "staff" })).toMatchObject({ ok: false });
+  expect(authAdminMock.createUser).not.toHaveBeenCalled();
+});

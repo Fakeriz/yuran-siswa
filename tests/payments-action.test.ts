@@ -188,3 +188,33 @@ describe("recordPayment", () => {
     expect(mocks.insert).toHaveBeenCalledOnce();
   });
 });
+
+describe("uploadKwitansi", () => {
+  it.each(["staff", "orang_tua"])("denies %s before Drive or DB", async (peran) => {
+    mocks.getProfile.mockResolvedValue({ id: "user", peran });
+    const { uploadKwitansi } = await import("../lib/actions/payments");
+    expect(await uploadKwitansi("payment", valid().bukti)).toMatchObject({ ok: false });
+    expect(mocks.uploadFile).not.toHaveBeenCalled();
+    expect(mocks.from).not.toHaveBeenCalled();
+  });
+  it("admin uploads once and updates only the chosen payment receipt", async () => {
+    const update = vi.fn();
+    const chain = { select: vi.fn().mockReturnThis(), eq: vi.fn().mockReturnThis(), maybeSingle: vi.fn().mockResolvedValue({ data: { id: "payment", student_id: "student-1", bulan: 10, tahun: 2026 }, error: null }), update };
+    update.mockReturnValue(chain);
+    mocks.from.mockReturnValue(chain);
+    const { uploadKwitansi } = await import("../lib/actions/payments");
+    expect(await uploadKwitansi("payment", valid().bukti)).toEqual({ ok: true });
+    expect(mocks.uploadFile).toHaveBeenCalledOnce();
+    expect(update).toHaveBeenCalledExactlyOnceWith({ kwitansi_drive_file_id: "drive-proof-123" });
+    expect(chain.eq).toHaveBeenCalledWith("id", "payment");
+  });
+  it("never updates a receipt when upload fails", async () => {
+    const update = vi.fn();
+    const chain = { select: vi.fn().mockReturnThis(), eq: vi.fn().mockReturnThis(), maybeSingle: vi.fn().mockResolvedValue({ data: { id: "payment" }, error: null }), update };
+    mocks.from.mockReturnValue(chain);
+    mocks.uploadFile.mockRejectedValue(new Error("offline"));
+    const { uploadKwitansi } = await import("../lib/actions/payments");
+    expect(await uploadKwitansi("payment", valid().bukti)).toMatchObject({ ok: false });
+    expect(update).not.toHaveBeenCalled();
+  });
+});

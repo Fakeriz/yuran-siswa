@@ -1,5 +1,14 @@
 # Yuran Siswa
 
+## Administrasi akun
+
+Pembuatan akun pada `/admin?tab=akun` membutuhkan
+`SUPABASE_SERVICE_ROLE_KEY` sebagai secret server (jangan memakai prefix
+`NEXT_PUBLIC_`). Key ini hanya dipakai untuk API administrasi Supabase Auth
+setelah peran admin diverifikasi. Operasi tabel tetap memakai sesi admin dan
+RLS. Akun buatan admin langsung dikonfirmasi; bagikan kata sandi melalui jalur
+yang sesuai. Jika pembuatan profil gagal, akun Auth baru dibatalkan.
+
 ## Pilihan grup staf
 
 Terapkan migrasi `20261003020000_staff_groups.sql` sebelum memakai

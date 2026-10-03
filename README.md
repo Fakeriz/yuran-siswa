@@ -57,8 +57,10 @@ npx @cloudflare/next-on-pages
 ## Catatan Cloudflare
 
 Layout memakai runtime `edge`. Logika domain tidak mengimpor API Node.js.
-`googleapis` dipasang sesuai rencana, tetapi belum diimpor oleh kode server;
-kompatibilitas integrasi Drive harus diverifikasi pada Task 4.
+`googleapis` tetap terpasang sesuai scaffold, tetapi integrasi Drive memakai
+REST melalui `fetch` dan Web Crypto agar kompatibel dengan edge. Tidak ada
+impor runtime `googleapis`. Detail upload dan verifikasi manual yang masih
+tertunda ada di `docs/integrations.md`.
 
 `@cloudflare/next-on-pages` sudah deprecated dan peer dependency-nya
 membatasi Next.js sampai 15.5.2. Scaffold tetap memakai 15.5.27 dengan

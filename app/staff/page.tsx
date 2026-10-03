@@ -1,0 +1,99 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { myGroups } from "../../lib/auth";
+import { paymentStatusFor, unpaidStudents } from "../../lib/fees";
+import { createClient } from "../../lib/supabase/server";
+import type { Payment, Student } from "../../lib/types";
+import { PaymentForm } from "./payment-form";
+
+export const metadata: Metadata = { title: "Dashboard staf | Yuran Siswa" };
+const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+const field = "min-h-11 rounded-2xl border border-zinc-300 bg-white px-3 py-2 dark:border-zinc-700 dark:bg-zinc-900";
+
+export default async function StaffPage({ searchParams }: {
+  searchParams: Promise<{ bulan?: string; tahun?: string; filter?: string }>;
+}) {
+  const params = await searchParams;
+  const today = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Kuala_Lumpur", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
+  const [currentYear, currentMonth] = today.split("-").map(Number);
+  const requestedMonth = Number(params.bulan);
+  const requestedYear = Number(params.tahun);
+  const bulan = Number.isInteger(requestedMonth) && requestedMonth >= 1 && requestedMonth <= 12 ? requestedMonth : currentMonth;
+  const tahun = Number.isInteger(requestedYear) && requestedYear >= 2000 && requestedYear <= 2100 ? requestedYear : currentYear;
+  const filter = params.filter === "belum" || params.filter === "sudah" ? params.filter : "semua";
+  const groups = await myGroups();
+  let students: Student[] = [];
+  let payments: Payment[] = [];
+  if (groups.length) {
+    const db = await createClient();
+    const result = await db.from("students").select("id, nama, grup, kelas, yuran_per_bulan, status")
+      .in("grup", groups).eq("status", "aktif").order("nama").returns<Student[]>();
+    if (result.error) throw new Error("Daftar siswa tidak dapat dimuat.");
+    students = result.data ?? [];
+    if (students.length) {
+      const result = await db.from("payments").select("*").in("student_id", students.map((student) => student.id))
+        .eq("bulan", bulan).eq("tahun", tahun).returns<Payment[]>();
+      if (result.error) throw new Error("Pembayaran tidak dapat dimuat.");
+      payments = result.data ?? [];
+    }
+  }
+  const unpaid = unpaidStudents(students, payments, bulan, tahun);
+  const visible = filter === "belum" ? unpaid : filter === "sudah"
+    ? students.filter((student) => paymentStatusFor(payments, student.id, bulan, tahun) === "sudah") : students;
+  const period = `${months[bulan - 1]} ${tahun}`;
+
+  return (
+    <div className="min-h-dvh bg-white text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100 md:grid md:grid-cols-[220px_minmax(0,1fr)] [&_:focus-visible]:outline-2 [&_:focus-visible]:outline-offset-4 [&_:focus-visible]:outline-emerald-700">
+      <aside className="border-b border-zinc-200 p-6 dark:border-zinc-800 md:min-h-dvh md:border-r md:border-b-0">
+        <p className="text-lg font-semibold">Yuran Siswa</p>
+        <nav aria-label="Menu staf" className="mt-6">
+          <Link href="/staff" aria-current="page" className="block rounded-2xl bg-zinc-100 px-4 py-3 font-medium dark:bg-zinc-900">Dashboard staf</Link>
+        </nav>
+      </aside>
+      <main className="mx-auto w-full max-w-6xl min-w-0 px-4 py-8 sm:px-8 md:py-12">
+        <h1 className="text-3xl font-semibold tracking-tight">Yuran bulanan</h1>
+        <p className="mt-2 text-zinc-600 dark:text-zinc-400">Pembayaran siswa aktif dalam grup Anda.</p>
+        <form key={`${bulan}-${tahun}`} className="mt-8 flex flex-wrap items-end gap-3" action="/staff">
+          <label className="grid gap-2 text-sm font-medium">Bulan
+            <select name="bulan" defaultValue={bulan} className={field}>{months.map((month, index) => <option value={index + 1} key={month}>{month}</option>)}</select>
+          </label>
+          <label className="grid gap-2 text-sm font-medium">Tahun
+            <input name="tahun" type="number" min="2000" max="2100" required defaultValue={tahun} className={`${field} w-28`} />
+          </label>
+          <input type="hidden" name="filter" value={filter} />
+          <button className="min-h-11 rounded-2xl bg-zinc-900 px-5 py-2 font-medium text-white transition-colors duration-150 hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300">Tampilkan</button>
+        </form>
+        <section aria-label={`Ringkasan ${period}`} className="mt-8 grid grid-cols-2 gap-4">
+          <div className="rounded-2xl border border-zinc-200 p-5 shadow-sm dark:border-zinc-800"><p className="text-sm text-zinc-600 dark:text-zinc-400">Sudah bayar</p><p className="mt-2 text-3xl font-semibold tabular-nums">{students.length - unpaid.length}</p></div>
+          <div className="rounded-2xl border border-zinc-200 p-5 shadow-sm dark:border-zinc-800"><p className="text-sm text-zinc-600 dark:text-zinc-400">Belum bayar</p><p className="mt-2 text-3xl font-semibold tabular-nums">{unpaid.length}</p></div>
+        </section>
+        <section className="mt-10" aria-labelledby="student-list">
+          <h2 id="student-list" className="text-xl font-semibold">Daftar siswa · {period}</h2>
+          <nav aria-label="Filter pembayaran" className="my-5 flex flex-wrap gap-2">
+            {([['semua', 'Semua'], ['sudah', 'Sudah bayar'], ['belum', 'Belum bayar']] as const).map(([value, label]) => (
+              <Link key={value} href={`/staff?bulan=${bulan}&tahun=${tahun}&filter=${value}`} aria-current={filter === value ? "page" : undefined}
+                className={`rounded-2xl px-4 py-3 text-sm font-medium transition-colors duration-150 ${filter === value ? "bg-emerald-800 text-white" : "bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-900 dark:hover:bg-zinc-800"}`}>{label}</Link>
+            ))}
+          </nav>
+          {!visible.length ? <p className="rounded-2xl border border-zinc-200 p-6 text-zinc-600 dark:border-zinc-800 dark:text-zinc-400">{!groups.length ? "Anda belum memiliki grup. Hubungi admin untuk memeriksa penugasan Anda." : !students.length ? "Belum ada siswa aktif dalam grup Anda." : "Tidak ada siswa untuk filter ini."}</p> : (
+            <div className="overflow-x-auto rounded-2xl border border-zinc-200 dark:border-zinc-800">
+              <table className="w-full text-left text-sm">
+                <caption className="sr-only">Status yuran siswa untuk {period}</caption>
+                <thead className="bg-zinc-50 text-zinc-600 dark:bg-zinc-900 dark:text-zinc-400"><tr>{["Siswa", "Kelas / grup", "Status", "Pembayaran"].map((label) => <th scope="col" key={label} className="px-4 py-4 font-medium">{label}</th>)}</tr></thead>
+                <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800">{visible.map((student) => {
+                  const paid = paymentStatusFor(payments, student.id, bulan, tahun) === "sudah";
+                  return <tr key={student.id}>
+                    <th scope="row" className="max-w-64 break-words px-4 py-5 font-medium">{student.nama}</th>
+                    <td className="px-4 py-5">{student.kelas}<span className="block text-zinc-600 dark:text-zinc-400">{student.grup}</span></td>
+                    <td className="px-4 py-5"><span className={`inline-block whitespace-nowrap rounded-lg px-2 py-1 text-xs font-medium ${paid ? "bg-emerald-100 text-emerald-900 dark:bg-emerald-950 dark:text-emerald-200" : "bg-amber-100 text-amber-900 dark:bg-amber-950 dark:text-amber-200"}`}>{paid ? "Sudah bayar" : "Belum bayar"}</span></td>
+                    <td className="px-4 py-5">{paid ? <span className="text-zinc-600 dark:text-zinc-400">Tercatat</span> : <PaymentForm key={`${student.id}-${bulan}-${tahun}`} student={student} bulan={bulan} tahun={tahun} period={period} today={today} />}</td>
+                  </tr>;
+                })}</tbody>
+              </table>
+            </div>
+          )}
+        </section>
+      </main>
+    </div>
+  );
+}

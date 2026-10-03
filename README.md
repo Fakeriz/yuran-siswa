@@ -1,5 +1,11 @@
 # Yuran Siswa
 
+## Pilihan grup staf
+
+Terapkan migrasi `20261003020000_staff_groups.sql` sebelum memakai
+`/staff/grup`. Fungsi penggantian grup memakai identitas sesi, RLS, dan satu
+transaksi; daftar kosong melepas seluruh grup staf yang sedang masuk.
+
 ## Pendaftaran orang tua
 
 Terapkan migrasi `20261003010000_parent_registration.sql` sebelum memakai

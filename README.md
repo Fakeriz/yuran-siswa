@@ -2,8 +2,26 @@
 
 Pencatat yuran bulanan siswa. Task 1 menyediakan scaffold Next.js 15
 (App Router), TypeScript strict, Tailwind CSS, dan logika domain pembayaran.
-Halaman awal masih berupa placeholder; autentikasi dan penyimpanan data
-belum diimplementasikan.
+Halaman awal masih berupa placeholder. Task 3 menambahkan login email dan
+kata sandi di `/login`, client Supabase, serta helper autentikasi.
+
+## Konfigurasi Supabase
+
+Isi `.env.local` dengan `NEXT_PUBLIC_SUPABASE_URL` dan
+`NEXT_PUBLIC_SUPABASE_ANON_KEY` dari project Supabase. Browser memerlukan
+kedua nama tersebut pada waktu build. Server juga menerima `SUPABASE_URL`
+dan `SUPABASE_ANON_KEY` sebagai fallback. Gunakan anon key, bukan service-role
+key. Akun dan baris `profiles` harus tersedia di Supabase.
+
+Login memakai Server Action dan cookie sesi. Setelah berhasil, pengguna
+diarahkan ke `/`, halaman awal sementara sampai dashboard tersedia.
+Middleware memvalidasi pengguna dan menyegarkan sesi untuk `/staff`,
+`/orangtua`, `/admin`, termasuk subhalamannya. Pemeriksaan peran dilakukan
+oleh `requireRole` dan akses database tetap tunduk pada RLS.
+
+Client server secara default read-only untuk Server Components. Gunakan
+`createClient({ readOnly: false })` dalam Server Action yang menulis cookie,
+seperti login. Jangan memakai client read-only untuk sign-in/sign-out.
 
 ## Menjalankan proyek
 

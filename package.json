@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
+    "build:pages": "next-on-pages",
     "start": "next start",
     "test": "vitest run",
     "typecheck": "tsc --noEmit"

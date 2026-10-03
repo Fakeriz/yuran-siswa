@@ -1,0 +1,4 @@
+name = "yuran-siswa"
+pages_build_output_dir = ".vercel/output/static"
+compatibility_date = "2026-10-03"
+compatibility_flags = ["nodejs_compat"]

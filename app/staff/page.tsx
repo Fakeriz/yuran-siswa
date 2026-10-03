@@ -26,10 +26,10 @@ export default async function StaffPage({ searchParams }: {
   let payments: Payment[] = [];
   if (groups.length) {
     const db = await createClient();
-    const result = await db.from("students").select("id, nama, grup, kelas, yuran_per_bulan, status")
-      .in("grup", groups).eq("status", "aktif").order("nama").returns<Student[]>();
+    const result = await db.from("students").select("id, nama, grup, kelas, yuran_per_bulan")
+      .in("grup", groups).eq("is_active", true).order("nama").returns<Omit<Student, "status">[]>();
     if (result.error) throw new Error("Daftar siswa tidak dapat dimuat.");
-    students = result.data ?? [];
+    students = (result.data ?? []).map((student) => ({ ...student, status: "aktif" }));
     if (students.length) {
       const result = await db.from("payments").select("*").in("student_id", students.map((student) => student.id))
         .eq("bulan", bulan).eq("tahun", tahun).returns<Payment[]>();
@@ -48,6 +48,7 @@ export default async function StaffPage({ searchParams }: {
         <p className="text-lg font-semibold">Yuran Siswa</p>
         <nav aria-label="Menu staf" className="mt-6">
           <Link href="/staff" aria-current="page" className="block rounded-2xl bg-zinc-100 px-4 py-3 font-medium dark:bg-zinc-900">Dashboard staf</Link>
+          <Link href="/staff/grup" className="mt-2 block rounded-2xl px-4 py-3 hover:bg-zinc-100 dark:hover:bg-zinc-900">Pilih grup</Link>
         </nav>
       </aside>
       <main className="mx-auto w-full max-w-6xl min-w-0 px-4 py-8 sm:px-8 md:py-12">
@@ -75,7 +76,7 @@ export default async function StaffPage({ searchParams }: {
                 className={`rounded-2xl px-4 py-3 text-sm font-medium transition-colors duration-150 ${filter === value ? "bg-emerald-800 text-white" : "bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-900 dark:hover:bg-zinc-800"}`}>{label}</Link>
             ))}
           </nav>
-          {!visible.length ? <p className="rounded-2xl border border-zinc-200 p-6 text-zinc-600 dark:border-zinc-800 dark:text-zinc-400">{!groups.length ? "Anda belum memiliki grup. Hubungi admin untuk memeriksa penugasan Anda." : !students.length ? "Belum ada siswa aktif dalam grup Anda." : "Tidak ada siswa untuk filter ini."}</p> : (
+          {!visible.length ? <p className="rounded-2xl border border-zinc-200 p-6 text-zinc-600 dark:border-zinc-800 dark:text-zinc-400">{!groups.length ? "Anda belum memiliki grup. Buka Pilih grup untuk memilih anak didik Anda." : !students.length ? "Belum ada siswa aktif dalam grup Anda." : "Tidak ada siswa untuk filter ini."}</p> : (
             <div className="overflow-x-auto rounded-2xl border border-zinc-200 dark:border-zinc-800">
               <table className="w-full text-left text-sm">
                 <caption className="sr-only">Status yuran siswa untuk {period}</caption>

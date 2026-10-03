@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { createClient } from "../../../lib/supabase/server";
+import { getProfile } from "../../../lib/auth";
 
 export interface LoginState {
   error: string | null;
@@ -23,5 +24,6 @@ export async function login(_previous: LoginState, formData: FormData): Promise<
     return { error: "Layanan masuk belum tersedia. Silakan coba lagi nanti." };
   }
 
-  redirect("/");
+  const profile = await getProfile();
+  redirect(profile?.peran === "orang_tua" ? "/daftar" : "/");
 }

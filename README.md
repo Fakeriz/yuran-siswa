@@ -1,5 +1,16 @@
 # Yuran Siswa
 
+## Pendaftaran orang tua
+
+Terapkan migrasi `20261003010000_parent_registration.sql` sebelum memakai
+`/daftar`. Trigger signup membuat profil orang tua dan semua klaim `pending`
+dalam transaksi yang sama. RPC publik `registration_students` hanya membuka
+ID, nama, dan kelas siswa aktif untuk pemilihan anak; data pembayaran tetap privat.
+Konfirmasi email mengikuti pengaturan Supabase Auth.
+
+Schema memakai status `pending`/`approved`: keputusan tolak mempertahankan
+`pending` dan mencatat reviewer pada `approved_by`, tanpa memberi akses anak.
+
 Pencatat yuran bulanan siswa. Task 1 menyediakan scaffold Next.js 15
 (App Router), TypeScript strict, Tailwind CSS, dan logika domain pembayaran.
 Halaman awal masih berupa placeholder. Task 3 menambahkan login email dan

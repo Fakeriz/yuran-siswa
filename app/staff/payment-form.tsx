@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useTransition } from "react";
+import { useId, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { recordPayment } from "../../lib/actions/payments";
 import type { Student } from "../../lib/types";
@@ -15,7 +15,7 @@ export function PaymentForm({ student, bulan, tahun, period, today }: {
   const [pending, startTransition] = useTransition();
   const [message, setMessage] = useState("");
   const [saved, setSaved] = useState(false);
-  const titleId = `payment-${student.id}`;
+  const titleId = useId();
 
   function close() {
     dialog.current?.close();

@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { PHASE_DEVELOPMENT_SERVER } from "next/constants";
 
 const nextConfig: NextConfig = {
   experimental: {
@@ -7,4 +8,10 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default async function config(phase: string): Promise<NextConfig> {
+  if (phase === PHASE_DEVELOPMENT_SERVER) {
+    const { setupDevPlatform } = await import("@cloudflare/next-on-pages/next-dev");
+    await setupDevPlatform();
+  }
+  return nextConfig;
+}

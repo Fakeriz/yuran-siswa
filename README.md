@@ -1,5 +1,33 @@
 # Yuran Siswa
 
+## Cloudflare Pages
+
+Hubungkan repo melalui dashboard Cloudflare Pages. Gunakan pengaturan:
+
+- Framework preset: Next.js.
+- Build command: `npm run build:pages` (setara `npx @cloudflare/next-on-pages`).
+- Build output directory: `.vercel/output/static`.
+- Root directory: akar repo.
+- Node.js: `NODE_VERSION=22`.
+- Compatibility date dan flag dibaca dari `wrangler.toml`: `2026-10-03`,
+  `nodejs_compat`, untuk Preview maupun Production.
+
+CLI adapter 1.13.16 tidak menerima subcommand `build`. Build langsung
+menjalankan Vercel build lokal sebagai tahap bundling, bukan deploy ke Vercel.
+`vercel.json` melewati instalasi kedua karena dependency sudah dipasang oleh
+build image Pages (atau `npm ci` saat setup lokal). Jangan set build command
+dashboard ke `npm run build`, karena itu belum menghasilkan worker Pages.
+
+Salin `.env.example` ke `.env.local` untuk lokal. Di dashboard, isi setiap env
+untuk Preview dan Production. `NEXT_PUBLIC_SUPABASE_*` harus tersedia saat
+build dan identik dengan pasangan `SUPABASE_*`. Simpan service-role key dan
+JSON service account Drive sebagai secret server. Folder bukti/kwitansi wajib
+berada di Shared Drive dan service account harus memiliki izin membuat file.
+Jangan memasukkan kredensial ke `wrangler.toml` atau repo.
+
+Terapkan seluruh migrasi Supabase sebelum memakai aplikasi. Deploy preview
+belum dilakukan; koneksi repo dan kredensial Cloudflare diatur melalui dashboard.
+
 ## Administrasi akun
 
 Pembuatan akun pada `/admin?tab=akun` membutuhkan
@@ -40,7 +68,7 @@ dan `SUPABASE_ANON_KEY` sebagai fallback. Gunakan anon key, bukan service-role
 key. Akun dan baris `profiles` harus tersedia di Supabase.
 
 Login memakai Server Action dan cookie sesi. Setelah berhasil, pengguna
-diarahkan ke `/`, halaman awal sementara sampai dashboard tersedia.
+diarahkan sesuai peran ke `/admin`, `/staff`, atau `/orangtua`.
 Middleware memvalidasi pengguna dan menyegarkan sesi untuk `/staff`,
 `/orangtua`, `/admin`, termasuk subhalamannya. Pemeriksaan peran dilakukan
 oleh `requireRole` dan akses database tetap tunduk pada RLS.

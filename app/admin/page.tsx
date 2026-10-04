@@ -85,7 +85,7 @@ const initialTalebeData: TalebeRecord[] = [
     grup: "Fatih HE",
     yuranBulanan: 500,
     jumlahBayar: 250,
-    bulanDibayar: "Oktober 2026",
+    bulanDibayar: "September 2026",
     tanggal: "01 Okt 2026",
     metodeBayar: "Tunai (Kaunter)",
     status: "Sebahagian",
@@ -98,7 +98,7 @@ const initialTalebeData: TalebeRecord[] = [
     grup: "Razi HE",
     yuranBulanan: 500,
     jumlahBayar: 500,
-    bulanDibayar: "Oktober 2026",
+    bulanDibayar: "September 2026",
     tanggal: "02 Okt 2026",
     metodeBayar: "Bank Transfer",
     status: "Lunas",
@@ -111,7 +111,7 @@ const initialTalebeData: TalebeRecord[] = [
     grup: "Mevlana HE",
     yuranBulanan: 500,
     jumlahBayar: 0,
-    bulanDibayar: "Oktober 2026",
+    bulanDibayar: "September 2026",
     tanggal: "-",
     metodeBayar: "Belum Bayar",
     status: "Tunggakan",
@@ -124,7 +124,7 @@ const initialTalebeData: TalebeRecord[] = [
     grup: "Fatih HE",
     yuranBulanan: 500,
     jumlahBayar: 500,
-    bulanDibayar: "Oktober 2026",
+    bulanDibayar: "Ogos 2026",
     tanggal: "04 Okt 2026",
     metodeBayar: "Online Transfer (FPX)",
     status: "Lunas",
@@ -137,7 +137,7 @@ const initialTalebeData: TalebeRecord[] = [
     grup: "Razi HE",
     yuranBulanan: 500,
     jumlahBayar: 500,
-    bulanDibayar: "Oktober 2026",
+    bulanDibayar: "Ogos 2026",
     tanggal: "03 Okt 2026",
     metodeBayar: "DuitNow QR",
     status: "Lunas",
@@ -157,12 +157,16 @@ function AdminContent() {
   const searchParams = useSearchParams();
   const tab = searchParams.get("tab");
 
-  const [records] = useState<TalebeRecord[]>(initialTalebeData);
+  const [records, setRecords] = useState<TalebeRecord[]>(initialTalebeData);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedGroup, setSelectedGroup] = useState<string>("Semua");
   const [selectedStatus, setSelectedStatus] = useState<string>("Semua");
   const [selectedMonth, setSelectedMonth] = useState("Oktober 2026");
   const [selectedRecord, setSelectedRecord] = useState<TalebeRecord | null>(null);
+  const [showBayarModal, setShowBayarModal] = useState(false);
+  const [bayarNama, setBayarNama] = useState("");
+  const [bayarJumlah, setBayarJumlah] = useState("500");
+  const [bayarBulan, setBayarBulan] = useState("Oktober 2026");
 
   // Penapisan rekod Talebe secara dinamik
   const filteredRecords = useMemo(() => {
@@ -174,10 +178,11 @@ function AdminContent() {
 
       const matchGroup = selectedGroup === "Semua" || item.grup === selectedGroup;
       const matchStatus = selectedStatus === "Semua" || item.status === selectedStatus;
+      const matchMonth = item.bulanDibayar === selectedMonth;
 
-      return matchSearch && matchGroup && matchStatus;
+      return matchSearch && matchGroup && matchStatus && matchMonth;
     });
-  }, [records, searchQuery, selectedGroup, selectedStatus]);
+  }, [records, searchQuery, selectedGroup, selectedStatus, selectedMonth]);
 
   // Statistik Keseluruhan (KPI Math)
   const totalTarget = 30000; // 60 siswa x RM 500
@@ -270,13 +275,14 @@ function AdminContent() {
             <span>Eksport Data</span>
           </button>
 
-          <Link
-            href="/admin?tab=kwitansi"
+          <button
+            type="button"
+            onClick={() => setShowBayarModal(true)}
             className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-800 px-3.5 py-2 text-xs font-semibold text-white shadow-xs hover:bg-emerald-900 transition-colors focus-visible:outline-emerald-600"
           >
             <Plus className="size-4" />
             <span>Catat Bayaran</span>
-          </Link>
+          </button>
         </div>
       </div>
 
@@ -780,6 +786,85 @@ function AdminContent() {
                 <Receipt className="size-3.5" />
                 <span>Urus Kwitansi</span>
               </Link>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal Catat Bayaran */}
+      {showBayarModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+          <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl">
+            <h2 className="text-lg font-bold text-gray-900">Catat Bayaran Baru</h2>
+            <p className="mt-1 text-xs text-gray-500">Rekod pembayaran yuran bulanan talebe.</p>
+            <div className="mt-4 space-y-4">
+              <div>
+                <label className="text-xs font-semibold text-gray-700">Nama Talebe</label>
+                <input
+                  type="text"
+                  value={bayarNama}
+                  onChange={(e) => setBayarNama(e.target.value)}
+                  placeholder="cth: Ahmad bin Ali"
+                  className="mt-1 w-full rounded-xl border border-gray-300 px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="text-xs font-semibold text-gray-700">Bulan</label>
+                  <select
+                    value={bayarBulan}
+                    onChange={(e) => setBayarBulan(e.target.value)}
+                    className="mt-1 w-full rounded-xl border border-gray-300 px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
+                  >
+                    <option>Oktober 2026</option>
+                    <option>September 2026</option>
+                    <option>Ogos 2026</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="text-xs font-semibold text-gray-700">Jumlah (RM)</label>
+                  <input
+                    type="number"
+                    value={bayarJumlah}
+                    onChange={(e) => setBayarJumlah(e.target.value)}
+                    className="mt-1 w-full rounded-xl border border-gray-300 px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="mt-6 flex justify-end gap-3">
+              <button
+                type="button"
+                onClick={() => setShowBayarModal(false)}
+                className="rounded-xl border border-gray-300 px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50"
+              >
+                Batal
+              </button>
+              <button
+                type="button"
+                disabled={!bayarNama.trim()}
+                onClick={() => {
+                  const baru: TalebeRecord = {
+                    id: `T-${Date.now()}`,
+                    nama: bayarNama.trim(),
+                    noTransaksi: `TRX-${Date.now().toString().slice(-6)}`,
+                    grup: "Mevlana HE",
+                    yuranBulanan: 500,
+                    jumlahBayar: Number(bayarJumlah) || 500,
+                    bulanDibayar: bayarBulan,
+                    tanggal: "04 Okt 2026",
+                    metodeBayar: "Tunai (Kaunter)",
+                    status: "Lunas",
+                    statusAktif: true,
+                  };
+                  setRecords((r) => [baru, ...r]);
+                  setBayarNama("");
+                  setShowBayarModal(false);
+                }}
+                className="rounded-xl bg-emerald-800 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-900 disabled:opacity-50"
+              >
+                Simpan Bayaran
+              </button>
             </div>
           </div>
         </div>

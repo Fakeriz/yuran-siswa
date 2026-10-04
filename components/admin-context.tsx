@@ -9,6 +9,8 @@ interface AdminContextType {
   setSelectedYear: (y: string) => void;
   requestExport: () => void;
   onExportRequest: (fn: () => void) => void;
+  pageTitle: string;
+  setPageTitle: (t: string) => void;
 }
 
 const AdminContext = createContext<AdminContextType | null>(null);
@@ -17,6 +19,7 @@ export function AdminProvider({ children }: { children: ReactNode }) {
   const [selectedMonth, setSelectedMonth] = useState("Oktober");
   const [selectedYear, setSelectedYear] = useState("2026");
   const [exportFn, setExportFn] = useState<(() => void) | null>(null);
+  const [pageTitle, setPageTitle] = useState("Dasbor Pentadbiran Yuran");
 
   return (
     <AdminContext.Provider
@@ -27,6 +30,8 @@ export function AdminProvider({ children }: { children: ReactNode }) {
         setSelectedYear,
         requestExport: () => exportFn?.(),
         onExportRequest: (fn) => setExportFn(() => fn),
+        pageTitle,
+        setPageTitle,
       }}
     >
       {children}

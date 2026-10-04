@@ -128,7 +128,7 @@ function TopbarControls() {
         className="inline-flex items-center gap-1.5 rounded-lg border border-gray-300 bg-white px-3.5 py-2 text-xs font-semibold text-gray-700 shadow-2xs hover:bg-gray-50 transition-colors"
       >
         <DownloadIcon className="size-3.5 text-gray-500" />
-        <span>Export</span>
+        <span className="hidden sm:inline">Export</span>
       </button>
       <button
         type="button"
@@ -136,13 +136,13 @@ function TopbarControls() {
         className="inline-flex items-center gap-1.5 rounded-lg bg-gray-900 px-3.5 py-2 text-xs font-semibold text-white shadow-xs hover:bg-gray-800 transition-colors"
       >
         <DocumentIcon className="size-3.5" />
-        <span>Generate Report</span>
+        <span className="hidden sm:inline">Generate Report</span>
       </button>
       <div className="relative">
         <button
           type="button"
           onClick={() => setNotifOpen((o) => !o)}
-          className="relative p-2 text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-xl transition-colors"
+          className="relative inline-flex items-center rounded-lg border border-gray-300 bg-white p-2 text-gray-500 shadow-2xs hover:bg-gray-50 hover:text-gray-900 transition-colors"
           aria-label="Pemberitahuan sistem"
         >
           <NotificationIcon className="size-4.5" />
@@ -188,6 +188,20 @@ function TopbarControls() {
           </div>
         )}
       </div>
+    </div>
+  );
+}
+
+function HeaderTitle() {
+  const { pageTitle, selectedMonth, selectedYear } = useAdmin();
+  return (
+    <div>
+      <h1 className="text-lg font-bold tracking-tight text-gray-900 sm:text-xl">
+        {pageTitle}
+      </h1>
+      <p className="text-xs text-gray-500">
+        {selectedMonth} {selectedYear}
+      </p>
     </div>
   );
 }
@@ -286,6 +300,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
             >
               <CategoryIcon className="size-5" />
             </button>
+            <HeaderTitle />
           </div>
 
           {/* Topbar Right Controls */}

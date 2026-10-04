@@ -159,7 +159,7 @@ function AdminContent() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedGroup, setSelectedGroup] = useState<string>("Semua");
   const [selectedStatus, setSelectedStatus] = useState<string>("Semua");
-  const { selectedMonth, setSelectedMonth, selectedYear, setSelectedYear, onExportRequest } = useAdmin();
+  const { selectedMonth, setSelectedMonth, selectedYear, setSelectedYear, onExportRequest, setPageTitle } = useAdmin();
   const [selectedRecord, setSelectedRecord] = useState<TalebeRecord | null>(null);
   const [showBayarModal, setShowBayarModal] = useState(false);
   const [bayarNama, setBayarNama] = useState("");
@@ -289,21 +289,15 @@ function AdminContent() {
     : tab === "resit" ? "Resit & Kwitansi"
     : "Dasbor Pentadbiran Yuran";
 
+  // Set tajuk di topbar
+  useEffect(() => {
+    setPageTitle(headerTitle);
+  }, [headerTitle, setPageTitle]);
+
   return (
     <div className="space-y-8">
-      {/* 1. Header Dasbor Utama & Tindakan */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
-            {headerTitle}
-          </h1>
-          <p className="mt-1 text-sm text-gray-500">
-            {selectedMonth} {selectedYear}
-          </p>
-        </div>
-
-        {/* Butang Tindakan Cepat */}
-        <div className="flex flex-row flex-wrap items-center gap-2.5">
+      {/* 1. Butang Tindakan */}
+      <div className="flex flex-row flex-wrap items-center gap-2.5">
           {isSiswa && (
             <button
               type="button"
@@ -324,7 +318,6 @@ function AdminContent() {
             <span>Catat Bayaran</span>
           </button>
         </div>
-      </div>
 
       {/* Ringkasan Aliran Kas (tab aliran-kas sahaja) */}
       {isAliranKas && (

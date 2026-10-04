@@ -57,7 +57,7 @@ export function MonthYearPicker({
         className="inline-flex items-center gap-2 rounded-xl border border-gray-300 bg-white px-3.5 py-2 text-xs font-semibold text-gray-700 shadow-2xs hover:border-gray-400"
       >
         <CalendarIcon className="size-3.5 text-gray-400" />
-        <span>
+        <span className="hidden sm:inline">
           {month} {year}
         </span>
       </button>

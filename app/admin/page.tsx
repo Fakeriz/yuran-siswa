@@ -268,7 +268,24 @@ function AdminContent() {
 
           <button
             type="button"
-            onClick={() => alert(`Laporan bagi sesi ${selectedMonth} sedang dieksport ke format Excel (CSV)...`)}
+            onClick={() => {
+              const header = ["ID", "No Transaksi", "Nama", "Grup", "Yuran Bulanan (RM)", "Jumlah Bayar (RM)", "Bulan", "Tanggal", "Metode", "Status"];
+              const rows = filteredRecords.map((r) => [
+                r.id, r.noTransaksi, r.nama, r.grup,
+                String(r.yuranBulanan), String(r.jumlahBayar),
+                r.bulanDibayar, r.tanggal, r.metodeBayar, r.status,
+              ]);
+              const csv = [header, ...rows]
+                .map((row) => row.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(","))
+                .join("\n");
+              const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8" });
+              const url = URL.createObjectURL(blob);
+              const a = document.createElement("a");
+              a.href = url;
+              a.download = `yuran-${selectedMonth.replace(/\s+/g, "-").toLowerCase()}.csv`;
+              a.click();
+              URL.revokeObjectURL(url);
+            }}
             className="inline-flex items-center gap-1.5 rounded-xl border border-gray-300 bg-white px-3.5 py-2 text-xs font-semibold text-gray-700 shadow-2xs hover:bg-gray-50 hover:text-gray-900 transition-colors"
           >
             <Download className="size-3.5 text-gray-500" />

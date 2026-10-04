@@ -2,7 +2,6 @@
 
 import { Suspense, useState, useMemo, useRef, useCallback, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import Link from "next/link";
 import {
   TrendingUp,
   Target,
@@ -33,6 +32,7 @@ import {
   MorphSelectTrigger,
   MorphSelectValue,
 } from "../../components/morph-select";
+import { Button, ButtonLink } from "../../components/motion-button";
 
 // Struktur jenis data berasaskan skema logik Data_Talebe & Transaksi_Masuk
 export interface TalebeRecord {
@@ -428,8 +428,10 @@ function AdminContent() {
           </div>
 
           <div className="flex items-center gap-2 w-full sm:w-auto">
-            <button
-              type="button"
+            <Button
+              variant="secondary"
+              size="sm"
+              className="flex-1 sm:flex-initial"
               onClick={() => {
                 const header = ["ID", "No Transaksi", "Nama", "Grup", "Yuran Bulanan (RM)", "Jumlah Bayar (RM)", "Bulan", "Tanggal", "Metode", "Status"];
                 const rows = filteredRecords.map((r) => [
@@ -448,30 +450,32 @@ function AdminContent() {
                 a.click();
                 URL.revokeObjectURL(url);
               }}
-              className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 rounded-xl border border-gray-300 bg-white px-3 py-2 text-xs font-semibold text-gray-700 shadow-2xs hover:bg-gray-50 hover:text-gray-900 transition-colors dark:border-slate-700 dark:bg-[#0f172a] dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-100"
             >
-              <Download className="size-3.5 text-gray-500 dark:text-slate-400" />
+              <Download className="size-3.5" />
               <span>Eksport</span>
-            </button>
+            </Button>
 
-            <button
-              type="button"
+            <Button
+              variant="secondary"
+              size="sm"
+              className="flex-1 sm:flex-initial"
               onClick={() => setShowImportModal(true)}
-              className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 rounded-xl border border-gray-300 bg-white px-3 py-2 text-xs font-semibold text-gray-700 shadow-2xs hover:bg-gray-50 hover:text-gray-900 transition-colors dark:border-slate-700 dark:bg-[#0f172a] dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-100"
             >
-              <Upload className="size-3.5 text-gray-500 dark:text-slate-400" />
+              <Upload className="size-3.5" />
               <span>Import</span>
-            </button>
+            </Button>
           </div>
 
-          <button
-            type="button"
+          <Button
+            variant="primary"
+            size="sm"
+            ripple
+            className="w-full sm:w-auto"
             onClick={() => setShowBayarModal(true)}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 px-4 py-2.5 sm:py-2 text-xs font-medium text-white shadow-sm shadow-emerald-950/30 transition-all active:scale-[0.98] focus-visible:outline-emerald-500 dark:shadow-emerald-950/50"
           >
             <Plus className="size-4" />
             <span>Catat Bayaran</span>
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -828,14 +832,14 @@ function AdminContent() {
                           </td>
                           {/* Tindakan */}
                           <td className="px-5 py-4 whitespace-nowrap text-center" onClick={(e) => e.stopPropagation()}>
-                            <button
-                              type="button"
+                            <Button
+                              variant="ghost"
+                              size="icon"
                               onClick={() => openRecordModal(item)}
-                              className="inline-flex items-center gap-1 rounded-lg p-1.5 text-gray-500 hover:text-emerald-800 hover:bg-emerald-50 transition-colors dark:text-slate-400 dark:hover:text-emerald-300 dark:hover:bg-slate-800"
                               title="Lihat Butiran"
                             >
                               <Eye className="size-4" />
-                            </button>
+                            </Button>
                           </td>
                         </>
                       ) : (
@@ -910,14 +914,14 @@ function AdminContent() {
 
                       {/* Tindakan */}
                       <td className="px-5 py-4 whitespace-nowrap text-center" onClick={(e) => e.stopPropagation()}>
-                        <button
-                          type="button"
+                        <Button
+                          variant="ghost"
+                          size="icon"
                           onClick={() => openRecordModal(item)}
-                          className="inline-flex items-center gap-1 rounded-lg p-1.5 text-gray-500 hover:text-emerald-800 hover:bg-emerald-50 transition-colors dark:text-slate-400 dark:hover:text-emerald-300 dark:hover:bg-slate-800"
                           title="Lihat Butiran Resit"
                         >
                           <Eye className="size-4" />
-                        </button>
+                        </Button>
                       </td>
                         </>
                       )}
@@ -1011,20 +1015,18 @@ function AdminContent() {
 
             <div className="mt-6 flex items-center justify-end gap-3 pt-4 border-t border-gray-100 dark:border-slate-800">
               <CenterMorphModalClose>
-                <button
-                  type="button"
-                  className="rounded-xl border border-gray-300 px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
-                >
+                <Button variant="secondary" size="sm">
                   Tutup
-                </button>
+                </Button>
               </CenterMorphModalClose>
-              <Link
+              <ButtonLink
+                variant="primary"
+                size="sm"
                 href="/admin?tab=kwitansi"
-                className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 px-4 py-2 text-xs font-semibold text-white shadow-sm shadow-emerald-950/30 transition-all active:scale-[0.98]"
               >
                 <Receipt className="size-3.5" />
                 <span>Urus Kwitansi</span>
-              </Link>
+              </ButtonLink>
             </div>
             </>
           )}
@@ -1081,15 +1083,14 @@ function AdminContent() {
             </div>
             <div className="mt-6 flex justify-end gap-3">
               <CenterMorphModalClose>
-                <button
-                  type="button"
-                  className="rounded-xl border border-gray-300 px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
-                >
+                <Button variant="secondary" size="sm">
                   Batal
-                </button>
+                </Button>
               </CenterMorphModalClose>
-              <button
-                type="button"
+              <Button
+                variant="primary"
+                size="sm"
+                ripple
                 disabled={!bayarNama.trim()}
                 onClick={() => {
                   const baru: TalebeRecord = {
@@ -1109,10 +1110,9 @@ function AdminContent() {
                   setShowBayarModal(false);
                   window.setTimeout(() => setBayarNama(""), 460);
                 }}
-                className="rounded-xl bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 px-4 py-2 text-xs font-semibold text-white shadow-sm shadow-emerald-950/30 transition-all active:scale-[0.98] disabled:opacity-50"
               >
                 Simpan Bayaran
-              </button>
+              </Button>
             </div>
         </CenterMorphModalContent>
       </CenterMorphModal>
@@ -1183,21 +1183,19 @@ function AdminContent() {
             </div>
             <div className="mt-6 flex justify-end gap-3">
               <CenterMorphModalClose>
-                <button
-                  type="button"
-                  className="rounded-xl border border-gray-300 px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
-                >
+                <Button variant="secondary" size="sm">
                   Batal
-                </button>
+                </Button>
               </CenterMorphModalClose>
-              <button
-                type="button"
+              <Button
+                variant="primary"
+                size="sm"
+                ripple
                 disabled={importPreview.length === 0}
                 onClick={confirmImport}
-                className="rounded-xl bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 px-4 py-2 text-xs font-semibold text-white shadow-sm shadow-emerald-950/30 transition-all active:scale-[0.98] disabled:opacity-50"
               >
                 Import {importPreview.length > 0 ? `(${importPreview.length})` : ""}
-              </button>
+              </Button>
             </div>
         </CenterMorphModalContent>
       </CenterMorphModal>

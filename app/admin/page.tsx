@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { Suspense, useState, useMemo } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import {
   TrendingUp,
@@ -152,7 +153,10 @@ function formatRM(amount: number): string {
   })}`;
 }
 
-export default function AdminDashboardPage() {
+function AdminContent() {
+  const searchParams = useSearchParams();
+  const tab = searchParams.get("tab");
+
   const [records] = useState<TalebeRecord[]>(initialTalebeData);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedGroup, setSelectedGroup] = useState<string>("Semua");
@@ -181,6 +185,33 @@ export default function AdminDashboardPage() {
   const totalTunggakan = 5500; // Baki tertunggak
   const persentaseKutipan = (totalPemasukan / totalTarget) * 100; // 81.67%
 
+  // Tab yang belum ada konten khusus
+  if (tab === "penugasan" || tab === "persetujuan") {
+    const title = tab === "penugasan" ? "Penugasan Staf" : "Pengesahan Ibu Bapa";
+    return (
+      <div className="space-y-8">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">{title}</h1>
+          <p className="mt-1 text-sm text-gray-500">Bahagian ini dalam pembangunan.</p>
+        </div>
+        <div className="rounded-2xl border border-dashed border-gray-300 bg-white p-12 text-center">
+          <p className="text-sm text-gray-500">
+            Modul {title} akan disambungkan ke data sebenar tidak lama lagi.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  const isDashboard = !tab;
+  // Untuk tab kwitansi & siswa, sorokkan ringkasan KPI/grup supaya fokus pada jadual
+  const showSummary = isDashboard;
+
+  const headerTitle =
+    tab === "kwitansi" ? "Aliran Kas & Yuran"
+    : tab === "siswa" ? "Data Talebe (Siswa)"
+    : "Dasbor Pentadbiran Yuran";
+
   return (
     <div className="space-y-8">
       {/* 1. Header Dasbor Utama & Tindakan */}
@@ -188,7 +219,7 @@ export default function AdminDashboardPage() {
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
-              Dasbor Pentadbiran Yuran
+              {headerTitle}
             </h1>
             <span className="inline-flex items-center rounded-md bg-emerald-50 px-2 py-1 text-xs font-semibold text-emerald-800 border border-emerald-200">
               Aylik Talebe
@@ -234,6 +265,7 @@ export default function AdminDashboardPage() {
       </div>
 
       {/* 2. Empat Kotak Ringkasan KPI (KPI Cards) */}
+      {showSummary && (
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {/* KPI 1: Total Pemasukan Kas */}
         <div className="relative overflow-hidden rounded-2xl border border-gray-200 bg-white p-5 shadow-xs transition-shadow hover:shadow-md">
@@ -328,8 +360,10 @@ export default function AdminDashboardPage() {
           </div>
         </div>
       </div>
+      )}
 
       {/* 3. Ringkasan Pantas Berdasarkan Grup Asrama (Aylik Talebe Groups) */}
+      {showSummary && (
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-2xs">
           <div className="flex items-center justify-between">
@@ -370,6 +404,7 @@ export default function AdminDashboardPage() {
           <p className="mt-2 text-xs text-gray-500">Kutipan: RM 8,000 / RM 10,000 (20 Talebe)</p>
         </div>
       </div>
+      )}
 
       {/* 4. Bahagian Utama: Penapis & Tabel Status Yuran Talebe */}
       <div className="rounded-2xl border border-gray-200 bg-white shadow-xs overflow-hidden">
@@ -688,5 +723,13 @@ export default function AdminDashboardPage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function AdminDashboardPage() {
+  return (
+    <Suspense>
+      <AdminContent />
+    </Suspense>
   );
 }

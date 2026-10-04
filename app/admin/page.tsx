@@ -17,7 +17,6 @@ import {
   CheckCircle2,
   Clock,
   ArrowUpDown,
-  Calendar,
   Eye,
   RefreshCw,
 } from "lucide-react";
@@ -27,6 +26,13 @@ import {
   CenterMorphModalClose,
   CenterMorphModalContent,
 } from "../../components/center-morph-modal";
+import {
+  MorphSelect,
+  MorphSelectContent,
+  MorphSelectItem,
+  MorphSelectTrigger,
+  MorphSelectValue,
+} from "../../components/morph-select";
 
 // Struktur jenis data berasaskan skema logik Data_Talebe & Transaksi_Masuk
 export interface TalebeRecord {
@@ -404,17 +410,21 @@ function AdminContent() {
 
         {/* Butang Tindakan Cepat (Responsive Mobile-First) */}
         <div className="flex flex-col sm:flex-row sm:items-center gap-2.5 sm:gap-3 w-full sm:w-auto">
-          <div className="relative w-full sm:w-auto">
-            <select
+          <div className="w-full sm:w-auto">
+            <MorphSelect
               value={selectedMonth}
-              onChange={(e) => setSelectedMonth(e.target.value)}
-              className="w-full sm:w-auto appearance-none rounded-xl border border-gray-300 bg-white py-2 pl-3 pr-8 text-xs font-semibold text-gray-700 shadow-2xs hover:border-gray-400 focus:border-emerald-600 focus:outline-hidden dark:border-slate-700 dark:bg-[#0f172a] dark:text-slate-300 dark:hover:border-slate-600"
+              onValueChange={setSelectedMonth}
+              className="w-full text-xs font-semibold sm:w-auto sm:min-w-48"
             >
-              <option value="Oktober 2026">Bulan: Oktober 2026</option>
-              <option value="September 2026">Bulan: September 2026</option>
-              <option value="Ogos 2026">Bulan: Ogos 2026</option>
-            </select>
-            <Calendar className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 size-3.5 text-gray-400 dark:text-slate-500" />
+              <MorphSelectTrigger>
+                <MorphSelectValue placeholder="Pilih bulan" />
+              </MorphSelectTrigger>
+              <MorphSelectContent>
+                <MorphSelectItem value="Oktober 2026">Bulan: Oktober 2026</MorphSelectItem>
+                <MorphSelectItem value="September 2026">Bulan: September 2026</MorphSelectItem>
+                <MorphSelectItem value="Ogos 2026">Bulan: Ogos 2026</MorphSelectItem>
+              </MorphSelectContent>
+            </MorphSelect>
           </div>
 
           <div className="flex items-center gap-2 w-full sm:w-auto">
@@ -1042,16 +1052,21 @@ function AdminContent() {
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs font-semibold text-gray-700 dark:text-slate-300">Bulan</label>
-                  <select
+                  <span className="text-xs font-semibold text-gray-700 dark:text-slate-300">Bulan</span>
+                  <MorphSelect
                     value={bayarBulan}
-                    onChange={(e) => setBayarBulan(e.target.value)}
-                    className="mt-1 w-full rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:border-emerald-600 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
+                    onValueChange={setBayarBulan}
+                    className="mt-1 w-full"
                   >
-                    <option>Oktober 2026</option>
-                    <option>September 2026</option>
-                    <option>Ogos 2026</option>
-                  </select>
+                    <MorphSelectTrigger>
+                      <MorphSelectValue placeholder="Pilih bulan" />
+                    </MorphSelectTrigger>
+                    <MorphSelectContent>
+                      <MorphSelectItem value="Oktober 2026">Oktober 2026</MorphSelectItem>
+                      <MorphSelectItem value="September 2026">September 2026</MorphSelectItem>
+                      <MorphSelectItem value="Ogos 2026">Ogos 2026</MorphSelectItem>
+                    </MorphSelectContent>
+                  </MorphSelect>
                 </div>
                 <div>
                   <label className="text-xs font-semibold text-gray-700 dark:text-slate-300">Jumlah (RM)</label>

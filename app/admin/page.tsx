@@ -1,11 +1,11 @@
 "use client";
 
-import { Suspense, useState, useMemo } from "react";
+import { Suspense, useState, useMemo, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { ChartIcon, DiscoveryIcon, DangerIcon, SearchIcon, FilterIcon, DownloadIcon, UploadIcon, PlusIcon, TicketIcon, TickSquareIcon, TimeCircleIcon, SwapIcon, HideIcon } from "@/components/icons";
-import { MonthYearPicker } from "@/components/month-year-picker";
+import { ChartIcon, DiscoveryIcon, DangerIcon, SearchIcon, FilterIcon, UploadIcon, PlusIcon, TicketIcon, TickSquareIcon, TimeCircleIcon, SwapIcon, HideIcon } from "@/components/icons";
 import { StudentSelect } from "@/components/student-select";
+import { useAdmin } from "@/components/admin-context";
 
 // Struktur jenis data berasaskan skema logik Data_Talebe & Transaksi_Masuk
 export interface TalebeRecord {
@@ -159,8 +159,7 @@ function AdminContent() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedGroup, setSelectedGroup] = useState<string>("Semua");
   const [selectedStatus, setSelectedStatus] = useState<string>("Semua");
-  const [selectedMonth, setSelectedMonth] = useState("Oktober");
-  const [selectedYear, setSelectedYear] = useState("2026");
+  const { selectedMonth, setSelectedMonth, selectedYear, setSelectedYear, onExportRequest } = useAdmin();
   const [selectedRecord, setSelectedRecord] = useState<TalebeRecord | null>(null);
   const [showBayarModal, setShowBayarModal] = useState(false);
   const [bayarNama, setBayarNama] = useState("");
@@ -216,6 +215,28 @@ function AdminContent() {
     });
   }, [records, searchQuery, selectedGroup, selectedStatus, selectedMonth, selectedYear]);
 
+  // Daftar export CSV untuk butang Export di topbar
+  useEffect(() => {
+    onExportRequest(() => {
+      const header = ["ID", "No Transaksi", "Nama", "Grup", "Yuran Bulanan (RM)", "Jumlah Bayar (RM)", "Bulan", "Tanggal", "Metode", "Status"];
+      const rows = filteredRecords.map((r) => [
+        r.id, r.noTransaksi, r.nama, r.grup,
+        String(r.yuranBulanan), String(r.jumlahBayar),
+        r.bulanDibayar, r.tanggal, r.metodeBayar, r.status,
+      ]);
+      const csv = [header, ...rows]
+        .map((row) => row.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(","))
+        .join("\n");
+      const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `yuran-${selectedMonth.toLowerCase()}-${selectedYear}.csv`;
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+  }, [filteredRecords, selectedMonth, selectedYear, onExportRequest]);
+
   // Statistik Keseluruhan (KPI Math) — ikut bulan & tahun yang dipilih
   const kpiRecords = useMemo(() => {
     const bulanTahun = `${selectedMonth} ${selectedYear}`;
@@ -268,69 +289,21 @@ function AdminContent() {
     : tab === "resit" ? "Resit & Kwitansi"
     : "Dasbor Pentadbiran Yuran";
 
-  const headerDesc =
-    tab === "aliran-kas" ? "Ringkasan aliran tunai masuk dan keluar kas asrama."
-    : tab === "siswa" ? "Senarai talebe berdaftar mengikut grup asrama."
-    : tab === "transaksi" ? "Senarai semua pembayaran yuran yang diterima."
-    : tab === "resit" ? "Senarai resit dan kwitansi yang telah dimuat naik."
-    : "Sistem pengurusan yuran bulanan asrama Talebe, rekod kutipan kas, dan pengesahan status pembayaran.";
-
   return (
     <div className="space-y-8">
       {/* 1. Header Dasbor Utama & Tindakan */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
-              {headerTitle}
-            </h1>
-            <span className="inline-flex items-center rounded-md bg-emerald-50 px-2 py-1 text-xs font-semibold text-emerald-800 border border-emerald-200">
-              Aylik Talebe
-            </span>
-          </div>
+          <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
+            {headerTitle}
+          </h1>
           <p className="mt-1 text-sm text-gray-500">
-            {headerDesc}
-          </p>
-          <p className="mt-0.5 text-xs font-medium text-gray-400">
             {selectedMonth} {selectedYear}
           </p>
         </div>
 
         {/* Butang Tindakan Cepat */}
         <div className="flex flex-row flex-wrap items-center gap-2.5">
-          <MonthYearPicker
-            month={selectedMonth}
-            year={selectedYear}
-            onMonthChange={setSelectedMonth}
-            onYearChange={setSelectedYear}
-          />
-
-          <button
-            type="button"
-            onClick={() => {
-              const header = ["ID", "No Transaksi", "Nama", "Grup", "Yuran Bulanan (RM)", "Jumlah Bayar (RM)", "Bulan", "Tanggal", "Metode", "Status"];
-              const rows = filteredRecords.map((r) => [
-                r.id, r.noTransaksi, r.nama, r.grup,
-                String(r.yuranBulanan), String(r.jumlahBayar),
-                r.bulanDibayar, r.tanggal, r.metodeBayar, r.status,
-              ]);
-              const csv = [header, ...rows]
-                .map((row) => row.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(","))
-                .join("\n");
-              const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8" });
-              const url = URL.createObjectURL(blob);
-              const a = document.createElement("a");
-              a.href = url;
-              a.download = `yuran-${selectedMonth.toLowerCase()}-${selectedYear}.csv`;
-              a.click();
-              URL.revokeObjectURL(url);
-            }}
-            className="inline-flex items-center gap-1.5 rounded-xl border border-gray-300 bg-white px-3.5 py-2 text-xs font-semibold text-gray-700 shadow-2xs hover:bg-gray-50 hover:text-gray-900 transition-colors"
-          >
-            <DownloadIcon className="size-3.5 text-gray-500" />
-            <span>Eksport Data</span>
-          </button>
-
           {isSiswa && (
             <button
               type="button"

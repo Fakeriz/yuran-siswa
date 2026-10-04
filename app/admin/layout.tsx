@@ -1,10 +1,12 @@
 "use client";
 
-import { useState, useEffect, Suspense, type ReactNode } from "react";
+import { useState, Suspense, type ReactNode } from "react";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
-import { HomeIcon, UsersIcon, WalletIcon, TicketIcon, DocumentIcon, AddUserIcon, NotificationIcon, CategoryIcon, CloseSquareIcon, LogoutIcon, ShieldDoneIcon, ArrowRightIcon, SchoolIcon } from "@/components/icons";
+import { HomeIcon, UsersIcon, WalletIcon, TicketIcon, DocumentIcon, AddUserIcon, NotificationIcon, CategoryIcon, CloseSquareIcon, LogoutIcon, ShieldDoneIcon, SchoolIcon, DownloadIcon } from "@/components/icons";
 import { Avatar } from "@/components/avatar";
+import { AdminProvider, useAdmin } from "@/components/admin-context";
+import { MonthYearPicker } from "@/components/month-year-picker";
 
 interface NavItem {
   name: string;
@@ -102,44 +104,8 @@ function SidebarNav({ onNavigate }: { onNavigate: () => void }) {
   );
 }
 
-function Breadcrumb() {
-  const searchParams = useSearchParams();
-  const tab = searchParams.get("tab");
-  const names: Record<string, string> = {
-    "aliran-kas": "Aliran Kas & Yuran",
-    siswa: "Data Talebe",
-    transaksi: "Transaksi Masuk",
-    penugasan: "Penugasan Staf",
-    persetujuan: "Pengesahan Ibu Bapa",
-    resit: "Resit & Kwitansi",
-    penyata: "Penyata Bulanan",
-  };
-  const current = tab && names[tab] ? names[tab] : "Dasbor Utama";
-  return (
-    <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-500 font-medium">
-      <span className="text-gray-800 font-semibold">YuranKu</span>
-      <ArrowRightIcon className="size-3.5 text-gray-400" />
-      <span>Pentadbiran</span>
-      <ArrowRightIcon className="size-3.5 text-gray-400" />
-      <span className="text-emerald-800 font-semibold">{current}</span>
-    </div>
-  );
-}
-
-export default function AdminLayout({ children }: { children: ReactNode }) {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const pathname = usePathname();
-
-  // Sesi persekolahan (persist di localStorage)
-  const SESI_LIST = ["2025/2026", "2026/2027", "2027/2028"];
-  const [sesi, setSesi] = useState("2026/2027");
-  const [sesiOpen, setSesiOpen] = useState(false);
-  useEffect(() => {
-    const saved = localStorage.getItem("yuran-sesi");
-    if (saved && SESI_LIST.includes(saved)) setSesi(saved);
-  }, []);
-
-  // Notifikasi (dummy)
+function TopbarControls() {
+  const { selectedMonth, selectedYear, setSelectedMonth, setSelectedYear, requestExport } = useAdmin();
   const [notifOpen, setNotifOpen] = useState(false);
   const [notifs, setNotifs] = useState([
     { id: 1, tipe: "pendaftaran", judul: "Pendaftaran ibu bapa baru", pesan: "Ahmad memerlukan pengesahan", masa: "10 minit lalu", dibaca: false, tab: "persetujuan" },
@@ -149,6 +115,89 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
   const unreadCount = notifs.filter((n) => !n.dibaca).length;
 
   return (
+    <div className="flex items-center gap-2.5">
+      <MonthYearPicker
+        month={selectedMonth}
+        year={selectedYear}
+        onMonthChange={setSelectedMonth}
+        onYearChange={setSelectedYear}
+      />
+      <button
+        type="button"
+        onClick={requestExport}
+        className="inline-flex items-center gap-1.5 rounded-lg border border-gray-300 bg-white px-3.5 py-2 text-xs font-semibold text-gray-700 shadow-2xs hover:bg-gray-50 transition-colors"
+      >
+        <DownloadIcon className="size-3.5 text-gray-500" />
+        <span>Export</span>
+      </button>
+      <button
+        type="button"
+        onClick={() => alert("Laporan AI segera hadir!")}
+        className="inline-flex items-center gap-1.5 rounded-lg bg-gray-900 px-3.5 py-2 text-xs font-semibold text-white shadow-xs hover:bg-gray-800 transition-colors"
+      >
+        <DocumentIcon className="size-3.5" />
+        <span>Generate Report</span>
+      </button>
+      <div className="relative">
+        <button
+          type="button"
+          onClick={() => setNotifOpen((o) => !o)}
+          className="relative p-2 text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-xl transition-colors"
+          aria-label="Pemberitahuan sistem"
+        >
+          <NotificationIcon className="size-4.5" />
+          {unreadCount > 0 && (
+            <span className="absolute top-1 right-1 flex size-4 items-center justify-center rounded-full bg-rose-500 text-[9px] font-bold text-white">
+              {unreadCount}
+            </span>
+          )}
+        </button>
+        {notifOpen && (
+          <div className="absolute right-0 mt-2 w-80 rounded-2xl border border-gray-200 bg-white shadow-xl z-50 overflow-hidden">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100">
+              <p className="text-sm font-bold text-gray-900">Notifikasi</p>
+              <button
+                type="button"
+                onClick={() => setNotifs((ns) => ns.map((n) => ({ ...n, dibaca: true })))}
+                className="text-xs font-medium text-emerald-700 hover:underline"
+              >
+                Tandai semua dibaca
+              </button>
+            </div>
+            <ul className="max-h-80 overflow-y-auto divide-y divide-gray-100">
+              {notifs.map((n) => (
+                <li key={n.id}>
+                  <Link
+                    href={`/admin?tab=${n.tab}`}
+                    onClick={() => {
+                      setNotifs((ns) => ns.map((x) => x.id === n.id ? { ...x, dibaca: true } : x));
+                      setNotifOpen(false);
+                    }}
+                    className={`block px-4 py-3 hover:bg-gray-50 ${!n.dibaca ? "bg-emerald-50/50" : ""}`}
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <p className="text-xs font-semibold text-gray-900">{n.judul}</p>
+                      {!n.dibaca && <span className="mt-1 size-2 shrink-0 rounded-full bg-emerald-500" />}
+                    </div>
+                    <p className="mt-0.5 text-xs text-gray-600">{n.pesan}</p>
+                    <p className="mt-1 text-[10px] text-gray-400">{n.masa}</p>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export default function AdminLayout({ children }: { children: ReactNode }) {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const pathname = usePathname();
+
+  return (
+    <AdminProvider>
     <div className="min-h-screen bg-gray-50 text-gray-900 flex flex-col antialiased">
       {/* Mobile Sidebar Backdrop Overlay */}
       {sidebarOpen && (
@@ -237,105 +286,10 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
             >
               <CategoryIcon className="size-5" />
             </button>
-
-            {/* Breadcrumb Navigation */}
-            <Suspense>
-              <Breadcrumb />
-            </Suspense>
           </div>
 
           {/* Topbar Right Controls */}
-          <div className="flex items-center gap-3 sm:gap-4">
-            {/* Pemilih Sesi Persekolahan */}
-            <div className="relative hidden sm:block">
-              <button
-                type="button"
-                onClick={() => { setSesiOpen((o) => !o); setNotifOpen(false); }}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 rounded-full text-xs font-medium text-gray-600 border border-gray-200 hover:border-gray-300"
-              >
-                <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span>Sesi Persekolahan {sesi}</span>
-              </button>
-              {sesiOpen && (
-                <div className="absolute right-0 mt-2 w-48 rounded-xl border border-gray-200 bg-white shadow-lg z-50">
-                  {SESI_LIST.map((s) => (
-                    <button
-                      key={s}
-                      type="button"
-                      onClick={() => {
-                        setSesi(s);
-                        localStorage.setItem("yuran-sesi", s);
-                        setSesiOpen(false);
-                      }}
-                      className={`block w-full text-left px-4 py-2.5 text-xs font-medium hover:bg-gray-50 first:rounded-t-xl last:rounded-b-xl ${s === sesi ? "text-emerald-800 bg-emerald-50" : "text-gray-700"}`}
-                    >
-                      Sesi {s}{s === sesi && " ✓"}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Notifikasi */}
-            <div className="relative">
-              <button
-                type="button"
-                onClick={() => { setNotifOpen((o) => !o); setSesiOpen(false); }}
-                className="relative p-2 text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-xl transition-colors"
-                aria-label="Pemberitahuan sistem"
-              >
-                <NotificationIcon className="size-4.5" />
-                {unreadCount > 0 && (
-                  <span className="absolute top-1 right-1 flex size-4 items-center justify-center rounded-full bg-rose-500 text-[9px] font-bold text-white">
-                    {unreadCount}
-                  </span>
-                )}
-              </button>
-              {notifOpen && (
-                <div className="absolute right-0 mt-2 w-80 rounded-2xl border border-gray-200 bg-white shadow-xl z-50 overflow-hidden">
-                  <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100">
-                    <p className="text-sm font-bold text-gray-900">Notifikasi</p>
-                    <button
-                      type="button"
-                      onClick={() => setNotifs((ns) => ns.map((n) => ({ ...n, dibaca: true })))}
-                      className="text-xs font-medium text-emerald-700 hover:underline"
-                    >
-                      Tandai semua dibaca
-                    </button>
-                  </div>
-                  <ul className="max-h-80 overflow-y-auto divide-y divide-gray-100">
-                    {notifs.map((n) => (
-                      <li key={n.id}>
-                        <Link
-                          href={`/admin?tab=${n.tab}`}
-                          onClick={() => {
-                            setNotifs((ns) => ns.map((x) => x.id === n.id ? { ...x, dibaca: true } : x));
-                            setNotifOpen(false);
-                          }}
-                          className={`block px-4 py-3 hover:bg-gray-50 ${!n.dibaca ? "bg-emerald-50/50" : ""}`}
-                        >
-                          <div className="flex items-start justify-between gap-2">
-                            <p className="text-xs font-semibold text-gray-900">{n.judul}</p>
-                            {!n.dibaca && <span className="mt-1 size-2 shrink-0 rounded-full bg-emerald-500" />}
-                          </div>
-                          <p className="mt-0.5 text-xs text-gray-600">{n.pesan}</p>
-                          <p className="mt-1 text-[10px] text-gray-400">{n.masa}</p>
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-
-            <Link
-              href="/admin?tab=resit"
-              className="hidden md:inline-flex items-center gap-2 rounded-xl bg-emerald-800 px-3.5 py-2 text-xs font-semibold text-white shadow-xs hover:bg-emerald-900 transition-colors focus-visible:outline-emerald-600"
-            >
-              <TicketIcon className="size-3.5" />
-              <span>Kwitansi & Bayaran</span>
-            </Link>
-          </div>
+          <TopbarControls />
         </header>
 
         {/* Page Children Container */}
@@ -344,5 +298,6 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
         </main>
       </div>
     </div>
+    </AdminProvider>
   );
 }

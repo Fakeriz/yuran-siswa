@@ -20,7 +20,15 @@ import {
   Calendar,
   Eye,
   RefreshCw,
+  UserPlus,
+  Trash2,
 } from "lucide-react";
+import { TabPenugasan } from "@/components/admin/TabPenugasan";
+import { TabPersetujuan } from "@/components/admin/TabPersetujuan";
+import { TabPenyata } from "@/components/admin/TabPenyata";
+import { TabResit } from "@/components/admin/TabResit";
+import { TabAliranKas } from "@/components/admin/TabAliranKas";
+import { TabAkun } from "@/components/admin/TabAkun";
 
 // Struktur jenis data berasaskan skema logik Data_Talebe & Transaksi_Masuk
 export interface TalebeRecord {
@@ -184,6 +192,12 @@ function AdminContent() {
   const [importPreview, setImportPreview] = useState<TalebeRecord[]>([]);
   const [importError, setImportError] = useState("");
 
+  const [showTambahSiswaModal, setShowTambahSiswaModal] = useState(false);
+  const [tambahNama, setTambahNama] = useState("");
+  const [tambahGrup, setTambahGrup] = useState<TalebeRecord["grup"]>("Mevlana HE");
+  const [tambahKelas, setTambahKelas] = useState("Tahun 1 Amanah");
+  const [tambahYuran, setTambahYuran] = useState("500");
+
   // Parse CSV import siswa: Nama,Grup,Kelas,Yuran Bulanan (RM),Aktif (Ya/Tidak),Sesi
   const parseImportCSV = (text: string): TalebeRecord[] => {
     const lines = text.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
@@ -235,28 +249,13 @@ function AdminContent() {
   const totalTunggakan = 5500; // Baki tertunggak
   const persentaseKutipan = (totalPemasukan / totalTarget) * 100; // 81.67%
 
-  // Tab yang belum ada konten khusus
-  if (tab === "penugasan" || tab === "persetujuan" || tab === "penyata") {
-    const titles: Record<string, string> = {
-      penugasan: "Penugasan Staf",
-      persetujuan: "Pengesahan Ibu Bapa",
-      penyata: "Penyata Bulanan",
-    };
-    const title = titles[tab] ?? "Modul";
-    return (
-      <div className="space-y-8">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">{title}</h1>
-          <p className="mt-1 text-sm text-gray-500">Bahagian ini dalam pembangunan.</p>
-        </div>
-        <div className="rounded-2xl border border-dashed border-gray-300 bg-white p-12 text-center">
-          <p className="text-sm text-gray-500">
-            Modul {title} akan disambungkan ke data sebenar tidak lama lagi.
-          </p>
-        </div>
-      </div>
-    );
-  }
+  // Integrasi Semua Tab
+  if (tab === "penugasan") return <TabPenugasan />;
+  if (tab === "persetujuan") return <TabPersetujuan />;
+  if (tab === "penyata") return <TabPenyata />;
+  if (tab === "resit" || tab === "kwitansi") return <TabResit />;
+  if (tab === "aliran-kas") return <TabAliranKas />;
+  if (tab === "akun") return <TabAkun />;
 
   const isDashboard = !tab;
   const isAliranKas = tab === "aliran-kas";
@@ -348,14 +347,25 @@ function AdminContent() {
             <span>Import Siswa</span>
           </button>
 
-          <button
-            type="button"
-            onClick={() => setShowBayarModal(true)}
-            className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-800 px-3.5 py-2 text-xs font-semibold text-white shadow-xs hover:bg-emerald-900 transition-colors focus-visible:outline-emerald-600"
-          >
-            <Plus className="size-4" />
-            <span>Catat Bayaran</span>
-          </button>
+          {isSiswa ? (
+            <button
+              type="button"
+              onClick={() => setShowTambahSiswaModal(true)}
+              className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-800 px-3.5 py-2 text-xs font-semibold text-white shadow-xs hover:bg-emerald-900 transition-colors focus-visible:outline-emerald-600"
+            >
+              <UserPlus className="size-4" />
+              <span>Tambah Talebe</span>
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={() => setShowBayarModal(true)}
+              className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-800 px-3.5 py-2 text-xs font-semibold text-white shadow-xs hover:bg-emerald-900 transition-colors focus-visible:outline-emerald-600"
+            >
+              <Plus className="size-4" />
+              <span>Catat Bayaran</span>
+            </button>
+          )}
         </div>
       </div>
 
@@ -726,14 +736,42 @@ function AdminContent() {
                           </td>
                           {/* Tindakan */}
                           <td className="px-5 py-4 whitespace-nowrap text-center" onClick={(e) => e.stopPropagation()}>
-                            <button
-                              type="button"
-                              onClick={() => setSelectedRecord(item)}
-                              className="inline-flex items-center gap-1 rounded-lg p-1.5 text-gray-500 hover:text-emerald-800 hover:bg-emerald-50 transition-colors"
-                              title="Lihat Butiran"
-                            >
-                              <Eye className="size-4" />
-                            </button>
+                            <div className="flex items-center justify-center gap-1.5">
+                              <button
+                                type="button"
+                                onClick={() => setSelectedRecord(item)}
+                                className="inline-flex items-center gap-1 rounded-lg p-1.5 text-gray-500 hover:text-emerald-800 hover:bg-emerald-50 transition-colors"
+                                title="Lihat Butiran"
+                              >
+                                <Eye className="size-4" />
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setRecords((prev) =>
+                                    prev.map((r) =>
+                                      r.id === item.id ? { ...r, statusAktif: !r.statusAktif } : r
+                                    )
+                                  );
+                                }}
+                                className="inline-flex items-center gap-1 rounded-lg p-1.5 text-gray-500 hover:text-blue-800 hover:bg-blue-50 transition-colors"
+                                title={item.statusAktif ? "Nyahaktifkan Talebe" : "Aktifkan Talebe"}
+                              >
+                                <RefreshCw className="size-3.5" />
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  if (window.confirm(`Adakah anda pasti untuk memadam talebe ${item.nama}?`)) {
+                                    setRecords((prev) => prev.filter((r) => r.id !== item.id));
+                                  }
+                                }}
+                                className="inline-flex items-center gap-1 rounded-lg p-1.5 text-gray-400 hover:text-rose-600 hover:bg-rose-50 transition-colors"
+                                title="Padam Talebe"
+                              >
+                                <Trash2 className="size-3.5" />
+                              </button>
+                            </div>
                           </td>
                         </>
                       ) : (
@@ -1111,6 +1149,119 @@ function AdminContent() {
                 Import {importPreview.length > 0 ? `(${importPreview.length})` : ""}
               </button>
             </div>
+          </div>
+        </div>
+      )}
+      {/* Modal Tambah Talebe */}
+      {showTambahSiswaModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-xs p-4"
+          onClick={() => setShowTambahSiswaModal(false)}
+        >
+          <div
+            className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl border border-gray-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between border-b border-gray-100 pb-3">
+              <div>
+                <h3 className="font-bold text-lg text-gray-900">Tambah Talebe Baharu</h3>
+                <p className="text-xs text-gray-500">Daftar pelajar asrama baharu ke dalam sistem rekod yuran.</p>
+              </div>
+            </div>
+
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (!tambahNama.trim()) return;
+
+                const newTalebe: TalebeRecord = {
+                  id: `TB-${Math.floor(1000 + Math.random() * 9000)}`,
+                  noTransaksi: `TRX-${Date.now().toString().slice(-6)}`,
+                  nama: tambahNama.trim(),
+                  grup: tambahGrup,
+                  yuranBulanan: Number(tambahYuran) || 500,
+                  jumlahBayar: 0,
+                  bulanDibayar: selectedMonth,
+                  tanggal: "-",
+                  metodeBayar: "Belum Bayar",
+                  status: "Tunggakan",
+                  statusAktif: true,
+                };
+
+                setRecords([newTalebe, ...records]);
+                setShowTambahSiswaModal(false);
+                setTambahNama("");
+              }}
+              className="mt-4 space-y-4"
+            >
+              <div>
+                <label className="text-xs font-semibold text-gray-700">Nama Penuh Talebe</label>
+                <input
+                  type="text"
+                  required
+                  value={tambahNama}
+                  onChange={(e) => setTambahNama(e.target.value)}
+                  placeholder="cth: Muhammad Luqman bin Osman"
+                  className="mt-1 w-full rounded-xl border border-gray-300 px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="text-xs font-semibold text-gray-700">Kumpulan Asrama</label>
+                  <select
+                    value={tambahGrup}
+                    onChange={(e) => setTambahGrup(e.target.value as TalebeRecord["grup"])}
+                    className="mt-1 w-full rounded-xl border border-gray-300 px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
+                  >
+                    <option value="Mevlana HE">Mevlana HE</option>
+                    <option value="Razi HE">Razi HE</option>
+                    <option value="Fatih HE">Fatih HE</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="text-xs font-semibold text-gray-700">Tingkatan / Kelas</label>
+                  <select
+                    value={tambahKelas}
+                    onChange={(e) => setTambahKelas(e.target.value)}
+                    className="mt-1 w-full rounded-xl border border-gray-300 px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
+                  >
+                    <option value="Tahun 1 Amanah">Tahun 1 Amanah</option>
+                    <option value="Tahun 2 Bestari">Tahun 2 Bestari</option>
+                    <option value="Tahun 3 Cerdas">Tahun 3 Cerdas</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label className="text-xs font-semibold text-gray-700">Kadar Yuran Bulanan (RM)</label>
+                <input
+                  type="number"
+                  required
+                  min="0"
+                  step="10"
+                  value={tambahYuran}
+                  onChange={(e) => setTambahYuran(e.target.value)}
+                  className="mt-1 w-full rounded-xl border border-gray-300 px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
+                />
+              </div>
+
+              <div className="mt-6 flex items-center justify-end gap-3 pt-3 border-t border-gray-100">
+                <button
+                  type="button"
+                  onClick={() => setShowTambahSiswaModal(false)}
+                  className="rounded-xl border border-gray-300 px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50"
+                >
+                  Batal
+                </button>
+                <button
+                  type="submit"
+                  className="rounded-xl bg-emerald-800 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-900"
+                >
+                  Daftar Talebe
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}

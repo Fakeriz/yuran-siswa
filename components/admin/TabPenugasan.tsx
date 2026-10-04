@@ -1,0 +1,429 @@
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+import {
+  Building2,
+  Users,
+  UserCheck,
+  Plus,
+  CheckCircle2,
+  Phone,
+  Mail,
+  ArrowRight,
+  ShieldCheck,
+  Search,
+} from "lucide-react";
+
+export interface StaffAssignment {
+  id: string;
+  nama: string;
+  email: string;
+  telefon: string;
+  grup: "Mevlana HE" | "Razi HE" | "Fatih HE";
+  jawatan: string;
+  bilanganTalebe: number;
+  kadarKutipan: number; // percentage
+  jumlahKutipan: number;
+  sasaranKutipan: number;
+  status: "Aktif" | "Cuti";
+}
+
+const INITIAL_STAFF: StaffAssignment[] = [
+  {
+    id: "staff-1",
+    nama: "Ustaz Ahmad Farhan",
+    email: "farhan@yuran.demo",
+    telefon: "+60 12-345 6789",
+    grup: "Mevlana HE",
+    jawatan: "Ketua Bimbingan Asrama Mevlana",
+    bilanganTalebe: 20,
+    kadarKutipan: 85,
+    jumlahKutipan: 8500,
+    sasaranKutipan: 10000,
+    status: "Aktif",
+  },
+  {
+    id: "staff-2",
+    nama: "Ustaz Mohd Haziq",
+    email: "haziq@yuran.demo",
+    telefon: "+60 13-987 6543",
+    grup: "Razi HE",
+    jawatan: "Staf Pembimbing Asrama Razi",
+    bilanganTalebe: 20,
+    kadarKutipan: 80,
+    jumlahKutipan: 8000,
+    sasaranKutipan: 10000,
+    status: "Aktif",
+  },
+  {
+    id: "staff-3",
+    nama: "Ustaz Luqman Hakim",
+    email: "luqman@yuran.demo",
+    telefon: "+60 11-234 5678",
+    grup: "Fatih HE",
+    jawatan: "Staf Pembimbing Asrama Fatih",
+    bilanganTalebe: 20,
+    kadarKutipan: 80,
+    jumlahKutipan: 8000,
+    sasaranKutipan: 10000,
+    status: "Aktif",
+  },
+];
+
+export function TabPenugasan() {
+  const [staffList, setStaffList] = useState<StaffAssignment[]>(INITIAL_STAFF);
+  const [search, setSearch] = useState("");
+  const [showAssignModal, setShowAssignModal] = useState(false);
+  const [selectedStaff, setSelectedStaff] = useState<StaffAssignment | null>(null);
+
+  // Form states
+  const [formNama, setFormNama] = useState("");
+  const [formEmail, setFormEmail] = useState("");
+  const [formTelefon, setFormTelefon] = useState("");
+  const [formGrup, setFormGrup] = useState<StaffAssignment["grup"]>("Mevlana HE");
+  const [toastMsg, setToastMsg] = useState<string | null>(null);
+
+  const showToast = (msg: string) => {
+    setToastMsg(msg);
+    setTimeout(() => setToastMsg(null), 3500);
+  };
+
+  const filteredStaff = staffList.filter(
+    (s) =>
+      s.nama.toLowerCase().includes(search.toLowerCase()) ||
+      s.grup.toLowerCase().includes(search.toLowerCase()) ||
+      s.email.toLowerCase().includes(search.toLowerCase())
+  );
+
+  const handleSaveAssignment = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formNama.trim() || !formEmail.trim()) return;
+
+    if (selectedStaff) {
+      // Kemaskini penugasan
+      setStaffList((prev) =>
+        prev.map((s) =>
+          s.id === selectedStaff.id
+            ? { ...s, nama: formNama, email: formEmail, telefon: formTelefon, grup: formGrup }
+            : s
+        )
+      );
+      showToast(`Penugasan ${formNama} untuk ${formGrup} berjaya dikemaskini.`);
+    } else {
+      // Tambah staf baharu
+      const newStaff: StaffAssignment = {
+        id: `staff-${Date.now()}`,
+        nama: formNama,
+        email: formEmail,
+        telefon: formTelefon || "+60 1X-XXX XXXX",
+        grup: formGrup,
+        jawatan: `Staf Pembimbing Asrama ${formGrup.split(" ")[0]}`,
+        bilanganTalebe: 20,
+        kadarKutipan: 0,
+        jumlahKutipan: 0,
+        sasaranKutipan: 10000,
+        status: "Aktif",
+      };
+      setStaffList((prev) => [newStaff, ...prev]);
+      showToast(`Staf baharu ${formNama} berjaya ditugaskan ke ${formGrup}.`);
+    }
+
+    setShowAssignModal(false);
+    setSelectedStaff(null);
+    setFormNama("");
+    setFormEmail("");
+    setFormTelefon("");
+  };
+
+  const openEditModal = (staff: StaffAssignment) => {
+    setSelectedStaff(staff);
+    setFormNama(staff.nama);
+    setFormEmail(staff.email);
+    setFormTelefon(staff.telefon);
+    setFormGrup(staff.grup);
+    setShowAssignModal(true);
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* Toast Notifikasi */}
+      {toastMsg && (
+        <div className="fixed top-5 right-5 z-50 flex items-center gap-2 rounded-xl bg-emerald-800 px-4 py-3 text-sm font-semibold text-white shadow-xl">
+          <CheckCircle2 className="size-4 shrink-0" />
+          <span>{toastMsg}</span>
+        </div>
+      )}
+
+      {/* Header & Butang Tambah Penugasan */}
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <div className="flex items-center gap-2">
+            <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
+              Penugasan Staf Asrama
+            </h1>
+            <span className="inline-flex items-center rounded-md bg-emerald-50 px-2 py-0.5 text-xs font-semibold text-emerald-800 border border-emerald-200">
+              3 Kumpulan HE
+            </span>
+          </div>
+          <p className="mt-1 text-sm text-gray-500">
+            Urus penugasan Ustaz dan Staf pembimbing bagi setiap kumpulan asrama Talebe.
+          </p>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => {
+            setSelectedStaff(null);
+            setFormNama("");
+            setFormEmail("");
+            setFormTelefon("");
+            setFormGrup("Mevlana HE");
+            setShowAssignModal(true);
+          }}
+          className="inline-flex items-center gap-2 rounded-xl bg-emerald-800 px-4 py-2.5 text-xs font-semibold text-white shadow-xs hover:bg-emerald-900 transition-colors focus-visible:outline-emerald-600"
+        >
+          <Plus className="size-4" />
+          <span>Tugaskan Staf Baharu</span>
+        </button>
+      </div>
+
+      {/* Kad Ringkasan Penugasan */}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-xs">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold uppercase tracking-wider text-gray-500">
+              Jumlah Staf Pembimbing
+            </span>
+            <div className="rounded-xl bg-emerald-50 p-2 text-emerald-800">
+              <UserCheck className="size-5" />
+            </div>
+          </div>
+          <p className="mt-3 text-2xl font-bold text-gray-900">{staffList.length} Orang</p>
+          <p className="mt-1 text-xs text-gray-500">100% kumpulan mempunyai pembimbing</p>
+        </div>
+
+        <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-xs">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold uppercase tracking-wider text-gray-500">
+              Kumpulan Asrama Aktif
+            </span>
+            <div className="rounded-xl bg-blue-50 p-2 text-blue-800">
+              <Building2 className="size-5" />
+            </div>
+          </div>
+          <p className="mt-3 text-2xl font-bold text-gray-900">3 Kumpulan HE</p>
+          <p className="mt-1 text-xs text-gray-500">Mevlana HE · Razi HE · Fatih HE</p>
+        </div>
+
+        <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-xs">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold uppercase tracking-wider text-gray-500">
+              Purata Kutipan Kumpulan
+            </span>
+            <div className="rounded-xl bg-purple-50 p-2 text-purple-800">
+              <Users className="size-5" />
+            </div>
+          </div>
+          <p className="mt-3 text-2xl font-bold text-gray-900">81.7%</p>
+          <p className="mt-1 text-xs text-emerald-700 font-medium">49 daripada 60 Talebe lunas</p>
+        </div>
+      </div>
+
+      {/* Carian & Penapis Staf */}
+      <div className="rounded-2xl border border-gray-200 bg-white shadow-xs overflow-hidden">
+        <div className="p-4 border-b border-gray-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 bg-gray-50/50">
+          <div className="relative flex-1 max-w-sm">
+            <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 size-4 text-gray-400" />
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Cari nama ustaz, grup, atau emel..."
+              className="w-full rounded-xl border border-gray-300 bg-white py-2 pl-9 pr-4 text-xs text-gray-900 focus:border-emerald-600 focus:outline-none"
+            />
+          </div>
+          <span className="text-xs text-gray-500">
+            Menunjukkan {filteredStaff.length} daripada {staffList.length} staf
+          </span>
+        </div>
+
+        {/* Senarai Kad Staf */}
+        <div className="divide-y divide-gray-100">
+          {filteredStaff.map((staff) => (
+            <div
+              key={staff.id}
+              className="p-5 sm:p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4 hover:bg-gray-50/60 transition-colors"
+            >
+              <div className="flex items-start gap-4">
+                <div className="size-12 rounded-2xl bg-emerald-100 text-emerald-800 font-bold flex items-center justify-center shrink-0 border border-emerald-200 text-base">
+                  {staff.nama
+                    .split(" ")
+                    .slice(0, 2)
+                    .map((n) => n[0])
+                    .join("")}
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <h3 className="font-bold text-base text-gray-900">{staff.nama}</h3>
+                    <span className="inline-flex items-center rounded-md bg-emerald-50 px-2 py-0.5 text-xs font-semibold text-emerald-800 border border-emerald-200">
+                      {staff.grup}
+                    </span>
+                    <span className="inline-flex items-center gap-1 rounded-full bg-green-100 px-2 py-0.5 text-[11px] font-medium text-green-800">
+                      <span className="size-1.5 rounded-full bg-green-500" />
+                      {staff.status}
+                    </span>
+                  </div>
+                  <p className="mt-1 text-xs text-gray-600">{staff.jawatan}</p>
+                  <div className="mt-2.5 flex flex-wrap items-center gap-4 text-xs text-gray-500">
+                    <span className="flex items-center gap-1">
+                      <Mail className="size-3.5 text-gray-400" />
+                      {staff.email}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Phone className="size-3.5 text-gray-400" />
+                      {staff.telefon}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Statistik Kutipan & Tindakan */}
+              <div className="flex flex-col sm:flex-row sm:items-center gap-4 lg:gap-6 pt-3 md:pt-0 border-t md:border-t-0 border-gray-100">
+                <div className="min-w-44">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-gray-500">Kutipan {staff.grup}</span>
+                    <span className="font-bold text-emerald-800">{staff.kadarKutipan}%</span>
+                  </div>
+                  <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-gray-100">
+                    <div
+                      className="h-full rounded-full bg-emerald-700 transition-all duration-500"
+                      style={{ width: `${staff.kadarKutipan}%` }}
+                    />
+                  </div>
+                  <div className="mt-1 flex items-center justify-between text-[11px] text-gray-400">
+                    <span>{staff.bilanganTalebe} Talebe</span>
+                    <span>RM {staff.jumlahKutipan.toLocaleString()} / RM {staff.sasaranKutipan.toLocaleString()}</span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => openEditModal(staff)}
+                    className="rounded-xl border border-gray-300 bg-white px-3 py-1.5 text-xs font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
+                  >
+                    Ubah Penugasan
+                  </button>
+                  <Link
+                    href={`/admin?tab=siswa&grup=${encodeURIComponent(staff.grup)}`}
+                    className="inline-flex items-center gap-1 rounded-xl bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-800 hover:bg-emerald-100 transition-colors"
+                  >
+                    <span>Lihat Talebe</span>
+                    <ArrowRight className="size-3.5" />
+                  </Link>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Modal Ubah / Tambah Penugasan */}
+      {showAssignModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-xs p-4"
+          onClick={() => setShowAssignModal(false)}
+        >
+          <div
+            className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl border border-gray-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between border-b border-gray-100 pb-3">
+              <div>
+                <h3 className="font-bold text-lg text-gray-900">
+                  {selectedStaff ? "Ubah Penugasan Staf" : "Tugaskan Staf Baharu"}
+                </h3>
+                <p className="text-xs text-gray-500">
+                  {selectedStaff
+                    ? `Kemaskini maklumat dan grup bimbingan untuk ${selectedStaff.nama}`
+                    : "Daftar ustaz pembimbing ke dalam sistem asrama"}
+                </p>
+              </div>
+            </div>
+
+            <form onSubmit={handleSaveAssignment} className="mt-4 space-y-4">
+              <div>
+                <label className="text-xs font-semibold text-gray-700">Nama Penuh Ustaz / Staf</label>
+                <input
+                  type="text"
+                  required
+                  value={formNama}
+                  onChange={(e) => setFormNama(e.target.value)}
+                  placeholder="cth: Ustaz Mohd Danial"
+                  className="mt-1 w-full rounded-xl border border-gray-300 px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="text-xs font-semibold text-gray-700">Emel</label>
+                  <input
+                    type="email"
+                    required
+                    value={formEmail}
+                    onChange={(e) => setFormEmail(e.target.value)}
+                    placeholder="emel@yuran.demo"
+                    className="mt-1 w-full rounded-xl border border-gray-300 px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-semibold text-gray-700">No. Telefon</label>
+                  <input
+                    type="text"
+                    value={formTelefon}
+                    onChange={(e) => setFormTelefon(e.target.value)}
+                    placeholder="+60 1X-XXX XXXX"
+                    className="mt-1 w-full rounded-xl border border-gray-300 px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="text-xs font-semibold text-gray-700">Kumpulan Asrama Ditugaskan</label>
+                <select
+                  value={formGrup}
+                  onChange={(e) => setFormGrup(e.target.value as StaffAssignment["grup"])}
+                  className="mt-1 w-full rounded-xl border border-gray-300 px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
+                >
+                  <option value="Mevlana HE">Mevlana HE (20 Talebe)</option>
+                  <option value="Razi HE">Razi HE (20 Talebe)</option>
+                  <option value="Fatih HE">Fatih HE (20 Talebe)</option>
+                </select>
+                <p className="mt-1 text-[11px] text-gray-500">
+                  Staf akan bertanggungjawab mencatat bayaran yuran dan mengesahkan ibu bapa bagi kumpulan ini.
+                </p>
+              </div>
+
+              <div className="mt-6 flex items-center justify-end gap-3 pt-3 border-t border-gray-100">
+                <button
+                  type="button"
+                  onClick={() => setShowAssignModal(false)}
+                  className="rounded-xl border border-gray-300 px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50"
+                >
+                  Batal
+                </button>
+                <button
+                  type="submit"
+                  className="rounded-xl bg-emerald-800 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-900"
+                >
+                  {selectedStaff ? "Simpan Perubahan" : "Sahkan Penugasan"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

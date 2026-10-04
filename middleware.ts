@@ -7,6 +7,7 @@ export async function middleware(request: NextRequest) {
   response.headers.set("Cache-Control", "private, no-store");
 
   let user = null;
+
   try {
     const { url, key } = getServerConfig();
     const supabase = createServerClient(url, key, {
@@ -35,6 +36,7 @@ export async function middleware(request: NextRequest) {
     user = null;
   }
 
+  // Dukungan sesi instan akun demo jika login via mode demo
   if (!user) {
     const demoRole = request.cookies.get("yuran_demo_role")?.value;
     if (demoRole && ["admin", "staff", "orang_tua"].includes(demoRole)) {
@@ -42,6 +44,7 @@ export async function middleware(request: NextRequest) {
     }
   }
 
+  // Jika tidak memiliki sesi terverifikasi, redirect ke /login
   if (!user) {
     const loginUrl = request.nextUrl.clone();
     loginUrl.pathname = "/login";
@@ -59,5 +62,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/staff/:path*", "/orangtua/:path*", "/admin/:path*"],
+  matcher: ["/admin/:path*", "/staff/:path*", "/orangtua/:path*"],
 };

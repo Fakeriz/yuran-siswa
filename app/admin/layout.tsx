@@ -48,6 +48,7 @@ const navigation: NavSection[] = [
       { name: "Transaksi Masuk", href: "/admin?tab=transaksi", icon: CreditCard },
       { name: "Penugasan Staf", href: "/admin?tab=penugasan", icon: Building2 },
       { name: "Pengesahan Ibu Bapa", href: "/admin?tab=persetujuan", icon: UserCheck, badge: "Pending" },
+      { name: "Pengurusan Akun", href: "/admin?tab=akun", icon: ShieldCheck },
     ],
   },
   {
@@ -127,7 +128,9 @@ function Breadcrumb() {
     penugasan: "Penugasan Staf",
     persetujuan: "Pengesahan Ibu Bapa",
     resit: "Resit & Kwitansi",
+    kwitansi: "Resit & Kwitansi",
     penyata: "Penyata Bulanan",
+    akun: "Pengurusan Akun",
   };
   const current = tab && names[tab] ? names[tab] : "Dasbor Utama";
   return (

@@ -8,35 +8,60 @@ export interface LoginState {
   destination: string | null;
 }
 
+/**
+ * Server Action untuk masuk akun.
+ * Mengembalikan objek `{ error, destination }` untuk ditangani oleh sisi klien.
+ * Dilarang memicu exception unhandled agar mencegah HTTP 500.
+ */
 export async function login(_previous: LoginState, formData: FormData): Promise<LoginState> {
   const email = formData.get("email");
   const password = formData.get("password");
-  if (typeof email !== "string" || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()) ||
-      typeof password !== "string" || password.length === 0) {
+
+  // Validasi awal form input
+  if (
+    typeof email !== "string" ||
+    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()) ||
+    typeof password !== "string" ||
+    password.length === 0
+  ) {
     return { error: "Isi alamat email yang valid dan kata sandi.", destination: null };
   }
 
-  let destination: string;
   try {
     const supabase = await createClient({ readOnly: false });
-    const { data: { user }, error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
-    if (error || !user) return { error: "Tidak dapat masuk. Periksa email dan kata sandi Anda.", destination: null };
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.signInWithPassword({
+      email: email.trim(),
+      password,
+    });
+
+    if (authError || !user) {
+      return { error: "Tidak dapat masuk. Periksa email dan kata sandi Anda.", destination: null };
+    }
 
     const { data: profile, error: profileError } = await supabase
       .from("profiles")
       .select("id, nama, peran")
       .eq("id", user.id)
       .maybeSingle<Profile>();
-    if (profileError) return { error: "Gagal memuat profil. Silakan coba lagi.", destination: null };
+
+    if (profileError) {
+      return { error: "Gagal memuat profil. Silakan coba lagi.", destination: null };
+    }
 
     const emailLower = email.trim().toLowerCase();
     const role: Profile["peran"] =
       profile?.peran ??
       (user.user_metadata?.peran as Profile["peran"]) ??
-      (emailLower.includes("admin") ? "admin"
-      : emailLower.includes("staff") ? "staff"
-      : "orang_tua");
+      (emailLower.includes("admin")
+        ? "admin"
+        : emailLower.includes("staff")
+        ? "staff"
+        : "orang_tua");
 
+    // Simpan role ke cookie sesi
     try {
       const { cookies } = await import("next/headers");
       const cookieStore = await cookies();
@@ -49,7 +74,14 @@ export async function login(_previous: LoginState, formData: FormData): Promise<
       cookieStore.set(
         "yuran_demo_user",
         JSON.stringify({
-          nama: profile?.nama ?? (user.user_metadata?.nama as string) ?? (role === "admin" ? "Administrator Demo" : role === "staff" ? "Staff Demo" : "Orang Tua Demo"),
+          nama:
+            profile?.nama ??
+            (user.user_metadata?.nama as string) ??
+            (role === "admin"
+              ? "Administrator Demo"
+              : role === "staff"
+              ? "Staff Demo"
+              : "Orang Tua Demo"),
           peran: role,
           email: emailLower,
         }),
@@ -61,24 +93,33 @@ export async function login(_previous: LoginState, formData: FormData): Promise<
         }
       );
     } catch {
-      // ignore
+      // Abaikan jika cookie context tidak mengizinkan mutasi
     }
 
-    destination =
-      role === "orang_tua" ? "/orangtua"
-      : role === "admin" ? "/admin"
-      : role === "staff" ? "/staff"
-      : "/";
-  } catch {
-    return { error: "Layanan masuk belum tersedia. Silakan coba lagi nanti.", destination: null };
-  }
+    const destination =
+      role === "admin"
+        ? "/admin"
+        : role === "staff"
+        ? "/staff"
+        : "/orangtua";
 
-  return { error: null, destination };
+    return { error: null, destination };
+  } catch {
+    return {
+      error: "Layanan masuk belum tersedia. Silakan coba lagi nanti.",
+      destination: null,
+    };
+  }
 }
 
+/**
+ * Login instan untuk akun demo
+ */
 export async function loginDemo(role: "admin" | "staff" | "orang_tua"): Promise<string> {
-  const email = role === "admin" ? "admin@yuran.demo" : role === "staff" ? "staff@yuran.demo" : "ortu@yuran.demo";
-  const password = role === "admin" ? "admin12345" : role === "staff" ? "staff12345" : "ortu12345";
+  const email =
+    role === "admin" ? "admin@yuran.demo" : role === "staff" ? "staff@yuran.demo" : "ortu@yuran.demo";
+  const password =
+    role === "admin" ? "admin12345" : role === "staff" ? "staff12345" : "ortu12345";
   const names = {
     admin: "Administrator Demo",
     staff: "Staff Demo",
@@ -109,20 +150,22 @@ export async function loginDemo(role: "admin" | "staff" | "orang_tua"): Promise<
       }
     );
   } catch {
-    // ignore
+    // Abaikan jika gagal set cookie
   }
 
   try {
     const supabase = await createClient({ readOnly: false });
     await supabase.auth.signInWithPassword({ email, password });
   } catch {
-    // Demo cookie guarantees session even if network auth fails
+    // Fallback demo cookie tetap aktif
   }
 
-  const destination = role === "admin" ? "/admin" : role === "staff" ? "/staff" : "/orangtua";
-  return destination;
+  return role === "admin" ? "/admin" : role === "staff" ? "/staff" : "/orangtua";
 }
 
+/**
+ * Logout pengguna
+ */
 export async function logout(): Promise<string> {
   try {
     const { cookies } = await import("next/headers");
@@ -130,14 +173,14 @@ export async function logout(): Promise<string> {
     cookieStore.delete("yuran_demo_role");
     cookieStore.delete("yuran_demo_user");
   } catch {
-    // ignore
+    // Abaikan
   }
 
   try {
     const supabase = await createClient({ readOnly: false });
     await supabase.auth.signOut();
   } catch {
-    // ignore
+    // Abaikan
   }
 
   return "/login";

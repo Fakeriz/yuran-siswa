@@ -291,19 +291,13 @@ function AdminContent() {
           <p className="mt-1 text-sm text-gray-500">
             {headerDesc}
           </p>
+          <p className="mt-0.5 text-xs font-medium text-gray-400">
+            {selectedMonth} {selectedYear}
+          </p>
         </div>
 
         {/* Butang Tindakan Cepat */}
-        <div className="flex flex-col items-start gap-3">
-          <button
-            type="button"
-            onClick={() => setShowBayarModal(true)}
-            className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-800 px-3.5 py-2 text-xs font-semibold text-white shadow-xs hover:bg-emerald-900 transition-colors focus-visible:outline-emerald-600"
-          >
-            <PlusIcon className="size-4" />
-            <span>Catat Bayaran</span>
-          </button>
-
+        <div className="flex flex-row flex-wrap items-center gap-2.5">
           <MonthYearPicker
             month={selectedMonth}
             year={selectedYear}
@@ -347,6 +341,15 @@ function AdminContent() {
               <span>Import Siswa</span>
             </button>
           )}
+
+          <button
+            type="button"
+            onClick={() => setShowBayarModal(true)}
+            className="inline-flex items-center gap-1.5 rounded-lg bg-gray-900 px-3.5 py-2 text-xs font-semibold text-white shadow-xs hover:bg-gray-800 transition-colors focus-visible:outline-gray-900"
+          >
+            <PlusIcon className="size-4" />
+            <span>Catat Bayaran</span>
+          </button>
         </div>
       </div>
 

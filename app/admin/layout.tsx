@@ -332,7 +332,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
               href="/admin?tab=resit"
               className="hidden md:inline-flex items-center gap-2 rounded-xl bg-emerald-800 px-3.5 py-2 text-xs font-semibold text-white shadow-xs hover:bg-emerald-900 transition-colors focus-visible:outline-emerald-600"
             >
-              <WalletIcon className="size-3.5" />
+              <TicketIcon className="size-3.5" />
               <span>Kwitansi & Bayaran</span>
             </Link>
           </div>

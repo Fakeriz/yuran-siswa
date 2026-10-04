@@ -929,8 +929,14 @@ function AdminContent() {
 
       {/* Modal Catat Bayaran */}
       {showBayarModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-          <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl">
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-md p-4"
+          onClick={() => setShowBayarModal(false)}
+        >
+          <div
+            className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl"
+            onClick={(e) => e.stopPropagation()}
+          >
             <h2 className="text-lg font-bold text-gray-900">Catat Bayaran Baru</h2>
             <p className="mt-1 text-xs text-gray-500">Rekod pembayaran yuran bulanan talebe.</p>
             <div className="mt-4 space-y-4">
@@ -1011,8 +1017,14 @@ function AdminContent() {
 
       {/* Modal Import Siswa */}
       {showImportModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-          <div className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl">
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-md p-4"
+          onClick={() => setShowImportModal(false)}
+        >
+          <div
+            className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl"
+            onClick={(e) => e.stopPropagation()}
+          >
             <h2 className="text-lg font-bold text-gray-900">Import Data Siswa</h2>
             <p className="mt-1 text-xs text-gray-500">
               Muat naik fail CSV mengikut template.{" "}

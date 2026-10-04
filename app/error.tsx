@@ -21,7 +21,7 @@ export default function RootError({
       </p>
       <button
         onClick={() => reset()}
-        className="mt-6 min-h-11 rounded-2xl bg-emerald-800 px-5 py-2.5 font-medium text-white transition hover:bg-emerald-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-800"
+        className="mt-6 min-h-11 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 px-5 py-2.5 font-medium text-white shadow-sm shadow-emerald-950/30 transition focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-500"
       >
         Coba lagi
       </button>

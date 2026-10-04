@@ -21,6 +21,7 @@ import {
   Wallet,
 } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { NotificationBadge } from "@/components/notification-badge";
 
 interface NavItem {
   name: string;
@@ -316,14 +317,10 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
               type="button"
               onClick={() => setNotifOpen((o) => !o)}
               className="relative p-2 text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-xl transition-colors dark:text-slate-400 dark:hover:text-slate-100 dark:hover:bg-slate-800"
-              aria-label="Pemberitahuan sistem"
+              aria-label={`Pemberitahuan sistem${unreadCount > 0 ? `, ${unreadCount} belum dibaca` : ""}`}
             >
               <Bell className="size-4.5" />
-              {unreadCount > 0 && (
-                <span className="absolute top-1.5 right-1.5 flex size-3.5 items-center justify-center rounded-full bg-rose-500 text-[8px] font-bold text-white">
-                  {unreadCount}
-                </span>
-              )}
+              <NotificationBadge count={unreadCount} />
             </button>
           </div>
         </header>
@@ -381,14 +378,10 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                 type="button"
                 onClick={() => { setNotifOpen((o) => !o); setSesiOpen(false); }}
                 className="relative p-2 text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-xl transition-colors dark:text-slate-400 dark:hover:text-slate-100 dark:hover:bg-slate-800"
-                aria-label="Pemberitahuan sistem"
+                aria-label={`Pemberitahuan sistem${unreadCount > 0 ? `, ${unreadCount} belum dibaca` : ""}`}
               >
                 <Bell className="size-4.5" />
-                {unreadCount > 0 && (
-                  <span className="absolute top-1 right-1 flex size-4 items-center justify-center rounded-full bg-rose-500 text-[9px] font-bold text-white">
-                    {unreadCount}
-                  </span>
-                )}
+                <NotificationBadge count={unreadCount} />
               </button>
               {notifOpen && (
                 <div className="absolute right-0 mt-2 w-80 rounded-2xl border border-gray-200 bg-white shadow-xl z-50 overflow-hidden dark:border-slate-800 dark:bg-[#0b1329]">

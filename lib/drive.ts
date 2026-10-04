@@ -1,5 +1,3 @@
-import type { Buffer } from "node:buffer";
-
 const TOKEN_URL = "https://oauth2.googleapis.com/token";
 const UPLOAD_URL = "https://www.googleapis.com/upload/drive/v3/files";
 const DRIVE_SCOPE = "https://www.googleapis.com/auth/drive.file";
@@ -78,7 +76,7 @@ async function responseField(response: Response, field: string): Promise<string>
   return value;
 }
 
-export async function uploadFile(data: Buffer, filename: string, mimeType: string): Promise<string> {
+export async function uploadFile(data: Uint8Array, filename: string, mimeType: string): Promise<string> {
   const folderId = process.env.DRIVE_FOLDER_ID?.trim();
   const json = process.env.DRIVE_SERVICE_ACCOUNT_JSON;
   if (!folderId || !json) throw new Error("Konfigurasi Google Drive belum tersedia.");

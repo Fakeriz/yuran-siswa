@@ -15,14 +15,13 @@
     "@cloudflare/next-on-pages": "^1.13.16",
     "@supabase/ssr": "^0.12.7",
     "@supabase/supabase-js": "^2.117.2",
-    "googleapis": "^183.0.0",
     "next": "15.5.27",
     "react": "19.1.0",
     "react-dom": "19.1.0"
   },
   "overrides": {
     "@cloudflare/next-on-pages": {
-      "next": "$next",
+      "next": "15.5.27",
       "@cloudflare/workers-types": "^5.20261001.1"
     }
   },

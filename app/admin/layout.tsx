@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect, type ReactNode } from "react";
+import { useState, useEffect, Suspense, type ReactNode } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import {
   LayoutDashboard,
   Users,
@@ -58,6 +58,64 @@ const navigation: NavSection[] = [
     ],
   },
 ];
+
+function SidebarNav({ onNavigate }: { onNavigate: () => void }) {
+  const searchParams = useSearchParams();
+  const currentTab = searchParams.get("tab"); // null = Dasbor Utama
+
+  return (
+    <div className="flex-1 overflow-y-auto px-4 py-5 space-y-6">
+      {navigation.map((section) => (
+        <div key={section.title}>
+          <h3 className="px-3 text-[11px] font-semibold uppercase tracking-wider text-gray-400">
+            {section.title}
+          </h3>
+          <div className="mt-2 space-y-1">
+            {section.items.map((item) => {
+              const Icon = item.icon;
+              // Bandingkan tab dari URL dengan tab tujuan link
+              const itemTab = item.href.includes("?tab=") ? item.href.split("?tab=")[1] : null;
+              const isActive = itemTab === currentTab;
+
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  onClick={onNavigate}
+                  className={`group flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-medium transition-colors ${
+                    isActive
+                      ? "bg-emerald-800 text-white shadow-xs"
+                      : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <Icon
+                      className={`size-4.5 shrink-0 transition-colors ${
+                        isActive ? "text-white" : "text-gray-400 group-hover:text-gray-600"
+                      }`}
+                    />
+                    <span>{item.name}</span>
+                  </div>
+                  {item.badge && (
+                    <span
+                      className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${
+                        isActive
+                          ? "bg-emerald-700 text-white"
+                          : "bg-amber-100 text-amber-800 border border-amber-200"
+                      }`}
+                    >
+                      {item.badge}
+                    </span>
+                  )}
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -131,54 +189,9 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
         </div>
 
         {/* Sidebar Nav Items */}
-        <div className="flex-1 overflow-y-auto px-4 py-5 space-y-6">
-          {navigation.map((section) => (
-            <div key={section.title}>
-              <h3 className="px-3 text-[11px] font-semibold uppercase tracking-wider text-gray-400">
-                {section.title}
-              </h3>
-              <div className="mt-2 space-y-1">
-                {section.items.map((item) => {
-                  const Icon = item.icon;
-                  const isActive = pathname === item.href || (item.href === "/admin" && pathname === "/admin");
-
-                  return (
-                    <Link
-                      key={item.name}
-                      href={item.href}
-                      onClick={() => setSidebarOpen(false)}
-                      className={`group flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-medium transition-colors ${
-                        isActive
-                          ? "bg-emerald-800 text-white shadow-xs"
-                          : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
-                      }`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <Icon
-                          className={`size-4.5 shrink-0 transition-colors ${
-                            isActive ? "text-white" : "text-gray-400 group-hover:text-gray-600"
-                          }`}
-                        />
-                        <span>{item.name}</span>
-                      </div>
-                      {item.badge && (
-                        <span
-                          className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${
-                            isActive
-                              ? "bg-emerald-700 text-white"
-                              : "bg-amber-100 text-amber-800 border border-amber-200"
-                          }`}
-                        >
-                          {item.badge}
-                        </span>
-                      )}
-                    </Link>
-                  );
-                })}
-              </div>
-            </div>
-          ))}
-        </div>
+        <Suspense>
+          <SidebarNav onNavigate={() => setSidebarOpen(false)} />
+        </Suspense>
 
         {/* User Profile Card & Sign Out */}
         <div className="p-4 border-t border-gray-100 bg-gray-50/50">

@@ -30,7 +30,7 @@ function NamaTalebe({ nama }: { nama: string }) {
   const patronimik = m ? `${m[2].toLowerCase()} ${m[3].trim()}` : null;
   return (
     <>
-      <div className="font-semibold text-gray-900">{namaUtama}</div>
+      <div className="font-semibold text-gray-900 dark:text-[#F1F5F9]">{namaUtama}</div>
       {patronimik && <div className="text-xs text-gray-500 mt-0.5">{patronimik}</div>}
     </>
   );
@@ -263,11 +263,11 @@ function AdminContent() {
     return (
       <div className="space-y-8">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">{title}</h1>
-          <p className="mt-1 text-sm text-gray-500">Bahagian ini dalam pembangunan.</p>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-[#F1F5F9]">{title}</h1>
+          <p className="mt-1 text-sm text-gray-500 dark:text-[#9AA8BE]">Bahagian ini dalam pembangunan.</p>
         </div>
-        <div className="rounded-2xl border border-dashed border-gray-300 bg-white p-12 text-center">
-          <p className="text-sm text-gray-500">
+        <div className="rounded-2xl border border-dashed border-gray-300 bg-white p-12 text-center dark:border-[#2E3A52] dark:bg-[#151922]">
+          <p className="text-sm text-gray-500 dark:text-[#9AA8BE]">
             Modul {title} akan disambungkan ke data sebenar tidak lama lagi.
           </p>
         </div>
@@ -764,7 +764,7 @@ function AdminContent() {
 
                       {/* Jumlah Bayar & Baki */}
                       <td className="px-5 py-4 text-right whitespace-nowrap">
-                        <div className="font-semibold text-gray-900">{formatRM(item.jumlahBayar)}</div>
+                        <div className="font-semibold text-gray-900 dark:text-[#F1F5F9]">{formatRM(item.jumlahBayar)}</div>
                         {baki > 0 && (
                           <div className="text-[11px] text-rose-600 font-medium">
                             Baki: {formatRM(baki)}
@@ -947,14 +947,14 @@ function AdminContent() {
           onClick={() => setShowBayarModal(false)}
         >
           <div
-            className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl"
+            className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl dark:bg-[#1A1F2B] dark:border dark:border-[#2E3A52]"
             onClick={(e) => e.stopPropagation()}
           >
-            <h2 className="text-lg font-bold text-gray-900">Catat Bayaran Baru</h2>
+            <h2 className="text-lg font-bold text-gray-900 dark:text-[#F1F5F9]">Catat Bayaran Baru</h2>
             <p className="mt-1 text-xs text-gray-500">Rekod pembayaran yuran bulanan talebe.</p>
             <div className="mt-4 space-y-4">
               <div>
-                <label className="text-xs font-semibold text-gray-700">Nama Siswa</label>
+                <label className="text-xs font-semibold text-gray-700 dark:text-[#9AA8BE]">Nama Siswa</label>
                 <StudentSelect
                   students={records.map((r) => ({ nama: r.nama, grup: r.grup }))}
                   value={bayarNama}
@@ -964,7 +964,7 @@ function AdminContent() {
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs font-semibold text-gray-700">Bulan</label>
+                  <label className="text-xs font-semibold text-gray-700 dark:text-[#9AA8BE]">Bulan</label>
                   <select
                     value={bayarBulan}
                     onChange={(e) => setBayarBulan(e.target.value)}
@@ -978,7 +978,7 @@ function AdminContent() {
                   </select>
                 </div>
                 <div>
-                  <label className="text-xs font-semibold text-gray-700">Jumlah (RM)</label>
+                  <label className="text-xs font-semibold text-gray-700 dark:text-[#9AA8BE]">Jumlah (RM)</label>
                   <input
                     type="number"
                     value={bayarJumlah}
@@ -1035,10 +1035,10 @@ function AdminContent() {
           onClick={() => setShowImportModal(false)}
         >
           <div
-            className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl"
+            className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl dark:bg-[#1A1F2B] dark:border dark:border-[#2E3A52]"
             onClick={(e) => e.stopPropagation()}
           >
-            <h2 className="text-lg font-bold text-gray-900">Import Data Siswa</h2>
+            <h2 className="text-lg font-bold text-gray-900 dark:text-[#F1F5F9]">Import Data Siswa</h2>
             <p className="mt-1 text-xs text-gray-500">
               Muat naik fail CSV mengikut template.{" "}
               <button

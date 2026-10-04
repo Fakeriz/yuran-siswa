@@ -94,17 +94,21 @@ export async function requireRole(roles: Role[]): Promise<Profile> {
 
 export async function myStudentIds(): Promise<string[]> {
   const profile = await requireRole(["orang_tua"]);
-  const { createClient } = await import("./supabase/server");
-  const supabase = await createClient();
-  const { data, error } = await supabase
-    .from("parent_students")
-    .select("student_id")
-    .eq("parent_id", profile.id)
-    .eq("status", "approved")
-    .returns<{ student_id: string }[]>();
+  try {
+    const { createClient } = await import("./supabase/server");
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("parent_students")
+      .select("student_id")
+      .eq("parent_id", profile.id)
+      .eq("status", "approved")
+      .returns<{ student_id: string }[]>();
 
-  if (!error && data && data.length > 0) {
-    return data.map((link) => link.student_id);
+    if (!error && data && data.length > 0) {
+      return data.map((link) => link.student_id);
+    }
+  } catch {
+    // Supabase unavailable or demo fallback
   }
   // Demo fallback
   return ["demo-student-1", "demo-student-2"];
@@ -112,16 +116,20 @@ export async function myStudentIds(): Promise<string[]> {
 
 export async function myGroups(): Promise<string[]> {
   const profile = await requireRole(["staff"]);
-  const { createClient } = await import("./supabase/server");
-  const supabase = await createClient();
-  const { data, error } = await supabase
-    .from("staff_groups")
-    .select("grup")
-    .eq("staff_id", profile.id)
-    .returns<{ grup: string }[]>();
+  try {
+    const { createClient } = await import("./supabase/server");
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("staff_groups")
+      .select("grup")
+      .eq("staff_id", profile.id)
+      .returns<{ grup: string }[]>();
 
-  if (!error && data && data.length > 0) {
-    return data.map((group) => group.grup);
+    if (!error && data && data.length > 0) {
+      return data.map((group) => group.grup);
+    }
+  } catch {
+    // Supabase unavailable or demo fallback
   }
   // Demo fallback
   return ["Grup A", "Grup B"];

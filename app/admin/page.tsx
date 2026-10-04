@@ -21,6 +21,7 @@ import {
   Eye,
   RefreshCw,
 } from "lucide-react";
+import { FileUpload, type FileUploadItem } from "../../components/file-upload";
 
 // Struktur jenis data berasaskan skema logik Data_Talebe & Transaksi_Masuk
 export interface TalebeRecord {
@@ -182,7 +183,7 @@ function AdminContent() {
   const [bayarBulan, setBayarBulan] = useState("Oktober 2026");
   const [showImportModal, setShowImportModal] = useState(false);
   const [importPreview, setImportPreview] = useState<TalebeRecord[]>([]);
-  const [importError, setImportError] = useState("");
+  const [uploadItems, setUploadItems] = useState<FileUploadItem[]>([]);
 
   // Parse CSV import siswa: Nama,Grup,Kelas,Yuran Bulanan (RM),Aktif (Ya/Tidak),Sesi
   const parseImportCSV = (text: string): TalebeRecord[] => {
@@ -211,6 +212,60 @@ function AdminContent() {
       });
     }
     return rows;
+  };
+
+  // --- Import CSV handlers (wired to FileUpload component) ---
+  const markUploadItem = (id: string, patch: Partial<FileUploadItem>) =>
+    setUploadItems((prev) => prev.map((it) => (it.id === id ? { ...it, ...patch } : it)));
+
+  const processImportFile = (item: FileUploadItem) => {
+    const file = item.file;
+    if (!file) return;
+    markUploadItem(item.id, { status: "uploading", progress: 40, error: undefined });
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const rows = parseImportCSV(String(reader.result ?? ""));
+        setImportPreview(rows);
+        markUploadItem(item.id, { status: "success", progress: 100 });
+      } catch (err) {
+        setImportPreview([]);
+        markUploadItem(item.id, {
+          status: "error",
+          progress: 0,
+          error: err instanceof Error ? err.message : "Gagal membaca fail.",
+        });
+      }
+    };
+    reader.onerror = () => {
+      setImportPreview([]);
+      markUploadItem(item.id, { status: "error", progress: 0, error: "Gagal membaca fail." });
+    };
+    reader.readAsText(file);
+  };
+
+  const handleImportFilesAdded = (added: FileUploadItem[]) => {
+    added.forEach(processImportFile);
+  };
+
+  const handleImportRemove = () => {
+    setImportPreview([]);
+  };
+
+  const handleImportRetry = (item: FileUploadItem) => {
+    setImportPreview([]);
+    processImportFile(item);
+  };
+
+  const closeImportModal = () => {
+    setShowImportModal(false);
+    setImportPreview([]);
+    setUploadItems([]);
+  };
+
+  const confirmImport = () => {
+    setRecords((r) => [...importPreview, ...r]);
+    closeImportModal();
   };
 
   // Penapisan rekod Talebe secara dinamik
@@ -1005,8 +1060,14 @@ function AdminContent() {
 
       {/* Modal Import Siswa */}
       {showImportModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl border border-gray-200 dark:bg-slate-900 dark:border-slate-800">
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm"
+          onClick={closeImportModal}
+        >
+          <div
+            className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl border border-gray-200 dark:bg-slate-900 dark:border-slate-800"
+            onClick={(e) => e.stopPropagation()}
+          >
             <h2 className="text-lg font-bold text-gray-900 dark:text-slate-100">Import Data Siswa</h2>
             <p className="mt-1 text-xs text-gray-500 dark:text-slate-400">
               Muat naik fail CSV mengikut template.{" "}
@@ -1028,33 +1089,20 @@ function AdminContent() {
               </button>
             </p>
             <div className="mt-4">
-              <label className="block rounded-xl border-2 border-dashed border-gray-300 p-6 text-center cursor-pointer hover:border-emerald-500 dark:border-slate-700 dark:hover:border-emerald-500">
-                <Upload className="mx-auto size-6 text-gray-400 dark:text-slate-500" />
-                <p className="mt-2 text-sm font-medium text-gray-700 dark:text-slate-300">Klik untuk pilih fail CSV</p>
-                <input
-                  type="file"
-                  accept=".csv"
-                  className="hidden"
-                  onChange={(e) => {
-                    const file = e.target.files?.[0];
-                    if (!file) return;
-                    const reader = new FileReader();
-                    reader.onload = () => {
-                      try {
-                        const rows = parseImportCSV(String(reader.result ?? ""));
-                        setImportPreview(rows);
-                        setImportError("");
-                      } catch (err) {
-                        setImportError(err instanceof Error ? err.message : "Gagal membaca fail.");
-                        setImportPreview([]);
-                      }
-                    };
-                    reader.readAsText(file);
-                    e.target.value = "";
-                  }}
-                />
-              </label>
-              {importError && <p className="mt-2 text-xs font-medium text-rose-600 dark:text-rose-400">{importError}</p>}
+              <FileUpload
+                value={uploadItems}
+                onValueChange={setUploadItems}
+                onFilesAdded={handleImportFilesAdded}
+                onRemove={handleImportRemove}
+                onRetry={handleImportRetry}
+                accept=".csv"
+                multiple={false}
+                maxFiles={1}
+                variant="centered"
+                title="Seret & letak fail CSV di sini"
+                description="atau klik untuk pilih fail mengikut template"
+                browseLabel="Pilih Fail"
+              />
               {importPreview.length > 0 && (
                 <div className="mt-3 max-h-48 overflow-y-auto rounded-xl border border-gray-200 dark:border-slate-800">
                   <table className="w-full text-xs text-gray-700 dark:text-slate-300">
@@ -1081,7 +1129,7 @@ function AdminContent() {
             <div className="mt-6 flex justify-end gap-3">
               <button
                 type="button"
-                onClick={() => { setShowImportModal(false); setImportPreview([]); setImportError(""); }}
+                onClick={closeImportModal}
                 className="rounded-xl border border-gray-300 px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
               >
                 Batal
@@ -1089,11 +1137,7 @@ function AdminContent() {
               <button
                 type="button"
                 disabled={importPreview.length === 0}
-                onClick={() => {
-                  setRecords((r) => [...importPreview, ...r]);
-                  setShowImportModal(false);
-                  setImportPreview([]);
-                }}
+                onClick={confirmImport}
                 className="rounded-xl bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 px-4 py-2 text-xs font-semibold text-white shadow-sm shadow-emerald-950/30 transition-all active:scale-[0.98] disabled:opacity-50"
               >
                 Import {importPreview.length > 0 ? `(${importPreview.length})` : ""}

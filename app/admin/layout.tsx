@@ -4,6 +4,7 @@ import { useState, useEffect, Suspense, type ReactNode } from "react";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { HomeIcon, UsersIcon, WalletIcon, TicketIcon, DocumentIcon, AddUserIcon, NotificationIcon, CategoryIcon, CloseSquareIcon, LogoutIcon, ShieldDoneIcon, ArrowRightIcon, SchoolIcon } from "@/components/icons";
+import { Avatar } from "@/components/avatar";
 
 interface NavItem {
   name: string;
@@ -204,9 +205,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
         {/* User Profile Card & Sign Out */}
         <div className="p-4 border-t border-gray-100 bg-gray-50/50">
           <div className="flex items-center gap-3 rounded-xl p-2.5 bg-white border border-gray-200 shadow-2xs">
-            <div className="size-9 rounded-full bg-emerald-100 text-emerald-800 font-semibold flex items-center justify-center shrink-0 border border-emerald-200 text-xs">
-              TU
-            </div>
+            <Avatar name="Pegawai Tata Usaha" className="size-9 text-xs" />
             <div className="min-w-0 flex-1">
               <p className="text-xs font-semibold text-gray-900 truncate">Pegawai Tata Usaha</p>
               <p className="text-[11px] text-gray-500 truncate flex items-center gap-1">

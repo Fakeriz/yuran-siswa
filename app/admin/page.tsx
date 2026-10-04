@@ -38,21 +38,15 @@ export interface TalebeRecord {
   statusAktif: boolean; // Status_Aktif
 }
 
-// Pisahkan "bin/binti Fulan" ke baris bawah bergabung dengan grup
-function NamaTalebe({ nama, grup }: { nama: string; grup: string }) {
+// Pisahkan "bin/binti Fulan" ke baris bawah (tanpa grup, grup kini kolom sendiri)
+function NamaTalebe({ nama }: { nama: string }) {
   const m = nama.match(/^(.*?)\s+(bin|binti|bt)\s+(.+)$/i);
   const namaUtama = m ? m[1].trim() : nama;
   const patronimik = m ? `${m[2].toLowerCase()} ${m[3].trim()}` : null;
   return (
     <>
       <div className="font-semibold text-gray-900">{namaUtama}</div>
-      <div className="text-xs text-gray-500 mt-0.5">
-        {patronimik && <span>{patronimik} · </span>}
-        <span className="text-emerald-800 font-medium inline-flex items-center gap-1">
-          <Building2 className="size-3" />
-          {grup}
-        </span>
-      </div>
+      {patronimik && <div className="text-xs text-gray-500 mt-0.5">{patronimik}</div>}
     </>
   );
 }
@@ -618,7 +612,8 @@ function AdminContent() {
                 {isSiswa ? (
                   <>
                     <th scope="col" className="px-5 py-3.5">ID Talebe</th>
-                    <th scope="col" className="px-5 py-3.5">Nama Talebe & Grup</th>
+                    <th scope="col" className="px-5 py-3.5">Nama Talebe</th>
+                    <th scope="col" className="px-5 py-3.5">Grup</th>
                     <th scope="col" className="px-5 py-3.5 text-right">Yuran Bulanan</th>
                     <th scope="col" className="px-5 py-3.5 text-center">Status Bayaran</th>
                     <th scope="col" className="px-5 py-3.5 text-center">Aktif</th>
@@ -630,7 +625,10 @@ function AdminContent() {
                   ID & No. Transaksi
                 </th>
                 <th scope="col" className="px-5 py-3.5">
-                  Nama Talebe & Grup
+                  Nama Talebe
+                </th>
+                <th scope="col" className="px-5 py-3.5">
+                  Grup
                 </th>
                 <th scope="col" className="px-5 py-3.5 text-right">
                   Yuran Bulanan
@@ -657,7 +655,7 @@ function AdminContent() {
             <tbody className="divide-y divide-gray-100">
               {filteredRecords.length === 0 ? (
                 <tr>
-                  <td colSpan={isSiswa ? 6 : 8} className="px-6 py-12 text-center">
+                  <td colSpan={isSiswa ? 7 : 9} className="px-6 py-12 text-center">
                     <div className="flex flex-col items-center justify-center">
                       <div className="rounded-full bg-gray-100 p-3 text-gray-400">
                         <Search className="size-6" />
@@ -698,7 +696,14 @@ function AdminContent() {
                           </td>
                           {/* Nama & Grup */}
                           <td className="px-5 py-4">
-                            <NamaTalebe nama={item.nama} grup={item.grup} />
+                            <NamaTalebe nama={item.nama} />
+                          </td>
+                          {/* Grup */}
+                          <td className="px-5 py-4 whitespace-nowrap">
+                            <span className="inline-flex items-center gap-1 text-xs font-medium text-emerald-800">
+                              <Building2 className="size-3" />
+                              {item.grup}
+                            </span>
                           </td>
                           {/* Yuran Bulanan */}
                           <td className="px-5 py-4 text-right whitespace-nowrap font-medium text-gray-900">
@@ -748,7 +753,14 @@ function AdminContent() {
 
                       {/* Nama Talebe & Grup */}
                       <td className="px-5 py-4">
-                        <NamaTalebe nama={item.nama} grup={item.grup} />
+                        <NamaTalebe nama={item.nama} />
+                      </td>
+                      {/* Grup */}
+                      <td className="px-5 py-4 whitespace-nowrap">
+                        <span className="inline-flex items-center gap-1 text-xs font-medium text-emerald-800">
+                          <Building2 className="size-3" />
+                          {item.grup}
+                        </span>
                       </td>
 
                       {/* Yuran Bulanan */}

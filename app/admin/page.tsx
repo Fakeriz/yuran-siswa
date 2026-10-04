@@ -292,38 +292,34 @@ function AdminContent() {
         </div>
 
         {/* Butang Tindakan Cepat */}
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="flex flex-col items-start gap-3">
+          <button
+            type="button"
+            onClick={() => setShowBayarModal(true)}
+            className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-800 px-3.5 py-2 text-xs font-semibold text-white shadow-xs hover:bg-emerald-900 transition-colors focus-visible:outline-emerald-600"
+          >
+            <PlusIcon className="size-4" />
+            <span>Catat Bayaran</span>
+          </button>
+
           <div className="relative">
             <select
-              value={selectedMonth}
-              onChange={(e) => setSelectedMonth(e.target.value)}
+              value={`${selectedMonth} ${selectedYear}`}
+              onChange={(e) => {
+                const [bulan, tahun] = e.target.value.split(" ");
+                setSelectedMonth(bulan);
+                setSelectedYear(tahun);
+              }}
               className="appearance-none rounded-xl border border-gray-300 bg-white py-2 pl-3 pr-8 text-xs font-semibold text-gray-700 shadow-2xs hover:border-gray-400 focus:border-emerald-600 focus:outline-hidden"
             >
-              <option value="Januari">Januari</option>
-              <option value="Februari">Februari</option>
-              <option value="Mac">Mac</option>
-              <option value="April">April</option>
-              <option value="Mei">Mei</option>
-              <option value="Jun">Jun</option>
-              <option value="Julai">Julai</option>
-              <option value="Ogos">Ogos</option>
-              <option value="September">September</option>
-              <option value="Oktober">Oktober</option>
-              <option value="November">November</option>
-              <option value="Disember">Disember</option>
-            </select>
-            <CalendarIcon className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 size-3.5 text-gray-400" />
-          </div>
-          <div className="relative">
-            <select
-              value={selectedYear}
-              onChange={(e) => setSelectedYear(e.target.value)}
-              className="appearance-none rounded-xl border border-gray-300 bg-white py-2 pl-3 pr-8 text-xs font-semibold text-gray-700 shadow-2xs hover:border-gray-400 focus:border-emerald-600 focus:outline-hidden"
-            >
-              <option value="2024">2024</option>
-              <option value="2025">2025</option>
-              <option value="2026">2026</option>
-              <option value="2027">2027</option>
+              <option value="Oktober 2026">Oktober 2026</option>
+              <option value="September 2026">September 2026</option>
+              <option value="Ogos 2026">Ogos 2026</option>
+              <option value="Julai 2026">Julai 2026</option>
+              <option value="Jun 2026">Jun 2026</option>
+              <option value="Oktober 2025">Oktober 2025</option>
+              <option value="September 2025">September 2025</option>
+              <option value="Ogos 2025">Ogos 2025</option>
             </select>
             <CalendarIcon className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 size-3.5 text-gray-400" />
           </div>
@@ -354,23 +350,16 @@ function AdminContent() {
             <span>Eksport Data</span>
           </button>
 
-          <button
-            type="button"
-            onClick={() => setShowImportModal(true)}
-            className="inline-flex items-center gap-1.5 rounded-xl border border-gray-300 bg-white px-3.5 py-2 text-xs font-semibold text-gray-700 shadow-2xs hover:bg-gray-50 hover:text-gray-900 transition-colors"
-          >
-            <UploadIcon className="size-3.5 text-gray-500" />
-            <span>Import Siswa</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setShowBayarModal(true)}
-            className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-800 px-3.5 py-2 text-xs font-semibold text-white shadow-xs hover:bg-emerald-900 transition-colors focus-visible:outline-emerald-600"
-          >
-            <PlusIcon className="size-4" />
-            <span>Catat Bayaran</span>
-          </button>
+          {isSiswa && (
+            <button
+              type="button"
+              onClick={() => setShowImportModal(true)}
+              className="inline-flex items-center gap-1.5 rounded-xl border border-gray-300 bg-white px-3.5 py-2 text-xs font-semibold text-gray-700 shadow-2xs hover:bg-gray-50 hover:text-gray-900 transition-colors"
+            >
+              <UploadIcon className="size-3.5 text-gray-500" />
+              <span>Import Siswa</span>
+            </button>
+          )}
         </div>
       </div>
 

@@ -9,6 +9,7 @@
 // - Variants themed to the app: primary = emerald gradient, secondary/ghost/
 //   outline in gray/slate with class-based dark mode.
 
+import { AlertCircle, Check, Loader2 } from "lucide-react";
 import {
   forwardRef,
   type CSSProperties,
@@ -258,3 +259,56 @@ export const ButtonLink = forwardRef<HTMLAnchorElement, ButtonLinkProps>(
     );
   },
 );
+
+export type StatefulButtonState = "idle" | "loading" | "success" | "error";
+
+export interface StatefulButtonProps extends ButtonProps {
+  state?: StatefulButtonState;
+  loadingText?: string;
+  successText?: string;
+  errorText?: string;
+}
+
+/**
+ * Button that reflects an async operation: idle -> loading (spinner) ->
+ * success (check) / error (alert). Text swaps per state when provided.
+ */
+export const StatefulButton = forwardRef<
+  HTMLButtonElement,
+  StatefulButtonProps
+>(function StatefulButton(
+  {
+    state = "idle",
+    loadingText,
+    successText,
+    errorText,
+    children,
+    disabled,
+    ...rest
+  },
+  ref,
+) {
+  const content =
+    state === "loading"
+      ? (loadingText ?? children)
+      : state === "success"
+        ? (successText ?? children)
+        : state === "error"
+          ? (errorText ?? children)
+          : children;
+
+  return (
+    <Button ref={ref} disabled={disabled || state === "loading"} {...rest}>
+      {state === "loading" ? (
+        <Loader2 className="size-4 animate-spin" aria-hidden />
+      ) : null}
+      {state === "success" ? (
+        <Check className="size-4" aria-hidden />
+      ) : null}
+      {state === "error" ? (
+        <AlertCircle className="size-4" aria-hidden />
+      ) : null}
+      {content}
+    </Button>
+  );
+});

@@ -3,7 +3,9 @@
 import { Suspense, useState, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { ChartIcon, DiscoveryIcon, DangerIcon, SearchIcon, FilterIcon, DownloadIcon, UploadIcon, PlusIcon, TicketIcon, TickSquareIcon, TimeCircleIcon, SwapIcon, CalendarIcon, HideIcon } from "@/components/icons";
+import { ChartIcon, DiscoveryIcon, DangerIcon, SearchIcon, FilterIcon, DownloadIcon, UploadIcon, PlusIcon, TicketIcon, TickSquareIcon, TimeCircleIcon, SwapIcon, HideIcon } from "@/components/icons";
+import { MonthYearPicker } from "@/components/month-year-picker";
+import { StudentSelect } from "@/components/student-select";
 
 // Struktur jenis data berasaskan skema logik Data_Talebe & Transaksi_Masuk
 export interface TalebeRecord {
@@ -302,27 +304,12 @@ function AdminContent() {
             <span>Catat Bayaran</span>
           </button>
 
-          <div className="relative">
-            <select
-              value={`${selectedMonth} ${selectedYear}`}
-              onChange={(e) => {
-                const [bulan, tahun] = e.target.value.split(" ");
-                setSelectedMonth(bulan);
-                setSelectedYear(tahun);
-              }}
-              className="appearance-none rounded-xl border border-gray-300 bg-white py-2 pl-3 pr-8 text-xs font-semibold text-gray-700 shadow-2xs hover:border-gray-400 focus:border-emerald-600 focus:outline-hidden"
-            >
-              <option value="Oktober 2026">Oktober 2026</option>
-              <option value="September 2026">September 2026</option>
-              <option value="Ogos 2026">Ogos 2026</option>
-              <option value="Julai 2026">Julai 2026</option>
-              <option value="Jun 2026">Jun 2026</option>
-              <option value="Oktober 2025">Oktober 2025</option>
-              <option value="September 2025">September 2025</option>
-              <option value="Ogos 2025">Ogos 2025</option>
-            </select>
-            <CalendarIcon className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 size-3.5 text-gray-400" />
-          </div>
+          <MonthYearPicker
+            month={selectedMonth}
+            year={selectedYear}
+            onMonthChange={setSelectedMonth}
+            onYearChange={setSelectedYear}
+          />
 
           <button
             type="button"
@@ -948,13 +935,12 @@ function AdminContent() {
             <p className="mt-1 text-xs text-gray-500">Rekod pembayaran yuran bulanan talebe.</p>
             <div className="mt-4 space-y-4">
               <div>
-                <label className="text-xs font-semibold text-gray-700">Nama Talebe</label>
-                <input
-                  type="text"
+                <label className="text-xs font-semibold text-gray-700">Nama Siswa</label>
+                <StudentSelect
+                  students={records.map((r) => ({ nama: r.nama, grup: r.grup }))}
                   value={bayarNama}
-                  onChange={(e) => setBayarNama(e.target.value)}
+                  onChange={setBayarNama}
                   placeholder="cth: Ahmad bin Ali"
-                  className="mt-1 w-full rounded-xl border border-gray-300 px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
                 />
               </div>
               <div className="grid grid-cols-2 gap-3">

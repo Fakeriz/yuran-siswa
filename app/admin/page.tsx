@@ -217,6 +217,7 @@ function AdminContent() {
   const isAliranKas = tab === "aliran-kas";
   const isTransaksi = tab === "transaksi";
   const isResit = tab === "resit";
+  const isSiswa = tab === "siswa";
   // Untuk tab fokus jadual, sorokkan ringkasan KPI/grup supaya fokus pada kandungan tab
   const showSummary = isDashboard;
 
@@ -229,6 +230,7 @@ function AdminContent() {
 
   const headerDesc =
     tab === "aliran-kas" ? "Ringkasan aliran tunai masuk dan keluar kas asrama."
+    : tab === "siswa" ? "Senarai talebe berdaftar mengikut grup asrama."
     : tab === "transaksi" ? "Senarai semua pembayaran yuran yang diterima."
     : tab === "resit" ? "Senarai resit dan kwitansi yang telah dimuat naik."
     : "Sistem pengurusan yuran bulanan asrama Talebe, rekod kutipan kas, dan pengesahan status pembayaran.";
@@ -552,6 +554,17 @@ function AdminContent() {
           <table className="w-full text-left text-sm text-gray-700">
             <thead className="bg-gray-50/80 text-xs font-semibold text-gray-500 uppercase tracking-wider border-b border-gray-200">
               <tr>
+                {isSiswa ? (
+                  <>
+                    <th scope="col" className="px-5 py-3.5">ID Talebe</th>
+                    <th scope="col" className="px-5 py-3.5">Nama Talebe & Grup</th>
+                    <th scope="col" className="px-5 py-3.5 text-right">Yuran Bulanan</th>
+                    <th scope="col" className="px-5 py-3.5 text-center">Status Bayaran</th>
+                    <th scope="col" className="px-5 py-3.5 text-center">Aktif</th>
+                    <th scope="col" className="px-5 py-3.5 text-center">Tindakan</th>
+                  </>
+                ) : (
+                  <>
                 <th scope="col" className="px-5 py-3.5">
                   ID & No. Transaksi
                 </th>
@@ -576,12 +589,14 @@ function AdminContent() {
                 <th scope="col" className="px-5 py-3.5 text-center">
                   Tindakan
                 </th>
+                  </>
+                )}
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
               {filteredRecords.length === 0 ? (
                 <tr>
-                  <td colSpan={8} className="px-6 py-12 text-center">
+                  <td colSpan={isSiswa ? 6 : 8} className="px-6 py-12 text-center">
                     <div className="flex flex-col items-center justify-center">
                       <div className="rounded-full bg-gray-100 p-3 text-gray-400">
                         <Search className="size-6" />
@@ -614,6 +629,58 @@ function AdminContent() {
                       className="hover:bg-gray-50/80 transition-colors group cursor-pointer"
                       onClick={() => setSelectedRecord(item)}
                     >
+                      {isSiswa ? (
+                        <>
+                          {/* ID Talebe */}
+                          <td className="px-5 py-4 whitespace-nowrap">
+                            <div className="font-mono text-xs font-semibold text-gray-900">{item.id}</div>
+                          </td>
+                          {/* Nama & Grup */}
+                          <td className="px-5 py-4">
+                            <div className="font-semibold text-gray-900">{item.nama}</div>
+                            <div className="text-xs text-emerald-800 font-medium flex items-center gap-1 mt-0.5">
+                              <Building2 className="size-3" />
+                              <span>{item.grup}</span>
+                            </div>
+                          </td>
+                          {/* Yuran Bulanan */}
+                          <td className="px-5 py-4 text-right whitespace-nowrap font-medium text-gray-900">
+                            {formatRM(item.yuranBulanan)}
+                          </td>
+                          {/* Status Bayaran */}
+                          <td className="px-5 py-4 whitespace-nowrap text-center">
+                            {item.status === "Lunas" ? (
+                              <span className="inline-flex items-center gap-1 rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-semibold text-green-800 border border-green-200">
+                                <CheckCircle2 className="size-3 text-green-700" />
+                                <span>Lunas</span>
+                              </span>
+                            ) : (
+                              <span className="inline-flex items-center gap-1 rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-semibold text-red-800 border border-red-200">
+                                <AlertCircle className="size-3 text-red-700" />
+                                <span>{item.status}</span>
+                              </span>
+                            )}
+                          </td>
+                          {/* Aktif */}
+                          <td className="px-5 py-4 whitespace-nowrap text-center">
+                            <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${item.statusAktif ? "bg-emerald-100 text-emerald-800" : "bg-gray-100 text-gray-500"}`}>
+                              {item.statusAktif ? "Aktif" : "Tidak Aktif"}
+                            </span>
+                          </td>
+                          {/* Tindakan */}
+                          <td className="px-5 py-4 whitespace-nowrap text-center" onClick={(e) => e.stopPropagation()}>
+                            <button
+                              type="button"
+                              onClick={() => setSelectedRecord(item)}
+                              className="inline-flex items-center gap-1 rounded-lg p-1.5 text-gray-500 hover:text-emerald-800 hover:bg-emerald-50 transition-colors"
+                              title="Lihat Butiran"
+                            >
+                              <Eye className="size-4" />
+                            </button>
+                          </td>
+                        </>
+                      ) : (
+                        <>
                       {/* ID & No Transaksi */}
                       <td className="px-5 py-4 whitespace-nowrap">
                         <div className="font-mono text-xs font-semibold text-gray-900">
@@ -691,6 +758,8 @@ function AdminContent() {
                           <Eye className="size-4" />
                         </button>
                       </td>
+                        </>
+                      )}
                     </tr>
                   );
                 })
@@ -703,7 +772,7 @@ function AdminContent() {
         <div className="p-4 border-t border-gray-100 bg-gray-50/50 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-500">
           <p>
             Menunjukkan <strong className="text-gray-900">{filteredRecords.length}</strong> daripada{" "}
-            <strong className="text-gray-900">{records.length}</strong> rekod Talebe bagi sesi{" "}
+            <strong className="text-gray-900">{records.length}</strong> rekod Talebe bagi bulan{" "}
             <strong className="text-gray-900">{selectedMonth}</strong>.
           </p>
           <div className="flex items-center gap-2">

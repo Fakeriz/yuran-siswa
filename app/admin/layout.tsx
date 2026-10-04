@@ -117,6 +117,30 @@ function SidebarNav({ onNavigate }: { onNavigate: () => void }) {
   );
 }
 
+function Breadcrumb() {
+  const searchParams = useSearchParams();
+  const tab = searchParams.get("tab");
+  const names: Record<string, string> = {
+    "aliran-kas": "Aliran Kas & Yuran",
+    siswa: "Data Talebe",
+    transaksi: "Transaksi Masuk",
+    penugasan: "Penugasan Staf",
+    persetujuan: "Pengesahan Ibu Bapa",
+    resit: "Resit & Kwitansi",
+    penyata: "Penyata Bulanan",
+  };
+  const current = tab && names[tab] ? names[tab] : "Dasbor Utama";
+  return (
+    <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-500 font-medium">
+      <span className="text-gray-800 font-semibold">YuranKu</span>
+      <ChevronRight className="size-3.5 text-gray-400" />
+      <span>Pentadbiran</span>
+      <ChevronRight className="size-3.5 text-gray-400" />
+      <span className="text-emerald-800 font-semibold">{current}</span>
+    </div>
+  );
+}
+
 export default function AdminLayout({ children }: { children: ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const pathname = usePathname();
@@ -232,13 +256,9 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
             </button>
 
             {/* Breadcrumb Navigation */}
-            <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-500 font-medium">
-              <span className="text-gray-800 font-semibold">YuranKu</span>
-              <ChevronRight className="size-3.5 text-gray-400" />
-              <span>Pentadbiran</span>
-              <ChevronRight className="size-3.5 text-gray-400" />
-              <span className="text-emerald-800 font-semibold">Dasbor Utama</span>
-            </div>
+            <Suspense>
+              <Breadcrumb />
+            </Suspense>
           </div>
 
           {/* Topbar Right Controls */}

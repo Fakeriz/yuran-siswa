@@ -109,7 +109,7 @@ export function MonthYearPicker({
                     }}
                     className={`rounded-xl px-1 py-2.5 text-xs font-semibold transition-colors ${
                       active
-                        ? "bg-emerald-800 text-white"
+                        ? "bg-brand-600 text-white"
                         : "text-gray-700 hover:bg-gray-100"
                     }`}
                   >

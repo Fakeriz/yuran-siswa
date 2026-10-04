@@ -54,7 +54,7 @@ function SidebarNav({ onNavigate }: { onNavigate: () => void }) {
     <div className="flex-1 overflow-y-auto px-4 py-5 space-y-6">
       {navigation.map((section) => (
         <div key={section.title}>
-          <h3 className="px-3 text-[11px] font-semibold uppercase tracking-wider text-gray-400">
+          <h3 className="px-3 text-[11px] font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">
             {section.title}
           </h3>
           <div className="mt-2 space-y-1">
@@ -71,8 +71,8 @@ function SidebarNav({ onNavigate }: { onNavigate: () => void }) {
                   onClick={onNavigate}
                   className={`group flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-medium transition-colors ${
                     isActive
-                      ? "bg-emerald-800 text-white shadow-xs"
-                      : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                      ? "bg-brand-600 text-white shadow-xs"
+                      : "text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-[#9AA8BE] dark:hover:bg-gray-800 dark:hover:text-white"
                   }`}
                 >
                   <div className="flex items-center gap-3">
@@ -87,7 +87,7 @@ function SidebarNav({ onNavigate }: { onNavigate: () => void }) {
                     <span
                       className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${
                         isActive
-                          ? "bg-emerald-700 text-white"
+                          ? "bg-brand-600 text-white"
                           : "bg-amber-100 text-amber-800 border border-amber-200"
                       }`}
                     >
@@ -120,7 +120,7 @@ function TopbarControls() {
         <button
           type="button"
           onClick={() => setNotifOpen((o) => !o)}
-          className="relative inline-flex items-center rounded-lg border border-gray-300 bg-white p-2 text-gray-500 shadow-2xs hover:bg-gray-50 hover:text-gray-900 transition-colors dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300"
+          className="relative inline-flex items-center rounded-lg border border-gray-300 bg-white p-2 text-gray-500 shadow-2xs hover:bg-gray-50 hover:text-gray-900 transition-colors dark:border-[#2E3A52] dark:bg-elevated dark:text-[#9AA8BE]"
           aria-label="Pemberitahuan sistem"
         >
           <NotificationIcon className="size-4" />
@@ -131,18 +131,18 @@ function TopbarControls() {
           )}
         </button>
         {notifOpen && (
-          <div className="absolute right-0 mt-2 w-80 rounded-2xl border border-gray-200 bg-white shadow-xl z-50 overflow-hidden dark:border-gray-700 dark:bg-gray-800">
-            <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 dark:border-gray-700">
-              <p className="text-sm font-bold text-gray-900 dark:text-white">Notifikasi</p>
+          <div className="absolute right-0 mt-2 w-80 rounded-2xl border border-gray-200 bg-white shadow-xl z-50 overflow-hidden dark:border-[#2E3A52] dark:bg-elevated">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 dark:border-[#2E3A52]">
+              <p className="text-sm font-bold text-gray-900 dark:text-[#F1F5F9]">Notifikasi</p>
               <button
                 type="button"
                 onClick={() => setNotifs((ns) => ns.map((n) => ({ ...n, dibaca: true })))}
-                className="text-xs font-medium text-emerald-700 hover:underline dark:text-emerald-400"
+                className="text-xs font-medium text-brand-600 hover:underline dark:text-emerald-400"
               >
                 Tandai semua dibaca
               </button>
             </div>
-            <ul className="max-h-80 overflow-y-auto divide-y divide-gray-100 dark:divide-gray-700">
+            <ul className="max-h-80 overflow-y-auto divide-y divide-gray-100 dark:divide-[#2E3A52]">
               {notifs.map((n) => (
                 <li key={n.id}>
                   <Link
@@ -151,13 +151,13 @@ function TopbarControls() {
                       setNotifs((ns) => ns.map((x) => x.id === n.id ? { ...x, dibaca: true } : x));
                       setNotifOpen(false);
                     }}
-                    className={`block px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700 ${!n.dibaca ? "bg-emerald-50/50 dark:bg-emerald-900/20" : ""}`}
+                    className={`block px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700 ${!n.dibaca ? "bg-brand-50/50 dark:bg-brand-700/20" : ""}`}
                   >
                     <div className="flex items-start justify-between gap-2">
-                      <p className="text-xs font-semibold text-gray-900 dark:text-white">{n.judul}</p>
-                      {!n.dibaca && <span className="mt-1 size-2 shrink-0 rounded-full bg-emerald-500" />}
+                      <p className="text-xs font-semibold text-gray-900 dark:text-[#F1F5F9]">{n.judul}</p>
+                      {!n.dibaca && <span className="mt-1 size-2 shrink-0 rounded-full bg-brand-500" />}
                     </div>
-                    <p className="mt-0.5 text-xs text-gray-600 dark:text-gray-300">{n.pesan}</p>
+                    <p className="mt-0.5 text-xs text-gray-600 dark:text-[#9AA8BE]">{n.pesan}</p>
                     <p className="mt-1 text-[10px] text-gray-400">{n.masa}</p>
                   </Link>
                 </li>
@@ -174,10 +174,10 @@ function HeaderTitle() {
   const { pageTitle, selectedMonth, selectedYear } = useAdmin();
   return (
     <div>
-      <h1 className="text-lg font-bold tracking-tight text-gray-900 sm:text-xl">
+      <h1 className="text-lg font-bold tracking-tight text-gray-900 sm:text-xl dark:text-[#F1F5F9]">
         {pageTitle}
       </h1>
-      <p className="text-xs text-gray-500">
+      <p className="text-xs text-gray-500 dark:text-[#6B7A90]">
         {selectedMonth} {selectedYear}
       </p>
     </div>
@@ -190,7 +190,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
   return (
     <AdminProvider>
-    <div className="min-h-screen bg-gray-50 text-gray-900 flex flex-col antialiased dark:bg-gray-950 dark:text-gray-100">
+    <div className="min-h-screen bg-gray-50 text-gray-900 flex flex-col antialiased dark:bg-canvas dark:text-gray-100">
       {/* Mobile Sidebar Backdrop Overlay */}
       {sidebarOpen && (
         <div
@@ -207,24 +207,24 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
       {/* Sidebar Navigation */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 flex w-72 flex-col bg-white border-r border-gray-200 shadow-sm transition-transform duration-200 ease-in-out lg:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-50 flex w-72 flex-col bg-white border-r border-gray-200 shadow-sm transition-transform duration-200 ease-in-out lg:translate-x-0 dark:bg-surface dark:border-[#212837] ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         {/* Brand Logo & Header */}
-        <div className="flex h-18 items-center justify-between px-6 border-b border-gray-100">
-          <Link href="/admin" className="flex items-center gap-3 group focus-visible:outline-emerald-600">
-            <div className="flex size-10 items-center justify-center rounded-xl bg-emerald-800 text-white shadow-xs group-hover:bg-emerald-900 transition-colors">
+        <div className="flex h-18 items-center justify-between px-6 border-b border-gray-100 dark:border-[#212837]">
+          <Link href="/admin" className="flex items-center gap-3 group focus-visible:outline-brand-500">
+            <div className="flex size-10 items-center justify-center rounded-xl bg-brand-600 text-white shadow-xs group-hover:bg-brand-700 transition-colors">
               <SchoolIcon className="size-5" />
             </div>
             <div>
               <div className="flex items-center gap-1.5">
-                <span className="font-bold text-lg text-gray-900 tracking-tight">YuranKu</span>
-                <span className="text-[10px] font-semibold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-1.5 py-0.5 rounded-md border border-emerald-200/60">
+                <span className="font-bold text-lg text-gray-900 tracking-tight dark:text-[#F1F5F9]">YuranKu</span>
+                <span className="text-[10px] font-semibold uppercase tracking-wider text-brand-600 bg-brand-50 px-1.5 py-0.5 rounded-md border border-brand-200/60">
                   Admin
                 </span>
               </div>
-              <p className="text-xs text-gray-500 font-medium">Aylik Talebe Management</p>
+              <p className="text-xs text-gray-500 font-medium dark:text-[#6B7A90]">Aylik Talebe Management</p>
             </div>
           </Link>
 
@@ -244,13 +244,13 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
         </Suspense>
 
         {/* User Profile Card & Sign Out */}
-        <div className="p-4 border-t border-gray-100 bg-gray-50/50">
-          <div className="flex items-center gap-3 rounded-xl p-2.5 bg-white border border-gray-200 shadow-2xs">
+        <div className="p-4 border-t border-gray-100 bg-gray-50/50 dark:border-[#212837] dark:bg-surface/50">
+          <div className="flex items-center gap-3 rounded-xl p-2.5 bg-white border border-gray-200 shadow-2xs dark:bg-elevated dark:border-[#2E3A52]">
             <Avatar name="Pegawai Tata Usaha" className="size-9 text-xs" />
             <div className="min-w-0 flex-1">
-              <p className="text-xs font-semibold text-gray-900 truncate">Pegawai Tata Usaha</p>
+              <p className="text-xs font-semibold text-gray-900 truncate dark:text-[#F1F5F9]">Pegawai Tata Usaha</p>
               <p className="text-[11px] text-gray-500 truncate flex items-center gap-1">
-                <ShieldDoneIcon className="size-3 text-emerald-600 shrink-0" />
+                <ShieldDoneIcon className="size-3 text-brand-500 shrink-0" />
                 Pentadbir Sistem
               </p>
             </div>
@@ -268,12 +268,12 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
       {/* Main Content Area */}
       <div className="lg:pl-72 flex flex-col flex-1">
         {/* Top Navbar */}
-        <header className="sticky top-0 z-30 flex h-18 items-center justify-between border-b border-gray-200 bg-white/95 backdrop-blur-xs px-4 sm:px-6 lg:px-8 dark:border-gray-800 dark:bg-gray-900/95">
+        <header className="sticky top-0 z-30 flex h-18 items-center justify-between border-b border-gray-200 bg-white/95 backdrop-blur-xs px-4 sm:px-6 lg:px-8 dark:border-[#212837] dark:bg-frame/95">
           <div className="flex items-center gap-3">
             <button
               type="button"
               onClick={() => setSidebarOpen(true)}
-              className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-xl lg:hidden focus-visible:outline-emerald-600"
+              className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-xl lg:hidden focus-visible:outline-brand-500"
               aria-label="Buka menu navigasi"
             >
               <CategoryIcon className="size-5" />

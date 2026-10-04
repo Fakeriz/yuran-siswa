@@ -362,18 +362,18 @@ function AdminContent() {
       {/* Ringkasan Aliran Kas (tab aliran-kas sahaja) */}
       {isAliranKas && (
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
-        <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-xs">
-          <p className="text-xs font-semibold uppercase tracking-wider text-gray-500">Jumlah Masuk</p>
-          <p className="mt-2 text-2xl font-bold text-emerald-700">RM 24,500</p>
+        <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-xs dark:border-[#212837] dark:bg-surface">
+          <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-[#6B7A90]">Jumlah Masuk</p>
+          <p className="mt-2 text-2xl font-bold text-brand-600">RM 24,500</p>
           <p className="mt-1 text-xs text-gray-500">Oktober 2026 · 49 transaksi</p>
         </div>
-        <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-xs">
-          <p className="text-xs font-semibold uppercase tracking-wider text-gray-500">Jumlah Keluar</p>
+        <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-xs dark:border-[#212837] dark:bg-surface">
+          <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-[#6B7A90]">Jumlah Keluar</p>
           <p className="mt-2 text-2xl font-bold text-rose-700">RM 3,200</p>
           <p className="mt-1 text-xs text-gray-500">Oktober 2026 · perbelanjaan operasi</p>
         </div>
-        <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-xs">
-          <p className="text-xs font-semibold uppercase tracking-wider text-gray-500">Baki Bersih</p>
+        <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-xs dark:border-[#212837] dark:bg-surface">
+          <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-[#6B7A90]">Baki Bersih</p>
           <p className="mt-2 text-2xl font-bold text-gray-900">RM 21,300</p>
           <p className="mt-1 text-xs text-gray-500">Masuk tolak keluar bulan ini</p>
         </div>
@@ -382,7 +382,7 @@ function AdminContent() {
 
       {/* Senarai Resit (tab resit sahaja) */}
       {isResit && (
-      <div className="rounded-2xl border border-gray-200 bg-white shadow-xs overflow-hidden">
+      <div className="rounded-2xl border border-gray-200 bg-white shadow-xs overflow-hidden dark:border-[#212837] dark:bg-surface">
         <div className="p-5 border-b border-gray-100">
           <h2 className="text-base font-bold text-gray-900">Resit & Kwitansi Terkini</h2>
           <p className="mt-1 text-xs text-gray-500">Dokumen bukti pembayaran yang dimuat naik.</p>
@@ -414,7 +414,7 @@ function AdminContent() {
             <span className="text-xs font-semibold tracking-wide text-gray-500 uppercase">
               Total Pemasukan Kas
             </span>
-            <div className="rounded-xl bg-emerald-50 p-2 text-emerald-800 border border-emerald-100">
+            <div className="rounded-xl bg-brand-50 p-2 text-brand-600 border border-brand-100">
               <ChartIcon className="size-5" />
             </div>
           </div>
@@ -423,7 +423,7 @@ function AdminContent() {
               {formatRM(totalPemasukan)}
             </p>
             <div className="mt-2 flex items-center gap-1.5 text-xs">
-              <span className="font-semibold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded-md">
+              <span className="font-semibold text-brand-600 bg-brand-50 px-1.5 py-0.5 rounded-md">
                 +12.4%
               </span>
               <span className="text-gray-500">berbanding bulan lepas</span>
@@ -489,12 +489,12 @@ function AdminContent() {
               <p className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
                 {persentaseKutipan.toFixed(1)}%
               </p>
-              <span className="text-xs font-medium text-emerald-700">49 / 60 Lunas</span>
+              <span className="text-xs font-medium text-brand-600">49 / 60 Lunas</span>
             </div>
             {/* Visual Progress Bar */}
             <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-gray-100">
               <div
-                className="h-full rounded-full bg-emerald-800 transition-all duration-500"
+                className="h-full rounded-full bg-brand-600 transition-all duration-500"
                 style={{ width: `${persentaseKutipan}%` }}
               />
             </div>
@@ -511,7 +511,7 @@ function AdminContent() {
             <div className="flex items-center gap-2">
               <span className="font-bold text-sm text-gray-900">Mevlana HE</span>
             </div>
-            <span className="text-xs font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-md">
+            <span className="text-xs font-bold text-brand-600 bg-brand-50 px-2 py-0.5 rounded-md">
               85% Selesai
             </span>
           </div>
@@ -523,7 +523,7 @@ function AdminContent() {
             <div className="flex items-center gap-2">
               <span className="font-bold text-sm text-gray-900">Razi HE</span>
             </div>
-            <span className="text-xs font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-md">
+            <span className="text-xs font-bold text-brand-600 bg-brand-50 px-2 py-0.5 rounded-md">
               80% Selesai
             </span>
           </div>
@@ -535,7 +535,7 @@ function AdminContent() {
             <div className="flex items-center gap-2">
               <span className="font-bold text-sm text-gray-900">Fatih HE</span>
             </div>
-            <span className="text-xs font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-md">
+            <span className="text-xs font-bold text-brand-600 bg-brand-50 px-2 py-0.5 rounded-md">
               80% Selesai
             </span>
           </div>
@@ -545,7 +545,7 @@ function AdminContent() {
       )}
 
       {/* 4. Bahagian Utama: Penapis & Tabel Status Yuran Talebe */}
-      <div className="rounded-2xl border border-gray-200 bg-white shadow-xs overflow-hidden">
+      <div className="rounded-2xl border border-gray-200 bg-white shadow-xs overflow-hidden dark:border-[#212837] dark:bg-surface">
         {/* Toolbar Carian & Penapis */}
         <div className="p-5 border-b border-gray-100 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between bg-white">
           {/* Carian Input */}
@@ -556,7 +556,7 @@ function AdminContent() {
               placeholder="Cari nama talebe, ID atau no. transaksi..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full rounded-xl border border-gray-300 bg-gray-50/50 py-2 pl-9 pr-4 text-sm text-gray-900 placeholder:text-gray-400 hover:border-gray-400 focus:border-emerald-600 focus:bg-white focus:outline-hidden transition-all"
+              className="w-full rounded-xl border border-gray-300 bg-gray-50/50 py-2 pl-9 pr-4 text-sm text-gray-900 placeholder:text-gray-400 hover:border-gray-400 focus:border-brand-500 focus:bg-white focus:outline-hidden transition-all"
             />
           </div>
 
@@ -602,8 +602,8 @@ function AdminContent() {
 
         {/* Tabel Data_Talebe & Transaksi_Masuk */}
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm text-gray-700">
-            <thead className="bg-gray-50/80 text-xs font-semibold text-gray-500 uppercase tracking-wider border-b border-gray-200">
+          <table className="w-full text-left text-sm text-gray-700 dark:text-[#9AA8BE]">
+            <thead className="bg-gray-50/80 text-xs font-semibold text-gray-500 uppercase tracking-wider border-b border-gray-200 dark:bg-elevated/80 dark:text-[#6B7A90] dark:border-[#2E3A52]">
               <tr>
                 {isSiswa ? (
                   <>
@@ -648,7 +648,7 @@ function AdminContent() {
                 )}
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-gray-100 dark:divide-[#212837]">
               {filteredRecords.length === 0 ? (
                 <tr>
                   <td colSpan={isSiswa ? 7 : 9} className="px-6 py-12 text-center">
@@ -667,7 +667,7 @@ function AdminContent() {
                           setSelectedGroup("Semua");
                           setSelectedStatus("Semua");
                         }}
-                        className="mt-4 text-xs font-semibold text-emerald-800 hover:underline"
+                        className="mt-4 text-xs font-semibold text-brand-600 hover:underline"
                       >
                         Set Semula Penapis
                       </button>
@@ -696,7 +696,7 @@ function AdminContent() {
                           </td>
                           {/* Grup */}
                           <td className="px-5 py-4 whitespace-nowrap">
-                            <span className="text-xs font-medium text-emerald-800">
+                            <span className="text-xs font-medium text-brand-600">
                               {item.grup}
                             </span>
                           </td>
@@ -720,7 +720,7 @@ function AdminContent() {
                           </td>
                           {/* Aktif */}
                           <td className="px-5 py-4 whitespace-nowrap text-center">
-                            <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${item.statusAktif ? "bg-emerald-100 text-emerald-800" : "bg-gray-100 text-gray-500"}`}>
+                            <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${item.statusAktif ? "bg-brand-100 text-brand-600" : "bg-gray-100 text-gray-500"}`}>
                               {item.statusAktif ? "Aktif" : "Tidak Aktif"}
                             </span>
                           </td>
@@ -729,7 +729,7 @@ function AdminContent() {
                             <button
                               type="button"
                               onClick={() => setSelectedRecord(item)}
-                              className="inline-flex items-center gap-1 rounded-lg p-1.5 text-gray-500 hover:text-emerald-800 hover:bg-emerald-50 transition-colors"
+                              className="inline-flex items-center gap-1 rounded-lg p-1.5 text-gray-500 hover:text-brand-600 hover:bg-brand-50 transition-colors"
                               title="Lihat Butiran"
                             >
                               <HideIcon className="size-4" />
@@ -752,7 +752,7 @@ function AdminContent() {
                       </td>
                       {/* Grup */}
                       <td className="px-5 py-4 whitespace-nowrap">
-                        <span className="text-xs font-medium text-emerald-800">
+                        <span className="text-xs font-medium text-brand-600">
                           {item.grup}
                         </span>
                       </td>
@@ -811,7 +811,7 @@ function AdminContent() {
                         <button
                           type="button"
                           onClick={() => setSelectedRecord(item)}
-                          className="inline-flex items-center gap-1 rounded-lg p-1.5 text-gray-500 hover:text-emerald-800 hover:bg-emerald-50 transition-colors"
+                          className="inline-flex items-center gap-1 rounded-lg p-1.5 text-gray-500 hover:text-brand-600 hover:bg-brand-50 transition-colors"
                           title="Lihat Butiran Resit"
                         >
                           <HideIcon className="size-4" />
@@ -855,7 +855,7 @@ function AdminContent() {
           >
             <div className="flex items-start justify-between border-b border-gray-100 pb-4">
               <div>
-                <span className="text-xs font-bold uppercase tracking-wider text-emerald-800">
+                <span className="text-xs font-bold uppercase tracking-wider text-brand-600">
                   Resit & Butiran Yuran Talebe
                 </span>
                 <h3 className="text-lg font-bold text-gray-900 mt-0.5">{selectedRecord.nama}</h3>
@@ -888,7 +888,7 @@ function AdminContent() {
                 </div>
                 <div>
                   <p className="text-xs text-gray-500">Jumlah Dibayar</p>
-                  <p className="font-bold text-emerald-800 mt-0.5">{formatRM(selectedRecord.jumlahBayar)}</p>
+                  <p className="font-bold text-brand-600 mt-0.5">{formatRM(selectedRecord.jumlahBayar)}</p>
                 </div>
                 <div>
                   <p className="text-xs text-gray-500">Kaedah Bayaran</p>
@@ -930,7 +930,7 @@ function AdminContent() {
               </button>
               <Link
                 href="/admin?tab=kwitansi"
-                className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-800 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-900 shadow-xs"
+                className="inline-flex items-center gap-1.5 rounded-xl bg-brand-600 px-4 py-2 text-xs font-semibold text-white hover:bg-brand-700 shadow-xs"
               >
                 <TicketIcon className="size-3.5" />
                 <span>Urus Kwitansi</span>
@@ -968,7 +968,7 @@ function AdminContent() {
                   <select
                     value={bayarBulan}
                     onChange={(e) => setBayarBulan(e.target.value)}
-                    className="mt-1 w-full rounded-xl border border-gray-300 px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
+                    className="mt-1 w-full rounded-xl border border-gray-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none"
                   >
                     <option>Oktober 2026</option>
                     <option>September 2026</option>
@@ -983,7 +983,7 @@ function AdminContent() {
                     type="number"
                     value={bayarJumlah}
                     onChange={(e) => setBayarJumlah(e.target.value)}
-                    className="mt-1 w-full rounded-xl border border-gray-300 px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
+                    className="mt-1 w-full rounded-xl border border-gray-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none"
                   />
                 </div>
               </div>
@@ -1019,7 +1019,7 @@ function AdminContent() {
                   setBayarNama("");
                   setShowBayarModal(false);
                 }}
-                className="rounded-xl bg-emerald-800 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-900 disabled:opacity-50"
+                className="rounded-xl bg-brand-600 px-4 py-2 text-xs font-semibold text-white hover:bg-brand-700 disabled:opacity-50"
               >
                 Simpan Bayaran
               </button>
@@ -1053,13 +1053,13 @@ function AdminContent() {
                   a.click();
                   URL.revokeObjectURL(url);
                 }}
-                className="font-semibold text-emerald-700 hover:underline"
+                className="font-semibold text-brand-600 hover:underline"
               >
                 Muat turun template
               </button>
             </p>
             <div className="mt-4">
-              <label className="block rounded-xl border-2 border-dashed border-gray-300 p-6 text-center cursor-pointer hover:border-emerald-500">
+              <label className="block rounded-xl border-2 border-dashed border-gray-300 p-6 text-center cursor-pointer hover:border-brand-500">
                 <UploadIcon className="mx-auto size-6 text-gray-400" />
                 <p className="mt-2 text-sm font-medium text-gray-700">Klik untuk pilih fail CSV</p>
                 <input
@@ -1096,7 +1096,7 @@ function AdminContent() {
                         <th className="px-3 py-2 text-right">Yuran</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-gray-100">
+                    <tbody className="divide-y divide-gray-100 dark:divide-[#212837]">
                       {importPreview.map((r) => (
                         <tr key={r.id}>
                           <td className="px-3 py-2">{r.nama}</td>
@@ -1125,7 +1125,7 @@ function AdminContent() {
                   setShowImportModal(false);
                   setImportPreview([]);
                 }}
-                className="rounded-xl bg-emerald-800 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-900 disabled:opacity-50"
+                className="rounded-xl bg-brand-600 px-4 py-2 text-xs font-semibold text-white hover:bg-brand-700 disabled:opacity-50"
               >
                 Import {importPreview.length > 0 ? `(${importPreview.length})` : ""}
               </button>

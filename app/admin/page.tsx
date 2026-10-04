@@ -174,7 +174,8 @@ function AdminContent() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedGroup, setSelectedGroup] = useState<string>("Semua");
   const [selectedStatus, setSelectedStatus] = useState<string>("Semua");
-  const [selectedMonth, setSelectedMonth] = useState("Oktober 2026");
+  const [selectedMonth, setSelectedMonth] = useState("Oktober");
+  const [selectedYear, setSelectedYear] = useState("2026");
   const [selectedRecord, setSelectedRecord] = useState<TalebeRecord | null>(null);
   const [showBayarModal, setShowBayarModal] = useState(false);
   const [bayarNama, setBayarNama] = useState("");
@@ -203,7 +204,7 @@ function AdminContent() {
         grup: (grup || "Mevlana HE") as TalebeRecord["grup"],
         yuranBulanan: yuran,
         jumlahBayar: 0,
-        bulanDibayar: selectedMonth,
+        bulanDibayar: `${selectedMonth} ${selectedYear}`,
         tanggal: "-",
         metodeBayar: "Belum Bayar",
         status: "Tunggakan",
@@ -215,6 +216,7 @@ function AdminContent() {
 
   // Penapisan rekod Talebe secara dinamik
   const filteredRecords = useMemo(() => {
+    const bulanTahun = `${selectedMonth} ${selectedYear}`;
     return records.filter((item) => {
       const matchSearch =
         item.nama.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -223,17 +225,25 @@ function AdminContent() {
 
       const matchGroup = selectedGroup === "Semua" || item.grup === selectedGroup;
       const matchStatus = selectedStatus === "Semua" || item.status === selectedStatus;
-      const matchMonth = item.bulanDibayar === selectedMonth;
+      const matchMonth = item.bulanDibayar === bulanTahun;
 
       return matchSearch && matchGroup && matchStatus && matchMonth;
     });
-  }, [records, searchQuery, selectedGroup, selectedStatus, selectedMonth]);
+  }, [records, searchQuery, selectedGroup, selectedStatus, selectedMonth, selectedYear]);
 
-  // Statistik Keseluruhan (KPI Math)
-  const totalTarget = 30000; // 60 siswa x RM 500
-  const totalPemasukan = 24500; // Total kutipan semasa
-  const totalTunggakan = 5500; // Baki tertunggak
-  const persentaseKutipan = (totalPemasukan / totalTarget) * 100; // 81.67%
+  // Statistik Keseluruhan (KPI Math) — ikut bulan & tahun yang dipilih
+  const kpiRecords = useMemo(() => {
+    const bulanTahun = `${selectedMonth} ${selectedYear}`;
+    return records.filter((item) => item.bulanDibayar === bulanTahun);
+  }, [records, selectedMonth, selectedYear]);
+  const totalTarget = kpiRecords.reduce((sum, r) => sum + r.yuranBulanan, 0);
+  const totalPemasukan = kpiRecords
+    .filter((r) => r.status === "Lunas")
+    .reduce((sum, r) => sum + r.jumlahBayar, 0);
+  const totalTunggakan = kpiRecords
+    .filter((r) => r.status === "Tunggakan")
+    .reduce((sum, r) => sum + (r.yuranBulanan - r.jumlahBayar), 0);
+  const persentaseKutipan = totalTarget > 0 ? (totalPemasukan / totalTarget) * 100 : 0;
 
   // Tab yang belum ada konten khusus
   if (tab === "penugasan" || tab === "persetujuan" || tab === "penyata") {
@@ -306,9 +316,31 @@ function AdminContent() {
               onChange={(e) => setSelectedMonth(e.target.value)}
               className="appearance-none rounded-xl border border-gray-300 bg-white py-2 pl-3 pr-8 text-xs font-semibold text-gray-700 shadow-2xs hover:border-gray-400 focus:border-emerald-600 focus:outline-hidden"
             >
-              <option value="Oktober 2026">Bulan: Oktober 2026</option>
-              <option value="September 2026">Bulan: September 2026</option>
-              <option value="Ogos 2026">Bulan: Ogos 2026</option>
+              <option value="Januari">Januari</option>
+              <option value="Februari">Februari</option>
+              <option value="Mac">Mac</option>
+              <option value="April">April</option>
+              <option value="Mei">Mei</option>
+              <option value="Jun">Jun</option>
+              <option value="Julai">Julai</option>
+              <option value="Ogos">Ogos</option>
+              <option value="September">September</option>
+              <option value="Oktober">Oktober</option>
+              <option value="November">November</option>
+              <option value="Disember">Disember</option>
+            </select>
+            <Calendar className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 size-3.5 text-gray-400" />
+          </div>
+          <div className="relative">
+            <select
+              value={selectedYear}
+              onChange={(e) => setSelectedYear(e.target.value)}
+              className="appearance-none rounded-xl border border-gray-300 bg-white py-2 pl-3 pr-8 text-xs font-semibold text-gray-700 shadow-2xs hover:border-gray-400 focus:border-emerald-600 focus:outline-hidden"
+            >
+              <option value="2024">2024</option>
+              <option value="2025">2025</option>
+              <option value="2026">2026</option>
+              <option value="2027">2027</option>
             </select>
             <Calendar className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 size-3.5 text-gray-400" />
           </div>
@@ -329,7 +361,7 @@ function AdminContent() {
               const url = URL.createObjectURL(blob);
               const a = document.createElement("a");
               a.href = url;
-              a.download = `yuran-${selectedMonth.replace(/\s+/g, "-").toLowerCase()}.csv`;
+              a.download = `yuran-${selectedMonth.toLowerCase()}-${selectedYear}.csv`;
               a.click();
               URL.revokeObjectURL(url);
             }}
@@ -832,7 +864,7 @@ function AdminContent() {
           <p>
             Menunjukkan <strong className="text-gray-900">{filteredRecords.length}</strong> daripada{" "}
             <strong className="text-gray-900">{records.length}</strong> rekod Talebe bagi bulan{" "}
-            <strong className="text-gray-900">{selectedMonth}</strong>.
+            <strong className="text-gray-900">{selectedMonth} {selectedYear}</strong>.
           </p>
           <div className="flex items-center gap-2">
             <span className="inline-block size-2 rounded-full bg-green-500" />
@@ -964,6 +996,8 @@ function AdminContent() {
                     <option>Oktober 2026</option>
                     <option>September 2026</option>
                     <option>Ogos 2026</option>
+                    <option>Oktober 2025</option>
+                    <option>Ogos 2025</option>
                   </select>
                 </div>
                 <div>
@@ -997,7 +1031,9 @@ function AdminContent() {
                     yuranBulanan: 500,
                     jumlahBayar: Number(bayarJumlah) || 500,
                     bulanDibayar: bayarBulan,
-                    tanggal: "04 Okt 2026",
+                    tanggal: `04 ${bayarBulan
+                      .replace("Oktober", "Okt")
+                      .replace("September", "Sep")}`,
                     metodeBayar: "Tunai (Kaunter)",
                     status: "Lunas",
                     statusAktif: true,

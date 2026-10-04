@@ -186,8 +186,13 @@ function AdminContent() {
   const persentaseKutipan = (totalPemasukan / totalTarget) * 100; // 81.67%
 
   // Tab yang belum ada konten khusus
-  if (tab === "penugasan" || tab === "persetujuan") {
-    const title = tab === "penugasan" ? "Penugasan Staf" : "Pengesahan Ibu Bapa";
+  if (tab === "penugasan" || tab === "persetujuan" || tab === "penyata") {
+    const titles: Record<string, string> = {
+      penugasan: "Penugasan Staf",
+      persetujuan: "Pengesahan Ibu Bapa",
+      penyata: "Penyata Bulanan",
+    };
+    const title = titles[tab] ?? "Modul";
     return (
       <div className="space-y-8">
         <div>
@@ -204,13 +209,24 @@ function AdminContent() {
   }
 
   const isDashboard = !tab;
-  // Untuk tab kwitansi & siswa, sorokkan ringkasan KPI/grup supaya fokus pada jadual
+  const isAliranKas = tab === "aliran-kas";
+  const isTransaksi = tab === "transaksi";
+  const isResit = tab === "resit";
+  // Untuk tab fokus jadual, sorokkan ringkasan KPI/grup supaya fokus pada kandungan tab
   const showSummary = isDashboard;
 
   const headerTitle =
-    tab === "kwitansi" ? "Aliran Kas & Yuran"
+    tab === "aliran-kas" ? "Aliran Kas & Yuran"
     : tab === "siswa" ? "Data Talebe (Siswa)"
+    : tab === "transaksi" ? "Transaksi Masuk"
+    : tab === "resit" ? "Resit & Kwitansi"
     : "Dasbor Pentadbiran Yuran";
+
+  const headerDesc =
+    tab === "aliran-kas" ? "Ringkasan aliran tunai masuk dan keluar kas asrama."
+    : tab === "transaksi" ? "Senarai semua pembayaran yuran yang diterima."
+    : tab === "resit" ? "Senarai resit dan kwitansi yang telah dimuat naik."
+    : "Sistem pengurusan yuran bulanan asrama Talebe, rekod kutipan kas, dan pengesahan status pembayaran.";
 
   return (
     <div className="space-y-8">
@@ -226,7 +242,7 @@ function AdminContent() {
             </span>
           </div>
           <p className="mt-1 text-sm text-gray-500">
-            Sistem pengurusan yuran bulanan asrama Talebe, rekod kutipan kas, dan pengesahan status pembayaran.
+            {headerDesc}
           </p>
         </div>
 
@@ -263,6 +279,52 @@ function AdminContent() {
           </Link>
         </div>
       </div>
+
+      {/* Ringkasan Aliran Kas (tab aliran-kas sahaja) */}
+      {isAliranKas && (
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
+        <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-xs">
+          <p className="text-xs font-semibold uppercase tracking-wider text-gray-500">Jumlah Masuk</p>
+          <p className="mt-2 text-2xl font-bold text-emerald-700">RM 24,500</p>
+          <p className="mt-1 text-xs text-gray-500">Oktober 2026 · 49 transaksi</p>
+        </div>
+        <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-xs">
+          <p className="text-xs font-semibold uppercase tracking-wider text-gray-500">Jumlah Keluar</p>
+          <p className="mt-2 text-2xl font-bold text-rose-700">RM 3,200</p>
+          <p className="mt-1 text-xs text-gray-500">Oktober 2026 · perbelanjaan operasi</p>
+        </div>
+        <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-xs">
+          <p className="text-xs font-semibold uppercase tracking-wider text-gray-500">Baki Bersih</p>
+          <p className="mt-2 text-2xl font-bold text-gray-900">RM 21,300</p>
+          <p className="mt-1 text-xs text-gray-500">Masuk tolak keluar bulan ini</p>
+        </div>
+      </div>
+      )}
+
+      {/* Senarai Resit (tab resit sahaja) */}
+      {isResit && (
+      <div className="rounded-2xl border border-gray-200 bg-white shadow-xs overflow-hidden">
+        <div className="p-5 border-b border-gray-100">
+          <h2 className="text-base font-bold text-gray-900">Resit & Kwitansi Terkini</h2>
+          <p className="mt-1 text-xs text-gray-500">Dokumen bukti pembayaran yang dimuat naik.</p>
+        </div>
+        <ul className="divide-y divide-gray-100">
+          {[
+            { no: "R-2026-1042", siswa: "Ahmad bin Ali", jumlah: "RM 500", tarikh: "02 Okt 2026" },
+            { no: "R-2026-1041", siswa: "Siti binti Hassan", jumlah: "RM 500", tarikh: "02 Okt 2026" },
+            { no: "R-2026-1040", siswa: "Mohd Rizal", jumlah: "RM 500", tarikh: "01 Okt 2026" },
+          ].map((r) => (
+            <li key={r.no} className="flex items-center justify-between p-5">
+              <div>
+                <p className="text-sm font-semibold text-gray-900">{r.no} · {r.siswa}</p>
+                <p className="mt-0.5 text-xs text-gray-500">{r.tarikh}</p>
+              </div>
+              <span className="text-sm font-bold text-gray-900">{r.jumlah}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      )}
 
       {/* 2. Empat Kotak Ringkasan KPI (KPI Cards) */}
       {showSummary && (

@@ -38,14 +38,14 @@ const navigation: NavSection[] = [
     title: "Ringkasan",
     items: [
       { name: "Dasbor Utama", href: "/admin", icon: LayoutDashboard },
-      { name: "Aliran Kas & Yuran", href: "/admin?tab=kwitansi", icon: Wallet },
+      { name: "Aliran Kas & Yuran", href: "/admin?tab=aliran-kas", icon: Wallet },
     ],
   },
   {
     title: "Pengurusan (Manage)",
     items: [
       { name: "Data Talebe (Siswa)", href: "/admin?tab=siswa", icon: Users },
-      { name: "Transaksi Masuk", href: "/admin?tab=kwitansi", icon: CreditCard },
+      { name: "Transaksi Masuk", href: "/admin?tab=transaksi", icon: CreditCard },
       { name: "Penugasan Staf", href: "/admin?tab=penugasan", icon: Building2 },
       { name: "Pengesahan Ibu Bapa", href: "/admin?tab=persetujuan", icon: UserCheck, badge: "Pending" },
     ],
@@ -53,8 +53,8 @@ const navigation: NavSection[] = [
   {
     title: "Laporan (Reporting)",
     items: [
-      { name: "Resit & Kwitansi", href: "/admin?tab=kwitansi", icon: Receipt },
-      { name: "Penyata Bulanan", href: "/admin?tab=kwitansi", icon: FileSpreadsheet },
+      { name: "Resit & Kwitansi", href: "/admin?tab=resit", icon: Receipt },
+      { name: "Penyata Bulanan", href: "/admin?tab=penyata", icon: FileSpreadsheet },
     ],
   },
 ];

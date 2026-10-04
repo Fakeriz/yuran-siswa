@@ -4,11 +4,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev -p 3000 -H 0.0.0.0",
     "build": "next build",
-    "build:pages": "next-on-pages",
     "start": "next start",
     "test": "vitest run",
+    "lint": "tsc --noEmit",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

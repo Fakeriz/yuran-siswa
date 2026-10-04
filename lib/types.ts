@@ -32,6 +32,6 @@ export interface Payment {
   tanggal_bayar: string;
   bukti_drive_file_id: string;
   kwitansi_drive_file_id: string | null;
-  dicatat_oleh: string;
+  dicatat_oleh: string | null;
   catatan: string | null;
 }

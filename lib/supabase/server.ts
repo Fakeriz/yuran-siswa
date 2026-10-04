@@ -13,7 +13,11 @@ export async function createClient({ readOnly = true }: { readOnly?: boolean } =
         // Server Components cannot write cookies; middleware refreshes their session.
         if (readOnly) return;
         for (const { name, value, options } of cookiesToSet) {
-          cookieStore.set(name, value, options);
+          cookieStore.set(name, value, {
+            ...options,
+            sameSite: "none",
+            secure: true,
+          });
         }
       },
     },

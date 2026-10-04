@@ -1,0 +1,5 @@
+{
+  "name": "Yuran Siswa",
+  "description": "Aplikasi web pencatat yuran bulanan siswa",
+  "capabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

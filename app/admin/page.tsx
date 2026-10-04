@@ -38,6 +38,25 @@ export interface TalebeRecord {
   statusAktif: boolean; // Status_Aktif
 }
 
+// Pisahkan "bin/binti Fulan" ke baris bawah bergabung dengan grup
+function NamaTalebe({ nama, grup }: { nama: string; grup: string }) {
+  const m = nama.match(/^(.*?)\s+(bin|binti|bt)\s+(.+)$/i);
+  const namaUtama = m ? m[1].trim() : nama;
+  const patronimik = m ? `${m[2].toLowerCase()} ${m[3].trim()}` : null;
+  return (
+    <>
+      <div className="font-semibold text-gray-900">{namaUtama}</div>
+      <div className="text-xs text-gray-500 mt-0.5">
+        {patronimik && <span>{patronimik} · </span>}
+        <span className="text-emerald-800 font-medium inline-flex items-center gap-1">
+          <Building2 className="size-3" />
+          {grup}
+        </span>
+      </div>
+    </>
+  );
+}
+
 // Data statis (dummy data) yang menyerupai yuran RM 500/bulan bagi 60 siswa
 const initialTalebeData: TalebeRecord[] = [
   {
@@ -679,11 +698,7 @@ function AdminContent() {
                           </td>
                           {/* Nama & Grup */}
                           <td className="px-5 py-4">
-                            <div className="font-semibold text-gray-900">{item.nama}</div>
-                            <div className="text-xs text-emerald-800 font-medium flex items-center gap-1 mt-0.5">
-                              <Building2 className="size-3" />
-                              <span>{item.grup}</span>
-                            </div>
+                            <NamaTalebe nama={item.nama} grup={item.grup} />
                           </td>
                           {/* Yuran Bulanan */}
                           <td className="px-5 py-4 text-right whitespace-nowrap font-medium text-gray-900">
@@ -733,11 +748,7 @@ function AdminContent() {
 
                       {/* Nama Talebe & Grup */}
                       <td className="px-5 py-4">
-                        <div className="font-semibold text-gray-900">{item.nama}</div>
-                        <div className="text-xs text-emerald-800 font-medium flex items-center gap-1 mt-0.5">
-                          <Building2 className="size-3" />
-                          <span>{item.grup}</span>
-                        </div>
+                        <NamaTalebe nama={item.nama} grup={item.grup} />
                       </td>
 
                       {/* Yuran Bulanan */}

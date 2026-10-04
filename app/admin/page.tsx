@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useState, useMemo } from "react";
+import { Suspense, useState, useMemo, useRef, useCallback, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import {
@@ -22,6 +22,11 @@ import {
   RefreshCw,
 } from "lucide-react";
 import { FileUpload, type FileUploadItem } from "../../components/file-upload";
+import {
+  CenterMorphModal,
+  CenterMorphModalClose,
+  CenterMorphModalContent,
+} from "../../components/center-morph-modal";
 
 // Struktur jenis data berasaskan skema logik Data_Talebe & Transaksi_Masuk
 export interface TalebeRecord {
@@ -177,6 +182,8 @@ function AdminContent() {
   const [selectedStatus, setSelectedStatus] = useState<string>("Semua");
   const [selectedMonth, setSelectedMonth] = useState("Oktober 2026");
   const [selectedRecord, setSelectedRecord] = useState<TalebeRecord | null>(null);
+  const [recordOpen, setRecordOpen] = useState(false);
+  const recordCloseTimer = useRef<number | null>(null);
   const [showBayarModal, setShowBayarModal] = useState(false);
   const [bayarNama, setBayarNama] = useState("");
   const [bayarJumlah, setBayarJumlah] = useState("500");
@@ -257,16 +264,58 @@ function AdminContent() {
     processImportFile(item);
   };
 
-  const closeImportModal = () => {
+  const importCloseTimer = useRef<number | null>(null);
+
+  // Tutup modal dahulu, kosongkan data selepas animasi tutup selesai
+  // supaya kandungan tidak hilang semasa panel mengecut.
+  const closeImportModal = useCallback(() => {
     setShowImportModal(false);
-    setImportPreview([]);
-    setUploadItems([]);
-  };
+    if (importCloseTimer.current) window.clearTimeout(importCloseTimer.current);
+    importCloseTimer.current = window.setTimeout(() => {
+      setImportPreview([]);
+      setUploadItems([]);
+    }, 460);
+  }, []);
+
+  const handleImportOpenChange = useCallback(
+    (o: boolean) => {
+      if (!o) closeImportModal();
+    },
+    [closeImportModal],
+  );
 
   const confirmImport = () => {
     setRecords((r) => [...importPreview, ...r]);
     closeImportModal();
   };
+
+  const openRecordModal = useCallback((item: TalebeRecord) => {
+    if (recordCloseTimer.current) window.clearTimeout(recordCloseTimer.current);
+    setSelectedRecord(item);
+    setRecordOpen(true);
+  }, []);
+
+  const closeRecordModal = useCallback(() => {
+    setRecordOpen(false);
+    if (recordCloseTimer.current) window.clearTimeout(recordCloseTimer.current);
+    recordCloseTimer.current = window.setTimeout(() => setSelectedRecord(null), 460);
+  }, []);
+
+  const handleRecordOpenChange = useCallback(
+    (o: boolean) => {
+      if (!o) closeRecordModal();
+    },
+    [closeRecordModal],
+  );
+
+  // Bersihkan timer bila komponen unmount
+  useEffect(
+    () => () => {
+      if (importCloseTimer.current) window.clearTimeout(importCloseTimer.current);
+      if (recordCloseTimer.current) window.clearTimeout(recordCloseTimer.current);
+    },
+    [],
+  );
 
   // Penapisan rekod Talebe secara dinamik
   const filteredRecords = useMemo(() => {
@@ -725,7 +774,7 @@ function AdminContent() {
                     <tr
                       key={item.id}
                       className="hover:bg-gray-50/80 dark:hover:bg-slate-800/50 transition-colors group cursor-pointer"
-                      onClick={() => setSelectedRecord(item)}
+                      onClick={() => openRecordModal(item)}
                     >
                       {isSiswa ? (
                         <>
@@ -771,7 +820,7 @@ function AdminContent() {
                           <td className="px-5 py-4 whitespace-nowrap text-center" onClick={(e) => e.stopPropagation()}>
                             <button
                               type="button"
-                              onClick={() => setSelectedRecord(item)}
+                              onClick={() => openRecordModal(item)}
                               className="inline-flex items-center gap-1 rounded-lg p-1.5 text-gray-500 hover:text-emerald-800 hover:bg-emerald-50 transition-colors dark:text-slate-400 dark:hover:text-emerald-300 dark:hover:bg-slate-800"
                               title="Lihat Butiran"
                             >
@@ -853,7 +902,7 @@ function AdminContent() {
                       <td className="px-5 py-4 whitespace-nowrap text-center" onClick={(e) => e.stopPropagation()}>
                         <button
                           type="button"
-                          onClick={() => setSelectedRecord(item)}
+                          onClick={() => openRecordModal(item)}
                           className="inline-flex items-center gap-1 rounded-lg p-1.5 text-gray-500 hover:text-emerald-800 hover:bg-emerald-50 transition-colors dark:text-slate-400 dark:hover:text-emerald-300 dark:hover:bg-slate-800"
                           title="Lihat Butiran Resit"
                         >
@@ -885,15 +934,14 @@ function AdminContent() {
       </div>
 
       {/* 5. Modal / Dialog Butiran Transaksi Talebe */}
-      {selectedRecord && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/60 p-4 backdrop-blur-xs">
-          <div
-            className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl border border-gray-200 dark:bg-slate-900 dark:border-slate-800"
-            role="dialog"
-            aria-modal="true"
-          >
-            <div className="flex items-start justify-between border-b border-gray-100 pb-4 dark:border-slate-800">
-              <div>
+      <CenterMorphModal open={recordOpen} onOpenChange={handleRecordOpenChange}>
+        <CenterMorphModalContent
+          ariaLabel="Butiran Transaksi Talebe"
+          className="max-w-lg p-6"
+        >
+          {selectedRecord && (
+            <>
+              <div className="border-b border-gray-100 pb-4 pr-10 dark:border-slate-800">
                 <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
                   Resit & Butiran Yuran Talebe
                 </span>
@@ -902,14 +950,6 @@ function AdminContent() {
                   {selectedRecord.noTransaksi} · {selectedRecord.id}
                 </p>
               </div>
-              <button
-                type="button"
-                onClick={() => setSelectedRecord(null)}
-                className="rounded-lg p-1.5 text-gray-400 hover:text-gray-700 hover:bg-gray-100 dark:text-slate-400 dark:hover:text-slate-200 dark:hover:bg-slate-800"
-              >
-                ✕
-              </button>
-            </div>
 
             <div className="mt-5 space-y-4 text-sm">
               <div className="grid grid-cols-2 gap-4 rounded-xl bg-gray-50 p-4 border border-gray-100 dark:bg-slate-800/60 dark:border-slate-800">
@@ -960,13 +1000,14 @@ function AdminContent() {
             </div>
 
             <div className="mt-6 flex items-center justify-end gap-3 pt-4 border-t border-gray-100 dark:border-slate-800">
-              <button
-                type="button"
-                onClick={() => setSelectedRecord(null)}
-                className="rounded-xl border border-gray-300 px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
-              >
-                Tutup
-              </button>
+              <CenterMorphModalClose>
+                <button
+                  type="button"
+                  className="rounded-xl border border-gray-300 px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
+                >
+                  Tutup
+                </button>
+              </CenterMorphModalClose>
               <Link
                 href="/admin?tab=kwitansi"
                 className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 px-4 py-2 text-xs font-semibold text-white shadow-sm shadow-emerald-950/30 transition-all active:scale-[0.98]"
@@ -975,14 +1016,17 @@ function AdminContent() {
                 <span>Urus Kwitansi</span>
               </Link>
             </div>
-          </div>
-        </div>
-      )}
+            </>
+          )}
+        </CenterMorphModalContent>
+      </CenterMorphModal>
 
       {/* Modal Catat Bayaran */}
-      {showBayarModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl border border-gray-200 dark:bg-slate-900 dark:border-slate-800">
+      <CenterMorphModal open={showBayarModal} onOpenChange={setShowBayarModal}>
+        <CenterMorphModalContent
+          ariaLabel="Catat Bayaran Baru"
+          className="max-w-md p-6"
+        >
             <h2 className="text-lg font-bold text-gray-900 dark:text-slate-100">Catat Bayaran Baru</h2>
             <p className="mt-1 text-xs text-gray-500 dark:text-slate-400">Rekod pembayaran yuran bulanan talebe.</p>
             <div className="mt-4 space-y-4">
@@ -1021,13 +1065,14 @@ function AdminContent() {
               </div>
             </div>
             <div className="mt-6 flex justify-end gap-3">
-              <button
-                type="button"
-                onClick={() => setShowBayarModal(false)}
-                className="rounded-xl border border-gray-300 px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
-              >
-                Batal
-              </button>
+              <CenterMorphModalClose>
+                <button
+                  type="button"
+                  className="rounded-xl border border-gray-300 px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
+                >
+                  Batal
+                </button>
+              </CenterMorphModalClose>
               <button
                 type="button"
                 disabled={!bayarNama.trim()}
@@ -1046,28 +1091,23 @@ function AdminContent() {
                     statusAktif: true,
                   };
                   setRecords((r) => [baru, ...r]);
-                  setBayarNama("");
                   setShowBayarModal(false);
+                  window.setTimeout(() => setBayarNama(""), 460);
                 }}
                 className="rounded-xl bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 px-4 py-2 text-xs font-semibold text-white shadow-sm shadow-emerald-950/30 transition-all active:scale-[0.98] disabled:opacity-50"
               >
                 Simpan Bayaran
               </button>
             </div>
-          </div>
-        </div>
-      )}
+        </CenterMorphModalContent>
+      </CenterMorphModal>
 
       {/* Modal Import Siswa */}
-      {showImportModal && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm"
-          onClick={closeImportModal}
+      <CenterMorphModal open={showImportModal} onOpenChange={handleImportOpenChange}>
+        <CenterMorphModalContent
+          ariaLabel="Import Data Siswa"
+          className="max-w-lg p-6"
         >
-          <div
-            className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl border border-gray-200 dark:bg-slate-900 dark:border-slate-800"
-            onClick={(e) => e.stopPropagation()}
-          >
             <h2 className="text-lg font-bold text-gray-900 dark:text-slate-100">Import Data Siswa</h2>
             <p className="mt-1 text-xs text-gray-500 dark:text-slate-400">
               Muat naik fail CSV mengikut template.{" "}
@@ -1127,13 +1167,14 @@ function AdminContent() {
               )}
             </div>
             <div className="mt-6 flex justify-end gap-3">
-              <button
-                type="button"
-                onClick={closeImportModal}
-                className="rounded-xl border border-gray-300 px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
-              >
-                Batal
-              </button>
+              <CenterMorphModalClose>
+                <button
+                  type="button"
+                  className="rounded-xl border border-gray-300 px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
+                >
+                  Batal
+                </button>
+              </CenterMorphModalClose>
               <button
                 type="button"
                 disabled={importPreview.length === 0}
@@ -1143,9 +1184,8 @@ function AdminContent() {
                 Import {importPreview.length > 0 ? `(${importPreview.length})` : ""}
               </button>
             </div>
-          </div>
-        </div>
-      )}
+        </CenterMorphModalContent>
+      </CenterMorphModal>
     </div>
   );
 }

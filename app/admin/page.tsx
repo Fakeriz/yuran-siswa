@@ -17,7 +17,6 @@ import {
   CheckCircle2,
   Clock,
   ArrowUpDown,
-  Building2,
   Calendar,
   Eye,
   RefreshCw,
@@ -510,7 +509,6 @@ function AdminContent() {
         <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-2xs">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Building2 className="size-4 text-emerald-800" />
               <span className="font-bold text-sm text-gray-900">Mevlana HE</span>
             </div>
             <span className="text-xs font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-md">
@@ -523,7 +521,6 @@ function AdminContent() {
         <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-2xs">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Building2 className="size-4 text-emerald-800" />
               <span className="font-bold text-sm text-gray-900">Razi HE</span>
             </div>
             <span className="text-xs font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-md">
@@ -536,7 +533,6 @@ function AdminContent() {
         <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-2xs">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Building2 className="size-4 text-emerald-800" />
               <span className="font-bold text-sm text-gray-900">Fatih HE</span>
             </div>
             <span className="text-xs font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-md">
@@ -700,8 +696,7 @@ function AdminContent() {
                           </td>
                           {/* Grup */}
                           <td className="px-5 py-4 whitespace-nowrap">
-                            <span className="inline-flex items-center gap-1 text-xs font-medium text-emerald-800">
-                              <Building2 className="size-3" />
+                            <span className="text-xs font-medium text-emerald-800">
                               {item.grup}
                             </span>
                           </td>
@@ -757,8 +752,7 @@ function AdminContent() {
                       </td>
                       {/* Grup */}
                       <td className="px-5 py-4 whitespace-nowrap">
-                        <span className="inline-flex items-center gap-1 text-xs font-medium text-emerald-800">
-                          <Building2 className="size-3" />
+                        <span className="text-xs font-medium text-emerald-800">
                           {item.grup}
                         </span>
                       </td>

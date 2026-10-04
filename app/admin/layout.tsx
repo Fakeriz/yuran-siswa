@@ -3,23 +3,7 @@
 import { useState, useEffect, Suspense, type ReactNode } from "react";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
-import {
-  LayoutDashboard,
-  Users,
-  CreditCard,
-  Receipt,
-  FileSpreadsheet,
-  UserCheck,
-  Building2,
-  Bell,
-  Menu,
-  X,
-  LogOut,
-  ShieldCheck,
-  ChevronRight,
-  School,
-  Wallet,
-} from "lucide-react";
+import { HomeIcon, UsersIcon, WalletIcon, TicketIcon, DocumentIcon, AddUserIcon, NotificationIcon, CategoryIcon, CloseSquareIcon, LogoutIcon, ShieldDoneIcon, ArrowRightIcon, SchoolIcon } from "@/components/icons";
 
 interface NavItem {
   name: string;
@@ -37,24 +21,24 @@ const navigation: NavSection[] = [
   {
     title: "Ringkasan",
     items: [
-      { name: "Dasbor Utama", href: "/admin", icon: LayoutDashboard },
-      { name: "Aliran Kas & Yuran", href: "/admin?tab=aliran-kas", icon: Wallet },
+      { name: "Dasbor Utama", href: "/admin", icon: HomeIcon },
+      { name: "Aliran Kas & Yuran", href: "/admin?tab=aliran-kas", icon: WalletIcon },
     ],
   },
   {
     title: "Pengurusan (Manage)",
     items: [
-      { name: "Data Talebe (Siswa)", href: "/admin?tab=siswa", icon: Users },
-      { name: "Transaksi Masuk", href: "/admin?tab=transaksi", icon: CreditCard },
-      { name: "Penugasan Staf", href: "/admin?tab=penugasan", icon: Building2 },
-      { name: "Pengesahan Ibu Bapa", href: "/admin?tab=persetujuan", icon: UserCheck, badge: "Pending" },
+      { name: "Data Talebe (Siswa)", href: "/admin?tab=siswa", icon: UsersIcon },
+      { name: "Transaksi Masuk", href: "/admin?tab=transaksi", icon: WalletIcon },
+      { name: "Penugasan Staf", href: "/admin?tab=penugasan", icon: SchoolIcon },
+      { name: "Pengesahan Ibu Bapa", href: "/admin?tab=persetujuan", icon: AddUserIcon, badge: "Pending" },
     ],
   },
   {
     title: "Laporan (Reporting)",
     items: [
-      { name: "Resit & Kwitansi", href: "/admin?tab=resit", icon: Receipt },
-      { name: "Penyata Bulanan", href: "/admin?tab=penyata", icon: FileSpreadsheet },
+      { name: "Resit & Kwitansi", href: "/admin?tab=resit", icon: TicketIcon },
+      { name: "Penyata Bulanan", href: "/admin?tab=penyata", icon: DocumentIcon },
     ],
   },
 ];
@@ -133,9 +117,9 @@ function Breadcrumb() {
   return (
     <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-500 font-medium">
       <span className="text-gray-800 font-semibold">YuranKu</span>
-      <ChevronRight className="size-3.5 text-gray-400" />
+      <ArrowRightIcon className="size-3.5 text-gray-400" />
       <span>Pentadbiran</span>
-      <ChevronRight className="size-3.5 text-gray-400" />
+      <ArrowRightIcon className="size-3.5 text-gray-400" />
       <span className="text-emerald-800 font-semibold">{current}</span>
     </div>
   );
@@ -189,7 +173,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
         <div className="flex h-18 items-center justify-between px-6 border-b border-gray-100">
           <Link href="/admin" className="flex items-center gap-3 group focus-visible:outline-emerald-600">
             <div className="flex size-10 items-center justify-center rounded-xl bg-emerald-800 text-white shadow-xs group-hover:bg-emerald-900 transition-colors">
-              <School className="size-5" />
+              <SchoolIcon className="size-5" />
             </div>
             <div>
               <div className="flex items-center gap-1.5">
@@ -208,7 +192,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
             className="lg:hidden p-1.5 text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-lg"
             aria-label="Tutup navigasi"
           >
-            <X className="size-5" />
+            <CloseSquareIcon className="size-5" />
           </button>
         </div>
 
@@ -226,7 +210,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
             <div className="min-w-0 flex-1">
               <p className="text-xs font-semibold text-gray-900 truncate">Pegawai Tata Usaha</p>
               <p className="text-[11px] text-gray-500 truncate flex items-center gap-1">
-                <ShieldCheck className="size-3 text-emerald-600 shrink-0" />
+                <ShieldDoneIcon className="size-3 text-emerald-600 shrink-0" />
                 Pentadbir Sistem
               </p>
             </div>
@@ -235,7 +219,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
               title="Keluar / Log Masuk Semula"
               className="text-gray-400 hover:text-rose-600 p-1 rounded-lg transition-colors"
             >
-              <LogOut className="size-4" />
+              <LogoutIcon className="size-4" />
             </Link>
           </div>
         </div>
@@ -252,7 +236,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
               className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-xl lg:hidden focus-visible:outline-emerald-600"
               aria-label="Buka menu navigasi"
             >
-              <Menu className="size-5" />
+              <CategoryIcon className="size-5" />
             </button>
 
             {/* Breadcrumb Navigation */}
@@ -301,7 +285,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                 className="relative p-2 text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-xl transition-colors"
                 aria-label="Pemberitahuan sistem"
               >
-                <Bell className="size-4.5" />
+                <NotificationIcon className="size-4.5" />
                 {unreadCount > 0 && (
                   <span className="absolute top-1 right-1 flex size-4 items-center justify-center rounded-full bg-rose-500 text-[9px] font-bold text-white">
                     {unreadCount}
@@ -349,7 +333,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
               href="/admin?tab=resit"
               className="hidden md:inline-flex items-center gap-2 rounded-xl bg-emerald-800 px-3.5 py-2 text-xs font-semibold text-white shadow-xs hover:bg-emerald-900 transition-colors focus-visible:outline-emerald-600"
             >
-              <CreditCard className="size-3.5" />
+              <WalletIcon className="size-3.5" />
               <span>Kwitansi & Bayaran</span>
             </Link>
           </div>

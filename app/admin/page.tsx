@@ -3,24 +3,7 @@
 import { Suspense, useState, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import {
-  TrendingUp,
-  Target,
-  AlertCircle,
-  PieChart,
-  Search,
-  Filter,
-  Download,
-  Upload,
-  Plus,
-  Receipt,
-  CheckCircle2,
-  Clock,
-  ArrowUpDown,
-  Calendar,
-  Eye,
-  RefreshCw,
-} from "lucide-react";
+import { ChartIcon, DiscoveryIcon, DangerIcon, SearchIcon, FilterIcon, DownloadIcon, UploadIcon, PlusIcon, TicketIcon, TickSquareIcon, TimeCircleIcon, SwapIcon, CalendarIcon, HideIcon } from "@/components/icons";
 
 // Struktur jenis data berasaskan skema logik Data_Talebe & Transaksi_Masuk
 export interface TalebeRecord {
@@ -329,7 +312,7 @@ function AdminContent() {
               <option value="November">November</option>
               <option value="Disember">Disember</option>
             </select>
-            <Calendar className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 size-3.5 text-gray-400" />
+            <CalendarIcon className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 size-3.5 text-gray-400" />
           </div>
           <div className="relative">
             <select
@@ -342,7 +325,7 @@ function AdminContent() {
               <option value="2026">2026</option>
               <option value="2027">2027</option>
             </select>
-            <Calendar className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 size-3.5 text-gray-400" />
+            <CalendarIcon className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 size-3.5 text-gray-400" />
           </div>
 
           <button
@@ -367,7 +350,7 @@ function AdminContent() {
             }}
             className="inline-flex items-center gap-1.5 rounded-xl border border-gray-300 bg-white px-3.5 py-2 text-xs font-semibold text-gray-700 shadow-2xs hover:bg-gray-50 hover:text-gray-900 transition-colors"
           >
-            <Download className="size-3.5 text-gray-500" />
+            <DownloadIcon className="size-3.5 text-gray-500" />
             <span>Eksport Data</span>
           </button>
 
@@ -376,7 +359,7 @@ function AdminContent() {
             onClick={() => setShowImportModal(true)}
             className="inline-flex items-center gap-1.5 rounded-xl border border-gray-300 bg-white px-3.5 py-2 text-xs font-semibold text-gray-700 shadow-2xs hover:bg-gray-50 hover:text-gray-900 transition-colors"
           >
-            <Upload className="size-3.5 text-gray-500" />
+            <UploadIcon className="size-3.5 text-gray-500" />
             <span>Import Siswa</span>
           </button>
 
@@ -385,7 +368,7 @@ function AdminContent() {
             onClick={() => setShowBayarModal(true)}
             className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-800 px-3.5 py-2 text-xs font-semibold text-white shadow-xs hover:bg-emerald-900 transition-colors focus-visible:outline-emerald-600"
           >
-            <Plus className="size-4" />
+            <PlusIcon className="size-4" />
             <span>Catat Bayaran</span>
           </button>
         </div>
@@ -447,7 +430,7 @@ function AdminContent() {
               Total Pemasukan Kas
             </span>
             <div className="rounded-xl bg-emerald-50 p-2 text-emerald-800 border border-emerald-100">
-              <TrendingUp className="size-5" />
+              <ChartIcon className="size-5" />
             </div>
           </div>
           <div className="mt-4">
@@ -463,14 +446,14 @@ function AdminContent() {
           </div>
         </div>
 
-        {/* KPI 2: Target Pemasukan */}
+        {/* KPI 2: DiscoveryIcon Pemasukan */}
         <div className="relative overflow-hidden rounded-2xl border border-gray-200 bg-white p-5 shadow-xs transition-shadow hover:shadow-md">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold tracking-wide text-gray-500 uppercase">
-              Target Pemasukan
+              DiscoveryIcon Pemasukan
             </span>
             <div className="rounded-xl bg-blue-50 p-2 text-blue-800 border border-blue-100">
-              <Target className="size-5" />
+              <DiscoveryIcon className="size-5" />
             </div>
           </div>
           <div className="mt-4">
@@ -490,7 +473,7 @@ function AdminContent() {
               Total Tunggakan
             </span>
             <div className="rounded-xl bg-rose-50 p-2 text-rose-800 border border-rose-100">
-              <AlertCircle className="size-5" />
+              <DangerIcon className="size-5" />
             </div>
           </div>
           <div className="mt-4">
@@ -513,7 +496,7 @@ function AdminContent() {
               Kutipan Yuran
             </span>
             <div className="rounded-xl bg-indigo-50 p-2 text-indigo-800 border border-indigo-100">
-              <PieChart className="size-5" />
+              <ChartIcon className="size-5" />
             </div>
           </div>
           <div className="mt-4">
@@ -582,7 +565,7 @@ function AdminContent() {
         <div className="p-5 border-b border-gray-100 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between bg-white">
           {/* Carian Input */}
           <div className="relative flex-1 max-w-md">
-            <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 size-4 text-gray-400" />
+            <SearchIcon className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 size-4 text-gray-400" />
             <input
               type="text"
               placeholder="Cari nama talebe, ID atau no. transaksi..."
@@ -592,9 +575,9 @@ function AdminContent() {
             />
           </div>
 
-          {/* Kumpulan & Status Filter Controls */}
+          {/* Kumpulan & Status FilterIcon Controls */}
           <div className="flex flex-wrap items-center gap-2">
-            {/* Filter Kumpulan (Grup) */}
+            {/* FilterIcon Kumpulan (Grup) */}
             <div className="flex items-center gap-1 rounded-xl bg-gray-100 p-1 border border-gray-200/80">
               {(["Semua", "Mevlana HE", "Razi HE", "Fatih HE"] as const).map((group) => (
                 <button
@@ -612,7 +595,7 @@ function AdminContent() {
               ))}
             </div>
 
-            {/* Filter Status Pembayaran */}
+            {/* FilterIcon Status Pembayaran */}
             <div className="flex items-center gap-1 rounded-xl bg-gray-100 p-1 border border-gray-200/80">
               {(["Semua", "Lunas", "Tunggakan", "Sebahagian"] as const).map((status) => (
                 <button
@@ -686,7 +669,7 @@ function AdminContent() {
                   <td colSpan={isSiswa ? 7 : 9} className="px-6 py-12 text-center">
                     <div className="flex flex-col items-center justify-center">
                       <div className="rounded-full bg-gray-100 p-3 text-gray-400">
-                        <Search className="size-6" />
+                        <SearchIcon className="size-6" />
                       </div>
                       <p className="mt-3 text-sm font-semibold text-gray-900">Tiada rekod dijumpai</p>
                       <p className="text-xs text-gray-500">
@@ -740,12 +723,12 @@ function AdminContent() {
                           <td className="px-5 py-4 whitespace-nowrap text-center">
                             {item.status === "Lunas" ? (
                               <span className="inline-flex items-center gap-1 rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-semibold text-green-800 border border-green-200">
-                                <CheckCircle2 className="size-3 text-green-700" />
+                                <TickSquareIcon className="size-3 text-green-700" />
                                 <span>Lunas</span>
                               </span>
                             ) : (
                               <span className="inline-flex items-center gap-1 rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-semibold text-red-800 border border-red-200">
-                                <AlertCircle className="size-3 text-red-700" />
+                                <DangerIcon className="size-3 text-red-700" />
                                 <span>{item.status}</span>
                               </span>
                             )}
@@ -764,7 +747,7 @@ function AdminContent() {
                               className="inline-flex items-center gap-1 rounded-lg p-1.5 text-gray-500 hover:text-emerald-800 hover:bg-emerald-50 transition-colors"
                               title="Lihat Butiran"
                             >
-                              <Eye className="size-4" />
+                              <HideIcon className="size-4" />
                             </button>
                           </td>
                         </>
@@ -818,21 +801,21 @@ function AdminContent() {
                       <td className="px-5 py-4 whitespace-nowrap text-center">
                         {item.status === "Lunas" && (
                           <span className="inline-flex items-center gap-1 rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-semibold text-green-800 border border-green-200">
-                            <CheckCircle2 className="size-3 text-green-700" />
+                            <TickSquareIcon className="size-3 text-green-700" />
                             <span>Lunas</span>
                           </span>
                         )}
 
                         {item.status === "Tunggakan" && (
                           <span className="inline-flex items-center gap-1 rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-semibold text-red-800 border border-red-200">
-                            <AlertCircle className="size-3 text-red-700" />
+                            <DangerIcon className="size-3 text-red-700" />
                             <span>Tunggakan</span>
                           </span>
                         )}
 
                         {item.status === "Sebahagian" && (
                           <span className="inline-flex items-center gap-1 rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-semibold text-yellow-800 border border-yellow-200">
-                            <Clock className="size-3 text-yellow-700" />
+                            <TimeCircleIcon className="size-3 text-yellow-700" />
                             <span>Sebahagian</span>
                           </span>
                         )}
@@ -846,7 +829,7 @@ function AdminContent() {
                           className="inline-flex items-center gap-1 rounded-lg p-1.5 text-gray-500 hover:text-emerald-800 hover:bg-emerald-50 transition-colors"
                           title="Lihat Butiran Resit"
                         >
-                          <Eye className="size-4" />
+                          <HideIcon className="size-4" />
                         </button>
                       </td>
                         </>
@@ -960,7 +943,7 @@ function AdminContent() {
                 href="/admin?tab=kwitansi"
                 className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-800 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-900 shadow-xs"
               >
-                <Receipt className="size-3.5" />
+                <TicketIcon className="size-3.5" />
                 <span>Urus Kwitansi</span>
               </Link>
             </div>
@@ -1077,7 +1060,7 @@ function AdminContent() {
             </p>
             <div className="mt-4">
               <label className="block rounded-xl border-2 border-dashed border-gray-300 p-6 text-center cursor-pointer hover:border-emerald-500">
-                <Upload className="mx-auto size-6 text-gray-400" />
+                <UploadIcon className="mx-auto size-6 text-gray-400" />
                 <p className="mt-2 text-sm font-medium text-gray-700">Klik untuk pilih fail CSV</p>
                 <input
                   type="file"

@@ -1,18 +1,25 @@
 "use client";
 
-import { useActionState, useState, useTransition } from "react";
+import { useActionState, useEffect, useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import { login, loginDemo } from "./actions";
 
 export function LoginForm() {
-  const [state, action, pending] = useActionState(login, { error: null });
+  const router = useRouter();
+  const [state, action, pending] = useActionState(login, { error: null, destination: null });
   const [demoPending, startDemoTransition] = useTransition();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    if (state.destination) router.push(state.destination);
+  }, [state.destination, router]);
   const inputClass = "mt-2 min-h-12 w-full rounded-2xl border border-zinc-300 bg-white px-4 text-zinc-900 focus-visible:outline-2 focus-visible:outline-offset-2 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100";
 
   const handleInstantDemo = (role: "admin" | "staff" | "orang_tua") => {
     startDemoTransition(async () => {
-      await loginDemo(role);
+      const destination = await loginDemo(role);
+      router.push(destination);
     });
   };
 

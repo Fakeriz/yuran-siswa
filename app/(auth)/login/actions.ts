@@ -1,11 +1,11 @@
 "use server";
 
-import { redirect } from "next/navigation";
 import { createClient } from "../../../lib/supabase/server";
 import type { Profile } from "../../../lib/types";
 
 export interface LoginState {
   error: string | null;
+  destination: string | null;
 }
 
 export async function login(_previous: LoginState, formData: FormData): Promise<LoginState> {
@@ -13,21 +13,21 @@ export async function login(_previous: LoginState, formData: FormData): Promise<
   const password = formData.get("password");
   if (typeof email !== "string" || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()) ||
       typeof password !== "string" || password.length === 0) {
-    return { error: "Isi alamat email yang valid dan kata sandi." };
+    return { error: "Isi alamat email yang valid dan kata sandi.", destination: null };
   }
 
   let destination: string;
   try {
     const supabase = await createClient({ readOnly: false });
     const { data: { user }, error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
-    if (error || !user) return { error: "Tidak dapat masuk. Periksa email dan kata sandi Anda." };
+    if (error || !user) return { error: "Tidak dapat masuk. Periksa email dan kata sandi Anda.", destination: null };
 
     const { data: profile, error: profileError } = await supabase
       .from("profiles")
       .select("id, nama, peran")
       .eq("id", user.id)
       .maybeSingle<Profile>();
-    if (profileError) return { error: "Gagal memuat profil. Silakan coba lagi." };
+    if (profileError) return { error: "Gagal memuat profil. Silakan coba lagi.", destination: null };
 
     const emailLower = email.trim().toLowerCase();
     const role: Profile["peran"] =
@@ -70,13 +70,13 @@ export async function login(_previous: LoginState, formData: FormData): Promise<
       : role === "staff" ? "/staff"
       : "/";
   } catch {
-    return { error: "Layanan masuk belum tersedia. Silakan coba lagi nanti." };
+    return { error: "Layanan masuk belum tersedia. Silakan coba lagi nanti.", destination: null };
   }
 
-  redirect(destination);
+  return { error: null, destination };
 }
 
-export async function loginDemo(role: "admin" | "staff" | "orang_tua"): Promise<void> {
+export async function loginDemo(role: "admin" | "staff" | "orang_tua"): Promise<string> {
   const email = role === "admin" ? "admin@yuran.demo" : role === "staff" ? "staff@yuran.demo" : "ortu@yuran.demo";
   const password = role === "admin" ? "admin12345" : role === "staff" ? "staff12345" : "ortu12345";
   const names = {
@@ -120,10 +120,10 @@ export async function loginDemo(role: "admin" | "staff" | "orang_tua"): Promise<
   }
 
   const destination = role === "admin" ? "/admin" : role === "staff" ? "/staff" : "/orangtua";
-  redirect(destination);
+  return destination;
 }
 
-export async function logout(): Promise<void> {
+export async function logout(): Promise<string> {
   try {
     const { cookies } = await import("next/headers");
     const cookieStore = await cookies();
@@ -140,5 +140,5 @@ export async function logout(): Promise<void> {
     // ignore
   }
 
-  redirect("/login");
+  return "/login";
 }

@@ -834,11 +834,15 @@ function AdminContent() {
 
       {/* 5. Modal / Dialog Butiran Transaksi Talebe */}
       {selectedRecord && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/60 p-4 backdrop-blur-xs">
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/60 p-4 backdrop-blur-md"
+          onClick={() => setSelectedRecord(null)}
+        >
           <div
             className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl border border-gray-200"
             role="dialog"
             aria-modal="true"
+            onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-start justify-between border-b border-gray-100 pb-4">
               <div>

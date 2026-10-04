@@ -11,6 +11,7 @@ import {
   Search,
   Filter,
   Download,
+  Upload,
   Plus,
   Receipt,
   CheckCircle2,
@@ -167,6 +168,38 @@ function AdminContent() {
   const [bayarNama, setBayarNama] = useState("");
   const [bayarJumlah, setBayarJumlah] = useState("500");
   const [bayarBulan, setBayarBulan] = useState("Oktober 2026");
+  const [showImportModal, setShowImportModal] = useState(false);
+  const [importPreview, setImportPreview] = useState<TalebeRecord[]>([]);
+  const [importError, setImportError] = useState("");
+
+  // Parse CSV import siswa: Nama,Grup,Kelas,Yuran Bulanan (RM),Aktif (Ya/Tidak),Sesi
+  const parseImportCSV = (text: string): TalebeRecord[] => {
+    const lines = text.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
+    if (lines.length < 2) throw new Error("Fail kosong atau tiada data.");
+    const rows: TalebeRecord[] = [];
+    for (let i = 1; i < lines.length; i++) {
+      // Split CSV menghormati tanda petik
+      const cols = lines[i].match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g)?.map((c) => c.replace(/^"|"$/g, "").trim()) ?? [];
+      const [nama, grup, , yuranStr, aktifStr] = cols;
+      if (!nama) throw new Error(`Baris ${i + 1}: Nama wajib diisi.`);
+      const yuran = Number(yuranStr);
+      if (!yuranStr || isNaN(yuran) || yuran < 0) throw new Error(`Baris ${i + 1}: Yuran Bulanan tidak valid.`);
+      rows.push({
+        id: `T-IMP-${Date.now()}-${i}`,
+        nama,
+        noTransaksi: "-",
+        grup: (grup || "Mevlana HE") as TalebeRecord["grup"],
+        yuranBulanan: yuran,
+        jumlahBayar: 0,
+        bulanDibayar: selectedMonth,
+        tanggal: "-",
+        metodeBayar: "Belum Bayar",
+        status: "Tunggakan",
+        statusAktif: (aktifStr || "Ya").toLowerCase() !== "tidak",
+      });
+    }
+    return rows;
+  };
 
   // Penapisan rekod Talebe secara dinamik
   const filteredRecords = useMemo(() => {
@@ -292,6 +325,15 @@ function AdminContent() {
           >
             <Download className="size-3.5 text-gray-500" />
             <span>Eksport Data</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setShowImportModal(true)}
+            className="inline-flex items-center gap-1.5 rounded-xl border border-gray-300 bg-white px-3.5 py-2 text-xs font-semibold text-gray-700 shadow-2xs hover:bg-gray-50 hover:text-gray-900 transition-colors"
+          >
+            <Upload className="size-3.5 text-gray-500" />
+            <span>Import Siswa</span>
           </button>
 
           <button
@@ -950,6 +992,106 @@ function AdminContent() {
                 className="rounded-xl bg-emerald-800 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-900 disabled:opacity-50"
               >
                 Simpan Bayaran
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal Import Siswa */}
+      {showImportModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+          <div className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl">
+            <h2 className="text-lg font-bold text-gray-900">Import Data Siswa</h2>
+            <p className="mt-1 text-xs text-gray-500">
+              Muat naik fail CSV mengikut template.{" "}
+              <button
+                type="button"
+                onClick={() => {
+                  const tpl = "Nama,Grup,Kelas,Yuran Bulanan (RM),Aktif (Ya/Tidak),Sesi\n\"Ahmad Faiz bin Rosli\",\"Mevlana HE\",\"Tingkatan 1\",500,Ya,2026/2027\n";
+                  const blob = new Blob(["\uFEFF" + tpl], { type: "text/csv;charset=utf-8" });
+                  const url = URL.createObjectURL(blob);
+                  const a = document.createElement("a");
+                  a.href = url;
+                  a.download = "template-import-siswa.csv";
+                  a.click();
+                  URL.revokeObjectURL(url);
+                }}
+                className="font-semibold text-emerald-700 hover:underline"
+              >
+                Muat turun template
+              </button>
+            </p>
+            <div className="mt-4">
+              <label className="block rounded-xl border-2 border-dashed border-gray-300 p-6 text-center cursor-pointer hover:border-emerald-500">
+                <Upload className="mx-auto size-6 text-gray-400" />
+                <p className="mt-2 text-sm font-medium text-gray-700">Klik untuk pilih fail CSV</p>
+                <input
+                  type="file"
+                  accept=".csv"
+                  className="hidden"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (!file) return;
+                    const reader = new FileReader();
+                    reader.onload = () => {
+                      try {
+                        const rows = parseImportCSV(String(reader.result ?? ""));
+                        setImportPreview(rows);
+                        setImportError("");
+                      } catch (err) {
+                        setImportError(err instanceof Error ? err.message : "Gagal membaca fail.");
+                        setImportPreview([]);
+                      }
+                    };
+                    reader.readAsText(file);
+                    e.target.value = "";
+                  }}
+                />
+              </label>
+              {importError && <p className="mt-2 text-xs font-medium text-rose-600">{importError}</p>}
+              {importPreview.length > 0 && (
+                <div className="mt-3 max-h-48 overflow-y-auto rounded-xl border border-gray-200">
+                  <table className="w-full text-xs">
+                    <thead className="bg-gray-50 sticky top-0">
+                      <tr>
+                        <th className="px-3 py-2 text-left">Nama</th>
+                        <th className="px-3 py-2 text-left">Grup</th>
+                        <th className="px-3 py-2 text-right">Yuran</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-100">
+                      {importPreview.map((r) => (
+                        <tr key={r.id}>
+                          <td className="px-3 py-2">{r.nama}</td>
+                          <td className="px-3 py-2">{r.grup}</td>
+                          <td className="px-3 py-2 text-right">RM {r.yuranBulanan}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+            <div className="mt-6 flex justify-end gap-3">
+              <button
+                type="button"
+                onClick={() => { setShowImportModal(false); setImportPreview([]); setImportError(""); }}
+                className="rounded-xl border border-gray-300 px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50"
+              >
+                Batal
+              </button>
+              <button
+                type="button"
+                disabled={importPreview.length === 0}
+                onClick={() => {
+                  setRecords((r) => [...importPreview, ...r]);
+                  setShowImportModal(false);
+                  setImportPreview([]);
+                }}
+                className="rounded-xl bg-emerald-800 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-900 disabled:opacity-50"
+              >
+                Import {importPreview.length > 0 ? `(${importPreview.length})` : ""}
               </button>
             </div>
           </div>

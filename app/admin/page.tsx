@@ -3,7 +3,8 @@
 import { Suspense, useState, useMemo, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { ChartIcon, DiscoveryIcon, DangerIcon, SearchIcon, FilterIcon, UploadIcon, PlusIcon, TicketIcon, TickSquareIcon, TimeCircleIcon, SwapIcon, HideIcon } from "@/components/icons";
+import { ChartIcon, DiscoveryIcon, DangerIcon, SearchIcon, FilterIcon, DownloadIcon, UploadIcon, PlusIcon, TicketIcon, TickSquareIcon, TimeCircleIcon, SwapIcon, HideIcon, DocumentIcon } from "@/components/icons";
+import { MonthYearPicker } from "@/components/month-year-picker";
 import { StudentSelect } from "@/components/student-select";
 import { useAdmin } from "@/components/admin-context";
 
@@ -298,6 +299,45 @@ function AdminContent() {
     <div className="space-y-8">
       {/* 1. Butang Tindakan */}
       <div className="flex flex-row flex-wrap items-center gap-2.5">
+          <MonthYearPicker
+            month={selectedMonth}
+            year={selectedYear}
+            onMonthChange={setSelectedMonth}
+            onYearChange={setSelectedYear}
+          />
+          <button
+            type="button"
+            onClick={() => {
+              const header = ["ID", "No Transaksi", "Nama", "Grup", "Yuran Bulanan (RM)", "Jumlah Bayar (RM)", "Bulan", "Tanggal", "Metode", "Status"];
+              const rows = filteredRecords.map((r) => [
+                r.id, r.noTransaksi, r.nama, r.grup,
+                String(r.yuranBulanan), String(r.jumlahBayar),
+                r.bulanDibayar, r.tanggal, r.metodeBayar, r.status,
+              ]);
+              const csv = [header, ...rows]
+                .map((row) => row.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(","))
+                .join("\n");
+              const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8" });
+              const url = URL.createObjectURL(blob);
+              const a = document.createElement("a");
+              a.href = url;
+              a.download = `yuran-${selectedMonth.toLowerCase()}-${selectedYear}.csv`;
+              a.click();
+              URL.revokeObjectURL(url);
+            }}
+            className="inline-flex items-center gap-1.5 rounded-lg border border-gray-300 bg-white px-3.5 py-2 text-xs font-semibold text-gray-700 shadow-2xs hover:bg-gray-50 transition-colors"
+          >
+            <DownloadIcon className="size-3.5 text-gray-500" />
+            <span>Export</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => alert("Laporan AI segera hadir!")}
+            className="inline-flex items-center gap-1.5 rounded-lg bg-gray-900 px-3.5 py-2 text-xs font-semibold text-white shadow-xs hover:bg-gray-800 transition-colors"
+          >
+            <DocumentIcon className="size-3.5" />
+            <span>Generate Report</span>
+          </button>
           {isSiswa && (
             <button
               type="button"

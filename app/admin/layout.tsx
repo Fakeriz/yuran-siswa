@@ -3,10 +3,10 @@
 import { useState, Suspense, type ReactNode } from "react";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
-import { HomeIcon, UsersIcon, WalletIcon, TicketIcon, DocumentIcon, AddUserIcon, NotificationIcon, CategoryIcon, CloseSquareIcon, LogoutIcon, ShieldDoneIcon, SchoolIcon, DownloadIcon } from "@/components/icons";
+import { HomeIcon, UsersIcon, WalletIcon, TicketIcon, DocumentIcon, AddUserIcon, NotificationIcon, CategoryIcon, CloseSquareIcon, LogoutIcon, ShieldDoneIcon, SchoolIcon } from "@/components/icons";
 import { Avatar } from "@/components/avatar";
 import { AdminProvider, useAdmin } from "@/components/admin-context";
-import { MonthYearPicker } from "@/components/month-year-picker";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 interface NavItem {
   name: string;
@@ -105,7 +105,6 @@ function SidebarNav({ onNavigate }: { onNavigate: () => void }) {
 }
 
 function TopbarControls() {
-  const { selectedMonth, selectedYear, setSelectedMonth, setSelectedYear, requestExport } = useAdmin();
   const [notifOpen, setNotifOpen] = useState(false);
   const [notifs, setNotifs] = useState([
     { id: 1, tipe: "pendaftaran", judul: "Pendaftaran ibu bapa baru", pesan: "Ahmad memerlukan pengesahan", masa: "10 minit lalu", dibaca: false, tab: "persetujuan" },
@@ -116,36 +115,15 @@ function TopbarControls() {
 
   return (
     <div className="flex items-center gap-2.5">
-      <MonthYearPicker
-        month={selectedMonth}
-        year={selectedYear}
-        onMonthChange={setSelectedMonth}
-        onYearChange={setSelectedYear}
-      />
-      <button
-        type="button"
-        onClick={requestExport}
-        className="inline-flex items-center gap-1.5 rounded-lg border border-gray-300 bg-white px-3.5 py-2 text-xs font-semibold text-gray-700 shadow-2xs hover:bg-gray-50 transition-colors"
-      >
-        <DownloadIcon className="size-3.5 text-gray-500" />
-        <span className="hidden sm:inline">Export</span>
-      </button>
-      <button
-        type="button"
-        onClick={() => alert("Laporan AI segera hadir!")}
-        className="inline-flex items-center gap-1.5 rounded-lg bg-gray-900 px-3.5 py-2 text-xs font-semibold text-white shadow-xs hover:bg-gray-800 transition-colors"
-      >
-        <DocumentIcon className="size-3.5" />
-        <span className="hidden sm:inline">Generate Report</span>
-      </button>
+      <ThemeToggle />
       <div className="relative">
         <button
           type="button"
           onClick={() => setNotifOpen((o) => !o)}
-          className="relative inline-flex items-center rounded-lg border border-gray-300 bg-white p-2 text-gray-500 shadow-2xs hover:bg-gray-50 hover:text-gray-900 transition-colors"
+          className="relative inline-flex items-center rounded-lg border border-gray-300 bg-white p-2 text-gray-500 shadow-2xs hover:bg-gray-50 hover:text-gray-900 transition-colors dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300"
           aria-label="Pemberitahuan sistem"
         >
-          <NotificationIcon className="size-4.5" />
+          <NotificationIcon className="size-4" />
           {unreadCount > 0 && (
             <span className="absolute top-1 right-1 flex size-4 items-center justify-center rounded-full bg-rose-500 text-[9px] font-bold text-white">
               {unreadCount}
@@ -153,18 +131,18 @@ function TopbarControls() {
           )}
         </button>
         {notifOpen && (
-          <div className="absolute right-0 mt-2 w-80 rounded-2xl border border-gray-200 bg-white shadow-xl z-50 overflow-hidden">
-            <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100">
-              <p className="text-sm font-bold text-gray-900">Notifikasi</p>
+          <div className="absolute right-0 mt-2 w-80 rounded-2xl border border-gray-200 bg-white shadow-xl z-50 overflow-hidden dark:border-gray-700 dark:bg-gray-800">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 dark:border-gray-700">
+              <p className="text-sm font-bold text-gray-900 dark:text-white">Notifikasi</p>
               <button
                 type="button"
                 onClick={() => setNotifs((ns) => ns.map((n) => ({ ...n, dibaca: true })))}
-                className="text-xs font-medium text-emerald-700 hover:underline"
+                className="text-xs font-medium text-emerald-700 hover:underline dark:text-emerald-400"
               >
                 Tandai semua dibaca
               </button>
             </div>
-            <ul className="max-h-80 overflow-y-auto divide-y divide-gray-100">
+            <ul className="max-h-80 overflow-y-auto divide-y divide-gray-100 dark:divide-gray-700">
               {notifs.map((n) => (
                 <li key={n.id}>
                   <Link
@@ -173,13 +151,13 @@ function TopbarControls() {
                       setNotifs((ns) => ns.map((x) => x.id === n.id ? { ...x, dibaca: true } : x));
                       setNotifOpen(false);
                     }}
-                    className={`block px-4 py-3 hover:bg-gray-50 ${!n.dibaca ? "bg-emerald-50/50" : ""}`}
+                    className={`block px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700 ${!n.dibaca ? "bg-emerald-50/50 dark:bg-emerald-900/20" : ""}`}
                   >
                     <div className="flex items-start justify-between gap-2">
-                      <p className="text-xs font-semibold text-gray-900">{n.judul}</p>
+                      <p className="text-xs font-semibold text-gray-900 dark:text-white">{n.judul}</p>
                       {!n.dibaca && <span className="mt-1 size-2 shrink-0 rounded-full bg-emerald-500" />}
                     </div>
-                    <p className="mt-0.5 text-xs text-gray-600">{n.pesan}</p>
+                    <p className="mt-0.5 text-xs text-gray-600 dark:text-gray-300">{n.pesan}</p>
                     <p className="mt-1 text-[10px] text-gray-400">{n.masa}</p>
                   </Link>
                 </li>
@@ -212,7 +190,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
   return (
     <AdminProvider>
-    <div className="min-h-screen bg-gray-50 text-gray-900 flex flex-col antialiased">
+    <div className="min-h-screen bg-gray-50 text-gray-900 flex flex-col antialiased dark:bg-gray-950 dark:text-gray-100">
       {/* Mobile Sidebar Backdrop Overlay */}
       {sidebarOpen && (
         <div
@@ -290,7 +268,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
       {/* Main Content Area */}
       <div className="lg:pl-72 flex flex-col flex-1">
         {/* Top Navbar */}
-        <header className="sticky top-0 z-30 flex h-18 items-center justify-between border-b border-gray-200 bg-white/95 backdrop-blur-xs px-4 sm:px-6 lg:px-8">
+        <header className="sticky top-0 z-30 flex h-18 items-center justify-between border-b border-gray-200 bg-white/95 backdrop-blur-xs px-4 sm:px-6 lg:px-8 dark:border-gray-800 dark:bg-gray-900/95">
           <div className="flex items-center gap-3">
             <button
               type="button"

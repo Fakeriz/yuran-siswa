@@ -6,7 +6,7 @@ import { createClient } from "../../lib/supabase/server";
 import type { Payment, Student } from "../../lib/types";
 import { PaymentForm } from "./payment-form";
 import { REAL_STUDENTS, REAL_PAYMENTS } from "../../lib/data/real-data";
-import { UserBar } from "../../components/user-bar";
+import { RoleLayout } from "../../components/role-layout";
 import { FinanceHero } from "../../components/finance-hero";
 import { FinanceKpi } from "../../components/finance-kpi";
 import { CheckCircle2, AlertCircle, Users, UsersRound, LayoutDashboard } from "lucide-react";
@@ -76,23 +76,8 @@ export default async function StaffPage({ searchParams }: {
   const period = `${months[bulan - 1]} ${tahun}`;
 
   return (
-    <div className="relative min-h-dvh flex flex-col bg-background text-foreground [&_:focus-visible]:outline-2 [&_:focus-visible]:outline-offset-4 [&_:focus-visible]:outline-primary">
-      <UserBar userRole="staff" userName="Staff Demo" title="YuranKu · Dashboard Staf" />
-      <div className="relative flex-1 md:grid md:grid-cols-[240px_minmax(0,1fr)] md:gap-6 md:p-6">
-        <aside className="border-b border-border bg-card p-4 md:rounded-2xl md:border md:p-4">
-          <p className="px-3 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Menu</p>
-          <nav aria-label="Menu staf" className="mt-2 space-y-1">
-            <Link href="/staff" aria-current="page" className="flex items-center gap-3 rounded-xl bg-primary px-3 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm">
-              <LayoutDashboard className="size-[18px] shrink-0" aria-hidden />
-              Dashboard Staf
-            </Link>
-            <Link href="/staff/grup" className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
-              <UsersRound className="size-[18px] shrink-0" aria-hidden />
-              Pilih Grup
-            </Link>
-          </nav>
-        </aside>
-      <main className="mx-auto w-full max-w-6xl min-w-0 px-4 py-8 sm:px-8 md:py-8">
+    <RoleLayout role="staff" userName="Staff Demo">
+      <div className="mx-auto w-full max-w-6xl min-w-0">
         <FinanceHero name="Staf" subtitle={`Kelola dan catat pembayaran yuran siswa dalam grup Anda — ${period}.`}
           kpiGridClassName="lg:grid-cols-3" actions={
             <Link href="/staff/grup" className="inline-flex min-h-11 items-center gap-2 rounded-full border border-border bg-card px-5 py-2 text-sm font-semibold text-primary transition hover:bg-muted"
@@ -154,8 +139,7 @@ export default async function StaffPage({ searchParams }: {
             </div>
           )}
         </section>
-      </main>
       </div>
-    </div>
+    </RoleLayout>
   );
 }

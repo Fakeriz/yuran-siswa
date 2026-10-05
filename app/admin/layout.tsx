@@ -334,7 +334,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
       </aside>
 
       {/* Main Content Area */}
-      <div className="lg:pl-80 flex flex-col flex-1 min-w-0 w-full max-w-full overflow-x-hidden">
+      <div className="lg:pl-80 flex flex-col flex-1 min-w-0 w-full max-w-full">
         {/* Dedicated Mobile Header (lg:hidden) */}
         <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-border/70 bg-background/80 p-4 backdrop-blur-md lg:hidden">
           <div className="flex items-center gap-3">

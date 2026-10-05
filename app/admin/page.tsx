@@ -1965,11 +1965,13 @@ function AdminContent() {
     </div>
   );
 
-  // Statistik Keseluruhan (KPI Math)
-  const totalTarget = 30000; // 60 siswa x RM 500
-  const totalPemasukan = 24500; // Total kutipan semasa
-  const totalTunggakan = 5500; // Sisa tertunggak
-  const persentaseKutipan = (totalPemasukan / totalTarget) * 100; // 81.67%
+  // Statistik Keseluruhan (KPI) — dihitung dari data asli
+  const totalTarget = initialSiswaData.reduce((s, r) => s + r.yuranBulanan, 0);
+  const totalPemasukan = initialSiswaData
+    .filter((r) => r.status === "Lunas")
+    .reduce((s, r) => s + r.jumlahBayar, 0);
+  const totalTunggakan = totalTarget - totalPemasukan;
+  const persentaseKutipan = totalTarget > 0 ? (totalPemasukan / totalTarget) * 100 : 0;
 
   // Tab yang belum ada konten khusus
   if (tab === "penugasan" || tab === "persetujuan" || tab === "penyata") {
@@ -2085,9 +2087,9 @@ function AdminContent() {
           >
             <div className="flex items-center gap-2">
               <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-semibold text-emerald-700">
-                +12.4%
+                {initialSiswaData.filter((r) => r.status === "Lunas").length} siswa
               </span>
-              <span className="text-xs text-muted-foreground">dibanding bulan lalu</span>
+              <span className="text-xs text-muted-foreground">sudah lunas bulan ini</span>
             </div>
           </FinanceKpi>
           <FinanceKpi icon={Target}
@@ -2108,12 +2110,12 @@ function AdminContent() {
             tone="blue" value={`${persentaseKutipan.toFixed(1)}%`}
             label="Tingkat penagihan yuran"
           >
-            <div className="h-1.5 overflow-hidden rounded-full bg-muted" role="progressbar" aria-valuenow={81.7}
+            <div className="h-1.5 overflow-hidden rounded-full bg-muted" role="progressbar" aria-valuenow={Number(persentaseKutipan.toFixed(1))}
               aria-valuemin={0}
               aria-valuemax={100}
               aria-label="Kemajuan penagihan"
             >
-              <div className="h-full rounded-full bg-emerald-500" style={{ width: "81.7%" }} />
+              <div className="h-full rounded-full bg-emerald-500" style={{ width: `${persentaseKutipan.toFixed(1)}%` }} />
             </div>
             <p className="mt-1.5 text-xs text-muted-foreground">49/60 Lunas</p>
           </FinanceKpi>

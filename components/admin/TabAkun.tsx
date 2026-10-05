@@ -74,7 +74,7 @@ const INITIAL_ACCOUNTS: AccountItem[] = [
     email: "salmah.othman@gmail.com",
     peran: "orang_tua",
     tarikhDicipta: "10 Feb 2026",
-    anakDihubung: ["Nur Aisyah"],
+    anakDihubung: ["Mohd Amirul Afiq Bin Haris"],
   },
 ];
 

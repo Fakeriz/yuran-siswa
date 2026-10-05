@@ -7,6 +7,9 @@ import type { Payment, Student } from "../../lib/types";
 import { PaymentForm } from "./payment-form";
 import { UserBar } from "../../components/user-bar";
 import { GlowBackground } from "../../components/glow-background";
+import { FinanceHero } from "../../components/finance-hero";
+import { FinanceKpi } from "../../components/finance-kpi";
+import { CheckCircle2, AlertCircle, Users, UsersRound } from "lucide-react";
 
 export const metadata: Metadata = { title: "Dashboard staf | YuranKu" };
 const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
@@ -83,8 +86,42 @@ export default async function StaffPage({ searchParams }: {
           </nav>
         </aside>
       <main className="mx-auto w-full max-w-6xl min-w-0 px-4 py-8 sm:px-8 md:py-12">
-        <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50">Yuran bulanan</h1>
-        <p className="mt-2 text-slate-500 dark:text-slate-400">Pembayaran siswa aktif dalam grup Anda.</p>
+        <FinanceHero
+          name="Staf"
+          subtitle={`Kelola dan catat pembayaran yuran siswa dalam grup Anda — ${period}.`}
+          kpiGridClassName="lg:grid-cols-3"
+          actions={
+            <Link
+              href="/staff/grup"
+              className="inline-flex min-h-11 items-center gap-2 rounded-2xl bg-white/95 px-5 py-2 text-sm font-semibold text-violet-700 shadow-md transition hover:bg-white"
+            >
+              <UsersRound className="size-4" aria-hidden />
+              Pilih Grup
+            </Link>
+          }
+        >
+          <FinanceKpi
+            icon={CheckCircle2}
+            tone="green"
+            value={String(students.length - unpaid.length)}
+            label="Siswa sudah bayar"
+            caption="Lunas"
+          />
+          <FinanceKpi
+            icon={AlertCircle}
+            tone="pink"
+            value={String(unpaid.length)}
+            label="Siswa belum bayar"
+            caption="Perlu Tindakan"
+          />
+          <FinanceKpi
+            icon={Users}
+            tone="blue"
+            value={String(students.length)}
+            label="Total siswa aktif"
+            caption="Total Siswa"
+          />
+        </FinanceHero>
         <form key={`${bulan}-${tahun}`} className="mt-8 flex flex-wrap items-end gap-3" action="/staff">
           <label className="grid gap-2 text-sm font-medium">Bulan
             <select name="bulan" defaultValue={bulan} className={field}>{months.map((month, index) => <option value={index + 1} key={month}>{month}</option>)}</select>
@@ -95,10 +132,7 @@ export default async function StaffPage({ searchParams }: {
           <input type="hidden" name="filter" value={filter} />
           <button className="min-h-11 rounded-2xl bg-neutral-900 px-5 py-2 font-semibold text-white shadow-[inset_2px_2px_5px_0px_rgba(0,0,0,0.5),inset_-2px_-2px_6px_1px_rgba(80,78,78,0.5)] transition hover:bg-black dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200">Tampilkan</button>
         </form>
-        <section aria-label={`Ringkasan ${period}`} className="mt-8 grid grid-cols-2 gap-4">
-          <div className="rounded-3xl border border-slate-200/70 bg-white/80 p-5 shadow-[0_24px_60px_-20px_rgba(37,99,235,0.3)] backdrop-blur dark:border-slate-800 dark:bg-slate-900/70"><p className="text-sm text-slate-500 dark:text-slate-400">Sudah bayar</p><p className="mt-2 text-3xl font-semibold tabular-nums">{students.length - unpaid.length}</p></div>
-          <div className="rounded-3xl border border-slate-200/70 bg-white/80 p-5 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-900/70"><p className="text-sm text-slate-500 dark:text-slate-400">Belum bayar</p><p className="mt-2 text-3xl font-semibold tabular-nums">{unpaid.length}</p></div>
-        </section>
+
         <section className="mt-10" aria-labelledby="student-list">
           <h2 id="student-list" className="text-xl font-semibold">Daftar siswa · {period}</h2>
           <form aria-label="Filter pembayaran" className="my-5 flex flex-wrap gap-2" action="/staff" method="GET">

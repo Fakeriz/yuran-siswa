@@ -6,6 +6,9 @@ import type { Payment, Student } from "../../lib/types";
 import { PaymentForm } from "../staff/payment-form";
 import { UserBar } from "../../components/user-bar";
 import { GlowBackground } from "../../components/glow-background";
+import { FinanceHero } from "../../components/finance-hero";
+import { FinanceKpi } from "../../components/finance-kpi";
+import { Users, CheckCircle2 } from "lucide-react";
 
 export const metadata = { title: "Yuran anak | YuranKu" };
 const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
@@ -55,8 +58,25 @@ export default async function ParentPage() {
       <UserBar userRole="orang_tua" userName="Orang Tua Demo" title="YuranKu · Portal Orang Tua" />
       <main className="relative flex-1 px-4 py-8 sm:px-6 sm:py-12">
         <div className="mx-auto max-w-3xl">
-          <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50">Yuran anak</h1>
-          <p className="mt-2 text-slate-500 dark:text-slate-400">Riwayat pembayaran tahun {tahun}.</p>
+          <FinanceHero
+            name="Orang Tua"
+            subtitle={`Pantau status yuran anak Anda — riwayat pembayaran tahun ${tahun}.`}
+          >
+            <FinanceKpi
+              icon={Users}
+              tone="blue"
+              value={String(students.length)}
+              label="Anak terdaftar"
+              caption="Anak"
+            />
+            <FinanceKpi
+              icon={CheckCircle2}
+              tone="green"
+              value={String(students.filter((s) => paymentStatusFor(payments, s.id, currentMonth, tahun) === "sudah").length)}
+              label={`Lunas bulan ${months[currentMonth - 1]}`}
+              caption="Bulan Ini"
+            />
+          </FinanceHero>
       {!ids.length ? <section className="mt-8 rounded-3xl border border-slate-200/70 bg-white/80 p-6 backdrop-blur dark:border-slate-800 dark:bg-slate-900/70" role="status">
         <h2 className="text-xl font-semibold">menunggu persetujuan</h2>
         <p className="mt-3 text-slate-500 dark:text-slate-400">Data anak akan tampil setelah pengajuan disetujui oleh admin atau staf.</p>

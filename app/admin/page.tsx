@@ -33,6 +33,8 @@ import {
   MorphSelectValue,
 } from "../../components/morph-select";
 import { Button, ButtonLink } from "../../components/motion-button";
+import { FinanceHero } from "../../components/finance-hero";
+import { FinanceKpi } from "../../components/finance-kpi";
 
 // Struktur jenis data berasaskan skema logik Data_Talebe & Transaksi_Masuk
 export interface TalebeRecord {
@@ -390,9 +392,142 @@ function AdminContent() {
     : tab === "resit" ? "Daftar kuitansi yang telah diunggah."
     : "Sistem pengelolaan yuran bulanan asrama siswa, pencatatan penerimaan kas, dan persetujuan status pembayaran.";
 
+  const quickActions = (
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2.5 sm:gap-3 w-full sm:w-auto">
+              <div className="w-full sm:w-auto">
+                <MorphSelect
+                  value={selectedMonth}
+                  onValueChange={setSelectedMonth}
+                  className="w-full text-xs font-semibold sm:w-auto sm:min-w-48"
+                >
+                  <MorphSelectTrigger>
+                    <MorphSelectValue placeholder="Pilih bulan" />
+                  </MorphSelectTrigger>
+                  <MorphSelectContent>
+                    <MorphSelectItem value="Oktober 2026">Bulan: Oktober 2026</MorphSelectItem>
+                    <MorphSelectItem value="September 2026">Bulan: September 2026</MorphSelectItem>
+                    <MorphSelectItem value="Agustus 2026">Bulan: Agustus 2026</MorphSelectItem>
+                  </MorphSelectContent>
+                </MorphSelect>
+              </div>
+
+              <div className="flex items-center gap-2 w-full sm:w-auto">
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  className="flex-1 sm:flex-initial"
+                  onClick={() => {
+                    const header = ["ID", "No Transaksi", "Nama", "Grup", "Yuran Bulanan (RM)", "Jumlah Bayar (RM)", "Bulan", "Tanggal", "Metode", "Status"];
+                    const rows = filteredRecords.map((r) => [
+                      r.id, r.noTransaksi, r.nama, r.grup,
+                      String(r.yuranBulanan), String(r.jumlahBayar),
+                      r.bulanDibayar, r.tanggal, r.metodeBayar, r.status,
+                    ]);
+                    const csv = [header, ...rows]
+                      .map((row) => row.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(","))
+                      .join("\n");
+                    const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8" });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement("a");
+                    a.href = url;
+                    a.download = `yuran-${selectedMonth.replace(/\s+/g, "-").toLowerCase()}.csv`;
+                    a.click();
+                    URL.revokeObjectURL(url);
+                  }}
+                >
+                  <Download className="size-3.5" />
+                  <span>Ekspor</span>
+                </Button>
+
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  className="flex-1 sm:flex-initial"
+                  onClick={() => setShowImportModal(true)}
+                >
+                  <Upload className="size-3.5" />
+                  <span>Impor</span>
+                </Button>
+              </div>
+
+              <Button
+                variant="primary"
+                size="sm"
+                ripple
+                className="w-full sm:w-auto whitespace-nowrap"
+                onClick={() => setShowBayarModal(true)}
+              >
+                <Plus className="size-4" />
+                <span>Catat Pembayaran</span>
+              </Button>
+            </div>
+  );
+
   return (
     <div className="space-y-6 sm:space-y-8 w-full min-w-0 max-w-full">
-      {/* 1. Header Dasbor Utama & Tindakan */}
+      {/* 1. Hero kewangan (tab utama) / header biasa (tab lain) */}
+      {isDashboard ? (
+        <FinanceHero
+          name="Admin"
+          subtitle="Dapatkan gambaran jelas tentang kinerja keuangan dan transaksi terkini."
+          actions={quickActions}
+        >
+          <FinanceKpi
+            icon={TrendingUp}
+            tone="violet"
+            value={formatRM(totalPemasukan)}
+            label="Total pemasukan bulan ini"
+            caption="Total Pemasukan"
+          >
+            <div className="flex items-center gap-1.5 text-xs">
+              <span className="inline-flex items-center rounded-md bg-emerald-50 px-1.5 py-0.5 text-[11px] font-semibold text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300">
+                +12.4%
+              </span>
+              <span className="text-[11px] text-slate-500 dark:text-slate-400">dibanding bulan lalu</span>
+            </div>
+          </FinanceKpi>
+          <FinanceKpi
+            icon={Target}
+            tone="green"
+            value={formatRM(totalTarget)}
+            label="Target pemasukan bulanan"
+            caption="Target Bulanan"
+          >
+            <p className="text-[11px] text-slate-500 dark:text-slate-400">Target dasar: 60 Siswa &times; RM 500</p>
+          </FinanceKpi>
+          <FinanceKpi
+            icon={AlertCircle}
+            tone="pink"
+            value={formatRM(totalTunggakan)}
+            label="Total tunggakan"
+            caption="Perlu Tindakan"
+          >
+            <p className="text-[11px]">
+              <span className="inline-flex items-center rounded-md bg-rose-50 px-1.5 py-0.5 font-semibold text-rose-700 dark:bg-rose-500/10 dark:text-rose-300">
+                11 Siswa
+              </span>
+              <span className="ml-1.5 text-slate-500 dark:text-slate-400">belum bayar</span>
+            </p>
+          </FinanceKpi>
+          <FinanceKpi
+            icon={PieChart}
+            tone="blue"
+            value={`${persentaseKutipan.toFixed(1)}%`}
+            label="Tingkat penagihan yuran"
+            caption="Penagihan Yuran"
+          >
+            <div className="flex items-center justify-between gap-2">
+              <div className="h-2 flex-1 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
+                <div
+                  className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-400 transition-all duration-500"
+                  style={{ width: `${persentaseKutipan}%` }}
+                />
+              </div>
+              <span className="shrink-0 text-[11px] font-medium text-emerald-600 dark:text-emerald-400">49/60 Lunas</span>
+            </div>
+          </FinanceKpi>
+        </FinanceHero>
+      ) : (
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between w-full min-w-0">
         <div>
           <div className="flex items-center gap-2">
@@ -408,76 +543,9 @@ function AdminContent() {
           </p>
         </div>
 
-        {/* Butang Tindakan Cepat (Responsive Mobile-First) */}
-        <div className="flex flex-col sm:flex-row sm:items-center gap-2.5 sm:gap-3 w-full sm:w-auto">
-          <div className="w-full sm:w-auto">
-            <MorphSelect
-              value={selectedMonth}
-              onValueChange={setSelectedMonth}
-              className="w-full text-xs font-semibold sm:w-auto sm:min-w-48"
-            >
-              <MorphSelectTrigger>
-                <MorphSelectValue placeholder="Pilih bulan" />
-              </MorphSelectTrigger>
-              <MorphSelectContent>
-                <MorphSelectItem value="Oktober 2026">Bulan: Oktober 2026</MorphSelectItem>
-                <MorphSelectItem value="September 2026">Bulan: September 2026</MorphSelectItem>
-                <MorphSelectItem value="Agustus 2026">Bulan: Agustus 2026</MorphSelectItem>
-              </MorphSelectContent>
-            </MorphSelect>
-          </div>
-
-          <div className="flex items-center gap-2 w-full sm:w-auto">
-            <Button
-              variant="secondary"
-              size="sm"
-              className="flex-1 sm:flex-initial"
-              onClick={() => {
-                const header = ["ID", "No Transaksi", "Nama", "Grup", "Yuran Bulanan (RM)", "Jumlah Bayar (RM)", "Bulan", "Tanggal", "Metode", "Status"];
-                const rows = filteredRecords.map((r) => [
-                  r.id, r.noTransaksi, r.nama, r.grup,
-                  String(r.yuranBulanan), String(r.jumlahBayar),
-                  r.bulanDibayar, r.tanggal, r.metodeBayar, r.status,
-                ]);
-                const csv = [header, ...rows]
-                  .map((row) => row.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(","))
-                  .join("\n");
-                const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8" });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement("a");
-                a.href = url;
-                a.download = `yuran-${selectedMonth.replace(/\s+/g, "-").toLowerCase()}.csv`;
-                a.click();
-                URL.revokeObjectURL(url);
-              }}
-            >
-              <Download className="size-3.5" />
-              <span>Ekspor</span>
-            </Button>
-
-            <Button
-              variant="secondary"
-              size="sm"
-              className="flex-1 sm:flex-initial"
-              onClick={() => setShowImportModal(true)}
-            >
-              <Upload className="size-3.5" />
-              <span>Impor</span>
-            </Button>
-          </div>
-
-          <Button
-            variant="primary"
-            size="sm"
-            ripple
-            className="w-full sm:w-auto whitespace-nowrap"
-            onClick={() => setShowBayarModal(true)}
-          >
-            <Plus className="size-4" />
-            <span>Catat Pembayaran</span>
-          </Button>
-        </div>
+        {quickActions}
       </div>
+      )}
 
       {/* Ringkasan Aliran Kas (tab aliran-kas sahaja) */}
       {isAliranKas && (
@@ -522,96 +590,6 @@ function AdminContent() {
             </li>
           ))}
         </ul>
-      </div>
-      )}
-
-      {/* 2. Empat Kotak Ringkasan KPI (Mobile-First 1 Kolom ke 4 Kolom) */}
-      {showSummary && (
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5 w-full min-w-0">
-        {/* KPI 1: Total Pemasukan Kas */}
-        <div className="flex flex-col rounded-xl border border-slate-200/70 bg-white/80 backdrop-blur p-4 shadow-[0_24px_60px_-20px_rgba(37,99,235,0.3)] transition-shadow hover:shadow-md dark:border-slate-800 dark:bg-slate-900/70 dark:shadow-[0_24px_60px_-20px_rgba(37,99,235,0.2)] w-full min-w-0">
-          <div className="flex items-center justify-between gap-2">
-            <span className="text-xs font-medium tracking-wide text-slate-500 uppercase dark:text-slate-400">
-              TOTAL PEMASUKAN KAS
-            </span>
-            <div className="size-9 rounded-lg flex items-center justify-center shrink-0 bg-emerald-50 text-emerald-600 dark:bg-emerald-950/60 dark:text-emerald-400 dark:border dark:border-emerald-800/60">
-              <TrendingUp className="size-4.5" />
-            </div>
-          </div>
-          <p className="mt-2 text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
-            {formatRM(totalPemasukan)}
-          </p>
-          <div className="mt-1 flex items-center gap-1.5 text-xs text-emerald-600 dark:text-emerald-400 font-medium">
-            <span className="inline-flex items-center rounded-md bg-emerald-50 px-1.5 py-0.5 text-[11px] font-semibold text-emerald-700 border border-emerald-100 dark:bg-emerald-950/80 dark:text-emerald-300 dark:border-emerald-800/50">
-              +12.4%
-            </span>
-            <span className="text-slate-500 dark:text-slate-400 text-[11px]">dibanding bulan lalu</span>
-          </div>
-        </div>
-
-        {/* KPI 2: Target Pemasukan */}
-        <div className="flex flex-col rounded-xl border border-slate-200/70 bg-white/80 backdrop-blur p-4 shadow-xs transition-shadow hover:shadow-md dark:border-slate-800 dark:bg-slate-900/70 w-full min-w-0">
-          <div className="flex items-center justify-between gap-2">
-            <span className="text-xs font-medium tracking-wide text-slate-500 uppercase dark:text-slate-400">
-              TARGET PEMASUKAN
-            </span>
-            <div className="size-9 rounded-lg flex items-center justify-center shrink-0 bg-blue-50 text-blue-600 dark:bg-blue-950/60 dark:text-blue-300 dark:border dark:border-blue-800/60">
-              <Target className="size-4.5" />
-            </div>
-          </div>
-          <p className="mt-2 text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
-            {formatRM(totalTarget)}
-          </p>
-          <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
-            Target dasar: 60 Siswa × RM 500
-          </p>
-        </div>
-
-        {/* KPI 3: Total Tunggakan */}
-        <div className="flex flex-col rounded-xl border border-slate-200/70 bg-white/80 backdrop-blur p-4 shadow-xs transition-shadow hover:shadow-md dark:border-slate-800 dark:bg-slate-900/70 w-full min-w-0">
-          <div className="flex items-center justify-between gap-2">
-            <span className="text-xs font-medium tracking-wide text-slate-500 uppercase dark:text-slate-400">
-              TOTAL TUNGGAKAN
-            </span>
-            <div className="size-9 rounded-lg flex items-center justify-center shrink-0 bg-rose-50 text-rose-600 dark:bg-rose-950/60 dark:text-rose-300 dark:border dark:border-rose-800/60">
-              <AlertCircle className="size-4.5" />
-            </div>
-          </div>
-          <p className="mt-2 text-xl sm:text-2xl font-bold text-rose-600 dark:text-rose-400">
-            {formatRM(totalTunggakan)}
-          </p>
-          <div className="mt-1 flex items-center gap-1.5 text-xs text-rose-600 dark:text-rose-400 font-medium">
-            <span className="inline-flex items-center rounded-md bg-rose-50 px-1.5 py-0.5 text-[11px] font-semibold text-rose-700 border border-rose-100 dark:bg-rose-950/80 dark:text-rose-300 dark:border-rose-800/50">
-              11 Siswa
-            </span>
-            <span className="text-slate-500 dark:text-slate-400 text-[11px]">belum bayar</span>
-          </div>
-        </div>
-
-        {/* KPI 4: Persentase Penagihan Yuran */}
-        <div className="flex flex-col rounded-xl border border-slate-200/70 bg-white/80 backdrop-blur p-4 shadow-xs transition-shadow hover:shadow-md dark:border-slate-800 dark:bg-slate-900/70 w-full min-w-0">
-          <div className="flex items-center justify-between gap-2">
-            <span className="text-xs font-medium tracking-wide text-slate-500 uppercase dark:text-slate-400">
-              PENAGIHAN YURAN
-            </span>
-            <div className="size-9 rounded-lg flex items-center justify-center shrink-0 bg-indigo-50 text-indigo-600 dark:bg-indigo-950/60 dark:text-indigo-300 dark:border dark:border-indigo-800/60">
-              <PieChart className="size-4.5" />
-            </div>
-          </div>
-          <div className="mt-2 flex items-baseline justify-between gap-2">
-            <p className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
-              {persentaseKutipan.toFixed(1)}%
-            </p>
-            <span className="text-xs font-medium text-emerald-600 dark:text-emerald-400">49/60 Lunas</span>
-          </div>
-          {/* Visual Progress Bar */}
-          <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
-            <div
-              className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-400 transition-all duration-500"
-              style={{ width: `${persentaseKutipan}%` }}
-            />
-          </div>
-        </div>
       </div>
       )}
 

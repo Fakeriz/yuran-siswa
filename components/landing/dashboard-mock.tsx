@@ -41,7 +41,7 @@ const AKTIVITAS = [
 
 export function DashboardMock() {
   return (
-    <div aria-label="Ilustrasi tampilan panel status yuran" className="relative overflow-hidden rounded-3xl border border-white bg-card/50 p-4 shadow-[0_30px_80px_-20px_rgba(37,99,235,0.35)] backdrop-blur-xl sm:p-6"
+    <div aria-label="Ilustrasi tampilan panel status yuran" className="relative overflow-hidden rounded-3xl border border-border bg-card p-4 sm:p-6"
     >
       {/* Kepala panel */}
       <div className="flex flex-wrap items-center justify-between gap-3">
@@ -58,7 +58,7 @@ export function DashboardMock() {
             </p>
           </div>
         </div>
-        <span className="rounded-full border border-blue-200 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+        <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
           Ilustrasi
         </span>
       </div>

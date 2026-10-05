@@ -2,11 +2,11 @@ import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
 
 const chipTone: Record<string, string> = {
-  violet: "from-[#007AFF] to-[#0051D5]",
-  green: "from-emerald-400 to-green-500",
-  pink: "from-pink-500 to-rose-500",
-  blue: "from-sky-400 to-blue-500",
-  amber: "from-amber-400 to-orange-500",
+  violet: "bg-primary/10 text-primary",
+  green: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+  pink: "bg-rose-500/10 text-rose-600 dark:text-rose-400",
+  blue: "bg-primary/10 text-primary",
+  amber: "bg-amber-500/10 text-amber-600 dark:text-amber-400",
 };
 
 interface FinanceKpiProps {
@@ -22,15 +22,15 @@ interface FinanceKpiProps {
 }
 
 /**
- * Kad KPI putih di atas hero ungu — ikon gradien berwarna, nilai besar,
- * label kecil, dan baris detail pilihan di bawah.
+ * Kad KPI minimal: ikon tonal, nilai besar, label kecil,
+ * dan baris detail pilihan di bawah.
  */
 export function FinanceKpi({ icon: Icon, value, label, tone = "violet", children }: FinanceKpiProps) {
   return (
-    <div className="flex min-w-0 flex-col rounded-2xl bg-card p-4 text-card-foreground shadow-lg shadow-black/5 dark:shadow-black/30">
+    <div className="flex min-w-0 flex-col rounded-2xl border border-border bg-card p-4 text-card-foreground">
       <div className="flex min-w-0 items-center gap-3">
         <div
-          className={`flex size-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br text-white shadow-md ${chipTone[tone]}`}
+          className={`flex size-11 shrink-0 items-center justify-center rounded-xl ${chipTone[tone]}`}
         >
           <Icon className="size-5" aria-hidden />
         </div>

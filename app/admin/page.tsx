@@ -484,54 +484,28 @@ function AdminContent() {
             value={formatRM(totalPemasukan)}
             label="Total pemasukan bulan ini"
             caption="Total Pemasukan"
-          >
-            <div className="flex items-center gap-1.5 text-xs">
-              <span className="inline-flex items-center rounded-md bg-emerald-50 px-1.5 py-0.5 text-[11px] font-semibold text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300">
-                +12.4%
-              </span>
-              <span className="text-[11px] text-slate-500 dark:text-slate-400">dibanding bulan lalu</span>
-            </div>
-          </FinanceKpi>
+          />
           <FinanceKpi
             icon={Target}
             tone="green"
             value={formatRM(totalTarget)}
             label="Target pemasukan bulanan"
             caption="Target Bulanan"
-          >
-            <p className="text-[11px] text-slate-500 dark:text-slate-400">Target dasar: 60 Siswa &times; RM 500</p>
-          </FinanceKpi>
+          />
           <FinanceKpi
             icon={AlertCircle}
             tone="pink"
             value={formatRM(totalTunggakan)}
             label="Total tunggakan"
             caption="Perlu Tindakan"
-          >
-            <p className="text-[11px]">
-              <span className="inline-flex items-center rounded-md bg-rose-50 px-1.5 py-0.5 font-semibold text-rose-700 dark:bg-rose-500/10 dark:text-rose-300">
-                11 Siswa
-              </span>
-              <span className="ml-1.5 text-slate-500 dark:text-slate-400">belum bayar</span>
-            </p>
-          </FinanceKpi>
+          />
           <FinanceKpi
             icon={PieChart}
             tone="blue"
             value={`${persentaseKutipan.toFixed(1)}%`}
             label="Tingkat penagihan yuran"
             caption="Penagihan Yuran"
-          >
-            <div className="flex items-center justify-between gap-2">
-              <div className="h-2 flex-1 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
-                <div
-                  className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-400 transition-all duration-500"
-                  style={{ width: `${persentaseKutipan}%` }}
-                />
-              </div>
-              <span className="shrink-0 text-[11px] font-medium text-emerald-600 dark:text-emerald-400">49/60 Lunas</span>
-            </div>
-          </FinanceKpi>
+          />
         </FinanceHero>
       ) : (
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between w-full min-w-0">

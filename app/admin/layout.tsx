@@ -25,7 +25,6 @@ import {
 } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { NotificationBadge } from "@/components/notification-badge";
-import { GlowBackground } from "@/components/glow-background";
 
 interface NavItem {
   name: string;
@@ -289,7 +288,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
       {/* Sidebar Navigation (Desktop Persistent + Mobile Slide Drawer) */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 flex w-72 max-w-[85vw] flex-col border-r border-slate-200/70 bg-white/90 shadow-xl backdrop-blur-xl transition-transform duration-300 ease-in-out lg:translate-x-0 dark:bg-[#0b1329] dark:border-slate-800 ${
+        className={`fixed inset-y-0 left-0 z-50 flex w-72 max-w-[85vw] flex-col overflow-hidden border border-slate-200/70 bg-white/90 shadow-xl backdrop-blur-xl transition-transform duration-300 ease-in-out lg:bottom-4 lg:left-4 lg:top-4 lg:rounded-3xl lg:shadow-[0_8px_30px_-12px_rgba(15,23,42,0.15)] lg:translate-x-0 dark:bg-[#0b1329] dark:border-slate-800 dark:lg:shadow-[0_8px_30px_-12px_rgba(0,0,0,0.5)] ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -325,8 +324,8 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
           <SidebarNav onNavigate={() => setSidebarOpen(false)} />
         </Suspense>
 
-        {/* User Profile Card & Sign Out */}
-        <div className="p-3.5 border-t border-slate-100 bg-slate-50/50 dark:border-slate-800 dark:bg-slate-900/50">
+        {/* User Profile Card & Sign Out — hanya dalam drawer mobile (desktop: sudah ada chip pengguna di bar atas) */}
+        <div className="p-3.5 border-t border-slate-100 bg-slate-50/50 dark:border-slate-800 dark:bg-slate-900/50 lg:hidden">
           <div className="flex items-center gap-3 rounded-xl p-2.5 border border-slate-200/70 bg-white/80 shadow-2xs dark:bg-slate-800/60 dark:border-slate-700">
             <div className="size-9 rounded-full bg-violet-600/10 text-violet-700 font-semibold flex items-center justify-center shrink-0 border border-violet-200/70 text-xs dark:bg-violet-500/15 dark:text-violet-300 dark:border-violet-800/50">
               TU
@@ -350,7 +349,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
       </aside>
 
       {/* Main Content Area */}
-      <div className="lg:pl-72 flex flex-col flex-1 min-w-0 w-full max-w-full overflow-x-hidden">
+      <div className="lg:pl-80 flex flex-col flex-1 min-w-0 w-full max-w-full overflow-x-hidden">
         {/* Dedicated Mobile Header (lg:hidden) */}
         <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-slate-200/70 bg-white/85 p-4 backdrop-blur-md dark:border-slate-800 dark:bg-[#0b1329]/85 lg:hidden">
           <div className="flex items-center gap-3">
@@ -613,7 +612,6 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
         {/* Page Children Container */}
         <main className="relative flex-1 p-3.5 sm:p-6 lg:p-8 max-w-7xl w-full min-w-0 mx-auto overflow-x-hidden">
-          <GlowBackground />
           <div className="relative">{children}</div>
         </main>
       </div>

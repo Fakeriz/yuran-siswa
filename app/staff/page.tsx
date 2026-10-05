@@ -6,7 +6,6 @@ import { createClient } from "../../lib/supabase/server";
 import type { Payment, Student } from "../../lib/types";
 import { PaymentForm } from "./payment-form";
 import { UserBar } from "../../components/user-bar";
-import { GlowBackground } from "../../components/glow-background";
 import { FinanceHero } from "../../components/finance-hero";
 import { FinanceKpi } from "../../components/finance-kpi";
 import { CheckCircle2, AlertCircle, Users, UsersRound, LayoutDashboard } from "lucide-react";
@@ -75,7 +74,6 @@ export default async function StaffPage({ searchParams }: {
 
   return (
     <div className="relative min-h-dvh flex flex-col bg-[#f7f9fc] text-slate-900 dark:bg-[#0b1329] dark:text-slate-100 [&_:focus-visible]:outline-2 [&_:focus-visible]:outline-offset-4 [&_:focus-visible]:outline-blue-600">
-      <GlowBackground />
       <UserBar userRole="staff" userName="Staff Demo" title="YuranKu · Dashboard Staf" />
       <div className="relative flex-1 md:grid md:grid-cols-[220px_minmax(0,1fr)]">
         <aside className="border-b border-slate-200 p-6 dark:border-slate-800 md:min-h-dvh md:border-r md:border-b-0">

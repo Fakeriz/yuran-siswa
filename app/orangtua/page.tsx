@@ -5,7 +5,6 @@ import { createClient } from "../../lib/supabase/server";
 import type { Payment, Student } from "../../lib/types";
 import { PaymentForm } from "../staff/payment-form";
 import { UserBar } from "../../components/user-bar";
-import { GlowBackground } from "../../components/glow-background";
 import { FinanceHero } from "../../components/finance-hero";
 import { FinanceKpi } from "../../components/finance-kpi";
 import { Users, CheckCircle2 } from "lucide-react";
@@ -54,7 +53,6 @@ export default async function ParentPage() {
 
   return (
     <div className="relative min-h-dvh flex flex-col bg-[#f7f9fc] text-slate-900 dark:bg-[#0b1329] dark:text-slate-100 [&_:focus-visible]:outline-2 [&_:focus-visible]:outline-offset-4 [&_:focus-visible]:outline-blue-600">
-      <GlowBackground />
       <UserBar userRole="orang_tua" userName="Orang Tua Demo" title="YuranKu · Portal Orang Tua" />
       <main className="relative flex-1 px-4 py-8 sm:px-6 sm:py-12">
         <div className="mx-auto max-w-3xl">

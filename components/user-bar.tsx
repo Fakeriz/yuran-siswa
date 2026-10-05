@@ -36,7 +36,7 @@ export function UserBar({ userName, userRole, title = "YuranKu" }: UserBarProps)
   };
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-background">
+    <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-7xl flex-wrap items-center justify-between gap-3 px-5">
         <div className="flex items-center gap-3">
           <Link href="/" className="flex items-center gap-2 rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary">

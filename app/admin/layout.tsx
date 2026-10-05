@@ -279,7 +279,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
       )}
 
       {/* Sidebar Navigation (Desktop Persistent + Mobile Slide Drawer) */}
-      <aside className={`fixed inset-y-0 left-0 z-50 flex w-72 max-w-[85vw] flex-col overflow-hidden border border-border/70 bg-card/95 shadow-xl lg:shadow-none transition-transform duration-300 ease-in-out lg:bottom-4 lg:left-4 lg:top-4 lg:rounded-3xl lg:translate-x-0  ${
+      <aside className={`fixed inset-y-0 left-0 z-50 flex w-72 max-w-[85vw] flex-col overflow-hidden border border-border/70 bg-background shadow-xl lg:bg-card/95 lg:shadow-none transition-transform duration-300 ease-in-out lg:bottom-4 lg:left-4 lg:top-4 lg:rounded-3xl lg:translate-x-0  ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -336,7 +336,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
       {/* Main Content Area */}
       <div className="lg:pl-80 flex flex-col flex-1 min-w-0 w-full max-w-full overflow-x-hidden">
         {/* Dedicated Mobile Header (lg:hidden) */}
-        <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-border/70 bg-card p-4 lg:hidden">
+        <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-border/70 bg-background/80 p-4 backdrop-blur-md lg:hidden">
           <div className="flex items-center gap-3">
             <button type="button" onClick={() => setSidebarOpen(true)}
               className="p-2 text-muted-foreground hover:text-foreground hover:bg-muted rounded-xl focus-visible:outline-primary" aria-label="Buka menu navigasi"
@@ -357,7 +357,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
           <div className="flex items-center gap-2">
             <ThemeToggle />
             <button type="button" onClick={() => setNotifOpen((o) => !o)}
-              className="relative p-2 text-muted-foreground hover:text-foreground hover:bg-muted rounded-xl transition-colors" aria-label={`Notifikasi sistem${unreadCount > 0 ? `, ${unreadCount} belum dibaca` : ""}`}
+              className="relative flex size-9 items-center justify-center rounded-xl border border-border bg-card text-muted-foreground shadow-2xs hover:bg-muted hover:text-foreground transition-colors" aria-label={`Notifikasi sistem${unreadCount > 0 ? `, ${unreadCount} belum dibaca` : ""}`}
             >
               <Bell className="size-4.5" />
               <NotificationBadge count={unreadCount} />
@@ -419,7 +419,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
               {/* Notifikasi */}
               <div className="relative">
                 <button type="button" onClick={() => { setNotifOpen((o) => !o); setHelpOpen(false); setUserOpen(false); }}
-                  className="relative rounded-full p-2.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground" aria-label={`Notifikasi sistem${unreadCount > 0 ? `, ${unreadCount} belum dibaca` : ""}`}
+                  className="relative flex size-9 items-center justify-center rounded-xl border border-border bg-card text-muted-foreground shadow-2xs hover:bg-muted hover:text-foreground transition-colors" aria-label={`Notifikasi sistem${unreadCount > 0 ? `, ${unreadCount} belum dibaca` : ""}`}
                 >
                   <Bell className="size-[18px]" />
                   <NotificationBadge count={unreadCount} />

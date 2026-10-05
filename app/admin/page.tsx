@@ -483,29 +483,50 @@ function AdminContent() {
             tone="violet"
             value={formatRM(totalPemasukan)}
             label="Total pemasukan bulan ini"
-            caption="Total Pemasukan"
-          />
+          >
+            <div className="flex items-center gap-2">
+              <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-semibold text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300">
+                +12.4%
+              </span>
+              <span className="text-xs text-slate-500 dark:text-slate-400">dibanding bulan lalu</span>
+            </div>
+          </FinanceKpi>
           <FinanceKpi
             icon={Target}
             tone="green"
             value={formatRM(totalTarget)}
             label="Target pemasukan bulanan"
-            caption="Target Bulanan"
-          />
+          >
+            <p className="text-xs text-slate-500 dark:text-slate-400">Target dasar: 60 Siswa × RM 500</p>
+          </FinanceKpi>
           <FinanceKpi
             icon={AlertCircle}
             tone="pink"
             value={formatRM(totalTunggakan)}
             label="Total tunggakan"
-            caption="Perlu Tindakan"
-          />
+          >
+            <span className="inline-flex w-fit rounded-full bg-rose-100 px-2.5 py-1 text-xs font-semibold text-rose-700 dark:bg-rose-500/15 dark:text-rose-300">
+              11 Siswa belum bayar
+            </span>
+          </FinanceKpi>
           <FinanceKpi
             icon={PieChart}
             tone="blue"
             value={`${persentaseKutipan.toFixed(1)}%`}
             label="Tingkat penagihan yuran"
-            caption="Penagihan Yuran"
-          />
+          >
+            <div
+              className="h-1.5 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700"
+              role="progressbar"
+              aria-valuenow={81.7}
+              aria-valuemin={0}
+              aria-valuemax={100}
+              aria-label="Kemajuan penagihan"
+            >
+              <div className="h-full rounded-full bg-emerald-500" style={{ width: "81.7%" }} />
+            </div>
+            <p className="mt-1.5 text-xs text-slate-500 dark:text-slate-400">49/60 Lunas</p>
+          </FinanceKpi>
         </FinanceHero>
       ) : (
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between w-full min-w-0">

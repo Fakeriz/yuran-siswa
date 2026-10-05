@@ -109,21 +109,18 @@ export default async function StaffPage({ searchParams }: {
             tone="green"
             value={String(students.length - unpaid.length)}
             label="Siswa sudah bayar"
-            caption="Lunas"
           />
           <FinanceKpi
             icon={AlertCircle}
             tone="pink"
             value={String(unpaid.length)}
             label="Siswa belum bayar"
-            caption="Perlu Tindakan"
           />
           <FinanceKpi
             icon={Users}
             tone="blue"
             value={String(students.length)}
             label="Total siswa aktif"
-            caption="Total Siswa"
           />
         </FinanceHero>
         <form key={`${bulan}-${tahun}`} className="mt-8 flex flex-wrap items-end gap-3" action="/staff">

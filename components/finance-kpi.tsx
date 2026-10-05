@@ -1,4 +1,5 @@
-import { MoreHorizontal, type LucideIcon } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+import type { ReactNode } from "react";
 
 const chipTone: Record<string, string> = {
   violet: "from-violet-500 to-purple-600",
@@ -14,20 +15,20 @@ interface FinanceKpiProps {
   value: string;
   /** Label kecil di bawah nilai */
   label: string;
-  /** Kapsyen di jalur footer, cth. "Total Pemasukan" */
-  caption: string;
   /** Warna ikon: violet | green | pink | blue | amber */
   tone?: keyof typeof chipTone;
+  /** Baris detail polos di bawah (tanpa latar pil) */
+  children?: ReactNode;
 }
 
 /**
  * Kad KPI putih di atas hero ungu — ikon gradien berwarna, nilai besar,
- * label kecil, dan jalur footer violet lut sinar selebar kad.
+ * label kecil, dan baris detail pilihan di bawah.
  */
-export function FinanceKpi({ icon: Icon, value, label, caption, tone = "violet" }: FinanceKpiProps) {
+export function FinanceKpi({ icon: Icon, value, label, tone = "violet", children }: FinanceKpiProps) {
   return (
-    <div className="flex min-w-0 flex-col overflow-hidden rounded-2xl bg-white shadow-lg shadow-black/5 dark:bg-slate-900 dark:shadow-black/30">
-      <div className="flex min-w-0 items-center gap-3 p-4 pb-3">
+    <div className="flex min-w-0 flex-col rounded-2xl bg-white p-4 shadow-lg shadow-black/5 dark:bg-slate-900 dark:shadow-black/30">
+      <div className="flex min-w-0 items-center gap-3">
         <div
           className={`flex size-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br text-white shadow-md ${chipTone[tone]}`}
         >
@@ -38,10 +39,9 @@ export function FinanceKpi({ icon: Icon, value, label, caption, tone = "violet" 
           <p className="truncate text-xs text-slate-500 dark:text-slate-400">{label}</p>
         </div>
       </div>
-      <div className="mt-auto flex items-center justify-between bg-violet-600/40 px-4 py-2.5 dark:bg-violet-400/25">
-        <span className="truncate text-xs font-semibold text-white">{caption}</span>
-        <MoreHorizontal className="size-4 shrink-0 text-white/80" aria-hidden />
-      </div>
+      {children ? (
+        <div className="mt-3 border-t border-slate-100 pt-3 dark:border-slate-800">{children}</div>
+      ) : null}
     </div>
   );
 }

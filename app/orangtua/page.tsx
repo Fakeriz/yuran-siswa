@@ -65,14 +65,12 @@ export default async function ParentPage() {
               tone="blue"
               value={String(students.length)}
               label="Anak terdaftar"
-              caption="Anak"
             />
             <FinanceKpi
               icon={CheckCircle2}
               tone="green"
               value={String(students.filter((s) => paymentStatusFor(payments, s.id, currentMonth, tahun) === "sudah").length)}
               label={`Lunas bulan ${months[currentMonth - 1]}`}
-              caption="Bulan Ini"
             />
           </FinanceHero>
       {!ids.length ? <section className="mt-8 rounded-3xl border border-slate-200/70 bg-white/80 p-6 backdrop-blur dark:border-slate-800 dark:bg-slate-900/70" role="status">

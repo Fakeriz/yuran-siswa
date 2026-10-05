@@ -32,43 +32,134 @@ export interface StaffAssignment {
 const INITIAL_STAFF: StaffAssignment[] = [
   {
     id: "staff-1",
-    nama: "Ustaz Ahmad Farhan",
-    email: "farhan@yuran.demo",
-    telefon: "+60 12-345 6789",
-    grup: "Umum",
-    jawatan: "Ketua Bimbingan Asrama Mevlana",
-    bilanganSiswa: 20,
-    kadarKutipan: 85,
-    jumlahKutipan: 8500,
-    sasaranKutipan: 10000,
-    status: "Aktif",
+    nama: "Staf Adhwa HE",
+    email: "staf-1@yuran.demo",
+    telefon: "-",
+    grup: "Adhwa HE",
+    jawatan: "Pembimbing Adhwa HE",
+    bilanganSiswa: 9,
+    kadarKutipan: 34,
+    jumlahKutipan: 1500,
+    sasaranKutipan: 4375,
+    status: "Aktif"
   },
   {
     id: "staff-2",
-    nama: "Ustaz Mohd Haziq",
-    email: "haziq@yuran.demo",
-    telefon: "+60 13-987 6543",
-    grup: "Umum",
-    jawatan: "Staf Pembimbing Asrama Razi",
-    bilanganSiswa: 20,
-    kadarKutipan: 80,
-    jumlahKutipan: 8000,
-    sasaranKutipan: 10000,
-    status: "Aktif",
+    nama: "Staf Adnan HE ve Syukri HE",
+    email: "staf-2@yuran.demo",
+    telefon: "-",
+    grup: "Adnan HE ve Syukri HE",
+    jawatan: "Pembimbing Adnan HE ve Syukri HE",
+    bilanganSiswa: 18,
+    kadarKutipan: 0,
+    jumlahKutipan: 0,
+    sasaranKutipan: 8750,
+    status: "Aktif"
   },
   {
     id: "staff-3",
-    nama: "Ustaz Luqman Hakim",
-    email: "luqman@yuran.demo",
-    telefon: "+60 11-234 5678",
-    grup: "Umum",
-    jawatan: "Staf Pembimbing Asrama Fatih",
-    bilanganSiswa: 20,
-    kadarKutipan: 80,
-    jumlahKutipan: 8000,
-    sasaranKutipan: 10000,
-    status: "Aktif",
+    nama: "Staf Ameer HE",
+    email: "staf-3@yuran.demo",
+    telefon: "-",
+    grup: "Ameer HE",
+    jawatan: "Pembimbing Ameer HE",
+    bilanganSiswa: 13,
+    kadarKutipan: 15,
+    jumlahKutipan: 1000,
+    sasaranKutipan: 6500,
+    status: "Aktif"
   },
+  {
+    id: "staff-4",
+    nama: "Staf Arif HE",
+    email: "staf-4@yuran.demo",
+    telefon: "-",
+    grup: "Arif HE",
+    jawatan: "Pembimbing Arif HE",
+    bilanganSiswa: 11,
+    kadarKutipan: 18,
+    jumlahKutipan: 1000,
+    sasaranKutipan: 5500,
+    status: "Aktif"
+  },
+  {
+    id: "staff-5",
+    nama: "Staf Azwar HE",
+    email: "staf-5@yuran.demo",
+    telefon: "-",
+    grup: "Azwar HE",
+    jawatan: "Pembimbing Azwar HE",
+    bilanganSiswa: 14,
+    kadarKutipan: 20,
+    jumlahKutipan: 1250,
+    sasaranKutipan: 6250,
+    status: "Aktif"
+  },
+  {
+    id: "staff-6",
+    nama: "Staf Herian HE",
+    email: "staf-6@yuran.demo",
+    telefon: "-",
+    grup: "Herian HE",
+    jawatan: "Pembimbing Herian HE",
+    bilanganSiswa: 7,
+    kadarKutipan: 0,
+    jumlahKutipan: 0,
+    sasaranKutipan: 3500,
+    status: "Aktif"
+  },
+  {
+    id: "staff-7",
+    nama: "Staf Mevlana HE",
+    email: "staf-7@yuran.demo",
+    telefon: "-",
+    grup: "Mevlana HE",
+    jawatan: "Pembimbing Mevlana HE",
+    bilanganSiswa: 10,
+    kadarKutipan: 22,
+    jumlahKutipan: 1000,
+    sasaranKutipan: 4500,
+    status: "Aktif"
+  },
+  {
+    id: "staff-8",
+    nama: "Staf Razi HE",
+    email: "staf-8@yuran.demo",
+    telefon: "-",
+    grup: "Razi HE",
+    jawatan: "Pembimbing Razi HE",
+    bilanganSiswa: 11,
+    kadarKutipan: 31,
+    jumlahKutipan: 1500,
+    sasaranKutipan: 4875,
+    status: "Aktif"
+  },
+  {
+    id: "staff-9",
+    nama: "Staf Rizky HE",
+    email: "staf-9@yuran.demo",
+    telefon: "-",
+    grup: "Rizky HE",
+    jawatan: "Pembimbing Rizky HE",
+    bilanganSiswa: 11,
+    kadarKutipan: 0,
+    jumlahKutipan: 0,
+    sasaranKutipan: 5125,
+    status: "Aktif"
+  },
+  {
+    id: "staff-10",
+    nama: "Staf Tamimi HE",
+    email: "staf-10@yuran.demo",
+    telefon: "-",
+    grup: "Tamimi HE",
+    jawatan: "Pembimbing Tamimi HE",
+    bilanganSiswa: 7,
+    kadarKutipan: 0,
+    jumlahKutipan: 0,
+    sasaranKutipan: 3375,
+    status: "Aktif"
+  }
 ];
 
 export function TabPenugasan() {
@@ -81,7 +172,7 @@ export function TabPenugasan() {
   const [formNama, setFormNama] = useState("");
   const [formEmail, setFormEmail] = useState("");
   const [formTelefon, setFormTelefon] = useState("");
-  const [formGrup, setFormGrup] = useState<StaffAssignment["grup"]>("Mevlana HE");
+  const [formGrup, setFormGrup] = useState<StaffAssignment["grup"]>("Adhwa HE");
   const [toastMsg, setToastMsg] = useState<string | null>(null);
 
   const showToast = (msg: string) => {

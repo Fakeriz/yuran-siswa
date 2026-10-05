@@ -92,7 +92,7 @@ export default async function StaffPage({ searchParams }: {
       <main className="mx-auto w-full max-w-6xl min-w-0 px-4 py-8 sm:px-8 md:py-12">
         <FinanceHero name="Staf" subtitle={`Kelola dan catat pembayaran yuran siswa dalam grup Anda — ${period}.`}
           kpiGridClassName="lg:grid-cols-3" actions={
-            <Link href="/staff/grup" className="inline-flex min-h-11 items-center gap-2 rounded-2xl bg-card/95 px-5 py-2 text-sm font-semibold text-primary shadow-md transition hover:bg-card"
+            <Link href="/staff/grup" className="inline-flex min-h-11 items-center gap-2 rounded-full border border-border bg-card px-5 py-2 text-sm font-semibold text-primary transition hover:bg-muted"
             >
               <UsersRound className="size-4" aria-hidden />
               Pilih Grup

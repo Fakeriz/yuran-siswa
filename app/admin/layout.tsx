@@ -12,7 +12,6 @@ import {
   UserCheck,
   Building2,
   Bell,
-  Menu,
   X,
   LogOut,
   ShieldCheck,
@@ -190,6 +189,7 @@ function Breadcrumb() {
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [desktopCollapsed, setDesktopCollapsed] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
   const [helpOpen, setHelpOpen] = useState(false);
   const [userOpen, setUserOpen] = useState(false);
@@ -279,13 +279,13 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
       )}
 
       {/* Sidebar Navigation (Desktop Persistent + Mobile Slide Drawer) */}
-      <aside className={`fixed inset-y-0 left-0 z-50 flex w-72 max-w-[85vw] flex-col overflow-hidden border border-border/70 bg-background shadow-xl lg:bg-card/95 lg:shadow-none transition-transform duration-300 ease-in-out lg:bottom-4 lg:left-4 lg:top-4 lg:rounded-3xl lg:translate-x-0  ${
+      <aside className={`fixed inset-y-0 left-0 z-50 flex w-72 max-w-[85vw] flex-col overflow-hidden border border-border/70 bg-background shadow-xl lg:bg-card/95 lg:shadow-none transition-transform duration-300 ease-in-out lg:bottom-4 lg:left-4 lg:top-4 lg:rounded-3xl ${desktopCollapsed ? "lg:-translate-x-[110%]" : "lg:translate-x-0"}  ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         {/* Brand Logo & Header */}
         <div className="flex h-16 items-center justify-between px-5 border-b border-border">
-          <Link href="/admin" onClick={() => setSidebarOpen(false)} className="flex items-center gap-2.5 group focus-visible:outline-primary">
+          <button type="button" onClick={() => { if (window.innerWidth >= 1024) setDesktopCollapsed((c) => !c); else setSidebarOpen(false); }} className="flex items-center gap-2.5 group focus-visible:outline-primary" aria-label="Buka/tutup navigasi">
             <div className="flex size-9 items-center justify-center rounded-xl bg-primary text-white shadow-md transition-all">
               <School className="size-4.5" />
             </div>
@@ -298,7 +298,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
               </div>
               <p className="text-[11px] text-muted-foreground font-medium">Manajemen Yuran Bulanan</p>
             </div>
-          </Link>
+          </button>
 
           <button type="button" onClick={() => setSidebarOpen(false)}
             className="lg:hidden p-2 text-muted-foreground hover:text-foreground hover:bg-muted rounded-xl transition-colors" aria-label="Tutup navigasi"
@@ -334,16 +334,13 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
       </aside>
 
       {/* Main Content Area */}
-      <div className="lg:pl-80 flex flex-col flex-1 min-w-0 w-full max-w-full">
+      <div className={`flex flex-col flex-1 min-w-0 w-full max-w-full ${desktopCollapsed ? "" : "lg:pl-80"}`}>
         {/* Dedicated Mobile Header (lg:hidden) */}
         <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-border/70 bg-background/80 p-4 backdrop-blur-md lg:hidden">
           <div className="flex items-center gap-3">
-            <button type="button" onClick={() => setSidebarOpen(true)}
-              className="p-2 text-muted-foreground hover:text-foreground hover:bg-muted rounded-xl focus-visible:outline-primary" aria-label="Buka menu navigasi"
+            <button type="button" onClick={() => setSidebarOpen((o) => !o)}
+              className="flex items-center gap-2 rounded-lg focus-visible:outline-primary" aria-label="Buka/tutup menu navigasi" aria-expanded={sidebarOpen}
             >
-              <Menu className="size-5" />
-            </button>
-            <Link href="/admin" className="flex items-center gap-2">
               <div className="flex size-8 items-center justify-center rounded-lg bg-primary text-white shadow-xs">
                 <School className="size-4" />
               </div>
@@ -351,7 +348,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
               <span className="text-[9px] font-semibold uppercase tracking-wider text-primary bg-primary/10 px-1.5 py-0.5 rounded-md border border-primary/20">
                 Admin
               </span>
-            </Link>
+            </button>
           </div>
 
           <div className="flex items-center gap-2">
@@ -368,10 +365,17 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
         {/* Desktop Top Navbar — bar terapung gaya financial dashboard */}
         <header className="sticky top-0 z-30 hidden w-full px-6 pt-4 lg:block lg:px-8">
           <div className="flex h-16 w-full items-center justify-between gap-4 rounded-2xl border border-border/60 bg-card px-5">
-            {/* Tajuk tab semasa */}
-            <Suspense>
-              <HeaderTitle />
-            </Suspense>
+            <div className="flex items-center gap-3">
+              <button type="button" onClick={() => setDesktopCollapsed((c) => !c)}
+                className="flex size-8 items-center justify-center rounded-lg bg-primary text-white shadow-xs" aria-label="Buka/tutup navigasi" aria-expanded={!desktopCollapsed}
+              >
+                <School className="size-4" />
+              </button>
+              {/* Tajuk tab semasa */}
+              <Suspense>
+                <HeaderTitle />
+              </Suspense>
+            </div>
 
             {/* Carian global */}
             <form role="search" onSubmit={(e) => {

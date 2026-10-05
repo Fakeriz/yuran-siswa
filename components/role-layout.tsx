@@ -31,6 +31,7 @@ const NAVS: Record<Exclude<Role, "admin">, { title: string; items: NavItem[] }> 
 
 export function RoleLayout({ role, userName, children }: { role: Exclude<Role, "admin">; userName?: string; children: ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [desktopCollapsed, setDesktopCollapsed] = useState(false);
   const pathname = usePathname();
   const nav = NAVS[role];
 
@@ -71,7 +72,10 @@ export function RoleLayout({ role, userName, children }: { role: Exclude<Role, "
 
   return (
     <div className="relative min-h-dvh flex flex-col bg-background text-foreground">
-      <UserBar userRole={role} userName={userName} onMenuClick={() => setSidebarOpen(true)} />
+      <UserBar userRole={role} userName={userName} onMenuClick={() => {
+        if (window.innerWidth >= 1024) setDesktopCollapsed((c) => !c);
+        else setSidebarOpen((o) => !o);
+      }} />
 
       {/* Mobile drawer */}
       {sidebarOpen && (
@@ -82,8 +86,8 @@ export function RoleLayout({ role, userName, children }: { role: Exclude<Role, "
       </aside>
 
       {/* Desktop layout */}
-      <div className="relative flex-1 lg:grid lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-6 lg:p-6 lg:pt-2">
-        <aside className="hidden lg:flex lg:rounded-2xl lg:border lg:border-border lg:bg-card lg:p-4 flex-col overflow-hidden">
+      <div className={`relative flex-1 lg:gap-6 lg:p-6 lg:pt-2 ${desktopCollapsed ? "lg:block" : "lg:grid lg:grid-cols-[240px_minmax(0,1fr)]"}`}>
+        <aside className={`hidden lg:flex lg:rounded-2xl lg:border lg:border-border lg:bg-card lg:p-4 flex-col overflow-hidden ${desktopCollapsed ? "lg:hidden" : ""}`}>
           {sidebarContent(() => {})}
         </aside>
         <main className="min-w-0 flex-1 px-4 py-6 sm:px-6 lg:px-2 lg:py-2">

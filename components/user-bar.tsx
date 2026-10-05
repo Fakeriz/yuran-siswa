@@ -1,8 +1,7 @@
 "use client";
 
 import { useTransition } from "react";
-import Link from "next/link";
-import { LogOut, Menu, ReceiptText } from "lucide-react";
+import { LogOut, ReceiptText } from "lucide-react";
 import { loginDemo, logout } from "../app/(auth)/login/actions";
 import { ThemeToggle } from "./theme-toggle";
 import type { Role } from "../lib/types";
@@ -37,7 +36,6 @@ export function UserBar({ userName, userRole, onMenuClick }: UserBarProps) {
     orang_tua: "Orang Tua",
   };
 
-  const homeHref = userRole === "admin" ? "/admin" : userRole === "staff" ? "/staff" : "/orangtua";
 
   return (
     <>
@@ -45,11 +43,8 @@ export function UserBar({ userName, userRole, onMenuClick }: UserBarProps) {
       <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-border/70 bg-background/80 p-4 backdrop-blur-md lg:hidden">
         <div className="flex items-center gap-3">
           <button type="button" onClick={onMenuClick}
-            className="p-2 text-muted-foreground hover:text-foreground hover:bg-muted rounded-xl focus-visible:outline-primary" aria-label="Buka menu navigasi"
+            className="flex items-center gap-2 rounded-lg focus-visible:outline-primary" aria-label="Buka/tutup menu navigasi"
           >
-            <Menu className="size-5" />
-          </button>
-          <Link href={homeHref} className="flex items-center gap-2">
             <span className="flex size-8 items-center justify-center rounded-lg bg-primary text-white shadow-xs">
               <ReceiptText className="size-4" aria-hidden="true" />
             </span>
@@ -57,7 +52,7 @@ export function UserBar({ userName, userRole, onMenuClick }: UserBarProps) {
             <span className="text-[9px] font-semibold uppercase tracking-wider text-primary bg-primary/10 px-1.5 py-0.5 rounded-md border border-primary/20">
               {roleLabels[userRole]}
             </span>
-          </Link>
+          </button>
         </div>
         <div className="flex items-center gap-2">
           <ThemeToggle />
@@ -73,7 +68,9 @@ export function UserBar({ userName, userRole, onMenuClick }: UserBarProps) {
       <header className="sticky top-0 z-30 hidden w-full px-6 pt-4 lg:block lg:px-8">
         <div className="flex h-16 w-full items-center justify-between gap-4 rounded-2xl border border-border/60 bg-card px-5">
           <div className="flex items-center gap-3">
-            <Link href={homeHref} className="flex items-center gap-2">
+            <button type="button" onClick={onMenuClick}
+              className="flex items-center gap-2 rounded-lg focus-visible:outline-primary" aria-label="Buka/tutup menu navigasi"
+            >
               <span className="flex size-8 items-center justify-center rounded-lg bg-primary text-white shadow-xs">
                 <ReceiptText className="size-4" aria-hidden="true" />
               </span>
@@ -81,7 +78,7 @@ export function UserBar({ userName, userRole, onMenuClick }: UserBarProps) {
               <span className="text-[9px] font-semibold uppercase tracking-wider text-primary bg-primary/10 px-1.5 py-0.5 rounded-md border border-primary/20">
                 {roleLabels[userRole]}
               </span>
-            </Link>
+            </button>
             {userName && (
               <span className="hidden text-xs text-muted-foreground xl:inline">
                 · {userName}

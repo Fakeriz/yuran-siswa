@@ -22,7 +22,7 @@ export interface StaffAssignment {
   telefon: string;
   grup: "Mevlana HE" | "Razi HE" | "Fatih HE";
   jawatan: string;
-  bilanganTalebe: number;
+  bilanganSiswa: number;
   kadarKutipan: number; // percentage
   jumlahKutipan: number;
   sasaranKutipan: number;
@@ -37,7 +37,7 @@ const INITIAL_STAFF: StaffAssignment[] = [
     telefon: "+60 12-345 6789",
     grup: "Mevlana HE",
     jawatan: "Ketua Bimbingan Asrama Mevlana",
-    bilanganTalebe: 20,
+    bilanganSiswa: 20,
     kadarKutipan: 85,
     jumlahKutipan: 8500,
     sasaranKutipan: 10000,
@@ -50,7 +50,7 @@ const INITIAL_STAFF: StaffAssignment[] = [
     telefon: "+60 13-987 6543",
     grup: "Razi HE",
     jawatan: "Staf Pembimbing Asrama Razi",
-    bilanganTalebe: 20,
+    bilanganSiswa: 20,
     kadarKutipan: 80,
     jumlahKutipan: 8000,
     sasaranKutipan: 10000,
@@ -63,7 +63,7 @@ const INITIAL_STAFF: StaffAssignment[] = [
     telefon: "+60 11-234 5678",
     grup: "Fatih HE",
     jawatan: "Staf Pembimbing Asrama Fatih",
-    bilanganTalebe: 20,
+    bilanganSiswa: 20,
     kadarKutipan: 80,
     jumlahKutipan: 8000,
     sasaranKutipan: 10000,
@@ -109,9 +109,9 @@ export function TabPenugasan() {
             : s
         )
       );
-      showToast(`Penugasan ${formNama} untuk ${formGrup} berjaya dikemaskini.`);
+      showToast(`Penugasan ${formNama} untuk ${formGrup} berhasil diperbarui.`);
     } else {
-      // Tambah staf baharu
+      // Tambah staf baru
       const newStaff: StaffAssignment = {
         id: `staff-${Date.now()}`,
         nama: formNama,
@@ -119,14 +119,14 @@ export function TabPenugasan() {
         telefon: formTelefon || "+60 1X-XXX XXXX",
         grup: formGrup,
         jawatan: `Staf Pembimbing Asrama ${formGrup.split(" ")[0]}`,
-        bilanganTalebe: 20,
+        bilanganSiswa: 20,
         kadarKutipan: 0,
         jumlahKutipan: 0,
         sasaranKutipan: 10000,
         status: "Aktif",
       };
       setStaffList((prev) => [newStaff, ...prev]);
-      showToast(`Staf baharu ${formNama} berjaya ditugaskan ke ${formGrup}.`);
+      showToast(`Staf baru ${formNama} berhasil ditugaskan ke ${formGrup}.`);
     }
 
     setShowAssignModal(false);
@@ -167,7 +167,7 @@ export function TabPenugasan() {
             </span>
           </div>
           <p className="mt-1 text-sm text-muted-foreground">
-            Urus penugasan Ustaz dan Staf pembimbing bagi setiap kumpulan asrama Talebe.
+            Urus penugasan Ustaz dan Staf pembimbing bagi setiap kumpulan asrama Siswa.
           </p>
         </div>
 
@@ -184,7 +184,7 @@ export function TabPenugasan() {
           className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-xs font-semibold text-white shadow-xs hover:bg-primary/90 transition-colors focus-visible:outline-primary"
         >
           <Plus className="size-4" />
-          <span>Tugaskan Staf Baharu</span>
+          <span>Tugaskan Staf Baru</span>
         </button>
       </div>
 
@@ -226,7 +226,7 @@ export function TabPenugasan() {
             </div>
           </div>
           <p className="mt-3 text-2xl font-bold text-foreground">81.7%</p>
-          <p className="mt-1 text-xs text-emerald-700 font-medium">49 daripada 60 Talebe lunas</p>
+          <p className="mt-1 text-xs text-emerald-700 font-medium">49 daripada 60 Siswa lunas</p>
         </div>
       </div>
 
@@ -239,7 +239,7 @@ export function TabPenugasan() {
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Cari nama ustaz, grup, atau emel..."
+              placeholder="Cari nama ustaz, grup, atau email..."
               className="w-full rounded-xl border border-input bg-card py-2 pl-9 pr-4 text-xs text-foreground focus:border-primary focus:outline-none"
             />
           </div>
@@ -302,7 +302,7 @@ export function TabPenugasan() {
                     />
                   </div>
                   <div className="mt-1 flex items-center justify-between text-[11px] text-muted-foreground">
-                    <span>{staff.bilanganTalebe} Talebe</span>
+                    <span>{staff.bilanganSiswa} Siswa</span>
                     <span>RM {staff.jumlahKutipan.toLocaleString()} / RM {staff.sasaranKutipan.toLocaleString()}</span>
                   </div>
                 </div>
@@ -319,7 +319,7 @@ export function TabPenugasan() {
                     href={`/admin?tab=siswa&grup=${encodeURIComponent(staff.grup)}`}
                     className="inline-flex items-center gap-1 rounded-xl bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-800 hover:bg-emerald-100 transition-colors"
                   >
-                    <span>Lihat Talebe</span>
+                    <span>Lihat Siswa</span>
                     <ArrowRight className="size-3.5" />
                   </Link>
                 </div>
@@ -342,7 +342,7 @@ export function TabPenugasan() {
             <div className="flex items-center justify-between border-b border-border pb-3">
               <div>
                 <h3 className="font-bold text-lg text-foreground">
-                  {selectedStaff ? "Ubah Penugasan Staf" : "Tugaskan Staf Baharu"}
+                  {selectedStaff ? "Ubah Penugasan Staf" : "Tugaskan Staf Baru"}
                 </h3>
                 <p className="text-xs text-muted-foreground">
                   {selectedStaff
@@ -367,13 +367,13 @@ export function TabPenugasan() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs font-semibold text-foreground">Emel</label>
+                  <label className="text-xs font-semibold text-foreground">Email</label>
                   <input
                     type="email"
                     required
                     value={formEmail}
                     onChange={(e) => setFormEmail(e.target.value)}
-                    placeholder="emel@yuran.demo"
+                    placeholder="email@yuran.demo"
                     className="mt-1 w-full rounded-xl border border-input px-3 py-2 text-sm focus:border-primary focus:outline-none"
                   />
                 </div>
@@ -396,12 +396,12 @@ export function TabPenugasan() {
                   onChange={(e) => setFormGrup(e.target.value as StaffAssignment["grup"])}
                   className="mt-1 w-full rounded-xl border border-input px-3 py-2 text-sm focus:border-primary focus:outline-none"
                 >
-                  <option value="Mevlana HE">Mevlana HE (20 Talebe)</option>
-                  <option value="Razi HE">Razi HE (20 Talebe)</option>
-                  <option value="Fatih HE">Fatih HE (20 Talebe)</option>
+                  <option value="Mevlana HE">Mevlana HE (20 Siswa)</option>
+                  <option value="Razi HE">Razi HE (20 Siswa)</option>
+                  <option value="Fatih HE">Fatih HE (20 Siswa)</option>
                 </select>
                 <p className="mt-1 text-[11px] text-muted-foreground">
-                  Staf akan bertanggungjawab mencatat bayaran yuran dan mengesahkan ibu bapa bagi kumpulan ini.
+                  Staf akan bertanggungjawab mencatat bayaran yuran dan mengesahkan orang tua bagi kumpulan ini.
                 </p>
               </div>
 

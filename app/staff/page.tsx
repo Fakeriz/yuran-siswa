@@ -133,7 +133,7 @@ export default async function StaffPage({ searchParams }: {
                 className={`rounded-full px-4 py-3 text-sm font-medium transition duration-150 ${filter === value ? "bg-primary text-primary-foreground" : "border border-border bg-card hover:bg-muted"}`}>{label}</button>
             ))}
           </form>
-          {!visible.length ? <p className="rounded-2xl border border-border p-6 text-muted-foreground">{!groups.length ? "Anda belum memiliki grup. Buka Pilih grup untuk memilih anak didik Anda." : !students.length ? "Belum ada siswa aktif dalam grup Anda." : "Tidak ada siswa untuk filter ini."}</p> : (
+          {!visible.length ? <p className="rounded-2xl border border-border p-6 text-muted-foreground">{!groups.length ? "Anda belum memiliki grup. Buka Pilih grup untuk memilih siswa Anda." : !students.length ? "Belum ada siswa aktif dalam grup Anda." : "Tidak ada siswa untuk filter ini."}</p> : (
             <div className="overflow-x-auto rounded-3xl border border-border/70 bg-card shadow-sm">
               <table className="w-full text-left text-sm">
                 <caption className="sr-only">Status yuran siswa untuk {period}</caption>

@@ -292,7 +292,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
             <div>
               <div className="flex items-center gap-1.5">
                 <span className="font-bold text-base text-foreground tracking-tight">YuranKu</span>
-                <span className="text-[9px] font-semibold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded-md border border-emerald-200/80">
+                <span className="text-[9px] font-semibold uppercase tracking-wider text-primary bg-primary/10 px-1.5 py-0.5 rounded-md border border-primary/20">
                   Admin
                 </span>
               </div>
@@ -321,7 +321,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
             <div className="min-w-0 flex-1">
               <p className="text-xs font-semibold text-foreground truncate">Pegawai Tata Usaha</p>
               <p className="text-[11px] text-muted-foreground truncate flex items-center gap-1">
-                <ShieldCheck className="size-3 text-emerald-500 shrink-0" />
+                <ShieldCheck className="size-3 text-primary shrink-0" />
                 Administrator Sistem
               </p>
             </div>
@@ -348,7 +348,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                 <School className="size-4" />
               </div>
               <span className="font-bold text-base text-foreground tracking-tight">YuranKu</span>
-              <span className="text-[9px] font-semibold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded-md border border-emerald-200/80">
+              <span className="text-[9px] font-semibold uppercase tracking-wider text-primary bg-primary/10 px-1.5 py-0.5 rounded-md border border-primary/20">
                 Admin
               </span>
             </Link>
@@ -483,7 +483,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                       <div className="min-w-0">
                         <p className="truncate text-sm font-semibold text-foreground">Administrator Demo</p>
                         <p className="flex items-center gap-1 text-[11px] text-muted-foreground">
-                          <ShieldCheck className="size-3 shrink-0 text-emerald-500" />
+                          <ShieldCheck className="size-3 shrink-0 text-primary" />
                           Administrator Sistem
                         </p>
                       </div>

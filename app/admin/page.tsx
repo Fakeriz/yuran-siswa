@@ -56,7 +56,7 @@ interface SiswaRingkas {
   grup: string;
 }
 
-const columnHelper = createColumnHelper<DataTableFeatures, TalebeRecord>();
+const columnHelper = createColumnHelper<DataTableFeatures, SiswaRecord>();
 
 const BULAN_KE_INDEKS: Record<string, number> = {
   Jan: 0, Feb: 1, Mar: 2, Apr: 3, Mei: 4, Jun: 5,
@@ -73,7 +73,7 @@ function tanggalKeTimestamp(tanggal: string): number {
 }
 
 /** Lencana status untuk varian tabel transaksi. */
-function LencanaStatus({ status }: { status: TalebeRecord["status"] }) {
+function LencanaStatus({ status }: { status: SiswaRecord["status"] }) {
   if (status === "Lunas") {
     return (
       <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-700 border border-emerald-200/80">
@@ -99,7 +99,7 @@ function LencanaStatus({ status }: { status: TalebeRecord["status"] }) {
 }
 
 /** Lencana status untuk varian senarai siswa (Lunas hijau, selebihnya merah). */
-function LencanaStatusSiswa({ status }: { status: TalebeRecord["status"] }) {
+function LencanaStatusSiswa({ status }: { status: SiswaRecord["status"] }) {
   if (status === "Lunas") {
     return (
       <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-700 border border-emerald-200/80">
@@ -125,11 +125,11 @@ function LencanaAktif({ aktif }: { aktif: boolean }) {
   );
 }
 
-// Struktur jenis data berasaskan skema logik Data_Talebe & Transaksi_Masuk
-export interface TalebeRecord {
-  id: string; // ID_Talebe (PK)
+// Struktur jenis data berasaskan skema logik Data_Siswa & Transaksi_Masuk
+export interface SiswaRecord {
+  id: string; // ID_Siswa (PK)
   noTransaksi: string; // No_Transaksi (PK)
-  nama: string; // Nama_Talebe
+  nama: string; // Nama_Siswa
   grup: "Mevlana HE" | "Razi HE" | "Fatih HE"; // Grup
   yuranBulanan: number; // Yuran_Bulanan (Default RM 500)
   jumlahBayar: number; // Jumlah_Bayar
@@ -141,7 +141,7 @@ export interface TalebeRecord {
 }
 
 // Pisahkan "bin/binti Fulan" ke baris bawah (tanpa grup, grup kini kolom sendiri)
-function NamaTalebe({ nama }: { nama: string }) {
+function NamaSiswa({ nama }: { nama: string }) {
   const m = nama.match(/^(.*?)\s+(bin|binti|bt)\s+(.+)$/i);
   const namaUtama = m ? m[1].trim() : nama;
   const patronimik = m ? `${m[2].toLowerCase()} ${m[3].trim()}` : null;
@@ -154,7 +154,7 @@ function NamaTalebe({ nama }: { nama: string }) {
 }
 
 // Data statis (dummy data) yang menyerupai yuran RM 500/bulan bagi 60 siswa
-const initialTalebeData: TalebeRecord[] = [
+const initialSiswaData: SiswaRecord[] = [
   {
     id: "TB-001",
     noTransaksi: "TRX-202610-001",
@@ -273,7 +273,7 @@ function AdminContent() {
   const searchParams = useSearchParams();
   const tab = searchParams.get("tab");
 
-  const [records, setRecords] = useState<TalebeRecord[]>(initialTalebeData);
+  const [records, setRecords] = useState<SiswaRecord[]>(initialSiswaData);
   const qParam = searchParams.get("q") ?? "";
   const [searchQuery, setSearchQuery] = useState(qParam);
   // Segerakkan carian jadual apabila carian global header menghantar ?q=
@@ -283,7 +283,7 @@ function AdminContent() {
   const [selectedGroup, setSelectedGroup] = useState<string>("Semua");
   const [selectedStatus, setSelectedStatus] = useState<string>("Semua");
   const [selectedMonth, setSelectedMonth] = useState("Oktober 2026");
-  const [selectedRecord, setSelectedRecord] = useState<TalebeRecord | null>(null);
+  const [selectedRecord, setSelectedRecord] = useState<SiswaRecord | null>(null);
   const [recordOpen, setRecordOpen] = useState(false);
   const recordCloseTimer = useRef<number | null>(null);
   const [showBayarModal, setShowBayarModal] = useState(false);
@@ -299,14 +299,14 @@ function AdminContent() {
   const [bayarJumlah, setBayarJumlah] = useState("500");
   const [bayarBulan, setBayarBulan] = useState("Oktober 2026");
   const [showImportModal, setShowImportModal] = useState(false);
-  const [importPreview, setImportPreview] = useState<TalebeRecord[]>([]);
+  const [importPreview, setImportPreview] = useState<SiswaRecord[]>([]);
   const [uploadItems, setUploadItems] = useState<FileUploadItem[]>([]);
 
   // Parse CSV import siswa: Nama,Grup,Kelas,Yuran Bulanan (RM),Aktif (Ya/Tidak),Sesi
-  const parseImportCSV = (text: string): TalebeRecord[] => {
+  const parseImportCSV = (text: string): SiswaRecord[] => {
     const lines = text.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
     if (lines.length < 2) throw new Error("Fail kosong atau tiada data.");
-    const rows: TalebeRecord[] = [];
+    const rows: SiswaRecord[] = [];
     for (let i = 1; i < lines.length; i++) {
       // Split CSV menghormati tanda petik
       const cols = lines[i].match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g)?.map((c) => c.replace(/^"|"$/g, "").trim()) ?? [];
@@ -318,7 +318,7 @@ function AdminContent() {
         id: `T-IMP-${Date.now()}-${i}`,
         nama,
         noTransaksi: "-",
-        grup: (grup || "Mevlana HE") as TalebeRecord["grup"],
+        grup: (grup || "Mevlana HE") as SiswaRecord["grup"],
         yuranBulanan: yuran,
         jumlahBayar: 0,
         bulanDibayar: selectedMonth,
@@ -399,7 +399,7 @@ function AdminContent() {
     closeImportModal();
   };
 
-  const openRecordModal = useCallback((item: TalebeRecord) => {
+  const openRecordModal = useCallback((item: SiswaRecord) => {
     if (recordCloseTimer.current) window.clearTimeout(recordCloseTimer.current);
     setSelectedRecord(item);
     setRecordOpen(true);
@@ -427,7 +427,7 @@ function AdminContent() {
     [],
   );
 
-  // Penapisan rekod Talebe secara dinamik
+  // Penapisan rekod Siswa secara dinamik
   const filteredRecords = useMemo(() => {
     return records.filter((item) => {
       const matchSearch =
@@ -461,7 +461,7 @@ function AdminContent() {
         }),
         columnHelper.accessor("nama", {
           header: ({ column }) => <DataTableColumnHeader column={column} title="Nama Siswa" />,
-          cell: ({ row }) => <NamaTalebe nama={row.original.nama} />,
+          cell: ({ row }) => <NamaSiswa nama={row.original.nama} />,
           sortFn: "text",
         }),
         columnHelper.accessor("grup", {
@@ -557,7 +557,7 @@ function AdminContent() {
         }),
         columnHelper.accessor("nama", {
           header: ({ column }) => <DataTableColumnHeader column={column} title="Nama Siswa" />,
-          cell: ({ row }) => <NamaTalebe nama={row.original.nama} />,
+          cell: ({ row }) => <NamaSiswa nama={row.original.nama} />,
           sortFn: "text",
         }),
         columnHelper.accessor("grup", {
@@ -911,7 +911,7 @@ function AdminContent() {
           </div>
         </div>
 
-        {/* Tabel Data_Talebe & Transaksi_Masuk */}
+        {/* Tabel Data_Siswa & Transaksi_Masuk */}
         <DataTable columns={isSiswa ? siswaColumns : transaksiColumns}
           data={filteredRecords}
           onRowClick={openRecordModal}
@@ -1082,11 +1082,11 @@ function AdminContent() {
               <Button variant="primary" size="sm" ripple disabled={!bayarSiswa}
                 onClick={() => {
                   if (!bayarSiswa) return;
-                  const baru: TalebeRecord = {
+                  const baru: SiswaRecord = {
                     id: `T-${Date.now()}`,
                     nama: bayarSiswa.nama,
                     noTransaksi: `TRX-${Date.now().toString().slice(-6)}`,
-                    grup: bayarSiswa.grup as TalebeRecord["grup"],
+                    grup: bayarSiswa.grup as SiswaRecord["grup"],
                     yuranBulanan: 500,
                     jumlahBayar: Number(bayarJumlah) || 500,
                     bulanDibayar: bayarBulan,

@@ -16,8 +16,8 @@ import {
 
 export interface ReceiptItem {
   id: string;
-  noResit: string;
-  namaTalebe: string;
+  noKuitansi: string;
+  namaSiswa: string;
   grup: string;
   bulan: string;
   jumlah: number;
@@ -31,8 +31,8 @@ export interface ReceiptItem {
 const INITIAL_RECEIPTS: ReceiptItem[] = [
   {
     id: "rec-1",
-    noResit: "R-2026-1042",
-    namaTalebe: "Ahmad bin Ali",
+    noKuitansi: "R-2026-1042",
+    namaSiswa: "Ahmad bin Ali",
     grup: "Mevlana HE",
     bulan: "Oktober 2026",
     jumlah: 500,
@@ -44,8 +44,8 @@ const INITIAL_RECEIPTS: ReceiptItem[] = [
   },
   {
     id: "rec-2",
-    noResit: "R-2026-1041",
-    namaTalebe: "Siti Nurhaliza",
+    noKuitansi: "R-2026-1041",
+    namaSiswa: "Siti Nurhaliza",
     grup: "Mevlana HE",
     bulan: "Oktober 2026",
     jumlah: 500,
@@ -57,8 +57,8 @@ const INITIAL_RECEIPTS: ReceiptItem[] = [
   },
   {
     id: "rec-3",
-    noResit: "R-2026-1040",
-    namaTalebe: "Mohd Rizal",
+    noKuitansi: "R-2026-1040",
+    namaSiswa: "Mohd Rizal",
     grup: "Razi HE",
     bulan: "Oktober 2026",
     jumlah: 500,
@@ -68,8 +68,8 @@ const INITIAL_RECEIPTS: ReceiptItem[] = [
   },
   {
     id: "rec-4",
-    noResit: "R-2026-1039",
-    namaTalebe: "Muhammad Faiz",
+    noKuitansi: "R-2026-1039",
+    namaSiswa: "Muhammad Faiz",
     grup: "Razi HE",
     bulan: "Oktober 2026",
     jumlah: 500,
@@ -79,8 +79,8 @@ const INITIAL_RECEIPTS: ReceiptItem[] = [
   },
   {
     id: "rec-5",
-    noResit: "R-2026-1038",
-    namaTalebe: "Nur Aisyah",
+    noKuitansi: "R-2026-1038",
+    namaSiswa: "Nur Aisyah",
     grup: "Fatih HE",
     bulan: "Oktober 2026",
     jumlah: 500,
@@ -92,8 +92,8 @@ const INITIAL_RECEIPTS: ReceiptItem[] = [
   },
   {
     id: "rec-6",
-    noResit: "R-2026-1037",
-    namaTalebe: "Danial Hakimi",
+    noKuitansi: "R-2026-1037",
+    namaSiswa: "Danial Hakimi",
     grup: "Fatih HE",
     bulan: "Oktober 2026",
     jumlah: 500,
@@ -125,8 +125,8 @@ export function TabResit() {
       (filterType === "uploaded" && r.kwitansiUploaded) ||
       (filterType === "pending" && !r.kwitansiUploaded);
     const matchSearch =
-      r.noResit.toLowerCase().includes(search.toLowerCase()) ||
-      r.namaTalebe.toLowerCase().includes(search.toLowerCase()) ||
+      r.noKuitansi.toLowerCase().includes(search.toLowerCase()) ||
+      r.namaSiswa.toLowerCase().includes(search.toLowerCase()) ||
       r.grup.toLowerCase().includes(search.toLowerCase()) ||
       r.kaedah.toLowerCase().includes(search.toLowerCase());
     return matchFilter && matchSearch;
@@ -149,7 +149,7 @@ export function TabResit() {
       )
     );
 
-    showToast(`Kwitansi rasmi bagi resit ${selectedReceipt.noResit} (${selectedReceipt.namaTalebe}) berjaya dimuat naik ke Google Drive.`);
+    showToast(`Kwitansi rasmi bagi resit ${selectedReceipt.noKuitansi} (${selectedReceipt.namaSiswa}) berhasil dimuat naik ke Google Drive.`);
     setShowUploadModal(false);
     setSelectedReceipt(null);
     setUploadFile(null);
@@ -179,7 +179,7 @@ export function TabResit() {
             )}
           </div>
           <p className="mt-1 text-sm text-muted-foreground">
-            Pengurusan dokumen rasmi bayaran yuran dan muat naik kwitansi rasmi pentadbir ke Google Drive.
+            Pengurusan dokumen rasmi bayaran yuran dan muat naik kwitansi rasmi admin ke Google Drive.
           </p>
         </div>
 
@@ -209,7 +209,7 @@ export function TabResit() {
           <p className="mt-3 text-2xl font-bold text-emerald-800">
             {receipts.filter((r) => r.kwitansiUploaded).length} Resit
           </p>
-          <p className="mt-1 text-xs text-muted-foreground">Tersedia di Google Drive & portal ibu bapa</p>
+          <p className="mt-1 text-xs text-muted-foreground">Tersedia di Google Drive & portal orang tua</p>
         </div>
 
         <div className="rounded-2xl border border-border bg-card p-5 shadow-xs">
@@ -222,7 +222,7 @@ export function TabResit() {
             </div>
           </div>
           <p className="mt-3 text-2xl font-bold text-amber-800">{pendingKwitansiCount} Resit</p>
-          <p className="mt-1 text-xs text-muted-foreground">Perlu dimuat naik oleh pentadbir</p>
+          <p className="mt-1 text-xs text-muted-foreground">Perlu dimuat naik oleh admin</p>
         </div>
 
         <div className="rounded-2xl border border-border bg-card p-5 shadow-xs">
@@ -246,7 +246,7 @@ export function TabResit() {
             <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
             <input type="text" value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Cari no. resit, talebe, grup..." className="w-full rounded-xl border border-input bg-muted/50 py-2 pl-9 pr-4 text-xs text-foreground focus:border-primary focus:bg-card focus:outline-none"
+              placeholder="Cari no. resit, siswa, grup..." className="w-full rounded-xl border border-input bg-muted/50 py-2 pl-9 pr-4 text-xs text-foreground focus:border-primary focus:bg-card focus:outline-none"
             />
           </div>
 
@@ -278,7 +278,7 @@ export function TabResit() {
             <thead className="bg-muted/80 text-xs font-semibold text-muted-foreground uppercase tracking-wider border-b border-border">
               <tr>
                 <th scope="col" className="px-5 py-3.5">No. Resit</th>
-                <th scope="col" className="px-5 py-3.5">Nama Talebe & Grup</th>
+                <th scope="col" className="px-5 py-3.5">Nama Siswa & Grup</th>
                 <th scope="col" className="px-5 py-3.5">Bulan Yuran</th>
                 <th scope="col" className="px-5 py-3.5">Kaedah Bayaran</th>
                 <th scope="col" className="px-5 py-3.5 text-right">Jumlah</th>
@@ -290,11 +290,11 @@ export function TabResit() {
               {filtered.map((item) => (
                 <tr key={item.id} className="hover:bg-muted/50">
                   <td className="px-5 py-4 font-mono text-xs font-bold text-foreground">
-                    {item.noResit}
+                    {item.noKuitansi}
                     <span className="block text-[11px] font-normal text-muted-foreground font-sans">{item.tarikhBayar}</span>
                   </td>
                   <td className="px-5 py-4">
-                    <p className="font-bold text-foreground">{item.namaTalebe}</p>
+                    <p className="font-bold text-foreground">{item.namaSiswa}</p>
                     <p className="text-xs text-emerald-800 font-medium">{item.grup}</p>
                   </td>
                   <td className="px-5 py-4 whitespace-nowrap text-xs text-foreground">
@@ -363,7 +363,7 @@ export function TabResit() {
               <div>
                 <h3 className="font-bold text-lg text-foreground">Muat Naik Kwitansi Rasmi</h3>
                 <p className="text-xs text-muted-foreground">
-                  Resit #{selectedReceipt.noResit} · {selectedReceipt.namaTalebe}
+                  Resit #{selectedReceipt.noKuitansi} · {selectedReceipt.namaSiswa}
                 </p>
               </div>
             </div>
@@ -371,8 +371,8 @@ export function TabResit() {
             <form onSubmit={handleUploadSubmit} className="mt-4 space-y-4">
               <div className="rounded-xl bg-muted p-3.5 border border-border text-xs space-y-1">
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Nama Talebe:</span>
-                  <span className="font-bold text-foreground">{selectedReceipt.namaTalebe}</span>
+                  <span className="text-muted-foreground">Nama Siswa:</span>
+                  <span className="font-bold text-foreground">{selectedReceipt.namaSiswa}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Bulan & Jumlah:</span>

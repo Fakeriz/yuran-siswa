@@ -51,7 +51,7 @@ export function ThemeToggle() {
         ) : theme === "light" ? (
           <Sun className="size-4.5 text-amber-500" />
         ) : (
-          <Monitor className="size-4.5 text-teal-400" />
+          <Monitor className="size-4.5 text-muted-foreground" />
         )}
       </button>
 

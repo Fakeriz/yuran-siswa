@@ -18,7 +18,7 @@ import {
 import { createPortal } from "react-dom";
 
 /**
- * Combobox searchable minimal (tanpa dependency baharu).
+ * Combobox searchable minimal (tanpa dependency baru).
  *
  * Dropdown di-render melalui portal ke document.body supaya tidak
  * terpotong oleh kontainer ber-overflow-hidden (cth. modal).

@@ -45,7 +45,7 @@ export default async function GroupPage() {
         </aside>
         <main className="w-full max-w-2xl px-6 py-8 md:p-12">
           <h1 className="text-3xl font-bold tracking-tight text-foreground">Pilih grup</h1>
-          <p className="mt-3 text-muted-foreground">Pilih grup anak didik Anda. Pilihan langsung berlaku setelah disimpan, tanpa persetujuan admin.</p>
+          <p className="mt-3 text-muted-foreground">Pilih grup siswa Anda. Pilihan langsung berlaku setelah disimpan, tanpa persetujuan admin.</p>
           <GroupForm groups={groups} initialSelected={selected} />
         </main>
       </div>

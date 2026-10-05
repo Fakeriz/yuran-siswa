@@ -18,11 +18,11 @@ import {
 export interface ParentClaim {
   id: string;
   namaIbuBapa: string;
-  emelIbuBapa: string;
+  emailOrangTua: string;
   telefonIbuBapa: string;
-  namaTalebe: string;
-  kelasTalebe: string;
-  grupTalebe: string;
+  namaSiswa: string;
+  kelasSiswa: string;
+  grupSiswa: string;
   tarikhMohon: string;
   status: "pending" | "approved" | "rejected";
   disahkanOleh?: string;
@@ -33,22 +33,22 @@ const INITIAL_CLAIMS: ParentClaim[] = [
   {
     id: "claim-1",
     namaIbuBapa: "Hassan bin Abdullah",
-    emelIbuBapa: "hassan.abd@gmail.com",
+    emailOrangTua: "hassan.abd@gmail.com",
     telefonIbuBapa: "+60 12-456 7890",
-    namaTalebe: "Ahmad bin Ali",
-    kelasTalebe: "Tahun 1 Amanah",
-    grupTalebe: "Mevlana HE",
+    namaSiswa: "Ahmad bin Ali",
+    kelasSiswa: "Tahun 1 Amanah",
+    grupSiswa: "Mevlana HE",
     tarikhMohon: "03 Okt 2026, 09:30 AM",
     status: "pending",
   },
   {
     id: "claim-2",
     namaIbuBapa: "Khadijah binti Ismail",
-    emelIbuBapa: "khadijah.ismail@yahoo.com",
+    emailOrangTua: "khadijah.ismail@yahoo.com",
     telefonIbuBapa: "+60 19-876 5432",
-    namaTalebe: "Siti Nurhaliza",
-    kelasTalebe: "Tahun 2 Bestari",
-    grupTalebe: "Mevlana HE",
+    namaSiswa: "Siti Nurhaliza",
+    kelasSiswa: "Tahun 2 Bestari",
+    grupSiswa: "Mevlana HE",
     tarikhMohon: "02 Okt 2026, 02:15 PM",
     status: "pending",
     ibuBapaSediaAda: "Haji Ismail (Bapa)",
@@ -56,22 +56,22 @@ const INITIAL_CLAIMS: ParentClaim[] = [
   {
     id: "claim-3",
     namaIbuBapa: "Zulkifli bin Hashim",
-    emelIbuBapa: "zul.hashim@outlook.com",
+    emailOrangTua: "zul.hashim@outlook.com",
     telefonIbuBapa: "+60 17-321 0987",
-    namaTalebe: "Muhammad Faiz",
-    kelasTalebe: "Tahun 3 Cerdas",
-    grupTalebe: "Razi HE",
+    namaSiswa: "Muhammad Faiz",
+    kelasSiswa: "Tahun 3 Cerdas",
+    grupSiswa: "Razi HE",
     tarikhMohon: "01 Okt 2026, 11:45 AM",
     status: "pending",
   },
   {
     id: "claim-4",
     namaIbuBapa: "Datin Salmah binti Othman",
-    emelIbuBapa: "salmah.othman@gmail.com",
+    emailOrangTua: "salmah.othman@gmail.com",
     telefonIbuBapa: "+60 11-123 4567",
-    namaTalebe: "Nur Aisyah",
-    kelasTalebe: "Tahun 1 Amanah",
-    grupTalebe: "Fatih HE",
+    namaSiswa: "Nur Aisyah",
+    kelasSiswa: "Tahun 1 Amanah",
+    grupSiswa: "Fatih HE",
     tarikhMohon: "28 Sep 2026",
     status: "approved",
     disahkanOleh: "Ustaz Farhan (Admin)",
@@ -79,11 +79,11 @@ const INITIAL_CLAIMS: ParentClaim[] = [
   {
     id: "claim-5",
     namaIbuBapa: "Ramli bin Kassim",
-    emelIbuBapa: "ramli.kassim@gmail.com",
+    emailOrangTua: "ramli.kassim@gmail.com",
     telefonIbuBapa: "+60 13-445 5667",
-    namaTalebe: "Danial Hakimi",
-    kelasTalebe: "Tahun 2 Bestari",
-    grupTalebe: "Razi HE",
+    namaSiswa: "Danial Hakimi",
+    kelasSiswa: "Tahun 2 Bestari",
+    grupSiswa: "Razi HE",
     tarikhMohon: "25 Sep 2026",
     status: "approved",
     disahkanOleh: "Ustaz Haziq (Admin)",
@@ -108,23 +108,23 @@ export function TabPersetujuan() {
           ? {
               ...c,
               status: decision,
-              disahkanOleh: decision === "approved" ? "Pentadbir Asrama (Admin)" : undefined,
+              disahkanOleh: decision === "approved" ? "Admin Asrama (Admin)" : undefined,
             }
           : c
       )
     );
     const claim = claims.find((c) => c.id === id);
     if (decision === "approved") {
-      showToast(`Permohonan ${claim?.namaIbuBapa} untuk ${claim?.namaTalebe} telah DISAHKAN.`);
+      showToast(`Permohonan ${claim?.namaIbuBapa} untuk ${claim?.namaSiswa} telah DISAHKAN.`);
     } else {
-      showToast(`Permohonan ${claim?.namaIbuBapa} untuk ${claim?.namaTalebe} telah DITOLAK.`);
+      showToast(`Permohonan ${claim?.namaIbuBapa} untuk ${claim?.namaSiswa} telah DITOLAK.`);
     }
   };
 
   const handleUnlink = (id: string) => {
-    if (!window.confirm("Adakah anda pasti untuk melepaskan hubungan akaun ibu bapa ini?")) return;
+    if (!window.confirm("Apakah Anda yakin untuk memutuskan hubungan akun orang tua ini?")) return;
     setClaims((prev) => prev.filter((c) => c.id !== id));
-    showToast("Hubungan anak dan ibu bapa telah berjaya dilepaskan.");
+    showToast("Hubungan anak dan orang tua telah berhasil diputuskan.");
   };
 
   const pendingCount = claims.filter((c) => c.status === "pending").length;
@@ -134,9 +134,9 @@ export function TabPersetujuan() {
     const matchStatus = filterStatus === "semua" || c.status === filterStatus;
     const matchSearch =
       c.namaIbuBapa.toLowerCase().includes(search.toLowerCase()) ||
-      c.namaTalebe.toLowerCase().includes(search.toLowerCase()) ||
-      c.emelIbuBapa.toLowerCase().includes(search.toLowerCase()) ||
-      c.grupTalebe.toLowerCase().includes(search.toLowerCase());
+      c.namaSiswa.toLowerCase().includes(search.toLowerCase()) ||
+      c.emailOrangTua.toLowerCase().includes(search.toLowerCase()) ||
+      c.grupSiswa.toLowerCase().includes(search.toLowerCase());
     return matchStatus && matchSearch;
   });
 
@@ -155,7 +155,7 @@ export function TabPersetujuan() {
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
-              Pengesahan Pendaftaran Ibu Bapa
+              Pengesahan Pendaftaran Orang Tua
             </h1>
             {pendingCount > 0 && (
               <span className="inline-flex items-center rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-semibold text-amber-800 border border-amber-200">
@@ -164,7 +164,7 @@ export function TabPersetujuan() {
             )}
           </div>
           <p className="mt-1 text-sm text-muted-foreground">
-            Sahkan permohonan pendaftaran akaun ibu bapa yang menuntut hak anak didik mereka.
+            Sahkan permohonan pendaftaran akun orang tua yang mengklaim siswa mereka.
           </p>
         </div>
       </div>
@@ -181,7 +181,7 @@ export function TabPersetujuan() {
             </div>
           </div>
           <p className="mt-3 text-2xl font-bold text-amber-800">{pendingCount} Permohonan</p>
-          <p className="mt-1 text-xs text-muted-foreground">Perlu disemak & disahkan oleh pentadbir</p>
+          <p className="mt-1 text-xs text-muted-foreground">Perlu diperiksa & disahkan oleh admin</p>
         </div>
 
         <div className="rounded-2xl border border-border bg-card p-5 shadow-xs">
@@ -194,7 +194,7 @@ export function TabPersetujuan() {
             </div>
           </div>
           <p className="mt-3 text-2xl font-bold text-emerald-800">{approvedCount} Hubungan</p>
-          <p className="mt-1 text-xs text-muted-foreground">Ibu bapa mempunyai akses portal rasmi</p>
+          <p className="mt-1 text-xs text-muted-foreground">Orang tua mempunyai akses portal rasmi</p>
         </div>
 
         <div className="rounded-2xl border border-border bg-card p-5 shadow-xs">
@@ -207,7 +207,7 @@ export function TabPersetujuan() {
             </div>
           </div>
           <p className="mt-3 text-2xl font-bold text-foreground">{claims.length} Rekod</p>
-          <p className="mt-1 text-xs text-muted-foreground">Sistem pendaftaran Talebe Sesi 2026/2027</p>
+          <p className="mt-1 text-xs text-muted-foreground">Sistem pendaftaran Siswa Sesi 2026/2027</p>
         </div>
       </div>
 
@@ -218,7 +218,7 @@ export function TabPersetujuan() {
             <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
             <input type="text" value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Cari ibu bapa, talebe, atau emel..." className="w-full rounded-xl border border-input bg-muted/50 py-2 pl-9 pr-4 text-xs text-foreground focus:border-primary focus:bg-card focus:outline-none"
+              placeholder="Cari orang tua, siswa, atau email..." className="w-full rounded-xl border border-input bg-muted/50 py-2 pl-9 pr-4 text-xs text-foreground focus:border-primary focus:bg-card focus:outline-none"
             />
           </div>
 
@@ -254,7 +254,7 @@ export function TabPersetujuan() {
                 : "Tiada rekod dijumpai mengikut tapisan."}
             </p>
             <p className="text-xs text-muted-foreground mt-1">
-              Semua akaun ibu bapa telah disemak dan dikemaskini.
+              Semua akun orang tua telah diperiksa dan diperbarui.
             </p>
           </div>
         ) : (
@@ -294,20 +294,20 @@ export function TabPersetujuan() {
                     <div className="mt-2 flex items-center gap-2 flex-wrap">
                       <span className="text-xs font-medium text-muted-foreground">Tuntut Anak:</span>
                       <span className="text-xs font-bold text-foreground bg-muted px-2 py-0.5 rounded-md">
-                        {claim.namaTalebe}
+                        {claim.namaSiswa}
                       </span>
-                      <span className="text-xs text-muted-foreground font-medium">({claim.kelasTalebe} · {claim.grupTalebe})</span>
+                      <span className="text-xs text-muted-foreground font-medium">({claim.kelasSiswa} · {claim.grupSiswa})</span>
                     </div>
 
                     {claim.ibuBapaSediaAda && (
                       <div className="mt-2 flex items-center gap-1 text-[11px] text-amber-800 bg-amber-50 px-2.5 py-1 rounded-lg border border-amber-200/60 max-w-fit">
                         <Info className="size-3.5 shrink-0" />
-                        <span>Perhatian: Talebe ini sudah mempunyai penjaga berdaftar: <strong>{claim.ibuBapaSediaAda}</strong></span>
+                        <span>Perhatian: Siswa ini sudah mempunyai penjaga berdaftar: <strong>{claim.ibuBapaSediaAda}</strong></span>
                       </div>
                     )}
 
                     <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
-                      <span>{claim.emelIbuBapa}</span>
+                      <span>{claim.emailOrangTua}</span>
                       <span>·</span>
                       <span>{claim.telefonIbuBapa}</span>
                       <span>·</span>

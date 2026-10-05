@@ -19,7 +19,7 @@ export interface CashTransaction {
   tarikh: string;
   noRuj: string;
   keterangan: string;
-  kategori: "Yuran Asrama" | "Makanan & Dapur" | "Utiliti" | "Kebajikan Talebe" | "Penyelenggaraan";
+  kategori: "Yuran Asrama" | "Makanan & Dapur" | "Utiliti" | "Kebajikan Siswa" | "Penyelenggaraan";
   jenis: "masuk" | "keluar";
   jumlah: number;
   baki: number;
@@ -135,7 +135,7 @@ export function TabAliranKas() {
     };
 
     setTransactions([newTx, ...transactions]);
-    showToast(`Perbelanjaan RM ${amount.toLocaleString()} berjaya direkodkan.`);
+    showToast(`Perbelanjaan RM ${amount.toLocaleString()} berhasil direkodkan.`);
     setShowModal(false);
     setFormKeterangan("");
     setFormJumlah("");
@@ -221,7 +221,7 @@ export function TabAliranKas() {
             </div>
           </div>
           <p className="mt-3 text-2xl font-bold text-emerald-800">RM {totalMasuk.toLocaleString()}</p>
-          <p className="mt-1 text-xs text-muted-foreground">Kutipan yuran bulanan 49 talebe</p>
+          <p className="mt-1 text-xs text-muted-foreground">Kutipan yuran bulanan 49 siswa</p>
         </div>
 
         <div className="rounded-2xl border border-border bg-card p-5 shadow-xs">
@@ -360,7 +360,7 @@ export function TabAliranKas() {
                   >
                     <option value="Makanan & Dapur">Makanan & Dapur</option>
                     <option value="Utiliti">Utiliti</option>
-                    <option value="Kebajikan Talebe">Kebajikan Talebe</option>
+                    <option value="Kebajikan Siswa">Kebajikan Siswa</option>
                     <option value="Penyelenggaraan">Penyelenggaraan</option>
                   </select>
                 </div>

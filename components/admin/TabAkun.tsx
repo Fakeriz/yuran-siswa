@@ -123,7 +123,7 @@ export function TabAkun() {
     };
 
     setAccounts([newAcc, ...accounts]);
-    showToast(`Akaun ${newAcc.nama} (${newAcc.peran}) berjaya dicipta.`);
+    showToast(`Akun ${newAcc.nama} (${newAcc.peran}) berhasil dicipta.`);
     setShowCreateModal(false);
     setNama("");
     setEmail("");
@@ -147,14 +147,14 @@ export function TabAkun() {
     );
 
     const parent = accounts.find((a) => a.id === selectedParentId);
-    showToast(`Anak ${selectedChildName} berjaya dihubungkan ke akaun ${parent?.nama}.`);
+    showToast(`Anak ${selectedChildName} berhasil dihubungkan ke akun ${parent?.nama}.`);
     setShowLinkModal(false);
     setSelectedParentId("");
     setSelectedChildName("");
   };
 
   const handleUnlinkChild = (accountId: string, childName: string) => {
-    if (!window.confirm(`Lepaskan hubungan anak ${childName} dari akaun ini?`)) return;
+    if (!window.confirm(`Lepaskan hubungan anak ${childName} dari akun ini?`)) return;
     setAccounts((prev) =>
       prev.map((acc) =>
         acc.id === accountId
@@ -162,7 +162,7 @@ export function TabAkun() {
           : acc
       )
     );
-    showToast(`Hubungan anak ${childName} berjaya dilepaskan.`);
+    showToast(`Hubungan anak ${childName} berhasil diputuskan.`);
   };
 
   const parentAccounts = accounts.filter((a) => a.peran === "orang_tua");
@@ -182,14 +182,14 @@ export function TabAkun() {
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
-              Pengurusan Akaun Pengguna
+              Pengurusan Akun Pengguna
             </h1>
             <span className="inline-flex items-center rounded-md bg-emerald-50 px-2 py-0.5 text-xs font-semibold text-emerald-800 border border-emerald-200">
-              {accounts.length} Akaun
+              {accounts.length} Akun
             </span>
           </div>
           <p className="mt-1 text-sm text-muted-foreground">
-            Daftar akaun staf atau ibu bapa baharu dan urus pautan anak didik secara langsung.
+            Daftar akun staf atau orang tua baru dan urus pautan siswa secara langsung.
           </p>
         </div>
 
@@ -209,7 +209,7 @@ export function TabAkun() {
             className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2 text-xs font-semibold text-white shadow-xs hover:bg-primary/90 transition-colors focus-visible:outline-primary"
           >
             <UserPlus className="size-4" />
-            <span>Cipta Akaun Baharu</span>
+            <span>Cipta Akun Baru</span>
           </button>
         </div>
       </div>
@@ -219,7 +219,7 @@ export function TabAkun() {
         <div className="rounded-2xl border border-border bg-card p-5 shadow-xs">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-              Akaun Ibu Bapa
+              Akun Orang Tua
             </span>
             <div className="rounded-xl bg-primary/10 p-2 text-primary">
               <Users className="size-5" />
@@ -249,7 +249,7 @@ export function TabAkun() {
         <div className="rounded-2xl border border-border bg-card p-5 shadow-xs">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-              Pentadbir (Admin)
+              Admin (Admin)
             </span>
             <div className="rounded-xl bg-primary/10 p-2 text-primary">
               <Key className="size-5" />
@@ -271,7 +271,7 @@ export function TabAkun() {
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Cari nama atau emel pengguna..."
+              placeholder="Cari nama atau email pengguna..."
               className="w-full rounded-xl border border-input bg-muted/50 py-2 pl-9 pr-4 text-xs text-foreground focus:border-primary focus:bg-card focus:outline-none"
             />
           </div>
@@ -280,7 +280,7 @@ export function TabAkun() {
             {(
               [
                 ["semua", "Semua Peranan"],
-                ["orang_tua", "Ibu Bapa"],
+                ["orang_tua", "Orang Tua"],
                 ["staff", "Staf"],
                 ["admin", "Admin"],
               ] as const
@@ -301,13 +301,13 @@ export function TabAkun() {
           </div>
         </div>
 
-        {/* Jadual Akaun */}
+        {/* Jadual Akun */}
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm text-foreground">
             <thead className="bg-muted/80 text-xs font-semibold text-muted-foreground uppercase tracking-wider border-b border-border">
               <tr>
                 <th scope="col" className="px-5 py-3.5">Pengguna</th>
-                <th scope="col" className="px-5 py-3.5">Emel</th>
+                <th scope="col" className="px-5 py-3.5">Email</th>
                 <th scope="col" className="px-5 py-3.5 text-center">Peranan</th>
                 <th scope="col" className="px-5 py-3.5">Anak Dihubungkan</th>
                 <th scope="col" className="px-5 py-3.5 text-right">Tarikh Daftar</th>
@@ -337,7 +337,7 @@ export function TabAkun() {
                           : "bg-blue-100 text-primary border border-blue-200"
                       }`}
                     >
-                      {acc.peran === "admin" ? "Pentadbir" : acc.peran === "staff" ? "Staf Asrama" : "Ibu Bapa"}
+                      {acc.peran === "admin" ? "Admin" : acc.peran === "staff" ? "Staf Asrama" : "Orang Tua"}
                     </span>
                   </td>
                   <td className="px-5 py-4">
@@ -378,7 +378,7 @@ export function TabAkun() {
         </div>
       </div>
 
-      {/* Modal Cipta Akaun Baharu */}
+      {/* Modal Cipta Akun Baru */}
       {showCreateModal && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-xs p-4"
@@ -390,8 +390,8 @@ export function TabAkun() {
           >
             <div className="flex items-center justify-between border-b border-border pb-3">
               <div>
-                <h3 className="font-bold text-lg text-foreground">Cipta Akaun Baharu</h3>
-                <p className="text-xs text-muted-foreground">Daftarkan akaun staf atau ibu bapa ke dalam sistem.</p>
+                <h3 className="font-bold text-lg text-foreground">Cipta Akun Baru</h3>
+                <p className="text-xs text-muted-foreground">Daftarkan akun staf atau orang tua ke dalam sistem.</p>
               </div>
             </div>
 
@@ -409,13 +409,13 @@ export function TabAkun() {
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-foreground">Alamat Emel</label>
+                <label className="text-xs font-semibold text-foreground">Alamat Email</label>
                 <input
                   type="email"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="pengguna@emel.com"
+                  placeholder="pengguna@email.com"
                   className="mt-1 w-full rounded-xl border border-input px-3 py-2 text-sm focus:border-primary focus:outline-none"
                 />
               </div>
@@ -440,7 +440,7 @@ export function TabAkun() {
                   onChange={(e) => setPeran(e.target.value as AccountItem["peran"])}
                   className="mt-1 w-full rounded-xl border border-input px-3 py-2 text-sm focus:border-primary focus:outline-none"
                 >
-                  <option value="orang_tua">Ibu Bapa / Penjaga</option>
+                  <option value="orang_tua">Orang Tua / Penjaga</option>
                   <option value="staff">Staf Asrama (Ustaz Pembimbing)</option>
                 </select>
               </div>
@@ -457,7 +457,7 @@ export function TabAkun() {
                   type="submit"
                   className="rounded-full bg-primary px-4 py-2 text-xs font-semibold text-white hover:bg-primary/90"
                 >
-                  Cipta Akaun
+                  Cipta Akun
                 </button>
               </div>
             </form>
@@ -478,20 +478,20 @@ export function TabAkun() {
             <div className="flex items-center justify-between border-b border-border pb-3">
               <div>
                 <h3 className="font-bold text-lg text-foreground">Hubungkan Anak Didik</h3>
-                <p className="text-xs text-muted-foreground">Pautkan anak kepada akaun ibu bapa berdaftar secara serta-merta.</p>
+                <p className="text-xs text-muted-foreground">Pautkan anak kepada akun orang tua berdaftar secara langsung.</p>
               </div>
             </div>
 
             <form onSubmit={handleLinkChild} className="mt-4 space-y-4">
               <div>
-                <label className="text-xs font-semibold text-foreground">Pilih Akaun Ibu Bapa</label>
+                <label className="text-xs font-semibold text-foreground">Pilih Akun Orang Tua</label>
                 <select
                   required
                   value={selectedParentId}
                   onChange={(e) => setSelectedParentId(e.target.value)}
                   className="mt-1 w-full rounded-xl border border-input px-3 py-2 text-sm focus:border-primary focus:outline-none"
                 >
-                  <option value="">-- Pilih Ibu Bapa --</option>
+                  <option value="">-- Pilih Orang Tua --</option>
                   {parentAccounts.map((p) => (
                     <option key={p.id} value={p.id}>
                       {p.nama} ({p.email})
@@ -501,14 +501,14 @@ export function TabAkun() {
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-foreground">Pilih Anak (Talebe)</label>
+                <label className="text-xs font-semibold text-foreground">Pilih Anak (Siswa)</label>
                 <select
                   required
                   value={selectedChildName}
                   onChange={(e) => setSelectedChildName(e.target.value)}
                   className="mt-1 w-full rounded-xl border border-input px-3 py-2 text-sm focus:border-primary focus:outline-none"
                 >
-                  <option value="">-- Pilih Talebe --</option>
+                  <option value="">-- Pilih Siswa --</option>
                   <option value="Ahmad bin Ali">Ahmad bin Ali (Mevlana HE · Tahun 1 Amanah)</option>
                   <option value="Siti Nurhaliza">Siti Nurhaliza (Mevlana HE · Tahun 2 Bestari)</option>
                   <option value="Muhammad Faiz">Muhammad Faiz (Razi HE · Tahun 3 Cerdas)</option>

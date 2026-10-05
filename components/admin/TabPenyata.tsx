@@ -30,7 +30,7 @@ export function TabPenyata() {
     {
       grup: "Mevlana HE",
       ustaz: "Ustaz Ahmad Farhan",
-      talebe: 20,
+      siswa: 20,
       yuran: 500,
       sasaran: 10000,
       kutipan: 8500,
@@ -42,7 +42,7 @@ export function TabPenyata() {
     {
       grup: "Razi HE",
       ustaz: "Ustaz Mohd Haziq",
-      talebe: 20,
+      siswa: 20,
       yuran: 500,
       sasaran: 10000,
       kutipan: 8000,
@@ -54,7 +54,7 @@ export function TabPenyata() {
     {
       grup: "Fatih HE",
       ustaz: "Ustaz Luqman Hakim",
-      talebe: 20,
+      siswa: 20,
       yuran: 500,
       sasaran: 10000,
       kutipan: 8000,
@@ -94,11 +94,11 @@ export function TabPenyata() {
       ["Jumlah Kutipan", `RM ${summary.kutipan}`],
       ["Baki Tunggakan", `RM ${summary.tunggakan}`],
       ["Kadar Kutipan", `${summary.peratusan}%`],
-      ["Bilangan Lunas", `${summary.bilLunas} / ${summary.jumlahSiswa} Talebe`],
+      ["Bilangan Lunas", `${summary.bilLunas} / ${summary.jumlahSiswa} Siswa`],
       [""],
       ["2. PECAHAN MENGIKUT KUMPULAN ASRAMA"],
-      ["Kumpulan", "Staf Pembimbing", "Bil. Talebe", "Sasaran (RM)", "Kutipan (RM)", "Peratus (%)", "Tunggakan (RM)"],
-      ...groupData.map((g) => [g.grup, g.ustaz, String(g.talebe), String(g.sasaran), String(g.kutipan), `${g.peratus}%`, String(g.tunggakan)]),
+      ["Kumpulan", "Staf Pembimbing", "Bil. Siswa", "Sasaran (RM)", "Kutipan (RM)", "Peratus (%)", "Tunggakan (RM)"],
+      ...groupData.map((g) => [g.grup, g.ustaz, String(g.siswa), String(g.sasaran), String(g.kutipan), `${g.peratus}%`, String(g.tunggakan)]),
       [""],
       ["3. PECAHAN MENGIKUT KAEDAH BAYARAN"],
       ["Kaedah Pembayaran", "Bil. Transaksi", "Jumlah (RM)", "Peratus (%)"],
@@ -131,7 +131,7 @@ export function TabPenyata() {
             </span>
           </div>
           <p className="mt-1 text-sm text-muted-foreground">
-            Penyata kutipan kewangan yuran bulanan asrama Talebe untuk semakan pentadbiran dan audit.
+            Penyata kutipan kewangan yuran bulanan asrama Siswa untuk semakan adminan dan audit.
           </p>
         </div>
 
@@ -182,7 +182,7 @@ export function TabPenyata() {
             </div>
           </div>
           <p className="mt-3 text-2xl font-bold text-foreground">RM {summary.sasaran.toLocaleString()}</p>
-          <p className="mt-1 text-xs text-muted-foreground">{summary.jumlahSiswa} Talebe x RM 500</p>
+          <p className="mt-1 text-xs text-muted-foreground">{summary.jumlahSiswa} Siswa x RM 500</p>
         </div>
 
         <div className="rounded-2xl border border-border bg-card p-5 shadow-xs">
@@ -195,7 +195,7 @@ export function TabPenyata() {
             </div>
           </div>
           <p className="mt-3 text-2xl font-bold text-emerald-800">RM {summary.kutipan.toLocaleString()}</p>
-          <p className="mt-1 text-xs text-emerald-700 font-semibold">{summary.peratusan}% berjaya dikutip</p>
+          <p className="mt-1 text-xs text-emerald-700 font-semibold">{summary.peratusan}% berhasil dikutip</p>
         </div>
 
         <div className="rounded-2xl border border-border bg-card p-5 shadow-xs">
@@ -208,7 +208,7 @@ export function TabPenyata() {
             </div>
           </div>
           <p className="mt-3 text-2xl font-bold text-rose-700">RM {summary.tunggakan.toLocaleString()}</p>
-          <p className="mt-1 text-xs text-rose-600 font-medium">11 Talebe belum selesai</p>
+          <p className="mt-1 text-xs text-rose-600 font-medium">11 Siswa belum selesai</p>
         </div>
 
         <div className="rounded-2xl border border-border bg-card p-5 shadow-xs">
@@ -244,7 +244,7 @@ export function TabPenyata() {
               <tr>
                 <th scope="col" className="px-5 py-3.5">Kumpulan Asrama</th>
                 <th scope="col" className="px-5 py-3.5">Staf Pembimbing</th>
-                <th scope="col" className="px-5 py-3.5 text-center">Bil. Talebe</th>
+                <th scope="col" className="px-5 py-3.5 text-center">Bil. Siswa</th>
                 <th scope="col" className="px-5 py-3.5 text-right">Sasaran</th>
                 <th scope="col" className="px-5 py-3.5 text-right">Kutipan</th>
                 <th scope="col" className="px-5 py-3.5 text-center">Pencapaian</th>
@@ -256,7 +256,7 @@ export function TabPenyata() {
                 <tr key={g.grup} className="hover:bg-muted/50">
                   <td className="px-5 py-4 font-bold text-foreground">{g.grup}</td>
                   <td className="px-5 py-4 text-muted-foreground">{g.ustaz}</td>
-                  <td className="px-5 py-4 text-center font-medium">{g.talebe} Talebe</td>
+                  <td className="px-5 py-4 text-center font-medium">{g.siswa} Siswa</td>
                   <td className="px-5 py-4 text-right font-medium text-foreground">RM {g.sasaran.toLocaleString()}</td>
                   <td className="px-5 py-4 text-right font-bold text-emerald-800">RM {g.kutipan.toLocaleString()}</td>
                   <td className="px-5 py-4 text-center">
@@ -271,7 +271,7 @@ export function TabPenyata() {
             <tfoot className="bg-muted font-bold text-foreground border-t border-border text-sm">
               <tr>
                 <td className="px-5 py-3.5" colSpan={2}>JUMLAH KESELURUHAN</td>
-                <td className="px-5 py-3.5 text-center">{summary.jumlahSiswa} Talebe</td>
+                <td className="px-5 py-3.5 text-center">{summary.jumlahSiswa} Siswa</td>
                 <td className="px-5 py-3.5 text-right">RM {summary.sasaran.toLocaleString()}</td>
                 <td className="px-5 py-3.5 text-right text-emerald-800">RM {summary.kutipan.toLocaleString()}</td>
                 <td className="px-5 py-3.5 text-center text-emerald-800">{summary.peratusan}%</td>
@@ -316,7 +316,7 @@ export function TabPenyata() {
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-base font-bold text-foreground">Senarai Tindakan Susulan Tunggakan</h2>
-              <p className="mt-0.5 text-xs text-muted-foreground">Talebe yang masih belum melunaskan yuran {selectedBulan}.</p>
+              <p className="mt-0.5 text-xs text-muted-foreground">Siswa yang masih belum melunaskan yuran {selectedBulan}.</p>
             </div>
             <span className="text-xs font-bold text-rose-700 bg-rose-50 px-2 py-0.5 rounded-md border border-rose-200">
               6 Perlu Susulan

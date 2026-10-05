@@ -9,7 +9,7 @@ import { UserBar } from "../../components/user-bar";
 import { GlowBackground } from "../../components/glow-background";
 import { FinanceHero } from "../../components/finance-hero";
 import { FinanceKpi } from "../../components/finance-kpi";
-import { CheckCircle2, AlertCircle, Users, UsersRound } from "lucide-react";
+import { CheckCircle2, AlertCircle, Users, UsersRound, LayoutDashboard } from "lucide-react";
 
 export const metadata: Metadata = { title: "Dashboard staf | YuranKu" };
 const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
@@ -79,10 +79,16 @@ export default async function StaffPage({ searchParams }: {
       <UserBar userRole="staff" userName="Staff Demo" title="YuranKu · Dashboard Staf" />
       <div className="relative flex-1 md:grid md:grid-cols-[220px_minmax(0,1fr)]">
         <aside className="border-b border-slate-200 p-6 dark:border-slate-800 md:min-h-dvh md:border-r md:border-b-0">
-          <p className="text-lg font-semibold">Menu Staf</p>
-          <nav aria-label="Menu staf" className="mt-6 space-y-2">
-            <Link href="/staff" aria-current="page" className="block rounded-2xl bg-blue-600/10 px-4 py-3 font-semibold text-blue-800 dark:bg-blue-500/15 dark:text-blue-300">Dashboard staf</Link>
-            <Link href="/staff/grup" className="block rounded-2xl px-4 py-3 hover:bg-slate-100 dark:hover:bg-slate-900">Pilih grup</Link>
+          <p className="px-3 text-xs font-medium text-slate-400 dark:text-slate-500">Menu</p>
+          <nav aria-label="Menu staf" className="mt-2 space-y-0.5">
+            <Link href="/staff" aria-current="page" className="flex items-center gap-3 rounded-xl bg-violet-100/80 px-3 py-2.5 text-sm font-semibold text-violet-700 dark:bg-violet-500/15 dark:text-violet-300">
+              <LayoutDashboard className="size-[18px] shrink-0 text-violet-600 dark:text-violet-400" aria-hidden />
+              Dashboard Staf
+            </Link>
+            <Link href="/staff/grup" className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800/70 dark:hover:text-slate-100">
+              <UsersRound className="size-[18px] shrink-0 text-slate-400 dark:text-slate-500" aria-hidden />
+              Pilih Grup
+            </Link>
           </nav>
         </aside>
       <main className="mx-auto w-full max-w-6xl min-w-0 px-4 py-8 sm:px-8 md:py-12">

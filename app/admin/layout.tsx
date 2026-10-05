@@ -48,7 +48,7 @@ const navigation: NavSection[] = [
     ],
   },
   {
-    title: "Pengurusan (Manage)",
+    title: "Pengurusan",
     items: [
       { name: "Data Siswa", href: "/admin?tab=siswa", icon: Users },
       { name: "Transaksi Masuk", href: "/admin?tab=transaksi", icon: CreditCard },
@@ -58,7 +58,7 @@ const navigation: NavSection[] = [
     ],
   },
   {
-    title: "Laporan (Reporting)",
+    title: "Laporan",
     items: [
       { name: "Kuitansi", href: "/admin?tab=resit", icon: Receipt },
       { name: "Laporan Bulanan", href: "/admin?tab=penyata", icon: FileSpreadsheet },
@@ -69,59 +69,87 @@ const navigation: NavSection[] = [
 function SidebarNav({ onNavigate }: { onNavigate: () => void }) {
   const searchParams = useSearchParams();
   const currentTab = searchParams.get("tab"); // null = Dasbor Utama
+  const [menuQuery, setMenuQuery] = useState("");
+
+  const q = menuQuery.trim().toLowerCase();
+  const visibleSections = navigation
+    .map((section) => ({
+      ...section,
+      items: section.items.filter((item) => !q || item.name.toLowerCase().includes(q)),
+    }))
+    .filter((section) => section.items.length > 0);
 
   return (
-    <div className="flex-1 overflow-y-auto px-4 py-5 space-y-6">
-      {navigation.map((section) => (
-        <div key={section.title}>
-          <h3 className="px-3 text-[11px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">
-            {section.title}
-          </h3>
-          <div className="mt-2 space-y-1">
-            {section.items.map((item) => {
-              const Icon = item.icon;
-              // Bandingkan tab dari URL dengan tab tujuan link
-              const itemTab = item.href.includes("?tab=") ? item.href.split("?tab=")[1] : null;
-              const isActive = itemTab === currentTab;
+    <div className="flex flex-1 min-h-0 flex-col px-4 pb-4">
+      {/* Carian menu */}
+      <div className="px-1 pb-3 pt-4">
+        <div className="relative">
+          <Search className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-slate-400" aria-hidden />
+          <input
+            type="search"
+            value={menuQuery}
+            onChange={(e) => setMenuQuery(e.target.value)}
+            placeholder="Cari menu"
+            aria-label="Cari menu navigasi"
+            className="h-10 w-full rounded-xl border border-transparent bg-slate-100/80 pl-10 pr-12 text-sm text-slate-900 placeholder:text-slate-400 focus:border-violet-300 focus:bg-white focus:outline-none dark:bg-slate-800/80 dark:text-slate-100 dark:focus:border-violet-700 dark:focus:bg-slate-900 [&::-webkit-search-cancel-button]:hidden"
+          />
+          <kbd className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 rounded-md border border-slate-200 bg-white px-1.5 py-0.5 text-[10px] font-semibold text-slate-400 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-500">
+            ⌘K
+          </kbd>
+        </div>
+      </div>
 
-              return (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  onClick={onNavigate}
-                  className={`group flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-medium transition-all ${
-                    isActive
-                      ? "bg-blue-600/10 text-blue-800 font-semibold border-l-4 border-blue-600 shadow-2xs dark:bg-blue-500/15 dark:text-blue-300 dark:border-l-4 dark:border-blue-400 dark:shadow-none"
-                      : "text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800/70 dark:hover:text-slate-100"
-                  }`}
-                >
-                  <div className="flex items-center gap-3">
-                    <Icon
-                      className={`size-4.5 shrink-0 transition-colors ${
+      <div className="flex-1 space-y-5 overflow-y-auto px-1 py-1">
+        {visibleSections.length === 0 ? (
+          <p className="px-3 py-6 text-center text-xs text-slate-400">Tiada menu sepadan.</p>
+        ) : (
+          visibleSections.map((section) => (
+            <div key={section.title}>
+              <h3 className="px-3 text-xs font-medium text-slate-400 dark:text-slate-500">
+                {section.title}
+              </h3>
+              <div className="mt-1.5 space-y-0.5">
+                {section.items.map((item) => {
+                  const Icon = item.icon;
+                  const itemTab = item.href.includes("?tab=") ? item.href.split("?tab=")[1] : null;
+                  const isActive = itemTab === currentTab;
+
+                  return (
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      onClick={onNavigate}
+                      aria-current={isActive ? "page" : undefined}
+                      className={`group flex items-center justify-between rounded-xl px-3 py-2.5 text-sm transition-colors ${
                         isActive
-                          ? "text-blue-600 dark:text-blue-400"
-                          : "text-slate-400 group-hover:text-slate-600 dark:text-slate-500 dark:group-hover:text-slate-300"
-                      }`}
-                    />
-                    <span>{item.name}</span>
-                  </div>
-                  {item.badge && (
-                    <span
-                      className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${
-                        isActive
-                          ? "bg-blue-100 text-blue-800 dark:bg-blue-950/80 dark:text-blue-300 dark:border dark:border-blue-800/50"
-                          : "bg-amber-100 text-amber-800 border border-amber-200 dark:bg-amber-950 dark:text-amber-300 dark:border-amber-800"
+                          ? "bg-violet-100/80 font-semibold text-violet-700 dark:bg-violet-500/15 dark:text-violet-300"
+                          : "font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800/70 dark:hover:text-slate-100"
                       }`}
                     >
-                      {item.badge}
-                    </span>
-                  )}
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-      ))}
+                      <span className="flex min-w-0 items-center gap-3">
+                        <Icon
+                          className={`size-[18px] shrink-0 transition-colors ${
+                            isActive
+                              ? "text-violet-600 dark:text-violet-400"
+                              : "text-slate-400 group-hover:text-slate-600 dark:text-slate-500 dark:group-hover:text-slate-300"
+                          }`}
+                          aria-hidden
+                        />
+                        <span className="truncate">{item.name}</span>
+                      </span>
+                      {item.badge && (
+                        <span className="ml-2 shrink-0 rounded-full bg-violet-100 px-2 py-0.5 text-[10px] font-semibold text-violet-700 dark:bg-violet-500/15 dark:text-violet-300">
+                          {item.badge}
+                        </span>
+                      )}
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          ))
+        )}
+      </div>
     </div>
   );
 }
@@ -268,7 +296,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
         {/* Brand Logo & Header */}
         <div className="flex h-16 items-center justify-between px-5 border-b border-slate-100 dark:border-slate-800/80">
           <Link href="/admin" onClick={() => setSidebarOpen(false)} className="flex items-center gap-2.5 group focus-visible:outline-blue-600">
-            <div className="flex size-9 items-center justify-center rounded-xl bg-blue-600 text-white shadow-sm transition-all">
+            <div className="flex size-9 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 text-white shadow-md transition-all">
               <School className="size-4.5" />
             </div>
             <div>
@@ -300,7 +328,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
         {/* User Profile Card & Sign Out */}
         <div className="p-3.5 border-t border-slate-100 bg-slate-50/50 dark:border-slate-800 dark:bg-slate-900/50">
           <div className="flex items-center gap-3 rounded-xl p-2.5 border border-slate-200/70 bg-white/80 shadow-2xs dark:bg-slate-800/60 dark:border-slate-700">
-            <div className="size-9 rounded-full bg-blue-600/10 text-blue-700 font-semibold flex items-center justify-center shrink-0 border border-blue-200/70 text-xs dark:bg-blue-500/15 dark:text-blue-300 dark:border-blue-800/50">
+            <div className="size-9 rounded-full bg-violet-600/10 text-violet-700 font-semibold flex items-center justify-center shrink-0 border border-violet-200/70 text-xs dark:bg-violet-500/15 dark:text-violet-300 dark:border-violet-800/50">
               TU
             </div>
             <div className="min-w-0 flex-1">

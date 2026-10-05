@@ -2,6 +2,7 @@ import Link from "next/link";
 import { myGroups } from "../../../lib/auth";
 import { createClient } from "../../../lib/supabase/server";
 import { GroupForm } from "./group-form";
+import { LayoutDashboard, UsersRound } from "lucide-react";
 import { UserBar } from "../../../components/user-bar";
 import { GlowBackground } from "../../../components/glow-background";
 
@@ -30,10 +31,16 @@ export default async function GroupPage() {
       <UserBar userRole="staff" userName="Staff Demo" title="YuranKu · Dashboard Staf" />
       <div className="relative flex-1 md:grid md:grid-cols-[220px_minmax(0,1fr)]">
         <aside className="border-b border-slate-200 p-6 dark:border-slate-800 md:border-r md:border-b-0">
-          <p className="text-lg font-semibold">Menu Staf</p>
-          <nav aria-label="Menu staf" className="mt-6 space-y-2">
-            <Link href="/staff" className="block rounded-2xl px-4 py-3 hover:bg-slate-100 dark:hover:bg-slate-900">Dashboard staf</Link>
-            <Link href="/staff/grup" aria-current="page" className="block rounded-2xl bg-blue-600/10 px-4 py-3 font-semibold text-blue-800 dark:bg-blue-500/15 dark:text-blue-300">Pilih grup</Link>
+          <p className="px-3 text-xs font-medium text-slate-400 dark:text-slate-500">Menu</p>
+          <nav aria-label="Menu staf" className="mt-2 space-y-0.5">
+            <Link href="/staff" className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800/70 dark:hover:text-slate-100">
+              <LayoutDashboard className="size-[18px] shrink-0 text-slate-400 dark:text-slate-500" aria-hidden />
+              Dashboard Staf
+            </Link>
+            <Link href="/staff/grup" aria-current="page" className="flex items-center gap-3 rounded-xl bg-violet-100/80 px-3 py-2.5 text-sm font-semibold text-violet-700 dark:bg-violet-500/15 dark:text-violet-300">
+              <UsersRound className="size-[18px] shrink-0 text-violet-600 dark:text-violet-400" aria-hidden />
+              Pilih Grup
+            </Link>
           </nav>
         </aside>
         <main className="w-full max-w-2xl px-6 py-8 md:p-12">

@@ -39,7 +39,7 @@ export const tabs = [
   ["penugasan", "Penugasan staff"],
   ["siswa", "Siswa"],
   ["akun", "Akun"],
-  ["kwitansi", "Kwitansi"],
+  ["kwitansi", "Kuitansi"],
 ] as const;
 
 export function AdminPanel({ initialTab, data }: { initialTab?: string; data: Data }) {
@@ -62,7 +62,7 @@ export function AdminPanel({ initialTab, data }: { initialTab?: string; data: Da
 
   return (
     <div className="min-h-dvh flex flex-col bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100 [&_:focus-visible]:outline-2 [&_:focus-visible]:outline-offset-4 [&_:focus-visible]:outline-emerald-700">
-      <UserBar userRole="admin" userName="Administrator Demo" title="Yuran Siswa · Panel Admin" />
+      <UserBar userRole="admin" userName="Administrator Demo" title="YuranKu · Panel Admin" />
       <div className="flex-1 md:grid md:grid-cols-[220px_minmax(0,1fr)]">
         <aside className="border-b border-slate-200 p-6 dark:border-slate-800 md:border-r md:border-b-0">
           <p className="text-lg font-semibold">Menu Admin</p>
@@ -266,11 +266,11 @@ export function AdminPanel({ initialTab, data }: { initialTab?: string; data: Da
 
         {activeTab === "kwitansi" && (
           <section className={`mt-8 ${card}`}>
-            <h2 className="mb-5 text-lg font-semibold">Upload kwitansi</h2>
+            <h2 className="mb-5 text-lg font-semibold">Unggah kuitansi</h2>
             {!data.payments.filter((p) => !p.kwitansi_drive_file_id).length ? (
-              <p>Tidak ada pembayaran yang menunggu kwitansi.</p>
+              <p>Tidak ada pembayaran yang menunggu kuitansi.</p>
             ) : (
-              <ActionForm label="Upload kwitansi" action={(form) => uploadKwitansi(text(form, "payment"), form.get("file") as File)}>
+              <ActionForm label="Unggah kuitansi" action={(form) => uploadKwitansi(text(form, "payment"), form.get("file") as File)}>
                 <label className="block">
                   Pembayaran
                   <select name="payment" required className={field}>
@@ -285,7 +285,7 @@ export function AdminPanel({ initialTab, data }: { initialTab?: string; data: Da
                   </select>
                 </label>
                 <label className="block">
-                  File kwitansi
+                  File kuitansi
                   <input name="file" type="file" accept="image/*,application/pdf" required className={field} />
                 </label>
                 <p className="text-sm text-slate-600 dark:text-slate-400">Gambar atau PDF, maksimal 10 MB.</p>

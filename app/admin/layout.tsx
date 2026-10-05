@@ -41,24 +41,24 @@ const navigation: NavSection[] = [
     title: "Ringkasan",
     items: [
       { name: "Dasbor Utama", href: "/admin", icon: LayoutDashboard },
-      { name: "Aliran Kas & Yuran", href: "/admin?tab=aliran-kas", icon: Wallet },
+      { name: "Arus Kas & Yuran", href: "/admin?tab=aliran-kas", icon: Wallet },
     ],
   },
   {
     title: "Pengurusan (Manage)",
     items: [
-      { name: "Data Talebe (Siswa)", href: "/admin?tab=siswa", icon: Users },
+      { name: "Data Siswa", href: "/admin?tab=siswa", icon: Users },
       { name: "Transaksi Masuk", href: "/admin?tab=transaksi", icon: CreditCard },
       { name: "Penugasan Staf", href: "/admin?tab=penugasan", icon: Building2 },
-      { name: "Pengesahan Ibu Bapa", href: "/admin?tab=persetujuan", icon: UserCheck, badge: "Pending" },
-      { name: "Pengurusan Akun", href: "/admin?tab=akun", icon: ShieldCheck },
+      { name: "Persetujuan Orang Tua", href: "/admin?tab=persetujuan", icon: UserCheck, badge: "Pending" },
+      { name: "Pengelolaan Akun", href: "/admin?tab=akun", icon: ShieldCheck },
     ],
   },
   {
     title: "Laporan (Reporting)",
     items: [
-      { name: "Resit & Kwitansi", href: "/admin?tab=resit", icon: Receipt },
-      { name: "Penyata Bulanan", href: "/admin?tab=penyata", icon: FileSpreadsheet },
+      { name: "Kuitansi", href: "/admin?tab=resit", icon: Receipt },
+      { name: "Laporan Bulanan", href: "/admin?tab=penyata", icon: FileSpreadsheet },
     ],
   },
 ];
@@ -127,22 +127,22 @@ function Breadcrumb() {
   const searchParams = useSearchParams();
   const tab = searchParams.get("tab");
   const names: Record<string, string> = {
-    "aliran-kas": "Aliran Kas & Yuran",
-    siswa: "Data Talebe",
+    "aliran-kas": "Arus Kas & Yuran",
+    siswa: "Data Siswa",
     transaksi: "Transaksi Masuk",
     penugasan: "Penugasan Staf",
-    persetujuan: "Pengesahan Ibu Bapa",
-    resit: "Resit & Kwitansi",
-    kwitansi: "Resit & Kwitansi",
-    penyata: "Penyata Bulanan",
-    akun: "Pengurusan Akun",
+    persetujuan: "Persetujuan Orang Tua",
+    resit: "Kuitansi",
+    kwitansi: "Kuitansi",
+    penyata: "Laporan Bulanan",
+    akun: "Pengelolaan Akun",
   };
   const current = tab && names[tab] ? names[tab] : "Dasbor Utama";
   return (
     <div className="flex items-center gap-2 text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium">
       <span className="text-slate-800 dark:text-slate-200 font-semibold">YuranKu</span>
       <ChevronRight className="size-3.5 text-slate-400 dark:text-slate-600" />
-      <span>Pentadbiran</span>
+      <span>Administrasi</span>
       <ChevronRight className="size-3.5 text-slate-400 dark:text-slate-600" />
       <span className="text-blue-600 dark:text-blue-400 font-semibold">{current}</span>
     </div>
@@ -188,24 +188,24 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
   const [notifs, setNotifs] = useState([
     {
       id: "n-1",
-      judul: "Kwitansi perlukan muat naik",
-      pesan: "Resit R-2026-1040 (Mohd Rizal) menunggu fail kwitansi rasmi.",
+      judul: "Kuitansi perlu diunggah",
+      pesan: "Kuitansi R-2026-1040 (Mohd Rizal) menunggu file kuitansi resmi.",
       masa: "10 min lalu",
       dibaca: false,
       tab: "resit",
     },
     {
       id: "n-2",
-      judul: "Tuntutan ibu bapa baru",
-      pesan: "Hassan bin Abdullah memohon pendaftaran bagi Ahmad bin Ali.",
+      judul: "Pengajuan orang tua baru",
+      pesan: "Hassan bin Abdullah mengajukan pendaftaran untuk Ahmad bin Ali.",
       masa: "1 jam lalu",
       dibaca: false,
       tab: "persetujuan",
     },
     {
       id: "n-3",
-      judul: "Bayaran yuran diterima",
-      pesan: "RM 500 diterima daripada Siti Nurhaliza via FPX.",
+      judul: "Pembayaran yuran diterima",
+      pesan: "RM 500 diterima dari Siti Nurhaliza via FPX.",
       masa: "3 jam lalu",
       dibaca: true,
       tab: "transaksi",
@@ -245,7 +245,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                   Admin
                 </span>
               </div>
-              <p className="text-[11px] text-slate-500 font-medium dark:text-slate-400">Aylik Talebe Management</p>
+              <p className="text-[11px] text-slate-500 font-medium dark:text-slate-400">Manajemen Yuran Bulanan</p>
             </div>
           </Link>
 
@@ -274,12 +274,12 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
               <p className="text-xs font-semibold text-slate-900 truncate dark:text-slate-100">Pegawai Tata Usaha</p>
               <p className="text-[11px] text-slate-500 truncate flex items-center gap-1 dark:text-slate-400">
                 <ShieldCheck className="size-3 text-emerald-500 shrink-0 dark:text-emerald-400" />
-                Pentadbir Sistem
+                Administrator Sistem
               </p>
             </div>
             <Link
               href="/login"
-              title="Keluar / Log Masuk Semula"
+              title="Keluar / Masuk Kembali"
               className="text-slate-400 hover:text-rose-600 p-1.5 rounded-lg transition-colors dark:text-slate-500 dark:hover:text-rose-400"
             >
               <LogOut className="size-4" />
@@ -318,7 +318,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
               type="button"
               onClick={() => setNotifOpen((o) => !o)}
               className="relative p-2 text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-colors dark:text-slate-400 dark:hover:text-slate-100 dark:hover:bg-slate-800"
-              aria-label={`Pemberitahuan sistem${unreadCount > 0 ? `, ${unreadCount} belum dibaca` : ""}`}
+              aria-label={`Notifikasi sistem${unreadCount > 0 ? `, ${unreadCount} belum dibaca` : ""}`}
             >
               <Bell className="size-4.5" />
               <NotificationBadge count={unreadCount} />
@@ -336,7 +336,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
           {/* Topbar Right Controls */}
           <div className="flex items-center gap-2 sm:gap-3">
-            {/* Pemilih Sesi Persekolahan */}
+            {/* Pemilih Tahun Ajaran */}
             <div className="relative">
               <button
                 type="button"
@@ -344,7 +344,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                 className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 rounded-full text-xs font-medium text-slate-600 border border-slate-200 hover:border-slate-300 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700 dark:hover:border-slate-600"
               >
                 <span className="size-2 rounded-full bg-blue-600 animate-pulse" />
-                <span>Sesi Persekolahan {sesi}</span>
+                <span>Tahun Ajaran {sesi}</span>
               </button>
               {sesiOpen && (
                 <div className="absolute right-0 mt-2 w-48 rounded-xl border border-slate-200 bg-white shadow-lg z-50 dark:border-slate-800 dark:bg-[#0b1329]">
@@ -379,7 +379,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                 type="button"
                 onClick={() => { setNotifOpen((o) => !o); setSesiOpen(false); }}
                 className="relative p-2 text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-colors dark:text-slate-400 dark:hover:text-slate-100 dark:hover:bg-slate-800"
-                aria-label={`Pemberitahuan sistem${unreadCount > 0 ? `, ${unreadCount} belum dibaca` : ""}`}
+                aria-label={`Notifikasi sistem${unreadCount > 0 ? `, ${unreadCount} belum dibaca` : ""}`}
               >
                 <Bell className="size-4.5" />
                 <NotificationBadge count={unreadCount} />
@@ -428,7 +428,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
               className="hidden md:inline-flex items-center gap-2 rounded-xl bg-neutral-900 px-3.5 py-2 text-xs font-semibold text-white shadow-[inset_2px_2px_5px_0px_rgba(0,0,0,0.5),inset_-2px_-2px_6px_1px_rgba(80,78,78,0.5)] transition-all hover:bg-black active:scale-[0.98] focus-visible:outline-blue-600 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200"
             >
               <CreditCard className="size-3.5" />
-              <span>Kwitansi & Bayaran</span>
+              <span>Kuitansi & Pembayaran</span>
             </Link>
           </div>
         </header>

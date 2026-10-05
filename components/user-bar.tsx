@@ -11,7 +11,7 @@ interface UserBarProps {
   title?: string;
 }
 
-export function UserBar({ userName, userRole, title = "Yuran Siswa" }: UserBarProps) {
+export function UserBar({ userName, userRole, title = "YuranKu" }: UserBarProps) {
   const [isPending, startTransition] = useTransition();
 
   const handleSwitch = (role: Role) => {

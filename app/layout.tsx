@@ -5,10 +5,10 @@ import "./globals.css";
 export const runtime = "edge";
 
 export const metadata: Metadata = {
-  title: "Yuran Siswa",
+  title: "YuranKu",
   description: "Aplikasi web pencatat yuran bulanan siswa",
   openGraph: {
-    title: "Yuran Siswa",
+    title: "YuranKu",
     description: "Aplikasi web pencatat yuran bulanan siswa",
   },
 };

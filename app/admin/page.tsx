@@ -45,7 +45,7 @@ export interface TalebeRecord {
   bulanDibayar: string; // Bulan_Dibayar
   tanggal: string; // Tanggal
   metodeBayar: "Online Transfer (FPX)" | "DuitNow QR" | "Tunai (Kaunter)" | "Bank Transfer" | "Belum Bayar";
-  status: "Lunas" | "Tunggakan" | "Sebahagian";
+  status: "Lunas" | "Tunggakan" | "Sebagian";
   statusAktif: boolean; // Status_Aktif
 }
 
@@ -113,7 +113,7 @@ const initialTalebeData: TalebeRecord[] = [
     bulanDibayar: "September 2026",
     tanggal: "01 Okt 2026",
     metodeBayar: "Tunai (Kaunter)",
-    status: "Sebahagian",
+    status: "Sebagian",
     statusAktif: true,
   },
   {
@@ -149,7 +149,7 @@ const initialTalebeData: TalebeRecord[] = [
     grup: "Fatih HE",
     yuranBulanan: 500,
     jumlahBayar: 500,
-    bulanDibayar: "Ogos 2026",
+    bulanDibayar: "Agustus 2026",
     tanggal: "04 Okt 2026",
     metodeBayar: "Online Transfer (FPX)",
     status: "Lunas",
@@ -162,7 +162,7 @@ const initialTalebeData: TalebeRecord[] = [
     grup: "Razi HE",
     yuranBulanan: 500,
     jumlahBayar: 500,
-    bulanDibayar: "Ogos 2026",
+    bulanDibayar: "Agustus 2026",
     tanggal: "03 Okt 2026",
     metodeBayar: "DuitNow QR",
     status: "Lunas",
@@ -342,15 +342,15 @@ function AdminContent() {
   // Statistik Keseluruhan (KPI Math)
   const totalTarget = 30000; // 60 siswa x RM 500
   const totalPemasukan = 24500; // Total kutipan semasa
-  const totalTunggakan = 5500; // Baki tertunggak
+  const totalTunggakan = 5500; // Sisa tertunggak
   const persentaseKutipan = (totalPemasukan / totalTarget) * 100; // 81.67%
 
   // Tab yang belum ada konten khusus
   if (tab === "penugasan" || tab === "persetujuan" || tab === "penyata") {
     const titles: Record<string, string> = {
       penugasan: "Penugasan Staf",
-      persetujuan: "Pengesahan Ibu Bapa",
-      penyata: "Penyata Bulanan",
+      persetujuan: "Persetujuan Orang Tua",
+      penyata: "Laporan Bulanan",
     };
     const title = titles[tab] ?? "Modul";
     return (
@@ -377,18 +377,18 @@ function AdminContent() {
   const showSummary = isDashboard;
 
   const headerTitle =
-    tab === "aliran-kas" ? "Aliran Kas & Yuran"
-    : tab === "siswa" ? "Data Talebe (Siswa)"
+    tab === "aliran-kas" ? "Arus Kas & Yuran"
+    : tab === "siswa" ? "Data Siswa"
     : tab === "transaksi" ? "Transaksi Masuk"
-    : tab === "resit" ? "Resit & Kwitansi"
-    : "Dasbor Pentadbiran Yuran";
+    : tab === "resit" ? "Kuitansi"
+    : "Dasbor Administrasi Yuran";
 
   const headerDesc =
-    tab === "aliran-kas" ? "Ringkasan aliran tunai masuk dan keluar kas asrama."
-    : tab === "siswa" ? "Senarai talebe berdaftar mengikut grup asrama."
-    : tab === "transaksi" ? "Senarai semua pembayaran yuran yang diterima."
-    : tab === "resit" ? "Senarai resit dan kwitansi yang telah dimuat naik."
-    : "Sistem pengurusan yuran bulanan asrama Talebe, rekod kutipan kas, dan pengesahan status pembayaran.";
+    tab === "aliran-kas" ? "Ringkasan arus kas masuk dan keluar kas asrama."
+    : tab === "siswa" ? "Daftar siswa terdaftar berdasarkan grup asrama."
+    : tab === "transaksi" ? "Daftar semua pembayaran yuran yang diterima."
+    : tab === "resit" ? "Daftar kuitansi yang telah diunggah."
+    : "Sistem pengelolaan yuran bulanan asrama siswa, pencatatan penerimaan kas, dan persetujuan status pembayaran.";
 
   return (
     <div className="space-y-6 sm:space-y-8 w-full min-w-0 max-w-full">
@@ -400,7 +400,7 @@ function AdminContent() {
               {headerTitle}
             </h1>
             <span className="inline-flex items-center rounded-md bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700 border border-blue-200/80 dark:bg-blue-950/80 dark:text-blue-300 dark:border-blue-800/50">
-              Aylik Talebe
+              Yuran Bulanan
             </span>
           </div>
           <p className="mt-1 text-xs sm:text-sm text-slate-500 dark:text-slate-400">
@@ -422,7 +422,7 @@ function AdminContent() {
               <MorphSelectContent>
                 <MorphSelectItem value="Oktober 2026">Bulan: Oktober 2026</MorphSelectItem>
                 <MorphSelectItem value="September 2026">Bulan: September 2026</MorphSelectItem>
-                <MorphSelectItem value="Ogos 2026">Bulan: Ogos 2026</MorphSelectItem>
+                <MorphSelectItem value="Agustus 2026">Bulan: Agustus 2026</MorphSelectItem>
               </MorphSelectContent>
             </MorphSelect>
           </div>
@@ -452,7 +452,7 @@ function AdminContent() {
               }}
             >
               <Download className="size-3.5" />
-              <span>Eksport</span>
+              <span>Ekspor</span>
             </Button>
 
             <Button
@@ -462,7 +462,7 @@ function AdminContent() {
               onClick={() => setShowImportModal(true)}
             >
               <Upload className="size-3.5" />
-              <span>Import</span>
+              <span>Impor</span>
             </Button>
           </div>
 
@@ -474,7 +474,7 @@ function AdminContent() {
             onClick={() => setShowBayarModal(true)}
           >
             <Plus className="size-4" />
-            <span>Catat Bayaran</span>
+            <span>Catat Pembayaran</span>
           </Button>
         </div>
       </div>
@@ -490,21 +490,21 @@ function AdminContent() {
         <div className="rounded-xl sm:rounded-2xl border border-slate-200/70 bg-white/80 backdrop-blur p-4 sm:p-5 shadow-xs dark:border-slate-800 dark:bg-slate-900/70 min-w-0">
           <p className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Jumlah Keluar</p>
           <p className="mt-2 text-xl sm:text-2xl font-bold text-rose-600 dark:text-rose-400">RM 3,200</p>
-          <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Oktober 2026 · perbelanjaan operasi</p>
+          <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Oktober 2026 · pengeluaran operasional</p>
         </div>
         <div className="rounded-xl sm:rounded-2xl border border-slate-200/70 bg-white/80 backdrop-blur p-4 sm:p-5 shadow-xs dark:border-slate-800 dark:bg-slate-900/70 min-w-0">
-          <p className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Baki Bersih</p>
+          <p className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Saldo Bersih</p>
           <p className="mt-2 text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">RM 21,300</p>
-          <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Masuk tolak keluar bulan ini</p>
+          <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Selisih masuk dan keluar bulan ini</p>
         </div>
       </div>
       )}
 
-      {/* Senarai Resit (tab resit sahaja) */}
+      {/* Daftar Kuitansi (tab kuitansi sahaja) */}
       {isResit && (
       <div className="rounded-xl sm:rounded-2xl border border-slate-200/70 bg-white/80 backdrop-blur shadow-xs overflow-hidden dark:border-slate-800 dark:bg-slate-900/70 w-full min-w-0">
         <div className="p-4 sm:p-5 border-b border-slate-100 dark:border-slate-800">
-          <h2 className="text-base font-bold text-slate-900 dark:text-slate-100">Resit & Kwitansi Terkini</h2>
+          <h2 className="text-base font-bold text-slate-900 dark:text-slate-100">Kuitansi Terkini</h2>
           <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Dokumen bukti pembayaran yang dimuat naik.</p>
         </div>
         <ul className="divide-y divide-slate-100 dark:divide-slate-800">
@@ -545,7 +545,7 @@ function AdminContent() {
             <span className="inline-flex items-center rounded-md bg-emerald-50 px-1.5 py-0.5 text-[11px] font-semibold text-emerald-700 border border-emerald-100 dark:bg-emerald-950/80 dark:text-emerald-300 dark:border-emerald-800/50">
               +12.4%
             </span>
-            <span className="text-slate-500 dark:text-slate-400 text-[11px]">berbanding bulan lepas</span>
+            <span className="text-slate-500 dark:text-slate-400 text-[11px]">dibanding bulan lalu</span>
           </div>
         </div>
 
@@ -563,7 +563,7 @@ function AdminContent() {
             {formatRM(totalTarget)}
           </p>
           <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
-            Sasaran asas: 60 Talebe × RM 500
+            Target dasar: 60 Siswa × RM 500
           </p>
         </div>
 
@@ -588,11 +588,11 @@ function AdminContent() {
           </div>
         </div>
 
-        {/* KPI 4: Persentase Kutipan Yuran */}
+        {/* KPI 4: Persentase Penagihan Yuran */}
         <div className="flex flex-col rounded-xl border border-slate-200/70 bg-white/80 backdrop-blur p-4 shadow-xs transition-shadow hover:shadow-md dark:border-slate-800 dark:bg-slate-900/70 w-full min-w-0">
           <div className="flex items-center justify-between gap-2">
             <span className="text-xs font-medium tracking-wide text-slate-500 uppercase dark:text-slate-400">
-              KUTIPAN YURAN
+              PENAGIHAN YURAN
             </span>
             <div className="size-9 rounded-lg flex items-center justify-center shrink-0 bg-indigo-50 text-indigo-600 dark:bg-indigo-950/60 dark:text-indigo-300 dark:border dark:border-indigo-800/60">
               <PieChart className="size-4.5" />
@@ -615,7 +615,7 @@ function AdminContent() {
       </div>
       )}
 
-      {/* 3. Ringkasan Pantas Berdasarkan Grup Asrama (Aylik Talebe Groups) */}
+      {/* 3. Ringkasan Cepat Berdasarkan Grup Asrama */}
       {showSummary && (
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full min-w-0">
         <div className="rounded-xl border border-slate-200/70 bg-white/80 backdrop-blur p-4 shadow-2xs dark:border-slate-800 dark:bg-slate-900/70 min-w-0">
@@ -625,7 +625,7 @@ function AdminContent() {
               85% Selesai
             </span>
           </div>
-          <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Kutipan: RM 8,500 / RM 10,000 (20 Talebe)</p>
+          <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Terkumpul: RM 8,500 / RM 10,000 (20 Siswa)</p>
         </div>
 
         <div className="rounded-xl border border-slate-200/70 bg-white/80 backdrop-blur p-4 shadow-2xs dark:border-slate-800 dark:bg-slate-900/70 min-w-0">
@@ -635,7 +635,7 @@ function AdminContent() {
               80% Selesai
             </span>
           </div>
-          <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Kutipan: RM 8,000 / RM 10,000 (20 Talebe)</p>
+          <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Terkumpul: RM 8,000 / RM 10,000 (20 Siswa)</p>
         </div>
 
         <div className="rounded-xl border border-slate-200/70 bg-white/80 backdrop-blur p-4 shadow-2xs dark:border-slate-800 dark:bg-slate-900/70 min-w-0">
@@ -645,12 +645,12 @@ function AdminContent() {
               80% Selesai
             </span>
           </div>
-          <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Kutipan: RM 8,000 / RM 10,000 (20 Talebe)</p>
+          <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Terkumpul: RM 8,000 / RM 10,000 (20 Siswa)</p>
         </div>
       </div>
       )}
 
-      {/* 4. Bahagian Utama: Penapis & Tabel Status Yuran Talebe */}
+      {/* 4. Bagian Utama: Filter & Tabel Status Yuran Siswa */}
       <div className="rounded-2xl border border-slate-200/70 bg-white/80 backdrop-blur shadow-xs overflow-hidden dark:border-slate-800 dark:bg-slate-900 w-full min-w-0">
         {/* Toolbar Carian & Penapis */}
         <div className="p-4 sm:p-5 border-b border-slate-100 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between bg-white dark:border-slate-800 dark:bg-slate-900 w-full min-w-0">
@@ -659,7 +659,7 @@ function AdminContent() {
             <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 size-4 text-slate-400 dark:text-slate-500" />
             <input
               type="text"
-              placeholder="Cari nama talebe, ID atau no. transaksi..."
+              placeholder="Cari nama siswa, ID atau no. transaksi..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full rounded-xl border border-slate-300 bg-slate-50/50 py-2 pl-9 pr-4 text-sm text-slate-900 placeholder:text-slate-400 hover:border-slate-400 focus:border-blue-600 focus:bg-white focus:outline-hidden transition-all dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:bg-slate-900"
@@ -688,7 +688,7 @@ function AdminContent() {
 
             {/* Filter Status Pembayaran */}
             <div className="flex items-center gap-1 rounded-xl bg-slate-100 p-1 border border-slate-200/80 dark:bg-slate-800 dark:border-slate-700 max-w-full overflow-x-auto scrollbar-none">
-              {(["Semua", "Lunas", "Tunggakan", "Sebahagian"] as const).map((status) => (
+              {(["Semua", "Lunas", "Tunggakan", "Sebagian"] as const).map((status) => (
                 <button
                   type="button"
                   key={status}
@@ -713,8 +713,8 @@ function AdminContent() {
               <tr>
                 {isSiswa ? (
                   <>
-                    <th scope="col" className="px-5 py-3.5">ID Talebe</th>
-                    <th scope="col" className="px-5 py-3.5">Nama Talebe</th>
+                    <th scope="col" className="px-5 py-3.5">ID Siswa</th>
+                    <th scope="col" className="px-5 py-3.5">Nama Siswa</th>
                     <th scope="col" className="px-5 py-3.5">Grup</th>
                     <th scope="col" className="px-5 py-3.5 text-right">Yuran Bulanan</th>
                     <th scope="col" className="px-5 py-3.5 text-center">Status Bayaran</th>
@@ -727,7 +727,7 @@ function AdminContent() {
                   ID & No. Transaksi
                 </th>
                 <th scope="col" className="px-5 py-3.5">
-                  Nama Talebe
+                  Nama Siswa
                 </th>
                 <th scope="col" className="px-5 py-3.5">
                   Grup
@@ -739,10 +739,10 @@ function AdminContent() {
                   Jumlah Bayar
                 </th>
                 <th scope="col" className="px-5 py-3.5">
-                  Kaedah Bayaran
+                  Metode Pembayaran
                 </th>
                 <th scope="col" className="px-5 py-3.5">
-                  Tarikh
+                  Tanggal
                 </th>
                 <th scope="col" className="px-5 py-3.5 text-center">
                   Status
@@ -792,7 +792,7 @@ function AdminContent() {
                     >
                       {isSiswa ? (
                         <>
-                          {/* ID Talebe */}
+                          {/* ID Siswa */}
                           <td className="px-5 py-4 whitespace-nowrap">
                             <div className="font-mono text-xs font-semibold text-slate-900 dark:text-slate-200">{item.id}</div>
                           </td>
@@ -836,7 +836,7 @@ function AdminContent() {
                               variant="ghost"
                               size="icon"
                               onClick={() => openRecordModal(item)}
-                              title="Lihat Butiran"
+                              title="Lihat Detail"
                             >
                               <Eye className="size-4" />
                             </Button>
@@ -852,7 +852,7 @@ function AdminContent() {
                         <div className="text-[11px] text-slate-400 font-mono dark:text-slate-500">{item.id}</div>
                       </td>
 
-                      {/* Nama Talebe & Grup */}
+                      {/* Nama Siswa & Grup */}
                       <td className="px-5 py-4">
                         <NamaTalebe nama={item.nama} />
                       </td>
@@ -868,12 +868,12 @@ function AdminContent() {
                         {formatRM(item.yuranBulanan)}
                       </td>
 
-                      {/* Jumlah Bayar & Baki */}
+                      {/* Jumlah Bayar & Sisa */}
                       <td className="px-5 py-4 text-right whitespace-nowrap">
                         <div className="font-semibold text-slate-900 dark:text-slate-100">{formatRM(item.jumlahBayar)}</div>
                         {baki > 0 && (
                           <div className="text-[11px] text-rose-600 font-medium dark:text-rose-400">
-                            Baki: {formatRM(baki)}
+                            Sisa: {formatRM(baki)}
                           </div>
                         )}
                       </td>
@@ -883,7 +883,7 @@ function AdminContent() {
                         {item.metodeBayar}
                       </td>
 
-                      {/* Tarikh Bayaran */}
+                      {/* Tanggal Bayaran */}
                       <td className="px-5 py-4 whitespace-nowrap text-xs text-slate-500 dark:text-slate-400">
                         {item.tanggal}
                       </td>
@@ -904,10 +904,10 @@ function AdminContent() {
                           </span>
                         )}
 
-                        {item.status === "Sebahagian" && (
+                        {item.status === "Sebagian" && (
                           <span className="inline-flex items-center gap-1 rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-semibold text-yellow-800 border border-yellow-200 dark:bg-yellow-950/70 dark:text-yellow-300 dark:border-yellow-800">
                             <Clock className="size-3 text-yellow-700 dark:text-yellow-400" />
-                            <span>Sebahagian</span>
+                            <span>Sebagian</span>
                           </span>
                         )}
                       </td>
@@ -918,7 +918,7 @@ function AdminContent() {
                           variant="ghost"
                           size="icon"
                           onClick={() => openRecordModal(item)}
-                          title="Lihat Butiran Resit"
+                          title="Lihat Detail Kuitansi"
                         >
                           <Eye className="size-4" />
                         </Button>
@@ -937,27 +937,27 @@ function AdminContent() {
         <div className="p-4 border-t border-slate-100 bg-slate-50/50 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500 dark:border-slate-800 dark:bg-slate-900/50 dark:text-slate-400">
           <p>
             Menunjukkan <strong className="text-slate-900 dark:text-slate-200">{filteredRecords.length}</strong> daripada{" "}
-            <strong className="text-slate-900 dark:text-slate-200">{records.length}</strong> rekod Talebe bagi bulan{" "}
+            <strong className="text-slate-900 dark:text-slate-200">{records.length}</strong> catatan siswa untuk bulan{" "}
             <strong className="text-slate-900 dark:text-slate-200">{selectedMonth}</strong>.
           </p>
           <div className="flex items-center gap-2">
             <span className="inline-block size-2 rounded-full bg-green-500" />
-            <span className="font-medium text-slate-700 dark:text-slate-300">Kadar Kutipan Semasa: {persentaseKutipan.toFixed(1)}%</span>
+            <span className="font-medium text-slate-700 dark:text-slate-300">Tingkat Penagihan Saat Ini: {persentaseKutipan.toFixed(1)}%</span>
           </div>
         </div>
       </div>
 
-      {/* 5. Modal / Dialog Butiran Transaksi Talebe */}
+      {/* 5. Modal / Dialog Detail Transaksi Siswa */}
       <CenterMorphModal open={recordOpen} onOpenChange={handleRecordOpenChange}>
         <CenterMorphModalContent
-          ariaLabel="Butiran Transaksi Talebe"
+          ariaLabel="Detail Transaksi Siswa"
           className="max-w-lg p-6"
         >
           {selectedRecord && (
             <>
               <div className="border-b border-slate-100 pb-4 pr-10 dark:border-slate-800">
                 <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-                  Resit & Butiran Yuran Talebe
+                  Kuitansi & Detail Yuran Siswa
                 </span>
                 <h3 className="text-lg font-bold text-slate-900 mt-0.5 dark:text-slate-100">{selectedRecord.nama}</h3>
                 <p className="text-xs text-slate-500 font-mono dark:text-slate-400">
@@ -984,11 +984,11 @@ function AdminContent() {
                   <p className="font-bold text-emerald-600 mt-0.5 dark:text-emerald-400">{formatRM(selectedRecord.jumlahBayar)}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">Kaedah Bayaran</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">Metode Pembayaran</p>
                   <p className="font-semibold text-slate-900 mt-0.5 dark:text-slate-100">{selectedRecord.metodeBayar}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">Tarikh Transaksi</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">Tanggal Transaksi</p>
                   <p className="font-semibold text-slate-900 mt-0.5 dark:text-slate-100">{selectedRecord.tanggal}</p>
                 </div>
               </div>
@@ -1005,9 +1005,9 @@ function AdminContent() {
                     Tunggakan (Belum Bayar)
                   </span>
                 )}
-                {selectedRecord.status === "Sebahagian" && (
+                {selectedRecord.status === "Sebagian" && (
                   <span className="rounded-full bg-yellow-100 px-3 py-1 text-xs font-bold text-yellow-800 border border-yellow-200 dark:bg-yellow-950/70 dark:text-yellow-300 dark:border-yellow-800">
-                    Sebahagian (Baki: {formatRM(selectedRecord.yuranBulanan - selectedRecord.jumlahBayar)})
+                    Sebagian (Sisa: {formatRM(selectedRecord.yuranBulanan - selectedRecord.jumlahBayar)})
                   </span>
                 )}
               </div>
@@ -1036,14 +1036,14 @@ function AdminContent() {
       {/* Modal Catat Bayaran */}
       <CenterMorphModal open={showBayarModal} onOpenChange={setShowBayarModal}>
         <CenterMorphModalContent
-          ariaLabel="Catat Bayaran Baru"
+          ariaLabel="Catat Pembayaran Baru"
           className="max-w-md p-6"
         >
-            <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">Catat Bayaran Baru</h2>
-            <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Rekod pembayaran yuran bulanan talebe.</p>
+            <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">Catat Pembayaran Baru</h2>
+            <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Catatan pembayaran yuran bulanan siswa.</p>
             <div className="mt-4 space-y-4">
               <div>
-                <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Nama Talebe</label>
+                <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Nama Siswa</label>
                 <input
                   type="text"
                   value={bayarNama}
@@ -1066,7 +1066,7 @@ function AdminContent() {
                     <MorphSelectContent>
                       <MorphSelectItem value="Oktober 2026">Oktober 2026</MorphSelectItem>
                       <MorphSelectItem value="September 2026">September 2026</MorphSelectItem>
-                      <MorphSelectItem value="Ogos 2026">Ogos 2026</MorphSelectItem>
+                      <MorphSelectItem value="Agustus 2026">Agustus 2026</MorphSelectItem>
                     </MorphSelectContent>
                   </MorphSelect>
                 </div>
@@ -1120,10 +1120,10 @@ function AdminContent() {
       {/* Modal Import Siswa */}
       <CenterMorphModal open={showImportModal} onOpenChange={handleImportOpenChange}>
         <CenterMorphModalContent
-          ariaLabel="Import Data Siswa"
+          ariaLabel="Impor Data Siswa"
           className="max-w-lg p-6"
         >
-            <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">Import Data Siswa</h2>
+            <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">Impor Data Siswa</h2>
             <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
               Muat naik fail CSV mengikut template.{" "}
               <button

@@ -8,7 +8,7 @@ import { PaymentForm } from "./payment-form";
 import { UserBar } from "../../components/user-bar";
 import { GlowBackground } from "../../components/glow-background";
 
-export const metadata: Metadata = { title: "Dashboard staf | Yuran Siswa" };
+export const metadata: Metadata = { title: "Dashboard staf | YuranKu" };
 const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
 const field = "min-h-11 rounded-2xl border border-slate-300 bg-white px-3 py-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-slate-700 dark:bg-slate-900";
 
@@ -73,7 +73,7 @@ export default async function StaffPage({ searchParams }: {
   return (
     <div className="relative min-h-dvh flex flex-col bg-[#f7f9fc] text-slate-900 dark:bg-[#0b1329] dark:text-slate-100 [&_:focus-visible]:outline-2 [&_:focus-visible]:outline-offset-4 [&_:focus-visible]:outline-blue-600">
       <GlowBackground />
-      <UserBar userRole="staff" userName="Staff Demo" title="Yuran Siswa · Dashboard Staf" />
+      <UserBar userRole="staff" userName="Staff Demo" title="YuranKu · Dashboard Staf" />
       <div className="relative flex-1 md:grid md:grid-cols-[220px_minmax(0,1fr)]">
         <aside className="border-b border-slate-200 p-6 dark:border-slate-800 md:min-h-dvh md:border-r md:border-b-0">
           <p className="text-lg font-semibold">Menu Staf</p>

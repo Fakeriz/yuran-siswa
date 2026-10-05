@@ -1,6 +1,6 @@
 "use client";
 
-// Halaman pemasaran Yuran Siswa dengan bahasa visual "financial dashboard glow":
+// Halaman pemasaran YuranKu dengan bahasa visual "financial dashboard glow":
 // bidang sejuk #f7f9fc, gradien biru di sudut, panel kaca, halo biru,
 // dan CTA gelap machined. Seluruh gerak dibuat dengan CSS murni
 // (tanpa dependency animasi), mengikuti pola komponen lain di repo ini.
@@ -190,7 +190,7 @@ export function LandingPage() {
               <ReceiptText className="size-4.5" aria-hidden="true" />
             </span>
             <span className="text-lg font-bold tracking-tight text-slate-900 dark:text-slate-100">
-              Yuran Siswa
+              YuranKu
             </span>
           </Link>
           <nav className="hidden items-center gap-8 text-sm font-semibold text-slate-500 md:flex dark:text-slate-400" aria-label="Navigasi utama">
@@ -240,7 +240,7 @@ export function LandingPage() {
                 <span className="flex size-8 items-center justify-center rounded-lg bg-blue-600 text-white">
                   <ReceiptText className="size-4.5" aria-hidden="true" />
                 </span>
-                <span className="text-lg font-bold tracking-tight text-slate-900 dark:text-slate-100">Yuran Siswa</span>
+                <span className="text-lg font-bold tracking-tight text-slate-900 dark:text-slate-100">YuranKu</span>
               </span>
               <button
                 type="button"
@@ -457,7 +457,7 @@ export function LandingPage() {
                 Siap merapikan pencatatan yuran sekolah?
               </h2>
               <p className="relative mx-auto mt-4 max-w-xl text-slate-300">
-                Daftarkan akaun orang tua dan hubungkan dengan data anak, atau
+                Daftarkan akun orang tua dan hubungkan dengan data anak, atau
                 masuk untuk mulai mencatat pembayaran hari ini juga.
               </p>
               <div className="relative mt-8 flex flex-wrap justify-center gap-4">
@@ -486,7 +486,7 @@ export function LandingPage() {
             <span className="flex size-7 items-center justify-center rounded-lg bg-blue-600 text-white">
               <ReceiptText className="size-4" aria-hidden="true" />
             </span>
-            <span className="font-bold tracking-tight text-slate-900 dark:text-slate-100">Yuran Siswa</span>
+            <span className="font-bold tracking-tight text-slate-900 dark:text-slate-100">YuranKu</span>
           </span>
           <nav className="flex items-center gap-6 text-sm font-medium text-slate-500 dark:text-slate-400" aria-label="Navigasi footer">
             <Link href="/login" className="rounded-md transition hover:text-blue-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-600 dark:hover:text-blue-400">Masuk</Link>

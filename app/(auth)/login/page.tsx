@@ -4,7 +4,7 @@ import { ReceiptText } from "lucide-react";
 import { LoginForm } from "./login-form";
 import { GlowBackground } from "../../../components/glow-background";
 
-export const metadata: Metadata = { title: "Masuk | Yuran Siswa" };
+export const metadata: Metadata = { title: "Masuk | YuranKu" };
 
 export default function LoginPage() {
   return (
@@ -19,7 +19,7 @@ export default function LoginPage() {
           <span className="flex size-9 items-center justify-center rounded-xl bg-blue-600 text-white">
             <ReceiptText className="size-4.5" aria-hidden="true" />
           </span>
-          <span className="text-xl font-bold tracking-tight">Yuran Siswa</span>
+          <span className="text-xl font-bold tracking-tight">YuranKu</span>
         </Link>
 
         <div className="mt-8 rounded-3xl border border-white bg-white/70 p-6 shadow-[0_24px_60px_-20px_rgba(37,99,235,0.3)] backdrop-blur-xl sm:p-8 dark:border-slate-700/60 dark:bg-slate-900/70 dark:shadow-[0_24px_60px_-20px_rgba(37,99,235,0.2)]">

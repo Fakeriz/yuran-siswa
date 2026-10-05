@@ -5,7 +5,7 @@ import { GroupForm } from "./group-form";
 import { UserBar } from "../../../components/user-bar";
 import { GlowBackground } from "../../../components/glow-background";
 
-export const metadata = { title: "Pilih grup | Yuran Siswa" };
+export const metadata = { title: "Pilih grup | YuranKu" };
 
 export default async function GroupPage() {
   const selected = await myGroups();
@@ -27,7 +27,7 @@ export default async function GroupPage() {
   return (
     <div className="relative min-h-dvh flex flex-col bg-[#f7f9fc] text-slate-900 dark:bg-[#0b1329] dark:text-slate-100 [&_:focus-visible]:outline-2 [&_:focus-visible]:outline-offset-4 [&_:focus-visible]:outline-blue-600">
       <GlowBackground />
-      <UserBar userRole="staff" userName="Staff Demo" title="Yuran Siswa · Dashboard Staf" />
+      <UserBar userRole="staff" userName="Staff Demo" title="YuranKu · Dashboard Staf" />
       <div className="relative flex-1 md:grid md:grid-cols-[220px_minmax(0,1fr)]">
         <aside className="border-b border-slate-200 p-6 dark:border-slate-800 md:border-r md:border-b-0">
           <p className="text-lg font-semibold">Menu Staf</p>

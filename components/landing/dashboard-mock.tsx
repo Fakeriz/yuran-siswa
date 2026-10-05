@@ -24,7 +24,7 @@ const BULAN = [
 const AKTIVITAS = [
   {
     ikon: CalendarCheck2,
-    teks: "Pembayaran bulan Julai dicatat",
+    teks: "Pembayaran bulan Juli dicatat",
     waktu: "2 jam lalu",
   },
   {
@@ -46,7 +46,7 @@ export function DashboardMock() {
       {/* Kepala panel */}
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2.5">
-          <span className="flex size-9 items-center justify-center rounded-xl bg-primary text-white">
+          <span className="flex size-9 items-center justify-center rounded-xl bg-primary text-primary-foreground">
             <ReceiptText className="size-4.5" aria-hidden="true" />
           </span>
           <div>

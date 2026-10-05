@@ -1,0 +1,10 @@
+.landing {
+  /* Aksen lokal menjaga kontras landing tanpa mengubah tema dashboard. */
+  --primary: #005fcc;
+  --primary-foreground: #ffffff;
+}
+
+:global(.dark) .landing {
+  --primary: #8cbeff;
+  --primary-foreground: #122744;
+}

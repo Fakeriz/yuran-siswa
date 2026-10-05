@@ -15,10 +15,10 @@ import {
   Receipt,
   CheckCircle2,
   Clock,
-  ArrowUpDown,
   Eye,
   RefreshCw,
 } from "lucide-react";
+import { createColumnHelper } from "@tanstack/react-table";
 import { FileUpload, type FileUploadItem } from "../../components/file-upload";
 import {
   CenterMorphModal,
@@ -42,6 +42,9 @@ import {
   ComboboxList,
 } from "../../components/ui/combobox";
 import { Item, ItemContent, ItemDescription, ItemTitle } from "../../components/ui/item";
+import { DataTable } from "../../components/data-table/data-table";
+import { DataTableColumnHeader } from "../../components/data-table/data-table-column-header";
+import type { DataTableFeatures } from "../../components/data-table/data-table-features";
 import { FinanceHero } from "../../components/finance-hero";
 import { FinanceKpi } from "../../components/finance-kpi";
 import { CartaTahunan, PanelKemajuanGrup } from "../../components/finance-charts";
@@ -51,6 +54,75 @@ interface SiswaRingkas {
   id: string;
   nama: string;
   grup: string;
+}
+
+const columnHelper = createColumnHelper<DataTableFeatures, TalebeRecord>();
+
+const BULAN_KE_INDEKS: Record<string, number> = {
+  Jan: 0, Feb: 1, Mar: 2, Apr: 3, Mei: 4, Jun: 5,
+  Jul: 6, Agu: 7, Sep: 8, Okt: 9, Nov: 10, Des: 11,
+};
+
+/** Ubah "04 Okt 2026" menjadi timestamp untuk susunan kronologi. */
+function tanggalKeTimestamp(tanggal: string): number {
+  const m = tanggal.match(/^(\d{1,2})\s+(\w{3})\s+(\d{4})$/);
+  if (!m) return -1;
+  const indeks = BULAN_KE_INDEKS[m[2]];
+  if (indeks === undefined) return -1;
+  return new Date(Number(m[3]), indeks, Number(m[1])).getTime();
+}
+
+/** Lencana status untuk varian tabel transaksi. */
+function LencanaStatus({ status }: { status: TalebeRecord["status"] }) {
+  if (status === "Lunas") {
+    return (
+      <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-700 border border-emerald-200/80 dark:bg-emerald-950/80 dark:text-emerald-300 dark:border-emerald-800/50">
+        <CheckCircle2 className="size-3 text-emerald-600 dark:text-emerald-400" />
+        <span>Lunas</span>
+      </span>
+    );
+  }
+  if (status === "Tunggakan") {
+    return (
+      <span className="inline-flex items-center gap-1 rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-semibold text-red-800 border border-red-200 dark:bg-red-950/70 dark:text-red-300 dark:border-red-800">
+        <AlertCircle className="size-3 text-red-700 dark:text-red-400" />
+        <span>Tunggakan</span>
+      </span>
+    );
+  }
+  return (
+    <span className="inline-flex items-center gap-1 rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-semibold text-yellow-800 border border-yellow-200 dark:bg-yellow-950/70 dark:text-yellow-300 dark:border-yellow-800">
+      <Clock className="size-3 text-yellow-700 dark:text-yellow-400" />
+      <span>Sebagian</span>
+    </span>
+  );
+}
+
+/** Lencana status untuk varian senarai siswa (Lunas hijau, selebihnya merah). */
+function LencanaStatusSiswa({ status }: { status: TalebeRecord["status"] }) {
+  if (status === "Lunas") {
+    return (
+      <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-700 border border-emerald-200/80 dark:bg-emerald-950/80 dark:text-emerald-300 dark:border-emerald-800/50">
+        <CheckCircle2 className="size-3 text-emerald-600 dark:text-emerald-400" />
+        <span>Lunas</span>
+      </span>
+    );
+  }
+  return (
+    <span className="inline-flex items-center gap-1 rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-semibold text-red-800 border border-red-200 dark:bg-red-950/70 dark:text-red-300 dark:border-red-800">
+      <AlertCircle className="size-3 text-red-700 dark:text-red-400" />
+      <span>{status}</span>
+    </span>
+  );
+}
+
+/** Lencana keaktifan siswa. */
+function LencanaAktif({ aktif }: { aktif: boolean }) {
+  return (
+    <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${aktif ? "bg-emerald-50 text-emerald-700 border border-emerald-200/60 dark:bg-emerald-950/80 dark:text-emerald-300 dark:border-emerald-800/50" : "bg-slate-100 text-slate-500 border border-slate-200/60 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700"}`}>
+      {aktif ? "Aktif" : "Tidak Aktif"}
+    </span>
+  );
 }
 
 // Struktur jenis data berasaskan skema logik Data_Talebe & Transaksi_Masuk
@@ -370,6 +442,194 @@ function AdminContent() {
       return matchSearch && matchGroup && matchStatus && matchMonth;
     });
   }, [records, searchQuery, selectedGroup, selectedStatus, selectedMonth]);
+
+  // Definisi lajur TanStack Table — varian transaksi
+  const transaksiColumns = useMemo(
+    () =>
+      columnHelper.columns([
+        columnHelper.accessor("noTransaksi", {
+          header: "ID & No. Transaksi",
+          cell: ({ row }) => (
+            <div className="whitespace-nowrap">
+              <div className="font-mono text-xs font-semibold text-slate-900 dark:text-slate-200">
+                {row.original.noTransaksi}
+              </div>
+              <div className="text-[11px] text-slate-400 font-mono dark:text-slate-500">{row.original.id}</div>
+            </div>
+          ),
+          sortFn: "alphanumeric",
+        }),
+        columnHelper.accessor("nama", {
+          header: ({ column }) => <DataTableColumnHeader column={column} title="Nama Siswa" />,
+          cell: ({ row }) => <NamaTalebe nama={row.original.nama} />,
+          sortFn: "text",
+        }),
+        columnHelper.accessor("grup", {
+          header: ({ column }) => <DataTableColumnHeader column={column} title="Grup" />,
+          cell: ({ row }) => (
+            <span className="whitespace-nowrap text-xs font-medium text-blue-700 dark:text-blue-300">
+              {row.original.grup}
+            </span>
+          ),
+          sortFn: "text",
+        }),
+        columnHelper.accessor("yuranBulanan", {
+          header: ({ column }) => <DataTableColumnHeader column={column} title="Yuran Bulanan" align="right" />,
+          cell: ({ row }) => (
+            <div className="whitespace-nowrap text-right font-medium text-slate-900 dark:text-slate-100">
+              {formatRM(row.original.yuranBulanan)}
+            </div>
+          ),
+          sortFn: "basic",
+        }),
+        columnHelper.accessor("jumlahBayar", {
+          header: ({ column }) => <DataTableColumnHeader column={column} title="Jumlah Bayar" align="right" />,
+          cell: ({ row }) => {
+            const baki = row.original.yuranBulanan - row.original.jumlahBayar;
+            return (
+              <div className="whitespace-nowrap text-right">
+                <div className="font-semibold text-slate-900 dark:text-slate-100">
+                  {formatRM(row.original.jumlahBayar)}
+                </div>
+                {baki > 0 && (
+                  <div className="text-[11px] text-rose-600 font-medium dark:text-rose-400">
+                    Sisa: {formatRM(baki)}
+                  </div>
+                )}
+              </div>
+            );
+          },
+          sortFn: "basic",
+        }),
+        columnHelper.accessor("metodeBayar", {
+          header: "Metode Pembayaran",
+          cell: ({ row }) => (
+            <span className="whitespace-nowrap text-xs text-slate-600 dark:text-slate-300">
+              {row.original.metodeBayar}
+            </span>
+          ),
+          sortFn: "text",
+        }),
+        columnHelper.accessor((row) => tanggalKeTimestamp(row.tanggal), {
+          id: "tanggal",
+          header: ({ column }) => <DataTableColumnHeader column={column} title="Tanggal" />,
+          cell: ({ row }) => (
+            <span className="whitespace-nowrap text-xs text-slate-500 dark:text-slate-400">
+              {row.original.tanggal}
+            </span>
+          ),
+          sortFn: "basic",
+        }),
+        columnHelper.accessor("status", {
+          header: ({ column }) => <DataTableColumnHeader column={column} title="Status" align="center" />,
+          cell: ({ row }) => <div className="whitespace-nowrap text-center"><LencanaStatus status={row.original.status} /></div>,
+          sortFn: "text",
+        }),
+        columnHelper.display({
+          id: "tindakan",
+          header: () => <span className="block text-center">Tindakan</span>,
+          cell: ({ row }) => (
+            <div className="text-center" onClick={(e) => e.stopPropagation()}>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => openRecordModal(row.original)}
+                title="Lihat Detail Kuitansi"
+              >
+                <Eye className="size-4" />
+              </Button>
+            </div>
+          ),
+        }),
+      ]),
+    [openRecordModal]
+  );
+
+  // Definisi lajur TanStack Table — varian senarai siswa
+  const siswaColumns = useMemo(
+    () =>
+      columnHelper.columns([
+        columnHelper.accessor("id", {
+          header: "ID Siswa",
+          cell: ({ row }) => (
+            <div className="whitespace-nowrap font-mono text-xs font-semibold text-slate-900 dark:text-slate-200">
+              {row.original.id}
+            </div>
+          ),
+          sortFn: "alphanumeric",
+        }),
+        columnHelper.accessor("nama", {
+          header: ({ column }) => <DataTableColumnHeader column={column} title="Nama Siswa" />,
+          cell: ({ row }) => <NamaTalebe nama={row.original.nama} />,
+          sortFn: "text",
+        }),
+        columnHelper.accessor("grup", {
+          header: ({ column }) => <DataTableColumnHeader column={column} title="Grup" />,
+          cell: ({ row }) => (
+            <span className="whitespace-nowrap text-xs font-medium text-blue-700 dark:text-blue-300">
+              {row.original.grup}
+            </span>
+          ),
+          sortFn: "text",
+        }),
+        columnHelper.accessor("yuranBulanan", {
+          header: ({ column }) => <DataTableColumnHeader column={column} title="Yuran Bulanan" align="right" />,
+          cell: ({ row }) => (
+            <div className="whitespace-nowrap text-right font-medium text-slate-900 dark:text-slate-100">
+              {formatRM(row.original.yuranBulanan)}
+            </div>
+          ),
+          sortFn: "basic",
+        }),
+        columnHelper.accessor("status", {
+          header: ({ column }) => <DataTableColumnHeader column={column} title="Status Bayaran" align="center" />,
+          cell: ({ row }) => <div className="whitespace-nowrap text-center"><LencanaStatusSiswa status={row.original.status} /></div>,
+          sortFn: "text",
+        }),
+        columnHelper.accessor((row) => (row.statusAktif ? 1 : 0), {
+          id: "statusAktif",
+          header: ({ column }) => <DataTableColumnHeader column={column} title="Aktif" align="center" />,
+          cell: ({ row }) => <div className="whitespace-nowrap text-center"><LencanaAktif aktif={row.original.statusAktif} /></div>,
+          sortFn: "basic",
+        }),
+        columnHelper.display({
+          id: "tindakan",
+          header: () => <span className="block text-center">Tindakan</span>,
+          cell: ({ row }) => (
+            <div className="text-center" onClick={(e) => e.stopPropagation()}>
+              <Button variant="ghost" size="icon" onClick={() => openRecordModal(row.original)} title="Lihat Detail">
+                <Eye className="size-4" />
+              </Button>
+            </div>
+          ),
+        }),
+      ]),
+    [openRecordModal]
+  );
+
+  // Keadaan kosong tabel (carian/penapis tidak sepadan)
+  const emptyState = (
+    <div className="flex flex-col items-center justify-center py-12">
+      <div className="rounded-full bg-slate-100 p-3 text-slate-400 dark:bg-slate-800 dark:text-slate-500">
+        <Search className="size-6" />
+      </div>
+      <p className="mt-3 text-sm font-semibold text-slate-900 dark:text-slate-100">Tidak ada data ditemukan</p>
+      <p className="text-xs text-slate-500 dark:text-slate-400">
+        Coba ubah kata kunci pencarian atau pengaturan filter grup/status Anda.
+      </p>
+      <button
+        type="button"
+        onClick={() => {
+          setSearchQuery("");
+          setSelectedGroup("Semua");
+          setSelectedStatus("Semua");
+        }}
+        className="mt-4 text-xs font-semibold text-blue-700 hover:underline dark:text-blue-300"
+      >
+        Atur Ulang Filter
+      </button>
+    </div>
+  );
 
   // Statistik Keseluruhan (KPI Math)
   const totalTarget = 30000; // 60 siswa x RM 500
@@ -693,236 +953,17 @@ function AdminContent() {
         </div>
 
         {/* Tabel Data_Talebe & Transaksi_Masuk */}
-        <div className="overflow-x-auto w-full">
-          <table className="w-full text-left text-sm text-slate-700 dark:text-slate-300">
-            <thead className="bg-slate-50/80 text-xs font-semibold text-slate-500 uppercase tracking-wider border-b border-slate-200 dark:bg-slate-800/80 dark:text-slate-400 dark:border-slate-700">
-              <tr>
-                {isSiswa ? (
-                  <>
-                    <th scope="col" className="px-5 py-3.5">ID Siswa</th>
-                    <th scope="col" className="px-5 py-3.5">Nama Siswa</th>
-                    <th scope="col" className="px-5 py-3.5">Grup</th>
-                    <th scope="col" className="px-5 py-3.5 text-right">Yuran Bulanan</th>
-                    <th scope="col" className="px-5 py-3.5 text-center">Status Bayaran</th>
-                    <th scope="col" className="px-5 py-3.5 text-center">Aktif</th>
-                    <th scope="col" className="px-5 py-3.5 text-center">Tindakan</th>
-                  </>
-                ) : (
-                  <>
-                <th scope="col" className="px-5 py-3.5">
-                  ID & No. Transaksi
-                </th>
-                <th scope="col" className="px-5 py-3.5">
-                  Nama Siswa
-                </th>
-                <th scope="col" className="px-5 py-3.5">
-                  Grup
-                </th>
-                <th scope="col" className="px-5 py-3.5 text-right">
-                  Yuran Bulanan
-                </th>
-                <th scope="col" className="px-5 py-3.5 text-right">
-                  Jumlah Bayar
-                </th>
-                <th scope="col" className="px-5 py-3.5">
-                  Metode Pembayaran
-                </th>
-                <th scope="col" className="px-5 py-3.5">
-                  Tanggal
-                </th>
-                <th scope="col" className="px-5 py-3.5 text-center">
-                  Status
-                </th>
-                <th scope="col" className="px-5 py-3.5 text-center">
-                  Tindakan
-                </th>
-                  </>
-                )}
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
-              {filteredRecords.length === 0 ? (
-                <tr>
-                  <td colSpan={isSiswa ? 7 : 9} className="px-6 py-12 text-center">
-                    <div className="flex flex-col items-center justify-center">
-                      <div className="rounded-full bg-slate-100 p-3 text-slate-400 dark:bg-slate-800 dark:text-slate-500">
-                        <Search className="size-6" />
-                      </div>
-                      <p className="mt-3 text-sm font-semibold text-slate-900 dark:text-slate-100">Tiada rekod dijumpai</p>
-                      <p className="text-xs text-slate-500 dark:text-slate-400">
-                        Cuba ubah carian kata kunci atau tetapan penapis grup/status anda.
-                      </p>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setSearchQuery("");
-                          setSelectedGroup("Semua");
-                          setSelectedStatus("Semua");
-                        }}
-                        className="mt-4 text-xs font-semibold text-blue-700 hover:underline dark:text-blue-300"
-                      >
-                        Set Semula Penapis
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ) : (
-                filteredRecords.map((item) => {
-                  const baki = item.yuranBulanan - item.jumlahBayar;
-
-                  return (
-                    <tr
-                      key={item.id}
-                      className="hover:bg-slate-50/80 dark:hover:bg-slate-800/50 transition-colors group cursor-pointer"
-                      onClick={() => openRecordModal(item)}
-                    >
-                      {isSiswa ? (
-                        <>
-                          {/* ID Siswa */}
-                          <td className="px-5 py-4 whitespace-nowrap">
-                            <div className="font-mono text-xs font-semibold text-slate-900 dark:text-slate-200">{item.id}</div>
-                          </td>
-                          {/* Nama & Grup */}
-                          <td className="px-5 py-4">
-                            <NamaTalebe nama={item.nama} />
-                          </td>
-                          {/* Grup */}
-                          <td className="px-5 py-4 whitespace-nowrap">
-                            <span className="text-xs font-medium text-blue-700 dark:text-blue-300">
-                              {item.grup}
-                            </span>
-                          </td>
-                          {/* Yuran Bulanan */}
-                          <td className="px-5 py-4 text-right whitespace-nowrap font-medium text-slate-900 dark:text-slate-100">
-                            {formatRM(item.yuranBulanan)}
-                          </td>
-                          {/* Status Bayaran */}
-                          <td className="px-5 py-4 whitespace-nowrap text-center">
-                            {item.status === "Lunas" ? (
-                              <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-700 border border-emerald-200/80 dark:bg-emerald-950/80 dark:text-emerald-300 dark:border-emerald-800/50">
-                                <CheckCircle2 className="size-3 text-emerald-600 dark:text-emerald-400" />
-                                <span>Lunas</span>
-                              </span>
-                            ) : (
-                              <span className="inline-flex items-center gap-1 rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-semibold text-red-800 border border-red-200 dark:bg-red-950/70 dark:text-red-300 dark:border-red-800">
-                                <AlertCircle className="size-3 text-red-700 dark:text-red-400" />
-                                <span>{item.status}</span>
-                              </span>
-                            )}
-                          </td>
-                          {/* Aktif */}
-                          <td className="px-5 py-4 whitespace-nowrap text-center">
-                            <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${item.statusAktif ? "bg-emerald-50 text-emerald-700 border border-emerald-200/60 dark:bg-emerald-950/80 dark:text-emerald-300 dark:border-emerald-800/50" : "bg-slate-100 text-slate-500 border border-slate-200/60 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700"}`}>
-                              {item.statusAktif ? "Aktif" : "Tidak Aktif"}
-                            </span>
-                          </td>
-                          {/* Tindakan */}
-                          <td className="px-5 py-4 whitespace-nowrap text-center" onClick={(e) => e.stopPropagation()}>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              onClick={() => openRecordModal(item)}
-                              title="Lihat Detail"
-                            >
-                              <Eye className="size-4" />
-                            </Button>
-                          </td>
-                        </>
-                      ) : (
-                        <>
-                      {/* ID & No Transaksi */}
-                      <td className="px-5 py-4 whitespace-nowrap">
-                        <div className="font-mono text-xs font-semibold text-slate-900 dark:text-slate-200">
-                          {item.noTransaksi}
-                        </div>
-                        <div className="text-[11px] text-slate-400 font-mono dark:text-slate-500">{item.id}</div>
-                      </td>
-
-                      {/* Nama Siswa & Grup */}
-                      <td className="px-5 py-4">
-                        <NamaTalebe nama={item.nama} />
-                      </td>
-                      {/* Grup */}
-                      <td className="px-5 py-4 whitespace-nowrap">
-                        <span className="text-xs font-medium text-blue-700 dark:text-blue-300">
-                          {item.grup}
-                        </span>
-                      </td>
-
-                      {/* Yuran Bulanan */}
-                      <td className="px-5 py-4 text-right whitespace-nowrap font-medium text-slate-900 dark:text-slate-100">
-                        {formatRM(item.yuranBulanan)}
-                      </td>
-
-                      {/* Jumlah Bayar & Sisa */}
-                      <td className="px-5 py-4 text-right whitespace-nowrap">
-                        <div className="font-semibold text-slate-900 dark:text-slate-100">{formatRM(item.jumlahBayar)}</div>
-                        {baki > 0 && (
-                          <div className="text-[11px] text-rose-600 font-medium dark:text-rose-400">
-                            Sisa: {formatRM(baki)}
-                          </div>
-                        )}
-                      </td>
-
-                      {/* Kaedah Bayar */}
-                      <td className="px-5 py-4 whitespace-nowrap text-xs text-slate-600 dark:text-slate-300">
-                        {item.metodeBayar}
-                      </td>
-
-                      {/* Tanggal Bayaran */}
-                      <td className="px-5 py-4 whitespace-nowrap text-xs text-slate-500 dark:text-slate-400">
-                        {item.tanggal}
-                      </td>
-
-                      {/* Label Status Badge */}
-                      <td className="px-5 py-4 whitespace-nowrap text-center">
-                        {item.status === "Lunas" && (
-                          <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-700 border border-emerald-200/80 dark:bg-emerald-950/80 dark:text-emerald-300 dark:border-emerald-800/50">
-                            <CheckCircle2 className="size-3 text-emerald-600 dark:text-emerald-400" />
-                            <span>Lunas</span>
-                          </span>
-                        )}
-
-                        {item.status === "Tunggakan" && (
-                          <span className="inline-flex items-center gap-1 rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-semibold text-red-800 border border-red-200 dark:bg-red-950/70 dark:text-red-300 dark:border-red-800">
-                            <AlertCircle className="size-3 text-red-700 dark:text-red-400" />
-                            <span>Tunggakan</span>
-                          </span>
-                        )}
-
-                        {item.status === "Sebagian" && (
-                          <span className="inline-flex items-center gap-1 rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-semibold text-yellow-800 border border-yellow-200 dark:bg-yellow-950/70 dark:text-yellow-300 dark:border-yellow-800">
-                            <Clock className="size-3 text-yellow-700 dark:text-yellow-400" />
-                            <span>Sebagian</span>
-                          </span>
-                        )}
-                      </td>
-
-                      {/* Tindakan */}
-                      <td className="px-5 py-4 whitespace-nowrap text-center" onClick={(e) => e.stopPropagation()}>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          onClick={() => openRecordModal(item)}
-                          title="Lihat Detail Kuitansi"
-                        >
-                          <Eye className="size-4" />
-                        </Button>
-                      </td>
-                        </>
-                      )}
-                    </tr>
-                  );
-                })
-              )}
-            </tbody>
-          </table>
-        </div>
+        <DataTable
+          columns={isSiswa ? siswaColumns : transaksiColumns}
+          data={filteredRecords}
+          onRowClick={openRecordModal}
+          emptyState={emptyState}
+        />
 
         {/* Footer Jadual / Paginasi Info */}
         <div className="p-4 border-t border-slate-100 bg-slate-50/50 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500 dark:border-slate-800 dark:bg-slate-900/50 dark:text-slate-400">
           <p>
-            Menunjukkan <strong className="text-slate-900 dark:text-slate-200">{filteredRecords.length}</strong> daripada{" "}
+            Menunjukkan <strong className="text-slate-900 dark:text-slate-200">{filteredRecords.length}</strong> dari{" "}
             <strong className="text-slate-900 dark:text-slate-200">{records.length}</strong> catatan siswa untuk bulan{" "}
             <strong className="text-slate-900 dark:text-slate-200">{selectedMonth}</strong>.
           </p>

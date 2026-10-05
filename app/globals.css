@@ -4,7 +4,7 @@
 
 /* ============================================================
    Sistem token YuranKu — bahasa visual minimal ala beUI
-   Light: putih bersih · Dark: #151515 / #1c1c1c · Aksen: biru #007AFF
+   Light: putih bersih · Dark: #0A0A0A / #121212 · Aksen: biru #007AFF
    Tanpa cyan. Satu aksen dikunci untuk seluruh aplikasi.
    ============================================================ */
 
@@ -88,37 +88,37 @@
 }
 
 .dark {
-  --background: #151515;
+  --background: #0A0A0A;
   --foreground: #F2F2F2;
-  --card: #1C1C1C;
+  --card: #121212;
   --card-foreground: #F2F2F2;
-  --popover: #1C1C1C;
+  --popover: #121212;
   --popover-foreground: #F2F2F2;
   --primary: #0A84FF;
   --primary-foreground: #FFFFFF;
-  --secondary: #262626;
+  --secondary: #1E1E1E;
   --secondary-foreground: #F2F2F2;
-  --muted: #1C1C1C;
+  --muted: #141414;
   --muted-foreground: #A6A6A6;
-  --accent: #262626;
+  --accent: #1E1E1E;
   --accent-foreground: #F2F2F2;
   --destructive: #FF5A5F;
   --destructive-foreground: #FFFFFF;
-  --border: #262626;
-  --input: #2E2E2E;
+  --border: #232323;
+  --input: #1E1E1E;
   --ring: #0A84FF;
   --chart-1: #0A84FF;
   --chart-2: #30D158;
   --chart-3: #FF9F0A;
   --chart-4: #FF375F;
   --chart-5: #BF5AF2;
-  --sidebar: #151515;
+  --sidebar: #0A0A0A;
   --sidebar-foreground: #F2F2F2;
   --sidebar-primary: #0A84FF;
   --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #1C1C1C;
+  --sidebar-accent: #121212;
   --sidebar-accent-foreground: #F2F2F2;
-  --sidebar-border: #262626;
+  --sidebar-border: #232323;
   --sidebar-ring: #0A84FF;
 }
 

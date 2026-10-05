@@ -5,10 +5,9 @@ import { ChevronDown, Wallet } from "lucide-react";
 
 const BULAN_PENDEK = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
 
-/** Data dummy kutipan bulanan (RM) — selaras dengan angka KPI dasbor. */
+/** Kutipan bulanan sebenar (RM) — dari spreadsheet "Aylik Talebe 2026". */
 const DATA_TAHUNAN: Record<string, number[]> = {
-  "2026": [18500, 19800, 21200, 20100, 22300, 23100, 21900, 22800, 23600, 24500, 0, 0],
-  "2025": [15200, 16800, 17400, 18100, 17900, 19200, 19800, 20100, 18900, 19600, 20300, 21100],
+  "2026": [46000, 51375, 50500, 50500, 49500, 49500, 48500, 42125, 31125, 7250, 0, 0],
 };
 
 const TAHUN_TERKINI = "2026";
@@ -32,7 +31,6 @@ export function CartaTahunan() {
   const [menuTahun, setMenuTahun] = useState(false);
   const data = DATA_TAHUNAN[tahun];
   const maks = Math.max(...data, 1);
-  const jumlah = data.reduce((a, b) => a + b, 0);
   const menyerlah = tahun === TAHUN_TERKINI ? BULAN_SEMASA : -1;
 
   return (
@@ -42,9 +40,7 @@ export function CartaTahunan() {
           <h2 className="text-base font-semibold text-foreground sm:text-lg">
             Ringkasan Transaksi
           </h2>
-          <p className="mt-1 text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
-            {formatRM(jumlah)}
-          </p>
+
         </div>
         <div className="relative shrink-0">
           <button

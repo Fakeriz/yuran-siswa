@@ -35,6 +35,7 @@ import {
 import { Button, ButtonLink } from "../../components/motion-button";
 import { FinanceHero } from "../../components/finance-hero";
 import { FinanceKpi } from "../../components/finance-kpi";
+import { CartaTahunan, PanelKemajuanGrup } from "../../components/finance-charts";
 
 // Struktur jenis data berasaskan skema logik Data_Talebe & Transaksi_Masuk
 export interface TalebeRecord {
@@ -598,37 +599,20 @@ function AdminContent() {
       </div>
       )}
 
-      {/* 3. Ringkasan Cepat Berdasarkan Grup Asrama */}
+      {/* 3. Carta tahunan + kemajuan grup */}
       {showSummary && (
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full min-w-0">
-        <div className="rounded-xl border border-slate-200/70 bg-white/80 backdrop-blur p-4 shadow-2xs dark:border-slate-800 dark:bg-slate-900/70 min-w-0">
-          <div className="flex items-center justify-between gap-2">
-            <span className="font-bold text-sm text-slate-900 dark:text-slate-100">Mevlana HE</span>
-            <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-md border border-emerald-100 dark:bg-emerald-950/80 dark:text-emerald-300 dark:border-emerald-800/50">
-              85% Selesai
-            </span>
-          </div>
-          <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Terkumpul: RM 8,500 / RM 10,000 (20 Siswa)</p>
+      <div className="grid grid-cols-1 gap-3 sm:gap-4 lg:grid-cols-3 w-full min-w-0">
+        <div className="lg:col-span-2 min-w-0">
+          <CartaTahunan />
         </div>
-
-        <div className="rounded-xl border border-slate-200/70 bg-white/80 backdrop-blur p-4 shadow-2xs dark:border-slate-800 dark:bg-slate-900/70 min-w-0">
-          <div className="flex items-center justify-between gap-2">
-            <span className="font-bold text-sm text-slate-900 dark:text-slate-100">Razi HE</span>
-            <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-md border border-emerald-100 dark:bg-emerald-950/80 dark:text-emerald-300 dark:border-emerald-800/50">
-              80% Selesai
-            </span>
-          </div>
-          <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Terkumpul: RM 8,000 / RM 10,000 (20 Siswa)</p>
-        </div>
-
-        <div className="rounded-xl border border-slate-200/70 bg-white/80 backdrop-blur p-4 shadow-2xs dark:border-slate-800 dark:bg-slate-900/70 min-w-0">
-          <div className="flex items-center justify-between gap-2">
-            <span className="font-bold text-sm text-slate-900 dark:text-slate-100">Fatih HE</span>
-            <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-md border border-emerald-100 dark:bg-emerald-950/80 dark:text-emerald-300 dark:border-emerald-800/50">
-              80% Selesai
-            </span>
-          </div>
-          <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Terkumpul: RM 8,000 / RM 10,000 (20 Siswa)</p>
+        <div className="min-w-0">
+          <PanelKemajuanGrup
+            grup={[
+              { nama: "Mevlana HE", terkumpul: 8500, sasaran: 10000 },
+              { nama: "Razi HE", terkumpul: 8000, sasaran: 10000 },
+              { nama: "Fatih HE", terkumpul: 8000, sasaran: 10000 },
+            ]}
+          />
         </div>
       </div>
       )}

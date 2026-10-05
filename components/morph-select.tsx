@@ -208,8 +208,8 @@ export function MorphSelectValue({
     <span
       className={cx(
         label
-          ? "text-gray-900 dark:text-slate-100"
-          : "text-gray-400 dark:text-slate-500",
+          ? "text-gray-900"
+          : "text-gray-400",
         className,
       )}
     >
@@ -237,7 +237,7 @@ export function MorphSelectTrigger({
         inert
         className={cx(
           ROW,
-          "invisible rounded-xl border border-gray-300 dark:border-slate-700",
+          "invisible rounded-xl border border-gray-300",
         )}
       >
         {children}
@@ -256,15 +256,15 @@ export function MorphSelectTrigger({
           style={{ borderRadius: 12 }}
           className={cx(
             ROW,
-            "absolute inset-x-0 top-0 z-10 border border-gray-300 bg-white text-gray-900 outline-none transition-colors",
+            "absolute inset-x-0 top-0 z-10 border border-gray-300 bg-card text-gray-900 outline-none transition-colors",
             "hover:border-gray-400 focus-visible:ring-2 focus-visible:ring-emerald-500/30",
             "disabled:pointer-events-none disabled:opacity-50",
-            "dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:border-slate-600",
+            "",
             className,
           )}
         >
           <span className="min-w-0 truncate">{children}</span>
-          <span className="text-gray-400 dark:text-slate-500">
+          <span className="text-gray-400">
             <ChevronDown className="size-4" />
           </span>
         </button>
@@ -389,7 +389,7 @@ export function MorphSelectContent({
           aria-labelledby={ctx.triggerId}
           style={{ borderRadius: 12 }}
           className={cx(
-            "fu-select-panel absolute inset-x-0 top-0 z-30 overflow-hidden border border-gray-300 bg-white shadow-lg dark:border-slate-700 dark:bg-slate-900",
+            "fu-select-panel absolute inset-x-0 top-0 z-30 overflow-hidden border border-gray-300 bg-card shadow-lg",
             isOpen && "fu-open",
             className,
           )}
@@ -400,26 +400,26 @@ export function MorphSelectContent({
             type="button"
             aria-expanded
             onClick={() => ctx.setOpen(false)}
-            className={cx(ROW, "text-gray-900 outline-none dark:text-slate-100")}
+            className={cx(ROW, "text-gray-900 outline-none")}
           >
             <span
               className={cx(
                 "min-w-0 truncate",
                 label
-                  ? "text-gray-900 dark:text-slate-100"
-                  : "text-gray-400 dark:text-slate-500",
+                  ? "text-gray-900"
+                  : "text-gray-400",
               )}
             >
               {label ?? ctx.placeholder}
             </span>
-            <span className="fu-select-chevron text-gray-400 dark:text-slate-500">
+            <span className="fu-select-chevron text-gray-400">
               <ChevronDown className="size-4" />
             </span>
           </button>
 
           <div className={cx("fu-select-list-wrap", isOpen && "fu-open")}>
             <div className="fu-select-list-inner">
-              <div className="h-px bg-gray-200 dark:bg-slate-800" />
+              <div className="h-px bg-gray-200" />
               <ul className="p-1">{children}</ul>
             </div>
           </div>
@@ -463,15 +463,15 @@ export function MorphSelectItem({
         className={cx(
           "flex w-full items-center justify-between gap-2 rounded-lg px-2.5 py-1.5 text-left text-sm outline-none transition-colors",
           selected
-            ? "bg-gray-100 text-gray-900 dark:bg-slate-800 dark:text-slate-100"
-            : "text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus-visible:bg-gray-100 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100 dark:focus-visible:bg-slate-800",
+            ? "bg-gray-100 text-gray-900"
+            : "text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus-visible:bg-gray-100",
           "disabled:pointer-events-none disabled:opacity-50",
           className,
         )}
       >
         {children}
         {selected ? (
-          <Check className="size-3.5 shrink-0 text-emerald-600 dark:text-emerald-400" />
+          <Check className="size-3.5 shrink-0 text-emerald-600" />
         ) : null}
       </button>
     </li>

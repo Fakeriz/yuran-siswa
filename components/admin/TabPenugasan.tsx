@@ -159,14 +159,14 @@ export function TabPenugasan() {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
+            <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
               Penugasan Staf Asrama
             </h1>
             <span className="inline-flex items-center rounded-md bg-emerald-50 px-2 py-0.5 text-xs font-semibold text-emerald-800 border border-emerald-200">
               3 Kumpulan HE
             </span>
           </div>
-          <p className="mt-1 text-sm text-gray-500">
+          <p className="mt-1 text-sm text-muted-foreground">
             Urus penugasan Ustaz dan Staf pembimbing bagi setiap kumpulan asrama Talebe.
           </p>
         </div>
@@ -190,70 +190,70 @@ export function TabPenugasan() {
 
       {/* Kad Ringkasan Penugasan */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-xs">
+        <div className="rounded-2xl border border-border bg-card p-5 shadow-xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wider text-gray-500">
+            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               Jumlah Staf Pembimbing
             </span>
             <div className="rounded-xl bg-emerald-50 p-2 text-emerald-800">
               <UserCheck className="size-5" />
             </div>
           </div>
-          <p className="mt-3 text-2xl font-bold text-gray-900">{staffList.length} Orang</p>
-          <p className="mt-1 text-xs text-gray-500">100% kumpulan mempunyai pembimbing</p>
+          <p className="mt-3 text-2xl font-bold text-foreground">{staffList.length} Orang</p>
+          <p className="mt-1 text-xs text-muted-foreground">100% kumpulan mempunyai pembimbing</p>
         </div>
 
-        <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-xs">
+        <div className="rounded-2xl border border-border bg-card p-5 shadow-xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wider text-gray-500">
+            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               Kumpulan Asrama Aktif
             </span>
-            <div className="rounded-xl bg-blue-50 p-2 text-blue-800">
+            <div className="rounded-xl bg-primary/10 p-2 text-primary">
               <Building2 className="size-5" />
             </div>
           </div>
-          <p className="mt-3 text-2xl font-bold text-gray-900">3 Kumpulan HE</p>
-          <p className="mt-1 text-xs text-gray-500">Mevlana HE · Razi HE · Fatih HE</p>
+          <p className="mt-3 text-2xl font-bold text-foreground">3 Kumpulan HE</p>
+          <p className="mt-1 text-xs text-muted-foreground">Mevlana HE · Razi HE · Fatih HE</p>
         </div>
 
-        <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-xs">
+        <div className="rounded-2xl border border-border bg-card p-5 shadow-xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wider text-gray-500">
+            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               Purata Kutipan Kumpulan
             </span>
-            <div className="rounded-xl bg-purple-50 p-2 text-purple-800">
+            <div className="rounded-xl bg-primary/10 p-2 text-primary">
               <Users className="size-5" />
             </div>
           </div>
-          <p className="mt-3 text-2xl font-bold text-gray-900">81.7%</p>
+          <p className="mt-3 text-2xl font-bold text-foreground">81.7%</p>
           <p className="mt-1 text-xs text-emerald-700 font-medium">49 daripada 60 Talebe lunas</p>
         </div>
       </div>
 
       {/* Carian & Penapis Staf */}
-      <div className="rounded-2xl border border-gray-200 bg-white shadow-xs overflow-hidden">
-        <div className="p-4 border-b border-gray-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 bg-gray-50/50">
+      <div className="rounded-2xl border border-border bg-card shadow-xs overflow-hidden">
+        <div className="p-4 border-b border-border flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 bg-muted/50">
           <div className="relative flex-1 max-w-sm">
-            <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 size-4 text-gray-400" />
+            <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Cari nama ustaz, grup, atau emel..."
-              className="w-full rounded-xl border border-gray-300 bg-white py-2 pl-9 pr-4 text-xs text-gray-900 focus:border-emerald-600 focus:outline-none"
+              className="w-full rounded-xl border border-input bg-card py-2 pl-9 pr-4 text-xs text-foreground focus:border-emerald-600 focus:outline-none"
             />
           </div>
-          <span className="text-xs text-gray-500">
+          <span className="text-xs text-muted-foreground">
             Menunjukkan {filteredStaff.length} daripada {staffList.length} staf
           </span>
         </div>
 
         {/* Senarai Kad Staf */}
-        <div className="divide-y divide-gray-100">
+        <div className="divide-y divide-border">
           {filteredStaff.map((staff) => (
             <div
               key={staff.id}
-              className="p-5 sm:p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4 hover:bg-gray-50/60 transition-colors"
+              className="p-5 sm:p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4 hover:bg-muted/60 transition-colors"
             >
               <div className="flex items-start gap-4">
                 <div className="size-12 rounded-2xl bg-emerald-100 text-emerald-800 font-bold flex items-center justify-center shrink-0 border border-emerald-200 text-base">
@@ -265,7 +265,7 @@ export function TabPenugasan() {
                 </div>
                 <div>
                   <div className="flex items-center gap-2 flex-wrap">
-                    <h3 className="font-bold text-base text-gray-900">{staff.nama}</h3>
+                    <h3 className="font-bold text-base text-foreground">{staff.nama}</h3>
                     <span className="inline-flex items-center rounded-md bg-emerald-50 px-2 py-0.5 text-xs font-semibold text-emerald-800 border border-emerald-200">
                       {staff.grup}
                     </span>
@@ -274,14 +274,14 @@ export function TabPenugasan() {
                       {staff.status}
                     </span>
                   </div>
-                  <p className="mt-1 text-xs text-gray-600">{staff.jawatan}</p>
-                  <div className="mt-2.5 flex flex-wrap items-center gap-4 text-xs text-gray-500">
+                  <p className="mt-1 text-xs text-muted-foreground">{staff.jawatan}</p>
+                  <div className="mt-2.5 flex flex-wrap items-center gap-4 text-xs text-muted-foreground">
                     <span className="flex items-center gap-1">
-                      <Mail className="size-3.5 text-gray-400" />
+                      <Mail className="size-3.5 text-muted-foreground" />
                       {staff.email}
                     </span>
                     <span className="flex items-center gap-1">
-                      <Phone className="size-3.5 text-gray-400" />
+                      <Phone className="size-3.5 text-muted-foreground" />
                       {staff.telefon}
                     </span>
                   </div>
@@ -289,19 +289,19 @@ export function TabPenugasan() {
               </div>
 
               {/* Statistik Kutipan & Tindakan */}
-              <div className="flex flex-col sm:flex-row sm:items-center gap-4 lg:gap-6 pt-3 md:pt-0 border-t md:border-t-0 border-gray-100">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-4 lg:gap-6 pt-3 md:pt-0 border-t md:border-t-0 border-border">
                 <div className="min-w-44">
                   <div className="flex items-center justify-between text-xs">
-                    <span className="text-gray-500">Kutipan {staff.grup}</span>
+                    <span className="text-muted-foreground">Kutipan {staff.grup}</span>
                     <span className="font-bold text-emerald-800">{staff.kadarKutipan}%</span>
                   </div>
-                  <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-gray-100">
+                  <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-muted">
                     <div
                       className="h-full rounded-full bg-emerald-700 transition-all duration-500"
                       style={{ width: `${staff.kadarKutipan}%` }}
                     />
                   </div>
-                  <div className="mt-1 flex items-center justify-between text-[11px] text-gray-400">
+                  <div className="mt-1 flex items-center justify-between text-[11px] text-muted-foreground">
                     <span>{staff.bilanganTalebe} Talebe</span>
                     <span>RM {staff.jumlahKutipan.toLocaleString()} / RM {staff.sasaranKutipan.toLocaleString()}</span>
                   </div>
@@ -311,7 +311,7 @@ export function TabPenugasan() {
                   <button
                     type="button"
                     onClick={() => openEditModal(staff)}
-                    className="rounded-xl border border-gray-300 bg-white px-3 py-1.5 text-xs font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
+                    className="rounded-xl border border-input bg-card px-3 py-1.5 text-xs font-semibold text-foreground hover:bg-muted transition-colors"
                   >
                     Ubah Penugasan
                   </button>
@@ -336,15 +336,15 @@ export function TabPenugasan() {
           onClick={() => setShowAssignModal(false)}
         >
           <div
-            className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl border border-gray-200"
+            className="w-full max-w-md rounded-2xl bg-card p-6 shadow-xl border border-border"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between border-b border-gray-100 pb-3">
+            <div className="flex items-center justify-between border-b border-border pb-3">
               <div>
-                <h3 className="font-bold text-lg text-gray-900">
+                <h3 className="font-bold text-lg text-foreground">
                   {selectedStaff ? "Ubah Penugasan Staf" : "Tugaskan Staf Baharu"}
                 </h3>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-muted-foreground">
                   {selectedStaff
                     ? `Kemaskini maklumat dan grup bimbingan untuk ${selectedStaff.nama}`
                     : "Daftar ustaz pembimbing ke dalam sistem asrama"}
@@ -354,62 +354,62 @@ export function TabPenugasan() {
 
             <form onSubmit={handleSaveAssignment} className="mt-4 space-y-4">
               <div>
-                <label className="text-xs font-semibold text-gray-700">Nama Penuh Ustaz / Staf</label>
+                <label className="text-xs font-semibold text-foreground">Nama Penuh Ustaz / Staf</label>
                 <input
                   type="text"
                   required
                   value={formNama}
                   onChange={(e) => setFormNama(e.target.value)}
                   placeholder="cth: Ustaz Mohd Danial"
-                  className="mt-1 w-full rounded-xl border border-gray-300 px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
+                  className="mt-1 w-full rounded-xl border border-input px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs font-semibold text-gray-700">Emel</label>
+                  <label className="text-xs font-semibold text-foreground">Emel</label>
                   <input
                     type="email"
                     required
                     value={formEmail}
                     onChange={(e) => setFormEmail(e.target.value)}
                     placeholder="emel@yuran.demo"
-                    className="mt-1 w-full rounded-xl border border-gray-300 px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
+                    className="mt-1 w-full rounded-xl border border-input px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-semibold text-gray-700">No. Telefon</label>
+                  <label className="text-xs font-semibold text-foreground">No. Telefon</label>
                   <input
                     type="text"
                     value={formTelefon}
                     onChange={(e) => setFormTelefon(e.target.value)}
                     placeholder="+60 1X-XXX XXXX"
-                    className="mt-1 w-full rounded-xl border border-gray-300 px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
+                    className="mt-1 w-full rounded-xl border border-input px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-gray-700">Kumpulan Asrama Ditugaskan</label>
+                <label className="text-xs font-semibold text-foreground">Kumpulan Asrama Ditugaskan</label>
                 <select
                   value={formGrup}
                   onChange={(e) => setFormGrup(e.target.value as StaffAssignment["grup"])}
-                  className="mt-1 w-full rounded-xl border border-gray-300 px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
+                  className="mt-1 w-full rounded-xl border border-input px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
                 >
                   <option value="Mevlana HE">Mevlana HE (20 Talebe)</option>
                   <option value="Razi HE">Razi HE (20 Talebe)</option>
                   <option value="Fatih HE">Fatih HE (20 Talebe)</option>
                 </select>
-                <p className="mt-1 text-[11px] text-gray-500">
+                <p className="mt-1 text-[11px] text-muted-foreground">
                   Staf akan bertanggungjawab mencatat bayaran yuran dan mengesahkan ibu bapa bagi kumpulan ini.
                 </p>
               </div>
 
-              <div className="mt-6 flex items-center justify-end gap-3 pt-3 border-t border-gray-100">
+              <div className="mt-6 flex items-center justify-end gap-3 pt-3 border-t border-border">
                 <button
                   type="button"
                   onClick={() => setShowAssignModal(false)}
-                  className="rounded-xl border border-gray-300 px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50"
+                  className="rounded-xl border border-input px-4 py-2 text-xs font-semibold text-foreground hover:bg-muted"
                 >
                   Batal
                 </button>

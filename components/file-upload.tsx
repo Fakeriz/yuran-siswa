@@ -81,10 +81,10 @@ const STATUS_LABEL: Record<FileUploadStatus, string> = {
 };
 
 const STATUS_TONE: Record<FileUploadStatus, string> = {
-  queued: "text-gray-400 dark:text-slate-500",
-  uploading: "text-gray-700 dark:text-slate-200",
-  success: "text-emerald-600 dark:text-emerald-400",
-  error: "text-rose-600 dark:text-rose-400",
+  queued: "text-muted-foreground",
+  uploading: "text-foreground",
+  success: "text-emerald-600",
+  error: "text-rose-600",
 };
 
 function useControllableUpload({
@@ -252,14 +252,14 @@ function FileUploadRow({
   return (
     <li
       className={cx(
-        "fu-row relative overflow-hidden rounded-2xl border border-gray-200 bg-white p-3 dark:border-slate-800 dark:bg-slate-900",
+        "fu-row relative overflow-hidden rounded-2xl border border-border bg-card p-3",
         classNames?.item,
       )}
     >
       <div className="flex items-center gap-3">
         <div
           className={cx(
-            "grid size-11 shrink-0 place-items-center rounded-xl bg-gray-100 text-gray-500 dark:bg-slate-800 dark:text-slate-400",
+            "grid size-11 shrink-0 place-items-center rounded-xl bg-muted text-muted-foreground",
             classNames?.leading,
           )}
         >
@@ -271,7 +271,7 @@ function FileUploadRow({
             <div className="min-w-0">
               <p
                 className={cx(
-                  "truncate text-sm font-medium text-gray-900 dark:text-slate-100",
+                  "truncate text-sm font-medium text-foreground",
                   classNames?.name,
                 )}
               >
@@ -279,7 +279,7 @@ function FileUploadRow({
               </p>
               <p
                 className={cx(
-                  "mt-0.5 truncate text-xs text-gray-500 dark:text-slate-400",
+                  "mt-0.5 truncate text-xs text-muted-foreground",
                   classNames?.meta,
                 )}
               >
@@ -296,7 +296,7 @@ function FileUploadRow({
                   onClick={() => onRetry(item)}
                   aria-label={`Cuba semula ${item.name}`}
                   className={cx(
-                    "grid size-7 place-items-center rounded-full text-gray-500 transition-colors duration-150 hover:bg-gray-100 hover:text-gray-900 active:scale-95 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100",
+                    "grid size-7 place-items-center rounded-full text-muted-foreground transition-colors duration-150 hover:bg-muted hover:text-foreground active:scale-95",
                     classNames?.action,
                   )}
                 >
@@ -308,7 +308,7 @@ function FileUploadRow({
                 onClick={() => onRemove(item)}
                 aria-label={`Buang ${item.name}`}
                 className={cx(
-                  "grid size-7 place-items-center rounded-full text-gray-500 transition-colors duration-150 hover:bg-gray-100 hover:text-gray-900 active:scale-95 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100",
+                  "grid size-7 place-items-center rounded-full text-muted-foreground transition-colors duration-150 hover:bg-muted hover:text-foreground active:scale-95",
                   classNames?.action,
                 )}
               >
@@ -325,7 +325,7 @@ function FileUploadRow({
               aria-valuenow={Math.round(progress)}
               aria-label={`Kemajuan muat naik ${item.name}`}
               className={cx(
-                "mt-3 h-1.5 overflow-hidden rounded-full bg-gray-100 dark:bg-slate-800",
+                "mt-3 h-1.5 overflow-hidden rounded-full bg-muted",
                 classNames?.progress,
               )}
             >
@@ -497,12 +497,12 @@ export function FileUpload({
           addFiles(Array.from(event.dataTransfer.files));
         }}
         className={cx(
-          "group relative flex w-full overflow-hidden rounded-3xl border border-dashed border-gray-300 bg-white outline-none",
+          "group relative flex w-full overflow-hidden rounded-3xl border border-dashed border-input bg-card outline-none",
           "transition-[border-color,transform] duration-200 active:scale-[0.99]",
           "hover:border-gray-400 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2",
           "data-[dragging=true]:border-emerald-500 data-[dragging=true]:bg-emerald-50/50",
           "disabled:pointer-events-none disabled:opacity-55",
-          "dark:border-slate-700 dark:bg-slate-900 dark:hover:border-slate-600 dark:data-[dragging=true]:border-emerald-500 dark:data-[dragging=true]:bg-emerald-950/30",
+          "dark:data-[dragging=true]:border-emerald-500 dark:data-[dragging=true]:bg-emerald-950/30",
           centered
             ? "min-h-56 flex-col items-center justify-center gap-3 p-7 text-center"
             : "items-center gap-4 p-5 text-left",
@@ -512,10 +512,10 @@ export function FileUpload({
         <span
           aria-hidden="true"
           className={cx(
-            "grid shrink-0 place-items-center bg-gray-100 text-gray-500 transition-transform duration-200 dark:bg-slate-800 dark:text-slate-400",
+            "grid shrink-0 place-items-center bg-muted text-muted-foreground transition-transform duration-200",
             dragging && "-translate-y-0.5",
             centered
-              ? "size-16 rounded-[1.35rem] border border-gray-200 dark:border-slate-700"
+              ? "size-16 rounded-[1.35rem] border border-border"
               : "size-14 rounded-[1.25rem]",
           )}
         >
@@ -525,7 +525,7 @@ export function FileUpload({
         <span className={cx("min-w-0", centered ? "max-w-xs" : "flex-1")}>
           <span
             className={cx(
-              "block font-semibold text-gray-900 dark:text-slate-100",
+              "block font-semibold text-foreground",
               centered ? "text-base" : "text-sm",
             )}
           >
@@ -533,7 +533,7 @@ export function FileUpload({
           </span>
           <span
             className={cx(
-              "block text-xs text-gray-500 dark:text-slate-400",
+              "block text-xs text-muted-foreground",
               centered ? "mt-1 leading-5" : "mt-0.5",
             )}
           >
@@ -545,7 +545,7 @@ export function FileUpload({
 
         <span
           className={cx(
-            "shrink-0 rounded-full border border-gray-200 text-xs font-medium text-gray-900 transition-colors duration-150 group-hover:bg-gray-100 dark:border-slate-700 dark:text-slate-100 dark:group-hover:bg-slate-800",
+            "shrink-0 rounded-full border border-border text-xs font-medium text-foreground transition-colors duration-150 group-hover:bg-muted dark:group-hover:bg-slate-800",
             centered ? "mt-1 px-4 py-2" : "px-3.5 py-2",
           )}
         >

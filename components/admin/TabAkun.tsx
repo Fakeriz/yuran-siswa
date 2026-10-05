@@ -181,14 +181,14 @@ export function TabAkun() {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
+            <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
               Pengurusan Akaun Pengguna
             </h1>
             <span className="inline-flex items-center rounded-md bg-emerald-50 px-2 py-0.5 text-xs font-semibold text-emerald-800 border border-emerald-200">
               {accounts.length} Akaun
             </span>
           </div>
-          <p className="mt-1 text-sm text-gray-500">
+          <p className="mt-1 text-sm text-muted-foreground">
             Daftar akaun staf atau ibu bapa baharu dan urus pautan anak didik secara langsung.
           </p>
         </div>
@@ -197,9 +197,9 @@ export function TabAkun() {
           <button
             type="button"
             onClick={() => setShowLinkModal(true)}
-            className="inline-flex items-center gap-1.5 rounded-xl border border-gray-300 bg-white px-3.5 py-2 text-xs font-semibold text-gray-700 shadow-2xs hover:bg-gray-50 transition-colors"
+            className="inline-flex items-center gap-1.5 rounded-xl border border-input bg-card px-3.5 py-2 text-xs font-semibold text-foreground shadow-2xs hover:bg-muted transition-colors"
           >
-            <LinkIcon className="size-3.5 text-gray-500" />
+            <LinkIcon className="size-3.5 text-muted-foreground" />
             <span>Hubungkan Anak</span>
           </button>
 
@@ -216,24 +216,24 @@ export function TabAkun() {
 
       {/* Ringkasan Peranan */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-xs">
+        <div className="rounded-2xl border border-border bg-card p-5 shadow-xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wider text-gray-500">
+            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               Akaun Ibu Bapa
             </span>
-            <div className="rounded-xl bg-blue-50 p-2 text-blue-800">
+            <div className="rounded-xl bg-primary/10 p-2 text-primary">
               <Users className="size-5" />
             </div>
           </div>
-          <p className="mt-3 text-2xl font-bold text-gray-900">
+          <p className="mt-3 text-2xl font-bold text-foreground">
             {accounts.filter((a) => a.peran === "orang_tua").length} Pengguna
           </p>
-          <p className="mt-1 text-xs text-gray-500">Akses pemantauan yuran & resit anak</p>
+          <p className="mt-1 text-xs text-muted-foreground">Akses pemantauan yuran & resit anak</p>
         </div>
 
-        <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-xs">
+        <div className="rounded-2xl border border-border bg-card p-5 shadow-xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wider text-gray-500">
+            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               Staf Asrama (Ustaz)
             </span>
             <div className="rounded-xl bg-emerald-50 p-2 text-emerald-800">
@@ -243,40 +243,40 @@ export function TabAkun() {
           <p className="mt-3 text-2xl font-bold text-emerald-800">
             {accounts.filter((a) => a.peran === "staff").length} Pengguna
           </p>
-          <p className="mt-1 text-xs text-gray-500">Pencatat bayaran & pembimbing grup</p>
+          <p className="mt-1 text-xs text-muted-foreground">Pencatat bayaran & pembimbing grup</p>
         </div>
 
-        <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-xs">
+        <div className="rounded-2xl border border-border bg-card p-5 shadow-xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wider text-gray-500">
+            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               Pentadbir (Admin)
             </span>
-            <div className="rounded-xl bg-purple-50 p-2 text-purple-800">
+            <div className="rounded-xl bg-primary/10 p-2 text-primary">
               <Key className="size-5" />
             </div>
           </div>
-          <p className="mt-3 text-2xl font-bold text-gray-900">
+          <p className="mt-3 text-2xl font-bold text-foreground">
             {accounts.filter((a) => a.peran === "admin").length} Pengguna
           </p>
-          <p className="mt-1 text-xs text-gray-500">Kawalan penuh sistem & kwitansi rasmi</p>
+          <p className="mt-1 text-xs text-muted-foreground">Kawalan penuh sistem & kwitansi rasmi</p>
         </div>
       </div>
 
       {/* Toolbar Carian & Penapis */}
-      <div className="rounded-2xl border border-gray-200 bg-white shadow-xs overflow-hidden">
-        <div className="p-4 border-b border-gray-100 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 bg-white">
+      <div className="rounded-2xl border border-border bg-card shadow-xs overflow-hidden">
+        <div className="p-4 border-b border-border flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 bg-card">
           <div className="relative flex-1 max-w-sm">
-            <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 size-4 text-gray-400" />
+            <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Cari nama atau emel pengguna..."
-              className="w-full rounded-xl border border-gray-300 bg-gray-50/50 py-2 pl-9 pr-4 text-xs text-gray-900 focus:border-emerald-600 focus:bg-white focus:outline-none"
+              className="w-full rounded-xl border border-input bg-muted/50 py-2 pl-9 pr-4 text-xs text-foreground focus:border-emerald-600 focus:bg-card focus:outline-none"
             />
           </div>
 
-          <div className="flex items-center gap-1 rounded-xl bg-gray-100 p-1 border border-gray-200/80">
+          <div className="flex items-center gap-1 rounded-xl bg-muted p-1 border border-border/80">
             {(
               [
                 ["semua", "Semua Peranan"],
@@ -291,8 +291,8 @@ export function TabAkun() {
                 onClick={() => setFilterRole(val)}
                 className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-all ${
                   filterRole === val
-                    ? "bg-white text-emerald-800 shadow-2xs"
-                    : "text-gray-600 hover:text-gray-900"
+                    ? "bg-card text-emerald-800 shadow-2xs"
+                    : "text-muted-foreground hover:text-foreground"
                 }`}
               >
                 {label}
@@ -303,8 +303,8 @@ export function TabAkun() {
 
         {/* Jadual Akaun */}
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm text-gray-700">
-            <thead className="bg-gray-50/80 text-xs font-semibold text-gray-500 uppercase tracking-wider border-b border-gray-200">
+          <table className="w-full text-left text-sm text-foreground">
+            <thead className="bg-muted/80 text-xs font-semibold text-muted-foreground uppercase tracking-wider border-b border-border">
               <tr>
                 <th scope="col" className="px-5 py-3.5">Pengguna</th>
                 <th scope="col" className="px-5 py-3.5">Emel</th>
@@ -313,28 +313,28 @@ export function TabAkun() {
                 <th scope="col" className="px-5 py-3.5 text-right">Tarikh Daftar</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-border">
               {filtered.map((acc) => (
-                <tr key={acc.id} className="hover:bg-gray-50/50">
+                <tr key={acc.id} className="hover:bg-muted/50">
                   <td className="px-5 py-4 whitespace-nowrap">
                     <div className="flex items-center gap-3">
                       <div className="size-9 rounded-full bg-emerald-100 text-emerald-800 font-bold flex items-center justify-center text-xs shrink-0 border border-emerald-200">
                         {acc.nama.slice(0, 2).toUpperCase()}
                       </div>
-                      <span className="font-bold text-gray-900">{acc.nama}</span>
+                      <span className="font-bold text-foreground">{acc.nama}</span>
                     </div>
                   </td>
-                  <td className="px-5 py-4 whitespace-nowrap text-xs text-gray-600">
+                  <td className="px-5 py-4 whitespace-nowrap text-xs text-muted-foreground">
                     {acc.email}
                   </td>
                   <td className="px-5 py-4 whitespace-nowrap text-center">
                     <span
                       className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${
                         acc.peran === "admin"
-                          ? "bg-purple-100 text-purple-800 border border-purple-200"
+                          ? "bg-purple-100 text-primary border border-purple-200"
                           : acc.peran === "staff"
                           ? "bg-emerald-100 text-emerald-800 border border-emerald-200"
-                          : "bg-blue-100 text-blue-800 border border-blue-200"
+                          : "bg-blue-100 text-primary border border-blue-200"
                       }`}
                     >
                       {acc.peran === "admin" ? "Pentadbir" : acc.peran === "staff" ? "Staf Asrama" : "Ibu Bapa"}
@@ -347,13 +347,13 @@ export function TabAkun() {
                           {acc.anakDihubung.map((anak) => (
                             <span
                               key={anak}
-                              className="inline-flex items-center gap-1 rounded-md bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-800"
+                              className="inline-flex items-center gap-1 rounded-md bg-muted px-2 py-0.5 text-xs font-medium text-foreground"
                             >
                               <span>{anak}</span>
                               <button
                                 type="button"
                                 onClick={() => handleUnlinkChild(acc.id, anak)}
-                                className="text-gray-400 hover:text-rose-600 ml-0.5"
+                                className="text-muted-foreground hover:text-rose-600 ml-0.5"
                                 title="Lepas hubungan anak"
                               >
                                 ×
@@ -362,13 +362,13 @@ export function TabAkun() {
                           ))}
                         </div>
                       ) : (
-                        <span className="text-xs text-gray-400 italic">Belum ada anak dihubungkan</span>
+                        <span className="text-xs text-muted-foreground italic">Belum ada anak dihubungkan</span>
                       )
                     ) : (
-                      <span className="text-xs text-gray-400">-</span>
+                      <span className="text-xs text-muted-foreground">-</span>
                     )}
                   </td>
-                  <td className="px-5 py-4 whitespace-nowrap text-right text-xs text-gray-500">
+                  <td className="px-5 py-4 whitespace-nowrap text-right text-xs text-muted-foreground">
                     {acc.tarikhDicipta}
                   </td>
                 </tr>
@@ -385,43 +385,43 @@ export function TabAkun() {
           onClick={() => setShowCreateModal(false)}
         >
           <div
-            className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl border border-gray-200"
+            className="w-full max-w-md rounded-2xl bg-card p-6 shadow-xl border border-border"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between border-b border-gray-100 pb-3">
+            <div className="flex items-center justify-between border-b border-border pb-3">
               <div>
-                <h3 className="font-bold text-lg text-gray-900">Cipta Akaun Baharu</h3>
-                <p className="text-xs text-gray-500">Daftarkan akaun staf atau ibu bapa ke dalam sistem.</p>
+                <h3 className="font-bold text-lg text-foreground">Cipta Akaun Baharu</h3>
+                <p className="text-xs text-muted-foreground">Daftarkan akaun staf atau ibu bapa ke dalam sistem.</p>
               </div>
             </div>
 
             <form onSubmit={handleCreateAccount} className="mt-4 space-y-4">
               <div>
-                <label className="text-xs font-semibold text-gray-700">Nama Penuh</label>
+                <label className="text-xs font-semibold text-foreground">Nama Penuh</label>
                 <input
                   type="text"
                   required
                   value={nama}
                   onChange={(e) => setNama(e.target.value)}
                   placeholder="cth: Haji Ahmad bin Mansor"
-                  className="mt-1 w-full rounded-xl border border-gray-300 px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
+                  className="mt-1 w-full rounded-xl border border-input px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-gray-700">Alamat Emel</label>
+                <label className="text-xs font-semibold text-foreground">Alamat Emel</label>
                 <input
                   type="email"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="pengguna@emel.com"
-                  className="mt-1 w-full rounded-xl border border-gray-300 px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
+                  className="mt-1 w-full rounded-xl border border-input px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-gray-700">Kata Laluan (Min. 8 Aksara)</label>
+                <label className="text-xs font-semibold text-foreground">Kata Laluan (Min. 8 Aksara)</label>
                 <input
                   type="password"
                   required
@@ -429,27 +429,27 @@ export function TabAkun() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="mt-1 w-full rounded-xl border border-gray-300 px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
+                  className="mt-1 w-full rounded-xl border border-input px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-gray-700">Peranan Pengguna</label>
+                <label className="text-xs font-semibold text-foreground">Peranan Pengguna</label>
                 <select
                   value={peran}
                   onChange={(e) => setPeran(e.target.value as AccountItem["peran"])}
-                  className="mt-1 w-full rounded-xl border border-gray-300 px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
+                  className="mt-1 w-full rounded-xl border border-input px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
                 >
                   <option value="orang_tua">Ibu Bapa / Penjaga</option>
                   <option value="staff">Staf Asrama (Ustaz Pembimbing)</option>
                 </select>
               </div>
 
-              <div className="mt-6 flex items-center justify-end gap-3 pt-3 border-t border-gray-100">
+              <div className="mt-6 flex items-center justify-end gap-3 pt-3 border-t border-border">
                 <button
                   type="button"
                   onClick={() => setShowCreateModal(false)}
-                  className="rounded-xl border border-gray-300 px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50"
+                  className="rounded-xl border border-input px-4 py-2 text-xs font-semibold text-foreground hover:bg-muted"
                 >
                   Batal
                 </button>
@@ -472,24 +472,24 @@ export function TabAkun() {
           onClick={() => setShowLinkModal(false)}
         >
           <div
-            className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl border border-gray-200"
+            className="w-full max-w-md rounded-2xl bg-card p-6 shadow-xl border border-border"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between border-b border-gray-100 pb-3">
+            <div className="flex items-center justify-between border-b border-border pb-3">
               <div>
-                <h3 className="font-bold text-lg text-gray-900">Hubungkan Anak Didik</h3>
-                <p className="text-xs text-gray-500">Pautkan anak kepada akaun ibu bapa berdaftar secara serta-merta.</p>
+                <h3 className="font-bold text-lg text-foreground">Hubungkan Anak Didik</h3>
+                <p className="text-xs text-muted-foreground">Pautkan anak kepada akaun ibu bapa berdaftar secara serta-merta.</p>
               </div>
             </div>
 
             <form onSubmit={handleLinkChild} className="mt-4 space-y-4">
               <div>
-                <label className="text-xs font-semibold text-gray-700">Pilih Akaun Ibu Bapa</label>
+                <label className="text-xs font-semibold text-foreground">Pilih Akaun Ibu Bapa</label>
                 <select
                   required
                   value={selectedParentId}
                   onChange={(e) => setSelectedParentId(e.target.value)}
-                  className="mt-1 w-full rounded-xl border border-gray-300 px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
+                  className="mt-1 w-full rounded-xl border border-input px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
                 >
                   <option value="">-- Pilih Ibu Bapa --</option>
                   {parentAccounts.map((p) => (
@@ -501,12 +501,12 @@ export function TabAkun() {
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-gray-700">Pilih Anak (Talebe)</label>
+                <label className="text-xs font-semibold text-foreground">Pilih Anak (Talebe)</label>
                 <select
                   required
                   value={selectedChildName}
                   onChange={(e) => setSelectedChildName(e.target.value)}
-                  className="mt-1 w-full rounded-xl border border-gray-300 px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
+                  className="mt-1 w-full rounded-xl border border-input px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
                 >
                   <option value="">-- Pilih Talebe --</option>
                   <option value="Ahmad bin Ali">Ahmad bin Ali (Mevlana HE · Tahun 1 Amanah)</option>
@@ -518,11 +518,11 @@ export function TabAkun() {
                 </select>
               </div>
 
-              <div className="mt-6 flex items-center justify-end gap-3 pt-3 border-t border-gray-100">
+              <div className="mt-6 flex items-center justify-end gap-3 pt-3 border-t border-border">
                 <button
                   type="button"
                   onClick={() => setShowLinkModal(false)}
-                  className="rounded-xl border border-gray-300 px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50"
+                  className="rounded-xl border border-input px-4 py-2 text-xs font-semibold text-foreground hover:bg-muted"
                 >
                   Batal
                 </button>

@@ -28,7 +28,7 @@ export function ThemeToggle() {
 
   if (!mounted) {
     return (
-      <div className="size-9 rounded-xl border border-gray-200 bg-white dark:border-slate-800 dark:bg-slate-900" />
+      <div className="size-9 rounded-xl border border-border bg-card" />
     );
   }
 
@@ -44,10 +44,10 @@ export function ThemeToggle() {
         type="button"
         onClick={() => setOpen((prev) => !prev)}
         aria-label="Tukar tema paparan"
-        className="flex size-9 items-center justify-center rounded-xl border border-gray-200 bg-white text-gray-600 shadow-2xs hover:bg-gray-50 hover:text-gray-900 focus-visible:outline-emerald-500 transition-colors dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-100"
+        className="flex size-9 items-center justify-center rounded-xl border border-border bg-card text-muted-foreground shadow-2xs hover:bg-muted hover:text-foreground focus-visible:outline-primary transition-colors"
       >
         {theme === "dark" ? (
-          <Moon className="size-4.5 text-emerald-400" />
+          <Moon className="size-4.5 text-primary" />
         ) : theme === "light" ? (
           <Sun className="size-4.5 text-amber-500" />
         ) : (
@@ -56,8 +56,8 @@ export function ThemeToggle() {
       </button>
 
       {open && (
-        <div className="absolute right-0 mt-2 w-44 rounded-2xl border border-gray-200 bg-white p-1.5 shadow-xl z-50 dark:border-slate-800 dark:bg-slate-900">
-          <div className="px-2.5 py-1.5 text-[11px] font-semibold text-gray-400 uppercase tracking-wider dark:text-slate-500">
+        <div className="absolute right-0 mt-2 w-44 rounded-2xl border border-border bg-card p-1.5 shadow-xl z-50">
+          <div className="px-2.5 py-1.5 text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
             Pilih Tema
           </div>
           <div className="space-y-0.5">
@@ -71,15 +71,15 @@ export function ThemeToggle() {
                 }}
                 className={`flex w-full items-center justify-between rounded-xl px-2.5 py-2 text-xs font-medium transition-colors ${
                   theme === id
-                    ? "bg-emerald-50 text-emerald-700 font-semibold dark:bg-emerald-950/80 dark:text-emerald-300"
-                    : "text-gray-700 hover:bg-gray-100 dark:text-slate-300 dark:hover:bg-slate-800"
+                    ? "bg-primary/10 text-primary font-semibold"
+                    : "text-foreground hover:bg-muted"
                 }`}
               >
                 <div className="flex items-center gap-2">
                   <Icon className="size-3.5" />
                   <span>{label}</span>
                 </div>
-                {theme === id && <Check className="size-3.5 text-emerald-600 dark:text-emerald-400" />}
+                {theme === id && <Check className="size-3.5 text-primary" />}
               </button>
             ))}
           </div>

@@ -154,7 +154,7 @@ export function TabPersetujuan() {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
+            <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
               Pengesahan Pendaftaran Ibu Bapa
             </h1>
             {pendingCount > 0 && (
@@ -163,7 +163,7 @@ export function TabPersetujuan() {
               </span>
             )}
           </div>
-          <p className="mt-1 text-sm text-gray-500">
+          <p className="mt-1 text-sm text-muted-foreground">
             Sahkan permohonan pendaftaran akaun ibu bapa yang menuntut hak anak didik mereka.
           </p>
         </div>
@@ -171,9 +171,9 @@ export function TabPersetujuan() {
 
       {/* Ringkasan Status Tab */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-xs">
+        <div className="rounded-2xl border border-border bg-card p-5 shadow-xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wider text-gray-500">
+            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               Menunggu Keputusan
             </span>
             <div className="rounded-xl bg-amber-50 p-2 text-amber-800">
@@ -181,12 +181,12 @@ export function TabPersetujuan() {
             </div>
           </div>
           <p className="mt-3 text-2xl font-bold text-amber-800">{pendingCount} Permohonan</p>
-          <p className="mt-1 text-xs text-gray-500">Perlu disemak & disahkan oleh pentadbir</p>
+          <p className="mt-1 text-xs text-muted-foreground">Perlu disemak & disahkan oleh pentadbir</p>
         </div>
 
-        <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-xs">
+        <div className="rounded-2xl border border-border bg-card p-5 shadow-xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wider text-gray-500">
+            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               Telah Disahkan (Aktif)
             </span>
             <div className="rounded-xl bg-green-50 p-2 text-green-800">
@@ -194,38 +194,35 @@ export function TabPersetujuan() {
             </div>
           </div>
           <p className="mt-3 text-2xl font-bold text-emerald-800">{approvedCount} Hubungan</p>
-          <p className="mt-1 text-xs text-gray-500">Ibu bapa mempunyai akses portal rasmi</p>
+          <p className="mt-1 text-xs text-muted-foreground">Ibu bapa mempunyai akses portal rasmi</p>
         </div>
 
-        <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-xs">
+        <div className="rounded-2xl border border-border bg-card p-5 shadow-xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wider text-gray-500">
+            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               Jumlah Rekod Tuntutan
             </span>
-            <div className="rounded-xl bg-blue-50 p-2 text-blue-800">
+            <div className="rounded-xl bg-primary/10 p-2 text-primary">
               <ShieldCheck className="size-5" />
             </div>
           </div>
-          <p className="mt-3 text-2xl font-bold text-gray-900">{claims.length} Rekod</p>
-          <p className="mt-1 text-xs text-gray-500">Sistem pendaftaran Talebe Sesi 2026/2027</p>
+          <p className="mt-3 text-2xl font-bold text-foreground">{claims.length} Rekod</p>
+          <p className="mt-1 text-xs text-muted-foreground">Sistem pendaftaran Talebe Sesi 2026/2027</p>
         </div>
       </div>
 
       {/* Toolbar Filter & Carian */}
-      <div className="rounded-2xl border border-gray-200 bg-white shadow-xs overflow-hidden">
-        <div className="p-4 border-b border-gray-100 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 bg-white">
+      <div className="rounded-2xl border border-border bg-card shadow-xs overflow-hidden">
+        <div className="p-4 border-b border-border flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 bg-card">
           <div className="relative flex-1 max-w-sm">
-            <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 size-4 text-gray-400" />
-            <input
-              type="text"
-              value={search}
+            <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+            <input type="text" value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Cari ibu bapa, talebe, atau emel..."
-              className="w-full rounded-xl border border-gray-300 bg-gray-50/50 py-2 pl-9 pr-4 text-xs text-gray-900 focus:border-emerald-600 focus:bg-white focus:outline-none"
+              placeholder="Cari ibu bapa, talebe, atau emel..." className="w-full rounded-xl border border-input bg-muted/50 py-2 pl-9 pr-4 text-xs text-foreground focus:border-emerald-600 focus:bg-card focus:outline-none"
             />
           </div>
 
-          <div className="flex items-center gap-1 rounded-xl bg-gray-100 p-1 border border-gray-200/80">
+          <div className="flex items-center gap-1 rounded-xl bg-muted p-1 border border-border/80">
             {(
               [
                 ["pending", `Menunggu (${pendingCount})`],
@@ -233,14 +230,12 @@ export function TabPersetujuan() {
                 ["semua", "Semua"],
               ] as const
             ).map(([val, label]) => (
-              <button
-                key={val}
-                type="button"
-                onClick={() => setFilterStatus(val)}
+              <button key={val}
+                type="button" onClick={() => setFilterStatus(val)}
                 className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-all ${
                   filterStatus === val
-                    ? "bg-white text-emerald-800 shadow-2xs"
-                    : "text-gray-600 hover:text-gray-900"
+                    ? "bg-card text-emerald-800 shadow-2xs"
+                    : "text-muted-foreground hover:text-foreground"
                 }`}
               >
                 {label}
@@ -253,21 +248,20 @@ export function TabPersetujuan() {
         {filtered.length === 0 ? (
           <div className="p-12 text-center">
             <CheckCircle2 className="mx-auto size-8 text-emerald-700 mb-2" />
-            <p className="text-sm font-semibold text-gray-900">
+            <p className="text-sm font-semibold text-foreground">
               {filterStatus === "pending"
                 ? "Tiada permohonan yang menunggu pengesahan!"
                 : "Tiada rekod dijumpai mengikut tapisan."}
             </p>
-            <p className="text-xs text-gray-500 mt-1">
+            <p className="text-xs text-muted-foreground mt-1">
               Semua akaun ibu bapa telah disemak dan dikemaskini.
             </p>
           </div>
         ) : (
-          <div className="divide-y divide-gray-100">
+          <div className="divide-y divide-border">
             {filtered.map((claim) => (
-              <div
-                key={claim.id}
-                className="p-5 sm:p-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 hover:bg-gray-50/50 transition-colors"
+              <div key={claim.id}
+                className="p-5 sm:p-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 hover:bg-muted/50 transition-colors"
               >
                 <div className="flex items-start gap-4">
                   <div className="size-11 rounded-2xl bg-amber-100 text-amber-800 font-bold flex items-center justify-center shrink-0 border border-amber-200 text-sm">
@@ -275,7 +269,7 @@ export function TabPersetujuan() {
                   </div>
                   <div>
                     <div className="flex items-center gap-2 flex-wrap">
-                      <h3 className="font-bold text-base text-gray-900">{claim.namaIbuBapa}</h3>
+                      <h3 className="font-bold text-base text-foreground">{claim.namaIbuBapa}</h3>
                       {claim.status === "pending" && (
                         <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-semibold text-amber-800 border border-amber-200">
                           <AlertCircle className="size-3" />
@@ -298,11 +292,11 @@ export function TabPersetujuan() {
 
                     {/* Maklumat Anak yang Dituntut */}
                     <div className="mt-2 flex items-center gap-2 flex-wrap">
-                      <span className="text-xs font-medium text-gray-500">Tuntut Anak:</span>
-                      <span className="text-xs font-bold text-gray-900 bg-gray-100 px-2 py-0.5 rounded-md">
+                      <span className="text-xs font-medium text-muted-foreground">Tuntut Anak:</span>
+                      <span className="text-xs font-bold text-foreground bg-muted px-2 py-0.5 rounded-md">
                         {claim.namaTalebe}
                       </span>
-                      <span className="text-xs text-gray-500 font-medium">({claim.kelasTalebe} · {claim.grupTalebe})</span>
+                      <span className="text-xs text-muted-foreground font-medium">({claim.kelasTalebe} · {claim.grupTalebe})</span>
                     </div>
 
                     {claim.ibuBapaSediaAda && (
@@ -312,7 +306,7 @@ export function TabPersetujuan() {
                       </div>
                     )}
 
-                    <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-gray-500">
+                    <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
                       <span>{claim.emelIbuBapa}</span>
                       <span>·</span>
                       <span>{claim.telefonIbuBapa}</span>
@@ -329,31 +323,25 @@ export function TabPersetujuan() {
                 </div>
 
                 {/* Butang Tindakan Keputusan */}
-                <div className="flex items-center gap-2 lg:gap-3 shrink-0 pt-2 lg:pt-0 border-t lg:border-t-0 border-gray-100">
+                <div className="flex items-center gap-2 lg:gap-3 shrink-0 pt-2 lg:pt-0 border-t lg:border-t-0 border-border">
                   {claim.status === "pending" ? (
                     <>
-                      <button
-                        type="button"
-                        onClick={() => handleDecision(claim.id, "approved")}
+                      <button type="button" onClick={() => handleDecision(claim.id, "approved")}
                         className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-800 px-3.5 py-2 text-xs font-semibold text-white shadow-xs hover:bg-emerald-900 transition-colors"
                       >
                         <CheckCircle2 className="size-3.5" />
                         <span>Sahkan Hubungan</span>
                       </button>
-                      <button
-                        type="button"
-                        onClick={() => handleDecision(claim.id, "rejected")}
-                        className="inline-flex items-center gap-1.5 rounded-xl border border-gray-300 bg-white px-3.5 py-2 text-xs font-semibold text-rose-700 hover:bg-rose-50 hover:border-rose-300 transition-colors"
+                      <button type="button" onClick={() => handleDecision(claim.id, "rejected")}
+                        className="inline-flex items-center gap-1.5 rounded-xl border border-input bg-card px-3.5 py-2 text-xs font-semibold text-rose-700 hover:bg-rose-50 hover:border-rose-300 transition-colors"
                       >
                         <XCircle className="size-3.5" />
                         <span>Tolak</span>
                       </button>
                     </>
                   ) : (
-                    <button
-                      type="button"
-                      onClick={() => handleUnlink(claim.id)}
-                      className="rounded-xl border border-gray-300 bg-white px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-50 hover:text-rose-600 transition-colors"
+                    <button type="button" onClick={() => handleUnlink(claim.id)}
+                      className="rounded-xl border border-input bg-card px-3 py-1.5 text-xs font-semibold text-muted-foreground hover:bg-muted hover:text-rose-600 transition-colors"
                     >
                       Lepas Hubungan
                     </button>

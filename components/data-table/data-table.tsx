@@ -53,7 +53,7 @@ export function DataTable<TData extends RowData>({
                 onClick={onRowClick ? () => onRowClick(row.original) : undefined}
                 className={
                   onRowClick
-                    ? "hover:bg-slate-50/80 dark:hover:bg-slate-800/50 transition-colors group cursor-pointer"
+                    ? "hover:bg-accent/80 transition-colors group cursor-pointer"
                     : ""
                 }
               >
@@ -68,7 +68,7 @@ export function DataTable<TData extends RowData>({
             <TableRow>
               <TableCell colSpan={columns.length} className="px-6 py-0">
                 {emptyState ?? (
-                  <p className="py-12 text-center text-sm text-slate-500 dark:text-slate-400">
+                  <p className="py-12 text-center text-sm text-muted-foreground">
                     Tiada rekod dijumpai.
                   </p>
                 )}

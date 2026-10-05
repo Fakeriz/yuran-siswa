@@ -4,9 +4,9 @@ export const runtime = "edge";
 
 export default function NotFound() {
   return (
-    <main className="flex min-h-dvh flex-col items-center justify-center bg-white px-6 text-center text-zinc-900 dark:bg-slate-950 dark:text-zinc-100">
+    <main className="flex min-h-dvh flex-col items-center justify-center bg-card px-6 text-center text-zinc-900">
       <h1 className="text-4xl font-bold tracking-tight">404</h1>
-      <p className="mt-3 text-lg text-zinc-600 dark:text-zinc-400">
+      <p className="mt-3 text-lg text-zinc-600">
         Halaman tidak ditemukan.
       </p>
       <Link

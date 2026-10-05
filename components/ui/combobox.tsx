@@ -229,7 +229,7 @@ export function ComboboxContent({ className = "", children, ...props }: HTMLAttr
       role="listbox"
       {...props}
       style={{ top: pos.top, left: pos.left, width: pos.width, maxHeight: DROPDOWN_MAX_H }}
-      className={`fixed z-[120] overflow-auto rounded-xl border border-slate-200 bg-white p-1 shadow-xl dark:border-slate-700 dark:bg-slate-800 ${className}`}
+      className={`fixed z-[120] overflow-auto rounded-xl border border-border bg-popover p-1 text-popover-foreground shadow-xl ${className}`}
     >
       {children}
     </div>,
@@ -241,7 +241,7 @@ export function ComboboxEmpty({ className = "", children, ...props }: HTMLAttrib
   const { filtered } = useCombobox();
   if (filtered.length > 0) return null;
   return (
-    <div className={`px-3 py-2 text-sm text-slate-500 dark:text-slate-400 ${className}`} {...props}>
+    <div className={`px-3 py-2 text-sm text-muted-foreground ${className}`} {...props}>
       {children}
     </div>
   );
@@ -267,7 +267,7 @@ export function ComboboxList<T>({ children }: { children: (item: T, index: numbe
               selectItem(item);
             }}
             onMouseEnter={() => setActiveIndex(index)}
-            className={`cursor-pointer rounded-lg ${isActive ? "bg-violet-50 dark:bg-violet-500/10" : ""}`}
+            className={`cursor-pointer rounded-lg ${isActive ? "bg-primary/10" : ""}`}
           >
             {children(item, index)}
           </div>

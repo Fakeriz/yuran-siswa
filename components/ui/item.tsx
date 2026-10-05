@@ -15,12 +15,12 @@ export function ItemContent({ className = "", ...props }: HTMLAttributes<HTMLDiv
 
 export function ItemTitle({ className = "", ...props }: HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className={`truncate text-sm font-medium text-slate-900 dark:text-slate-100 ${className}`} {...props} />
+    <div className={`truncate text-sm font-medium text-foreground ${className}`} {...props} />
   );
 }
 
 export function ItemDescription({ className = "", ...props }: HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className={`truncate text-xs text-slate-500 dark:text-slate-400 ${className}`} {...props} />
+    <div className={`truncate text-xs text-muted-foreground ${className}`} {...props} />
   );
 }

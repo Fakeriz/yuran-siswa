@@ -7,7 +7,7 @@ import type { HTMLAttributes, TdHTMLAttributes, ThHTMLAttributes } from "react";
 export function Table({ className = "", ...props }: HTMLAttributes<HTMLTableElement>) {
   return (
     <table
-      className={`w-full text-left text-sm text-slate-700 dark:text-slate-300 ${className}`}
+      className={`w-full text-left text-sm text-foreground ${className}`}
       {...props}
     />
   );
@@ -16,7 +16,7 @@ export function Table({ className = "", ...props }: HTMLAttributes<HTMLTableElem
 export function TableHeader({ className = "", ...props }: HTMLAttributes<HTMLElement>) {
   return (
     <thead
-      className={`bg-slate-50/80 border-b border-slate-200 dark:bg-slate-800/80 dark:border-slate-700 ${className}`}
+      className={`bg-muted/80 border-b border-border ${className}`}
       {...props}
     />
   );
@@ -24,7 +24,7 @@ export function TableHeader({ className = "", ...props }: HTMLAttributes<HTMLEle
 
 export function TableBody({ className = "", ...props }: HTMLAttributes<HTMLElement>) {
   return (
-    <tbody className={`divide-y divide-slate-100 dark:divide-slate-800 ${className}`} {...props} />
+    <tbody className={`divide-y divide-border ${className}`} {...props} />
   );
 }
 
@@ -36,7 +36,7 @@ export function TableHead({ className = "", ...props }: ThHTMLAttributes<HTMLTab
   return (
     <th
       scope="col"
-      className={`px-5 py-3.5 text-xs font-semibold text-slate-500 uppercase tracking-wider dark:text-slate-400 ${className}`}
+      className={`px-5 py-3.5 text-xs font-semibold text-muted-foreground uppercase tracking-wider ${className}`}
       {...props}
     />
   );

@@ -14,9 +14,9 @@ export default function RootError({
   }, [error]);
 
   return (
-    <main className="flex min-h-dvh flex-col items-center justify-center bg-white px-6 text-center text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100">
+    <main className="flex min-h-dvh flex-col items-center justify-center bg-card px-6 text-center text-zinc-900">
       <h1 className="text-2xl font-bold tracking-tight">Terjadi kesalahan</h1>
-      <p className="mt-3 max-w-md text-sm text-zinc-600 dark:text-zinc-400">
+      <p className="mt-3 max-w-md text-sm text-zinc-600">
         Layanan sedang mengalami kendala. Silakan coba muat ulang halaman.
       </p>
       <button

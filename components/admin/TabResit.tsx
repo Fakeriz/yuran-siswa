@@ -169,7 +169,7 @@ export function TabResit() {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
+            <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
               Resit & Kwitansi Rasmi
             </h1>
             {pendingKwitansiCount > 0 && (
@@ -178,14 +178,12 @@ export function TabResit() {
               </span>
             )}
           </div>
-          <p className="mt-1 text-sm text-gray-500">
+          <p className="mt-1 text-sm text-muted-foreground">
             Pengurusan dokumen rasmi bayaran yuran dan muat naik kwitansi rasmi pentadbir ke Google Drive.
           </p>
         </div>
 
-        <button
-          type="button"
-          onClick={() => {
+        <button type="button" onClick={() => {
             const firstPending = receipts.find((r) => !r.kwitansiUploaded);
             setSelectedReceipt(firstPending || receipts[0]);
             setShowUploadModal(true);
@@ -199,9 +197,9 @@ export function TabResit() {
 
       {/* Ringkasan Status Kwitansi */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-xs">
+        <div className="rounded-2xl border border-border bg-card p-5 shadow-xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wider text-gray-500">
+            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               Kwitansi Rasmi Dikeluarkan
             </span>
             <div className="rounded-xl bg-emerald-50 p-2 text-emerald-800">
@@ -211,12 +209,12 @@ export function TabResit() {
           <p className="mt-3 text-2xl font-bold text-emerald-800">
             {receipts.filter((r) => r.kwitansiUploaded).length} Resit
           </p>
-          <p className="mt-1 text-xs text-gray-500">Tersedia di Google Drive & portal ibu bapa</p>
+          <p className="mt-1 text-xs text-muted-foreground">Tersedia di Google Drive & portal ibu bapa</p>
         </div>
 
-        <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-xs">
+        <div className="rounded-2xl border border-border bg-card p-5 shadow-xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wider text-gray-500">
+            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               Menunggu Muat Naik Kwitansi
             </span>
             <div className="rounded-xl bg-amber-50 p-2 text-amber-800">
@@ -224,38 +222,35 @@ export function TabResit() {
             </div>
           </div>
           <p className="mt-3 text-2xl font-bold text-amber-800">{pendingKwitansiCount} Resit</p>
-          <p className="mt-1 text-xs text-gray-500">Perlu dimuat naik oleh pentadbir</p>
+          <p className="mt-1 text-xs text-muted-foreground">Perlu dimuat naik oleh pentadbir</p>
         </div>
 
-        <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-xs">
+        <div className="rounded-2xl border border-border bg-card p-5 shadow-xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wider text-gray-500">
+            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               Jumlah Resit Pembayaran
             </span>
-            <div className="rounded-xl bg-blue-50 p-2 text-blue-800">
+            <div className="rounded-xl bg-primary/10 p-2 text-primary">
               <Receipt className="size-5" />
             </div>
           </div>
-          <p className="mt-3 text-2xl font-bold text-gray-900">{receipts.length} Rekod</p>
-          <p className="mt-1 text-xs text-gray-500">Bagi sesi kutipan semasa</p>
+          <p className="mt-3 text-2xl font-bold text-foreground">{receipts.length} Rekod</p>
+          <p className="mt-1 text-xs text-muted-foreground">Bagi sesi kutipan semasa</p>
         </div>
       </div>
 
       {/* Toolbar Carian & Penapis */}
-      <div className="rounded-2xl border border-gray-200 bg-white shadow-xs overflow-hidden">
-        <div className="p-4 border-b border-gray-100 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 bg-white">
+      <div className="rounded-2xl border border-border bg-card shadow-xs overflow-hidden">
+        <div className="p-4 border-b border-border flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 bg-card">
           <div className="relative flex-1 max-w-sm">
-            <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 size-4 text-gray-400" />
-            <input
-              type="text"
-              value={search}
+            <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+            <input type="text" value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Cari no. resit, talebe, grup..."
-              className="w-full rounded-xl border border-gray-300 bg-gray-50/50 py-2 pl-9 pr-4 text-xs text-gray-900 focus:border-emerald-600 focus:bg-white focus:outline-none"
+              placeholder="Cari no. resit, talebe, grup..." className="w-full rounded-xl border border-input bg-muted/50 py-2 pl-9 pr-4 text-xs text-foreground focus:border-emerald-600 focus:bg-card focus:outline-none"
             />
           </div>
 
-          <div className="flex items-center gap-1 rounded-xl bg-gray-100 p-1 border border-gray-200/80">
+          <div className="flex items-center gap-1 rounded-xl bg-muted p-1 border border-border/80">
             {(
               [
                 ["semua", "Semua"],
@@ -263,14 +258,12 @@ export function TabResit() {
                 ["pending", `Menunggu (${pendingKwitansiCount})`],
               ] as const
             ).map(([val, label]) => (
-              <button
-                key={val}
-                type="button"
-                onClick={() => setFilterType(val)}
+              <button key={val}
+                type="button" onClick={() => setFilterType(val)}
                 className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-all ${
                   filterType === val
-                    ? "bg-white text-emerald-800 shadow-2xs"
-                    : "text-gray-600 hover:text-gray-900"
+                    ? "bg-card text-emerald-800 shadow-2xs"
+                    : "text-muted-foreground hover:text-foreground"
                 }`}
               >
                 {label}
@@ -281,8 +274,8 @@ export function TabResit() {
 
         {/* Jadual Resit */}
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm text-gray-700">
-            <thead className="bg-gray-50/80 text-xs font-semibold text-gray-500 uppercase tracking-wider border-b border-gray-200">
+          <table className="w-full text-left text-sm text-foreground">
+            <thead className="bg-muted/80 text-xs font-semibold text-muted-foreground uppercase tracking-wider border-b border-border">
               <tr>
                 <th scope="col" className="px-5 py-3.5">No. Resit</th>
                 <th scope="col" className="px-5 py-3.5">Nama Talebe & Grup</th>
@@ -293,24 +286,24 @@ export function TabResit() {
                 <th scope="col" className="px-5 py-3.5 text-right">Tindakan</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-border">
               {filtered.map((item) => (
-                <tr key={item.id} className="hover:bg-gray-50/50">
-                  <td className="px-5 py-4 font-mono text-xs font-bold text-gray-900">
+                <tr key={item.id} className="hover:bg-muted/50">
+                  <td className="px-5 py-4 font-mono text-xs font-bold text-foreground">
                     {item.noResit}
-                    <span className="block text-[11px] font-normal text-gray-400 font-sans">{item.tarikhBayar}</span>
+                    <span className="block text-[11px] font-normal text-muted-foreground font-sans">{item.tarikhBayar}</span>
                   </td>
                   <td className="px-5 py-4">
-                    <p className="font-bold text-gray-900">{item.namaTalebe}</p>
+                    <p className="font-bold text-foreground">{item.namaTalebe}</p>
                     <p className="text-xs text-emerald-800 font-medium">{item.grup}</p>
                   </td>
-                  <td className="px-5 py-4 whitespace-nowrap text-xs text-gray-700">
+                  <td className="px-5 py-4 whitespace-nowrap text-xs text-foreground">
                     {item.bulan}
                   </td>
-                  <td className="px-5 py-4 whitespace-nowrap text-xs text-gray-600">
+                  <td className="px-5 py-4 whitespace-nowrap text-xs text-muted-foreground">
                     {item.kaedah}
                   </td>
-                  <td className="px-5 py-4 whitespace-nowrap text-right font-bold text-gray-900">
+                  <td className="px-5 py-4 whitespace-nowrap text-right font-bold text-foreground">
                     RM {item.jumlah.toFixed(2)}
                   </td>
                   <td className="px-5 py-4 whitespace-nowrap text-center">
@@ -329,27 +322,20 @@ export function TabResit() {
                   <td className="px-5 py-4 whitespace-nowrap text-right">
                     {item.kwitansiUploaded ? (
                       <div className="flex items-center justify-end gap-2">
-                        <button
-                          type="button"
-                          onClick={() => alert(`Membuka fail kwitansi rasmi: ${item.kwitansiFileName} daripada Google Drive.`)}
-                          className="inline-flex items-center gap-1 rounded-lg border border-gray-300 bg-white px-2.5 py-1 text-xs font-semibold text-gray-700 hover:bg-gray-50"
+                        <button type="button" onClick={() => alert(`Membuka fail kwitansi rasmi: ${item.kwitansiFileName} daripada Google Drive.`)}
+                          className="inline-flex items-center gap-1 rounded-lg border border-input bg-card px-2.5 py-1 text-xs font-semibold text-foreground hover:bg-muted"
                         >
                           <FileText className="size-3 text-emerald-700" />
                           <span>Lihat</span>
                         </button>
-                        <button
-                          type="button"
-                          onClick={() => window.print()}
-                          className="p-1 text-gray-400 hover:text-gray-900 rounded-md"
-                          title="Cetak Resit"
+                        <button type="button" onClick={() => window.print()}
+                          className="p-1 text-muted-foreground hover:text-foreground rounded-md" title="Cetak Resit"
                         >
                           <Printer className="size-4" />
                         </button>
                       </div>
                     ) : (
-                      <button
-                        type="button"
-                        onClick={() => {
+                      <button type="button" onClick={() => {
                           setSelectedReceipt(item);
                           setShowUploadModal(true);
                         }}
@@ -369,74 +355,62 @@ export function TabResit() {
 
       {/* Modal Upload Kwitansi Rasmi */}
       {showUploadModal && selectedReceipt && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-xs p-4"
-          onClick={() => setShowUploadModal(false)}
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-xs p-4" onClick={() => setShowUploadModal(false)}
         >
-          <div
-            className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl border border-gray-200"
-            onClick={(e) => e.stopPropagation()}
+          <div className="w-full max-w-md rounded-2xl bg-card p-6 shadow-xl border border-border" onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between border-b border-gray-100 pb-3">
+            <div className="flex items-center justify-between border-b border-border pb-3">
               <div>
-                <h3 className="font-bold text-lg text-gray-900">Muat Naik Kwitansi Rasmi</h3>
-                <p className="text-xs text-gray-500">
+                <h3 className="font-bold text-lg text-foreground">Muat Naik Kwitansi Rasmi</h3>
+                <p className="text-xs text-muted-foreground">
                   Resit #{selectedReceipt.noResit} · {selectedReceipt.namaTalebe}
                 </p>
               </div>
             </div>
 
             <form onSubmit={handleUploadSubmit} className="mt-4 space-y-4">
-              <div className="rounded-xl bg-gray-50 p-3.5 border border-gray-200 text-xs space-y-1">
+              <div className="rounded-xl bg-muted p-3.5 border border-border text-xs space-y-1">
                 <div className="flex justify-between">
-                  <span className="text-gray-500">Nama Talebe:</span>
-                  <span className="font-bold text-gray-900">{selectedReceipt.namaTalebe}</span>
+                  <span className="text-muted-foreground">Nama Talebe:</span>
+                  <span className="font-bold text-foreground">{selectedReceipt.namaTalebe}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-500">Bulan & Jumlah:</span>
+                  <span className="text-muted-foreground">Bulan & Jumlah:</span>
                   <span className="font-bold text-emerald-800">
                     {selectedReceipt.bulan} (RM {selectedReceipt.jumlah.toFixed(2)})
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-500">Kaedah Bayaran:</span>
-                  <span className="text-gray-700">{selectedReceipt.kaedah}</span>
+                  <span className="text-muted-foreground">Kaedah Bayaran:</span>
+                  <span className="text-foreground">{selectedReceipt.kaedah}</span>
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-gray-700 mb-1.5">
+                <label className="block text-xs font-semibold text-foreground mb-1.5">
                   Pilih Fail Kwitansi Rasmi (PDF atau Gambar)
                 </label>
-                <label className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-300 p-6 text-center cursor-pointer hover:border-emerald-600 transition-colors bg-gray-50/50">
-                  <Upload className="size-6 text-gray-400 mb-1.5" />
-                  <span className="text-xs font-semibold text-gray-800">
+                <label className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-input p-6 text-center cursor-pointer hover:border-emerald-600 transition-colors bg-muted/50">
+                  <Upload className="size-6 text-muted-foreground mb-1.5" />
+                  <span className="text-xs font-semibold text-foreground">
                     {uploadFile ? uploadFile.name : "Klik untuk muat naik dokumen kwitansi"}
                   </span>
-                  <span className="text-[11px] text-gray-400 mt-0.5">
+                  <span className="text-[11px] text-muted-foreground mt-0.5">
                     Format: PDF, JPG, PNG (Maks 10 MB). Disimpan ke Google Drive.
                   </span>
-                  <input
-                    type="file"
-                    accept="image/*,application/pdf"
-                    required
-                    onChange={(e) => setUploadFile(e.target.files?.[0] || null)}
+                  <input type="file" accept="image/*,application/pdf" required onChange={(e) => setUploadFile(e.target.files?.[0] || null)}
                     className="hidden"
                   />
                 </label>
               </div>
 
-              <div className="mt-6 flex items-center justify-end gap-3 pt-3 border-t border-gray-100">
-                <button
-                  type="button"
-                  onClick={() => setShowUploadModal(false)}
-                  className="rounded-xl border border-gray-300 px-4 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50"
+              <div className="mt-6 flex items-center justify-end gap-3 pt-3 border-t border-border">
+                <button type="button" onClick={() => setShowUploadModal(false)}
+                  className="rounded-xl border border-input px-4 py-2 text-xs font-semibold text-foreground hover:bg-muted"
                 >
                   Batal
                 </button>
-                <button
-                  type="submit"
-                  disabled={!uploadFile}
+                <button type="submit" disabled={!uploadFile}
                   className="rounded-xl bg-emerald-800 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-900 disabled:opacity-50"
                 >
                   Simpan ke Google Drive

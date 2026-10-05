@@ -23,7 +23,7 @@ export function DataTableColumnHeader<TData extends RowData, TValue>({
       type="button"
       onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
       title={`Susun mengikut ${title}`}
-      className={`inline-flex items-center gap-1.5 transition-colors hover:text-slate-900 dark:hover:text-slate-100 ${
+      className={`inline-flex items-center gap-1.5 transition-colors hover:text-foreground ${
         align === "center" ? "w-full justify-center" : ""
       } ${align === "right" ? "w-full justify-end" : ""}`}
     >

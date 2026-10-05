@@ -62,13 +62,13 @@ type Ripple = { id: number; x: number; y: number; size: number };
 
 const VARIANT_CLASS: Record<ButtonVariant, string> = {
   primary:
-    "bg-neutral-900 text-white shadow-[inset_2px_2px_5px_0px_rgba(0,0,0,0.5),inset_-2px_-2px_6px_1px_rgba(80,78,78,0.5)] hover:bg-black dark:bg-white dark:text-slate-900 dark:shadow-[inset_2px_2px_4px_0px_rgba(0,0,0,0.08)] dark:hover:bg-slate-200",
+    "bg-neutral-900 text-white shadow-[inset_2px_2px_5px_0px_rgba(0,0,0,0.5),inset_-2px_-2px_6px_1px_rgba(80,78,78,0.5)] hover:bg-black",
   secondary:
-    "border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800",
+    "border border-input bg-card text-foreground hover:bg-muted",
   ghost:
-    "text-slate-500 hover:text-slate-900 hover:bg-slate-100/60 dark:text-slate-400 dark:hover:text-slate-100 dark:hover:bg-slate-800/60",
+    "text-muted-foreground hover:text-foreground hover:bg-muted/60",
   outline:
-    "border border-slate-300 bg-transparent text-slate-900 hover:bg-slate-100/60 dark:border-slate-700 dark:text-slate-100 dark:hover:bg-slate-800/60",
+    "border border-input bg-transparent text-foreground hover:bg-muted/60",
 };
 
 const SIZE_CLASS: Record<ButtonSize, string> = {

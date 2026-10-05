@@ -360,7 +360,7 @@ export function CenterMorphModalContent({
         disabled={!dismissible}
         onClick={() => context.setOpen(false)}
         className={cx(
-          "fu-morph-backdrop fixed inset-0 z-[100] h-full w-full cursor-default bg-slate-900/10 backdrop-blur-sm dark:bg-black/60",
+          "fu-morph-backdrop fixed inset-0 z-[100] h-full w-full cursor-default bg-slate-900/10 backdrop-blur-sm",
           isOpen && "fu-morph-open",
           backdropClassName,
         )}
@@ -390,7 +390,7 @@ export function CenterMorphModalContent({
             aria-describedby={ariaDescribedBy}
             tabIndex={-1}
             className={cx(
-              "fu-morph-panel pointer-events-auto relative w-full origin-center overflow-hidden rounded-[30px] border border-gray-200 bg-white will-change-[clip-path] dark:border-slate-800 dark:bg-slate-900",
+              "fu-morph-panel pointer-events-auto relative w-full origin-center overflow-hidden rounded-[30px] border border-border bg-card will-change-[clip-path]",
               isOpen && "fu-morph-open",
               className,
             )}
@@ -403,7 +403,7 @@ export function CenterMorphModalContent({
                 aria-label={closeButtonLabel}
                 onClick={() => context.setOpen(false)}
                 className={cx(
-                  "fu-morph-close absolute right-4 top-4 inline-flex size-8 items-center justify-center rounded-full bg-gray-900/5 text-gray-500 hover:bg-gray-900/10 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:bg-white/10 dark:text-slate-400 dark:hover:bg-white/15 dark:hover:text-slate-100",
+                  "fu-morph-close absolute right-4 top-4 inline-flex size-8 items-center justify-center rounded-full bg-foreground/5 text-muted-foreground hover:bg-foreground/10 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500",
                   isOpen && "fu-morph-open",
                 )}
               >

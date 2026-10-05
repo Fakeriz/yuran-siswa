@@ -36,13 +36,13 @@ export function CartaTahunan() {
   const menyerlah = tahun === TAHUN_TERKINI ? BULAN_SEMASA : -1;
 
   return (
-    <div className="flex min-w-0 flex-col rounded-2xl border border-slate-200/70 bg-white/80 p-4 shadow-sm backdrop-blur sm:p-5 dark:border-slate-800 dark:bg-slate-900/70">
+    <div className="flex min-w-0 flex-col rounded-2xl border border-border bg-card/80 p-4 shadow-sm backdrop-blur sm:p-5 ">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h2 className="text-base font-semibold text-slate-700 sm:text-lg dark:text-slate-200">
+          <h2 className="text-base font-semibold text-foreground sm:text-lg">
             Ringkasan Transaksi
           </h2>
-          <p className="mt-1 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl dark:text-white">
+          <p className="mt-1 text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
             {formatRM(jumlah)}
           </p>
         </div>
@@ -50,7 +50,7 @@ export function CartaTahunan() {
           <button
             type="button"
             onClick={() => setMenuTahun((o) => !o)}
-            className="flex items-center gap-1.5 rounded-full bg-slate-100 px-3.5 py-2 text-xs font-semibold text-slate-600 transition-colors hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
+            className="flex items-center gap-1.5 rounded-full bg-muted px-3.5 py-2 text-xs font-semibold text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
             aria-haspopup="listbox"
             aria-expanded={menuTahun}
           >
@@ -60,7 +60,7 @@ export function CartaTahunan() {
           {menuTahun && (
             <div
               role="listbox"
-              className="absolute right-0 z-20 mt-2 w-32 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-lg dark:border-slate-700 dark:bg-slate-900"
+              className="absolute right-0 z-20 mt-2 w-32 overflow-hidden rounded-xl border border-border bg-popover text-popover-foreground shadow-lg"
             >
               {Object.keys(DATA_TAHUNAN).map((t) => (
                 <button
@@ -69,8 +69,8 @@ export function CartaTahunan() {
                   aria-selected={t === tahun}
                   type="button"
                   onClick={() => { setTahun(t); setMenuTahun(false); }}
-                  className={`block w-full px-4 py-2.5 text-left text-xs font-semibold transition-colors hover:bg-slate-50 dark:hover:bg-slate-800 ${
-                    t === tahun ? "text-violet-700 dark:text-violet-300" : "text-slate-600 dark:text-slate-300"
+                  className={`block w-full px-4 py-2.5 text-left text-xs font-semibold transition-colors hover:bg-accent ${
+                    t === tahun ? "text-primary" : "text-muted-foreground"
                   }`}
                 >
                   {t}
@@ -90,24 +90,24 @@ export function CartaTahunan() {
             <div key={BULAN_PENDEK[i]} className="flex h-full min-w-0 flex-1 flex-col items-center justify-end gap-1.5">
               <div className="relative flex w-full flex-1 items-end justify-center">
                 {aktif && nilai > 0 && (
-                  <span className="absolute -top-1 z-10 -translate-y-full whitespace-nowrap rounded-lg bg-violet-600 px-2 py-1 text-[10px] font-bold text-white shadow-md">
+                  <span className="absolute -top-1 z-10 -translate-y-full whitespace-nowrap rounded-lg bg-primary px-2 py-1 text-[10px] font-bold text-primary-foreground shadow-md">
                     {formatRM(nilai)}
-                    <span className="absolute left-1/2 top-full -translate-x-1/2 border-4 border-transparent border-t-violet-600" aria-hidden />
+                    <span className="absolute left-1/2 top-full -translate-x-1/2 border-4 border-transparent border-t-primary" aria-hidden />
                   </span>
                 )}
                 <div
                   className={`w-full max-w-10 rounded-t-lg transition-all ${
                     aktif
-                      ? "bg-gradient-to-t from-violet-600 to-violet-400 shadow-[0_8px_20px_-6px_rgba(124,108,248,0.7)]"
+                      ? "bg-gradient-to-t from-[#0051D5] to-[#007AFF] shadow-[0_8px_20px_-6px_rgba(0,122,255,0.7)]"
                       : nilai > 0
-                        ? "bg-[repeating-linear-gradient(-45deg,#e2e8f0_0px,#e2e8f0_3px,#f1f5f9_3px,#f1f5f9_6px)] dark:bg-[repeating-linear-gradient(-45deg,#334155_0px,#334155_3px,#1e293b_3px,#1e293b_6px)]"
+                        ? "bg-[repeating-linear-gradient(-45deg,#D2D2D7_0px,#D2D2D7_3px,#E8E8ED_3px,#E8E8ED_6px)] dark:bg-[repeating-linear-gradient(-45deg,#48484A_0px,#48484A_3px,#2C2C2E_3px,#2C2C2E_6px)]"
                         : "bg-transparent"
                   }`}
                   style={{ height: `${tinggi}%` }}
                   title={nilai > 0 ? `${BULAN_PENDEK[i]}: ${formatRM(nilai)}` : `${BULAN_PENDEK[i]}: tiada data`}
                 />
               </div>
-              <span className={`text-[10px] sm:text-[11px] ${aktif ? "font-bold text-violet-700 dark:text-violet-300" : "text-slate-400 dark:text-slate-500"}`}>
+              <span className={`text-[10px] sm:text-[11px] ${aktif ? "font-bold text-primary" : "text-muted-foreground"}`}>
                 {BULAN_PENDEK[i]}
               </span>
             </div>
@@ -117,15 +117,15 @@ export function CartaTahunan() {
 
       {/* Skala & legenda */}
       <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
-        <p className="text-[10px] text-slate-400 dark:text-slate-500">
+        <p className="text-[10px] text-muted-foreground">
           Skala: 0 – {formatPadat(maks)} · nilai dalam Ringgit Malaysia
         </p>
-        <div className="flex items-center gap-3 text-[10px] text-slate-500 dark:text-slate-400">
+        <div className="flex items-center gap-3 text-[10px] text-muted-foreground">
           <span className="flex items-center gap-1.5">
-            <span className="size-2 rounded-full bg-violet-500" aria-hidden /> Bulan semasa
+            <span className="size-2 rounded-full bg-primary" aria-hidden /> Bulan semasa
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="size-2 rounded-full bg-slate-300 dark:bg-slate-600" aria-hidden /> Bulan lain
+            <span className="size-2 rounded-full bg-[#AAAAAA] dark:bg-[#6E6E73]" aria-hidden /> Bulan lain
           </span>
         </div>
       </div>
@@ -147,19 +147,19 @@ export function PanelKemajuanGrup({ grup }: { grup: KemajuanGrup[] }) {
   const jumlahTerkumpul = grup.reduce((a, g) => a + g.terkumpul, 0);
 
   return (
-    <div className="flex min-w-0 flex-col rounded-2xl border border-slate-200/70 bg-white/80 p-4 shadow-sm backdrop-blur sm:p-5 dark:border-slate-800 dark:bg-slate-900/70">
+    <div className="flex min-w-0 flex-col rounded-2xl border border-border bg-card/80 p-4 shadow-sm backdrop-blur sm:p-5 ">
       <div className="flex items-center gap-2.5">
-        <span className="flex size-9 items-center justify-center rounded-xl bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-300" aria-hidden>
+        <span className="flex size-9 items-center justify-center rounded-xl bg-muted text-muted-foreground" aria-hidden>
           <Wallet className="size-4.5" />
         </span>
-        <h2 className="text-base font-semibold text-slate-700 sm:text-lg dark:text-slate-200">
+        <h2 className="text-base font-semibold text-foreground sm:text-lg">
           Kemajuan Grup
         </h2>
       </div>
 
-      <p className="mt-4 text-xs text-slate-500 dark:text-slate-400">Jumlah Terkumpul</p>
+      <p className="mt-4 text-xs text-muted-foreground">Jumlah Terkumpul</p>
       <div className="mt-1 flex items-center gap-2">
-        <p className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl dark:text-white">
+        <p className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
           {formatRM(jumlahTerkumpul)}
         </p>
         <span className="rounded-md bg-emerald-50 px-1.5 py-0.5 text-[11px] font-semibold text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300">
@@ -173,11 +173,11 @@ export function PanelKemajuanGrup({ grup }: { grup: KemajuanGrup[] }) {
           return (
             <div key={g.nama}>
               <div className="flex items-center justify-between gap-2 text-xs">
-                <span className="truncate font-medium text-slate-600 dark:text-slate-300">{g.nama}</span>
-                <span className="shrink-0 font-semibold text-violet-700 dark:text-violet-300">{peratus}%</span>
+                <span className="truncate font-medium text-muted-foreground">{g.nama}</span>
+                <span className="shrink-0 font-semibold text-primary">{peratus}%</span>
               </div>
               <div
-                className="mt-1.5 h-2.5 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800"
+                className="mt-1.5 h-2.5 w-full overflow-hidden rounded-full bg-muted"
                 role="progressbar"
                 aria-valuenow={peratus}
                 aria-valuemin={0}
@@ -185,11 +185,11 @@ export function PanelKemajuanGrup({ grup }: { grup: KemajuanGrup[] }) {
                 aria-label={`Kemajuan ${g.nama}`}
               >
                 <div
-                  className="h-full rounded-full bg-gradient-to-r from-violet-500 to-violet-400 transition-all duration-500"
+                  className="h-full rounded-full bg-gradient-to-r from-[#0051D5] to-[#007AFF] transition-all duration-500"
                   style={{ width: `${peratus}%` }}
                 />
               </div>
-              <p className="mt-1 text-[10px] text-slate-400 dark:text-slate-500">
+              <p className="mt-1 text-[10px] text-muted-foreground">
                 {formatRM(g.terkumpul)} / {formatRM(g.sasaran)}
               </p>
             </div>

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { recordPayment } from "../../lib/actions/payments";
 import type { Student } from "../../lib/types";
 
-const field = "mt-2 block min-h-11 w-full rounded-2xl border border-slate-300 bg-white px-3 py-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-slate-700 dark:bg-slate-900";
+const field = "mt-2 block min-h-11 w-full rounded-2xl border border-input bg-card px-3 py-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary";
 
 export function PaymentForm({ student, bulan, tahun, period, today }: {
   student: Student; bulan: number; tahun: number; period: string; today: string;
@@ -47,23 +47,23 @@ export function PaymentForm({ student, bulan, tahun, period, today }: {
   }
 
   return <>
-    <button type="button" onClick={() => { setMessage(""); dialog.current?.showModal(); }} className="min-h-11 rounded-2xl bg-neutral-900 px-4 py-2 font-semibold text-white shadow-[inset_2px_2px_5px_0px_rgba(0,0,0,0.5),inset_-2px_-2px_6px_1px_rgba(80,78,78,0.5)] transition hover:bg-black dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200" aria-label={`Catat pembayaran ${student.nama}`}>Catat</button>
-    <dialog ref={dialog} aria-labelledby={titleId} onCancel={(event) => { if (pending) event.preventDefault(); }} onClose={() => { if (saved) router.refresh(); }} className="m-auto max-h-[90dvh] w-[calc(100%-2rem)] max-w-lg overflow-y-auto rounded-3xl border border-white bg-white/90 p-6 text-slate-900 shadow-[0_24px_60px_-20px_rgba(37,99,235,0.3)] backdrop-blur-xl backdrop:bg-black/50 dark:border-slate-700/60 dark:bg-slate-900/90 dark:text-slate-100">
+    <button type="button" onClick={() => { setMessage(""); dialog.current?.showModal(); }} className="min-h-11 rounded-2xl bg-neutral-900 px-4 py-2 font-semibold text-white shadow-[inset_2px_2px_5px_0px_rgba(0,0,0,0.5),inset_-2px_-2px_6px_1px_rgba(80,78,78,0.5)] transition hover:bg-black" aria-label={`Catat pembayaran ${student.nama}`}>Catat</button>
+    <dialog ref={dialog} aria-labelledby={titleId} onCancel={(event) => { if (pending) event.preventDefault(); }} onClose={() => { if (saved) router.refresh(); }} className="m-auto max-h-[90dvh] w-[calc(100%-2rem)] max-w-lg overflow-y-auto rounded-3xl border border-white bg-card/90 p-6 text-foreground shadow-[0_24px_60px_-20px_rgba(37,99,235,0.3)] backdrop-blur-xl backdrop:bg-black/50">
       <h2 id={titleId} className="text-xl font-semibold">Catat pembayaran</h2>
       <p className="mt-2 break-words font-medium">{student.nama}</p>
-      <p className="mt-1 text-slate-500 dark:text-slate-400">{period}</p>
+      <p className="mt-1 text-muted-foreground">{period}</p>
       <form onSubmit={(event) => { event.preventDefault(); submit(new FormData(event.currentTarget)); }} className="mt-6 space-y-4">
         <fieldset disabled={pending || saved} className="space-y-4 disabled:opacity-60">
           <label className="block text-sm font-medium">Jumlah (RM)<input className={field} name="jumlah" type="number" min="0.01" step="0.01" required defaultValue={student.yuran_per_bulan} /></label>
           <label className="block text-sm font-medium">Tanggal bayar<input className={field} name="tanggal_bayar" type="date" required defaultValue={today} /></label>
           <label className="block text-sm font-medium">Bukti pembayaran<input className={`${field} text-sm`} name="bukti" type="file" accept="image/*,application/pdf" required aria-describedby={`${titleId}-hint`} /></label>
-          <p id={`${titleId}-hint`} className="text-sm text-slate-500 dark:text-slate-400">Foto atau PDF, maksimal 10 MB.</p>
+          <p id={`${titleId}-hint`} className="text-sm text-muted-foreground">Foto atau PDF, maksimal 10 MB.</p>
           <label className="block text-sm font-medium">Catatan (opsional)<textarea className={field} name="catatan" rows={3} /></label>
         </fieldset>
-        {message && <p role={saved ? "status" : "alert"} className={`rounded-2xl p-3 text-sm ${saved ? "bg-emerald-100 text-emerald-900 dark:bg-emerald-950 dark:text-emerald-200" : "bg-red-50 text-red-800 dark:bg-red-950 dark:text-red-200"}`}>{message}</p>}
+        {message && <p role={saved ? "status" : "alert"} className={`rounded-2xl p-3 text-sm ${saved ? "bg-emerald-100 text-emerald-900" : "bg-red-50 text-red-800"}`}>{message}</p>}
         <div className="flex flex-wrap justify-end gap-3 pt-2">
-          <button type="button" onClick={close} disabled={pending} className="min-h-11 rounded-2xl border border-slate-300 px-4 py-2 disabled:opacity-60 dark:border-slate-700">{saved ? "Selesai" : "Batal"}</button>
-          {!saved && <button disabled={pending} className="min-h-11 rounded-2xl bg-neutral-900 px-5 py-2 font-semibold text-white shadow-[inset_2px_2px_5px_0px_rgba(0,0,0,0.5),inset_-2px_-2px_6px_1px_rgba(80,78,78,0.5)] transition hover:bg-black disabled:opacity-60 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200">{pending ? "Menyimpan…" : "Simpan"}</button>}
+          <button type="button" onClick={close} disabled={pending} className="min-h-11 rounded-2xl border border-input px-4 py-2 disabled:opacity-60">{saved ? "Selesai" : "Batal"}</button>
+          {!saved && <button disabled={pending} className="min-h-11 rounded-2xl bg-neutral-900 px-5 py-2 font-semibold text-white shadow-[inset_2px_2px_5px_0px_rgba(0,0,0,0.5),inset_-2px_-2px_6px_1px_rgba(80,78,78,0.5)] transition hover:bg-black disabled:opacity-60">{pending ? "Menyimpan…" : "Simpan"}</button>}
         </div>
       </form>
     </dialog>

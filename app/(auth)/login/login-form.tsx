@@ -66,35 +66,32 @@ export function LoginForm() {
 
   return (
     <div className="mt-8 space-y-6">
-      <div className="rounded-2xl border border-emerald-300 bg-emerald-50/80 p-5 dark:border-emerald-800 dark:bg-emerald-950/40">
+      <div className="rounded-2xl border border-emerald-300 bg-emerald-50/80 p-5">
         <div className="flex items-center justify-between">
-          <p className="text-xs font-bold uppercase tracking-wider text-emerald-900 dark:text-emerald-300">
+          <p className="text-xs font-bold uppercase tracking-wider text-emerald-900">
             Akses Demo Instan (1-Klik Masuk)
           </p>
-          <span className="inline-block rounded-full bg-emerald-200 px-2.5 py-0.5 text-[10px] font-semibold text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200">
+          <span className="inline-block rounded-full bg-emerald-200 px-2.5 py-0.5 text-[10px] font-semibold text-emerald-800">
             Tersedia
           </span>
         </div>
-        <p className="mt-1 text-xs text-slate-600 dark:text-slate-400">
-          Pilih salah satu peran di bawah untuk langsung mencoba aplikasi tanpa
-          perlu mengetik:
+        <p className="mt-1 text-xs text-muted-foreground">
+          Pilih salah satu peran di bawah untuk langsung mencoba aplikasi tanpa perlu mengetik:
         </p>
         <div className="mt-4 grid gap-2.5 sm:grid-cols-3">
           {demoRoles.map((d) => (
-            <button
-              key={d.role}
-              type="button"
-              disabled={isLoading}
+            <button key={d.role}
+              type="button" disabled={isLoading}
               onClick={() => handleInstantDemo(d.role)}
-              className="flex flex-col items-center justify-center rounded-xl border border-emerald-300 bg-white p-3 text-center shadow-xs transition hover:bg-emerald-100 active:scale-[0.98] dark:border-emerald-700 dark:bg-slate-900 dark:hover:bg-slate-800 disabled:opacity-60"
+              className="flex flex-col items-center justify-center rounded-xl border border-emerald-300 bg-card p-3 text-center shadow-xs transition hover:bg-emerald-100 active:scale-[0.98] disabled:opacity-60"
             >
-              <span className="text-xs font-bold text-emerald-950 dark:text-emerald-300">
+              <span className="text-xs font-bold text-emerald-950">
                 {d.title}
               </span>
-              <span className="mt-0.5 text-[11px] text-slate-600 dark:text-slate-400">
+              <span className="mt-0.5 text-[11px] text-muted-foreground">
                 {d.desc}
               </span>
-              <span className="mt-2 rounded-lg bg-emerald-800 px-2.5 py-1 text-[11px] font-medium text-white dark:bg-emerald-700">
+              <span className="mt-2 rounded-lg bg-emerald-800 px-2.5 py-1 text-[11px] font-medium text-white">
                 {d.cta}
               </span>
             </button>
@@ -104,10 +101,10 @@ export function LoginForm() {
 
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-slate-200 dark:border-slate-800" />
+          <div className="w-full border-t border-border" />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-white px-3 text-slate-500 dark:bg-slate-950 dark:text-slate-400">
+          <span className="bg-card px-3 text-muted-foreground">
             Atau masuk manual dengan email
           </span>
         </div>
@@ -116,43 +113,30 @@ export function LoginForm() {
       <form action={action} className="space-y-5" aria-busy={isLoading}>
         <div>
           <div className="mb-1.5 flex items-center justify-between">
-            <span className="text-xs font-semibold text-gray-700 dark:text-slate-300">
+            <span className="text-xs font-semibold text-foreground">
               Email
             </span>
-            <div className="flex gap-1.5 text-xs text-slate-500">
-              <button
-                type="button"
-                onClick={() => setDemo("admin@yuran.demo", "admin12345")}
-                className="underline hover:text-blue-700 dark:hover:text-blue-300"
+            <div className="flex gap-1.5 text-xs text-muted-foreground">
+              <button type="button" onClick={() => setDemo("admin@yuran.demo", "admin12345")}
+                className="underline hover:text-primary"
               >
                 Isi Admin
               </button>
               <span>·</span>
-              <button
-                type="button"
-                onClick={() => setDemo("staff@yuran.demo", "staff12345")}
-                className="underline hover:text-blue-700 dark:hover:text-blue-300"
+              <button type="button" onClick={() => setDemo("staff@yuran.demo", "staff12345")}
+                className="underline hover:text-primary"
               >
                 Isi Staff
               </button>
               <span>·</span>
-              <button
-                type="button"
-                onClick={() => setDemo("ortu@yuran.demo", "ortu12345")}
-                className="underline hover:text-blue-700 dark:hover:text-blue-300"
+              <button type="button" onClick={() => setDemo("ortu@yuran.demo", "ortu12345")}
+                className="underline hover:text-primary"
               >
                 Isi Ortu
               </button>
             </div>
           </div>
-          <Input
-            id="email"
-            name="email"
-            type="email"
-            autoComplete="email"
-            required
-            placeholder="admin@yuran.demo"
-            leftIcon={<Mail />}
+          <Input id="email" name="email" type="email" autoComplete="email" required placeholder="admin@yuran.demo" leftIcon={<Mail />}
             disabled={isLoading}
             value={email}
             onChange={setEmail}
@@ -160,26 +144,17 @@ export function LoginForm() {
         </div>
 
         <div>
-          <Input
-            id="password"
-            name="password"
-            label="Kata sandi"
-            type={revealPassword ? "text" : "password"}
-            autoComplete="current-password"
-            required
-            placeholder="••••••••"
-            leftIcon={<Lock />}
+          <Input id="password" name="password" label="Kata sandi" type={revealPassword ? "text" : "password"}
+            autoComplete="current-password" required placeholder="••••••••" leftIcon={<Lock />}
             rightIcon={
-              <button
-                type="button"
-                disabled={isLoading}
+              <button type="button" disabled={isLoading}
                 onClick={() => setRevealPassword((prev) => !prev)}
                 aria-label={
                   revealPassword
                     ? "Sembunyikan kata sandi"
                     : "Tampilkan kata sandi"
                 }
-                className="text-gray-400 outline-none transition-colors hover:text-gray-600 focus-visible:text-gray-600 dark:text-slate-500 dark:hover:text-slate-300 dark:focus-visible:text-slate-300"
+                className="text-muted-foreground outline-none transition-colors hover:text-muted-foreground focus-visible:text-muted-foreground"
               >
                 {revealPassword ? <EyeOff /> : <Eye />}
               </button>
@@ -191,21 +166,14 @@ export function LoginForm() {
         </div>
 
         {state.error && (
-          <p
-            role="alert"
-            className="rounded-2xl border border-red-300 bg-red-50 p-4 text-sm text-red-900 dark:border-red-800 dark:bg-red-950 dark:text-red-200"
+          <p role="alert" className="rounded-2xl border border-red-300 bg-red-50 p-4 text-sm text-red-900"
           >
             {state.error}
           </p>
         )}
 
-        <StatefulButton
-          type="submit"
-          size="lg"
-          state={submitState}
-          loadingText="Sedang memproses…"
-          errorText="Coba lagi"
-          disabled={isLoading}
+        <StatefulButton type="submit" size="lg" state={submitState}
+          loadingText="Sedang memproses…" errorText="Coba lagi" disabled={isLoading}
           className="w-full"
         >
           Masuk dengan Email

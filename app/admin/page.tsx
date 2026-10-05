@@ -76,23 +76,23 @@ function tanggalKeTimestamp(tanggal: string): number {
 function LencanaStatus({ status }: { status: TalebeRecord["status"] }) {
   if (status === "Lunas") {
     return (
-      <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-700 border border-emerald-200/80 dark:bg-emerald-950/80 dark:text-emerald-300 dark:border-emerald-800/50">
-        <CheckCircle2 className="size-3 text-emerald-600 dark:text-emerald-400" />
+      <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-700 border border-emerald-200/80">
+        <CheckCircle2 className="size-3 text-emerald-600" />
         <span>Lunas</span>
       </span>
     );
   }
   if (status === "Tunggakan") {
     return (
-      <span className="inline-flex items-center gap-1 rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-semibold text-red-800 border border-red-200 dark:bg-red-950/70 dark:text-red-300 dark:border-red-800">
-        <AlertCircle className="size-3 text-red-700 dark:text-red-400" />
+      <span className="inline-flex items-center gap-1 rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-semibold text-red-800 border border-red-200">
+        <AlertCircle className="size-3 text-red-700" />
         <span>Tunggakan</span>
       </span>
     );
   }
   return (
-    <span className="inline-flex items-center gap-1 rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-semibold text-yellow-800 border border-yellow-200 dark:bg-yellow-950/70 dark:text-yellow-300 dark:border-yellow-800">
-      <Clock className="size-3 text-yellow-700 dark:text-yellow-400" />
+    <span className="inline-flex items-center gap-1 rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-semibold text-yellow-800 border border-yellow-200">
+      <Clock className="size-3 text-yellow-700" />
       <span>Sebagian</span>
     </span>
   );
@@ -102,15 +102,15 @@ function LencanaStatus({ status }: { status: TalebeRecord["status"] }) {
 function LencanaStatusSiswa({ status }: { status: TalebeRecord["status"] }) {
   if (status === "Lunas") {
     return (
-      <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-700 border border-emerald-200/80 dark:bg-emerald-950/80 dark:text-emerald-300 dark:border-emerald-800/50">
-        <CheckCircle2 className="size-3 text-emerald-600 dark:text-emerald-400" />
+      <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-700 border border-emerald-200/80">
+        <CheckCircle2 className="size-3 text-emerald-600" />
         <span>Lunas</span>
       </span>
     );
   }
   return (
-    <span className="inline-flex items-center gap-1 rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-semibold text-red-800 border border-red-200 dark:bg-red-950/70 dark:text-red-300 dark:border-red-800">
-      <AlertCircle className="size-3 text-red-700 dark:text-red-400" />
+    <span className="inline-flex items-center gap-1 rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-semibold text-red-800 border border-red-200">
+      <AlertCircle className="size-3 text-red-700" />
       <span>{status}</span>
     </span>
   );
@@ -119,7 +119,7 @@ function LencanaStatusSiswa({ status }: { status: TalebeRecord["status"] }) {
 /** Lencana keaktifan siswa. */
 function LencanaAktif({ aktif }: { aktif: boolean }) {
   return (
-    <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${aktif ? "bg-emerald-50 text-emerald-700 border border-emerald-200/60 dark:bg-emerald-950/80 dark:text-emerald-300 dark:border-emerald-800/50" : "bg-slate-100 text-slate-500 border border-slate-200/60 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700"}`}>
+    <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${aktif ? "bg-emerald-50 text-emerald-700 border border-emerald-200/60" : "bg-muted text-muted-foreground border border-border/60"}`}>
       {aktif ? "Aktif" : "Tidak Aktif"}
     </span>
   );
@@ -147,8 +147,8 @@ function NamaTalebe({ nama }: { nama: string }) {
   const patronimik = m ? `${m[2].toLowerCase()} ${m[3].trim()}` : null;
   return (
     <>
-      <div className="font-semibold text-slate-900 dark:text-slate-100">{namaUtama}</div>
-      {patronimik && <div className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{patronimik}</div>}
+      <div className="font-semibold text-foreground">{namaUtama}</div>
+      {patronimik && <div className="text-xs text-muted-foreground mt-0.5">{patronimik}</div>}
     </>
   );
 }
@@ -451,10 +451,10 @@ function AdminContent() {
           header: "ID & No. Transaksi",
           cell: ({ row }) => (
             <div className="whitespace-nowrap">
-              <div className="font-mono text-xs font-semibold text-slate-900 dark:text-slate-200">
+              <div className="font-mono text-xs font-semibold text-foreground">
                 {row.original.noTransaksi}
               </div>
-              <div className="text-[11px] text-slate-400 font-mono dark:text-slate-500">{row.original.id}</div>
+              <div className="text-[11px] text-muted-foreground font-mono">{row.original.id}</div>
             </div>
           ),
           sortFn: "alphanumeric",
@@ -467,7 +467,7 @@ function AdminContent() {
         columnHelper.accessor("grup", {
           header: ({ column }) => <DataTableColumnHeader column={column} title="Grup" />,
           cell: ({ row }) => (
-            <span className="whitespace-nowrap text-xs font-medium text-blue-700 dark:text-blue-300">
+            <span className="whitespace-nowrap text-xs font-medium text-primary">
               {row.original.grup}
             </span>
           ),
@@ -476,7 +476,7 @@ function AdminContent() {
         columnHelper.accessor("yuranBulanan", {
           header: ({ column }) => <DataTableColumnHeader column={column} title="Yuran Bulanan" align="right" />,
           cell: ({ row }) => (
-            <div className="whitespace-nowrap text-right font-medium text-slate-900 dark:text-slate-100">
+            <div className="whitespace-nowrap text-right font-medium text-foreground">
               {formatRM(row.original.yuranBulanan)}
             </div>
           ),
@@ -488,11 +488,11 @@ function AdminContent() {
             const baki = row.original.yuranBulanan - row.original.jumlahBayar;
             return (
               <div className="whitespace-nowrap text-right">
-                <div className="font-semibold text-slate-900 dark:text-slate-100">
+                <div className="font-semibold text-foreground">
                   {formatRM(row.original.jumlahBayar)}
                 </div>
                 {baki > 0 && (
-                  <div className="text-[11px] text-rose-600 font-medium dark:text-rose-400">
+                  <div className="text-[11px] text-rose-600 font-medium">
                     Sisa: {formatRM(baki)}
                   </div>
                 )}
@@ -504,7 +504,7 @@ function AdminContent() {
         columnHelper.accessor("metodeBayar", {
           header: "Metode Pembayaran",
           cell: ({ row }) => (
-            <span className="whitespace-nowrap text-xs text-slate-600 dark:text-slate-300">
+            <span className="whitespace-nowrap text-xs text-muted-foreground">
               {row.original.metodeBayar}
             </span>
           ),
@@ -514,7 +514,7 @@ function AdminContent() {
           id: "tanggal",
           header: ({ column }) => <DataTableColumnHeader column={column} title="Tanggal" />,
           cell: ({ row }) => (
-            <span className="whitespace-nowrap text-xs text-slate-500 dark:text-slate-400">
+            <span className="whitespace-nowrap text-xs text-muted-foreground">
               {row.original.tanggal}
             </span>
           ),
@@ -530,10 +530,7 @@ function AdminContent() {
           header: () => <span className="block text-center">Tindakan</span>,
           cell: ({ row }) => (
             <div className="text-center" onClick={(e) => e.stopPropagation()}>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => openRecordModal(row.original)}
+              <Button variant="ghost" size="icon" onClick={() => openRecordModal(row.original)}
                 title="Lihat Detail Kuitansi"
               >
                 <Eye className="size-4" />
@@ -552,7 +549,7 @@ function AdminContent() {
         columnHelper.accessor("id", {
           header: "ID Siswa",
           cell: ({ row }) => (
-            <div className="whitespace-nowrap font-mono text-xs font-semibold text-slate-900 dark:text-slate-200">
+            <div className="whitespace-nowrap font-mono text-xs font-semibold text-foreground">
               {row.original.id}
             </div>
           ),
@@ -566,7 +563,7 @@ function AdminContent() {
         columnHelper.accessor("grup", {
           header: ({ column }) => <DataTableColumnHeader column={column} title="Grup" />,
           cell: ({ row }) => (
-            <span className="whitespace-nowrap text-xs font-medium text-blue-700 dark:text-blue-300">
+            <span className="whitespace-nowrap text-xs font-medium text-primary">
               {row.original.grup}
             </span>
           ),
@@ -575,7 +572,7 @@ function AdminContent() {
         columnHelper.accessor("yuranBulanan", {
           header: ({ column }) => <DataTableColumnHeader column={column} title="Yuran Bulanan" align="right" />,
           cell: ({ row }) => (
-            <div className="whitespace-nowrap text-right font-medium text-slate-900 dark:text-slate-100">
+            <div className="whitespace-nowrap text-right font-medium text-foreground">
               {formatRM(row.original.yuranBulanan)}
             </div>
           ),
@@ -610,21 +607,19 @@ function AdminContent() {
   // Keadaan kosong tabel (carian/penapis tidak sepadan)
   const emptyState = (
     <div className="flex flex-col items-center justify-center py-12">
-      <div className="rounded-full bg-slate-100 p-3 text-slate-400 dark:bg-slate-800 dark:text-slate-500">
+      <div className="rounded-full bg-muted p-3 text-muted-foreground">
         <Search className="size-6" />
       </div>
-      <p className="mt-3 text-sm font-semibold text-slate-900 dark:text-slate-100">Tidak ada data ditemukan</p>
-      <p className="text-xs text-slate-500 dark:text-slate-400">
+      <p className="mt-3 text-sm font-semibold text-foreground">Tidak ada data ditemukan</p>
+      <p className="text-xs text-muted-foreground">
         Coba ubah kata kunci pencarian atau pengaturan filter grup/status Anda.
       </p>
-      <button
-        type="button"
-        onClick={() => {
+      <button type="button" onClick={() => {
           setSearchQuery("");
           setSelectedGroup("Semua");
           setSelectedStatus("Semua");
         }}
-        className="mt-4 text-xs font-semibold text-blue-700 hover:underline dark:text-blue-300"
+        className="mt-4 text-xs font-semibold text-primary hover:underline"
       >
         Atur Ulang Filter
       </button>
@@ -648,11 +643,11 @@ function AdminContent() {
     return (
       <div className="space-y-8">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">{title}</h1>
-          <p className="mt-1 text-sm text-slate-500">Bahagian ini dalam pembangunan.</p>
+          <h1 className="text-2xl font-bold text-foreground">{title}</h1>
+          <p className="mt-1 text-sm text-muted-foreground">Bahagian ini dalam pembangunan.</p>
         </div>
-        <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-12 text-center">
-          <p className="text-sm text-slate-500">
+        <div className="rounded-2xl border border-dashed border-input bg-card p-12 text-center">
+          <p className="text-sm text-muted-foreground">
             Modul {title} akan disambungkan ke data sebenar tidak lama lagi.
           </p>
         </div>
@@ -685,8 +680,7 @@ function AdminContent() {
   const quickActions = (
             <div className="flex flex-col sm:flex-row sm:items-center gap-2.5 sm:gap-3 w-full sm:w-auto">
               <div className="w-full sm:w-auto">
-                <MorphSelect
-                  value={selectedMonth}
+                <MorphSelect value={selectedMonth}
                   onValueChange={setSelectedMonth}
                   className="w-full text-xs font-semibold sm:w-auto sm:min-w-48"
                 >
@@ -702,11 +696,7 @@ function AdminContent() {
               </div>
 
               <div className="flex items-center gap-2 w-full sm:w-auto">
-                <Button
-                  variant="secondary"
-                  size="sm"
-                  className="flex-1 sm:flex-initial"
-                  onClick={() => {
+                <Button variant="secondary" size="sm" className="flex-1 sm:flex-initial" onClick={() => {
                     const header = ["ID", "No Transaksi", "Nama", "Grup", "Yuran Bulanan (RM)", "Jumlah Bayar (RM)", "Bulan", "Tanggal", "Metode", "Status"];
                     const rows = filteredRecords.map((r) => [
                       r.id, r.noTransaksi, r.nama, r.grup,
@@ -729,23 +719,14 @@ function AdminContent() {
                   <span>Ekspor</span>
                 </Button>
 
-                <Button
-                  variant="secondary"
-                  size="sm"
-                  className="flex-1 sm:flex-initial"
-                  onClick={() => setShowImportModal(true)}
+                <Button variant="secondary" size="sm" className="flex-1 sm:flex-initial" onClick={() => setShowImportModal(true)}
                 >
                   <Upload className="size-3.5" />
                   <span>Impor</span>
                 </Button>
               </div>
 
-              <Button
-                variant="primary"
-                size="sm"
-                ripple
-                className="w-full sm:w-auto whitespace-nowrap"
-                onClick={() => setShowBayarModal(true)}
+              <Button variant="primary" size="sm" ripple className="w-full sm:w-auto whitespace-nowrap" onClick={() => setShowBayarModal(true)}
               >
                 <Plus className="size-4" />
                 <span>Catat Pembayaran</span>
@@ -757,73 +738,59 @@ function AdminContent() {
     <div className="space-y-6 sm:space-y-8 w-full min-w-0 max-w-full">
       {/* 1. Hero kewangan (tab utama) / header biasa (tab lain) */}
       {isDashboard ? (
-        <FinanceHero
-          name="Admin"
-          subtitle="Dapatkan gambaran jelas tentang kinerja keuangan dan transaksi terkini."
-          actions={quickActions}
+        <FinanceHero name="Admin" subtitle="Dapatkan gambaran jelas tentang kinerja keuangan dan transaksi terkini." actions={quickActions}
         >
-          <FinanceKpi
-            icon={TrendingUp}
-            tone="violet"
-            value={formatRM(totalPemasukan)}
+          <FinanceKpi icon={TrendingUp}
+            tone="violet" value={formatRM(totalPemasukan)}
             label="Total pemasukan bulan ini"
           >
             <div className="flex items-center gap-2">
-              <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-semibold text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300">
+              <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-semibold text-emerald-700">
                 +12.4%
               </span>
-              <span className="text-xs text-slate-500 dark:text-slate-400">dibanding bulan lalu</span>
+              <span className="text-xs text-muted-foreground">dibanding bulan lalu</span>
             </div>
           </FinanceKpi>
-          <FinanceKpi
-            icon={Target}
-            tone="green"
-            value={formatRM(totalTarget)}
+          <FinanceKpi icon={Target}
+            tone="green" value={formatRM(totalTarget)}
             label="Target pemasukan bulanan"
           >
-            <p className="text-xs text-slate-500 dark:text-slate-400">Target dasar: 60 Siswa × RM 500</p>
+            <p className="text-xs text-muted-foreground">Target dasar: 60 Siswa × RM 500</p>
           </FinanceKpi>
-          <FinanceKpi
-            icon={AlertCircle}
-            tone="pink"
-            value={formatRM(totalTunggakan)}
+          <FinanceKpi icon={AlertCircle}
+            tone="pink" value={formatRM(totalTunggakan)}
             label="Total tunggakan"
           >
-            <span className="inline-flex w-fit rounded-full bg-rose-100 px-2.5 py-1 text-xs font-semibold text-rose-700 dark:bg-rose-500/15 dark:text-rose-300">
+            <span className="inline-flex w-fit rounded-full bg-rose-100 px-2.5 py-1 text-xs font-semibold text-rose-700">
               11 Siswa belum bayar
             </span>
           </FinanceKpi>
-          <FinanceKpi
-            icon={PieChart}
-            tone="blue"
-            value={`${persentaseKutipan.toFixed(1)}%`}
+          <FinanceKpi icon={PieChart}
+            tone="blue" value={`${persentaseKutipan.toFixed(1)}%`}
             label="Tingkat penagihan yuran"
           >
-            <div
-              className="h-1.5 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700"
-              role="progressbar"
-              aria-valuenow={81.7}
+            <div className="h-1.5 overflow-hidden rounded-full bg-muted" role="progressbar" aria-valuenow={81.7}
               aria-valuemin={0}
               aria-valuemax={100}
               aria-label="Kemajuan penagihan"
             >
               <div className="h-full rounded-full bg-emerald-500" style={{ width: "81.7%" }} />
             </div>
-            <p className="mt-1.5 text-xs text-slate-500 dark:text-slate-400">49/60 Lunas</p>
+            <p className="mt-1.5 text-xs text-muted-foreground">49/60 Lunas</p>
           </FinanceKpi>
         </FinanceHero>
       ) : (
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between w-full min-w-0">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-foreground">
               {headerTitle}
             </h1>
-            <span className="inline-flex items-center rounded-md bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700 border border-blue-200/80 dark:bg-blue-950/80 dark:text-blue-300 dark:border-blue-800/50">
+            <span className="inline-flex items-center rounded-md bg-primary/10 px-2.5 py-1 text-xs font-semibold text-primary border border-primary/30">
               Yuran Bulanan
             </span>
           </div>
-          <p className="mt-1 text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+          <p className="mt-1 text-xs sm:text-sm text-muted-foreground">
             {headerDesc}
           </p>
         </div>
@@ -835,32 +802,32 @@ function AdminContent() {
       {/* Ringkasan Aliran Kas (tab aliran-kas sahaja) */}
       {isAliranKas && (
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-5 w-full min-w-0">
-        <div className="rounded-xl sm:rounded-2xl border border-slate-200/70 bg-white/80 backdrop-blur p-4 sm:p-5 shadow-xs dark:border-slate-800 dark:bg-slate-900/70 min-w-0">
-          <p className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Jumlah Masuk</p>
-          <p className="mt-2 text-xl sm:text-2xl font-bold text-emerald-600 dark:text-emerald-400">RM 24,500</p>
-          <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Oktober 2026 · 49 transaksi</p>
+        <div className="rounded-xl sm:rounded-2xl border border-border/70 bg-card/80 backdrop-blur p-4 sm:p-5 shadow-xs min-w-0">
+          <p className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-muted-foreground">Jumlah Masuk</p>
+          <p className="mt-2 text-xl sm:text-2xl font-bold text-emerald-600">RM 24,500</p>
+          <p className="mt-1 text-xs text-muted-foreground">Oktober 2026 · 49 transaksi</p>
         </div>
-        <div className="rounded-xl sm:rounded-2xl border border-slate-200/70 bg-white/80 backdrop-blur p-4 sm:p-5 shadow-xs dark:border-slate-800 dark:bg-slate-900/70 min-w-0">
-          <p className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Jumlah Keluar</p>
-          <p className="mt-2 text-xl sm:text-2xl font-bold text-rose-600 dark:text-rose-400">RM 3,200</p>
-          <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Oktober 2026 · pengeluaran operasional</p>
+        <div className="rounded-xl sm:rounded-2xl border border-border/70 bg-card/80 backdrop-blur p-4 sm:p-5 shadow-xs min-w-0">
+          <p className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-muted-foreground">Jumlah Keluar</p>
+          <p className="mt-2 text-xl sm:text-2xl font-bold text-rose-600">RM 3,200</p>
+          <p className="mt-1 text-xs text-muted-foreground">Oktober 2026 · pengeluaran operasional</p>
         </div>
-        <div className="rounded-xl sm:rounded-2xl border border-slate-200/70 bg-white/80 backdrop-blur p-4 sm:p-5 shadow-xs dark:border-slate-800 dark:bg-slate-900/70 min-w-0">
-          <p className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Saldo Bersih</p>
-          <p className="mt-2 text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">RM 21,300</p>
-          <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Selisih masuk dan keluar bulan ini</p>
+        <div className="rounded-xl sm:rounded-2xl border border-border/70 bg-card/80 backdrop-blur p-4 sm:p-5 shadow-xs min-w-0">
+          <p className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-muted-foreground">Saldo Bersih</p>
+          <p className="mt-2 text-xl sm:text-2xl font-bold text-foreground">RM 21,300</p>
+          <p className="mt-1 text-xs text-muted-foreground">Selisih masuk dan keluar bulan ini</p>
         </div>
       </div>
       )}
 
       {/* Daftar Kuitansi (tab kuitansi sahaja) */}
       {isResit && (
-      <div className="rounded-xl sm:rounded-2xl border border-slate-200/70 bg-white/80 backdrop-blur shadow-xs overflow-hidden dark:border-slate-800 dark:bg-slate-900/70 w-full min-w-0">
-        <div className="p-4 sm:p-5 border-b border-slate-100 dark:border-slate-800">
-          <h2 className="text-base font-bold text-slate-900 dark:text-slate-100">Kuitansi Terkini</h2>
-          <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Dokumen bukti pembayaran yang dimuat naik.</p>
+      <div className="rounded-xl sm:rounded-2xl border border-border/70 bg-card/80 backdrop-blur shadow-xs overflow-hidden w-full min-w-0">
+        <div className="p-4 sm:p-5 border-b border-border">
+          <h2 className="text-base font-bold text-foreground">Kuitansi Terkini</h2>
+          <p className="mt-1 text-xs text-muted-foreground">Dokumen bukti pembayaran yang dimuat naik.</p>
         </div>
-        <ul className="divide-y divide-slate-100 dark:divide-slate-800">
+        <ul className="divide-y divide-border">
           {[
             { no: "R-2026-1042", siswa: "Ahmad bin Ali", jumlah: "RM 500", tarikh: "02 Okt 2026" },
             { no: "R-2026-1041", siswa: "Siti binti Hassan", jumlah: "RM 500", tarikh: "02 Okt 2026" },
@@ -868,10 +835,10 @@ function AdminContent() {
           ].map((r) => (
             <li key={r.no} className="flex items-center justify-between p-4 sm:p-5">
               <div>
-                <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">{r.no} · {r.siswa}</p>
-                <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">{r.tarikh}</p>
+                <p className="text-sm font-semibold text-foreground">{r.no} · {r.siswa}</p>
+                <p className="mt-0.5 text-xs text-muted-foreground">{r.tarikh}</p>
               </div>
-              <span className="text-sm font-bold text-slate-900 dark:text-white">{r.jumlah}</span>
+              <span className="text-sm font-bold text-foreground">{r.jumlah}</span>
             </li>
           ))}
         </ul>
@@ -885,8 +852,7 @@ function AdminContent() {
           <CartaTahunan />
         </div>
         <div className="min-w-0">
-          <PanelKemajuanGrup
-            grup={[
+          <PanelKemajuanGrup grup={[
               { nama: "Mevlana HE", terkumpul: 8500, sasaran: 10000 },
               { nama: "Razi HE", terkumpul: 8000, sasaran: 10000 },
               { nama: "Fatih HE", terkumpul: 8000, sasaran: 10000 },
@@ -897,34 +863,29 @@ function AdminContent() {
       )}
 
       {/* 4. Bagian Utama: Filter & Tabel Status Yuran Siswa */}
-      <div className="rounded-2xl border border-slate-200/70 bg-white/80 backdrop-blur shadow-xs overflow-hidden dark:border-slate-800 dark:bg-slate-900 w-full min-w-0">
+      <div className="rounded-2xl border border-border/70 bg-card/80 backdrop-blur shadow-xs overflow-hidden w-full min-w-0">
         {/* Toolbar Carian & Penapis */}
-        <div className="p-4 sm:p-5 border-b border-slate-100 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between bg-white dark:border-slate-800 dark:bg-slate-900 w-full min-w-0">
+        <div className="p-4 sm:p-5 border-b border-border flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between bg-card w-full min-w-0">
           {/* Carian Input */}
           <div className="relative flex-1 w-full max-w-full lg:max-w-md">
-            <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 size-4 text-slate-400 dark:text-slate-500" />
-            <input
-              type="text"
-              placeholder="Cari nama siswa, ID atau no. transaksi..."
-              value={searchQuery}
+            <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+            <input type="text" placeholder="Cari nama siswa, ID atau no. transaksi..." value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full rounded-xl border border-slate-300 bg-slate-50/50 py-2 pl-9 pr-4 text-sm text-slate-900 placeholder:text-slate-400 hover:border-slate-400 focus:border-blue-600 focus:bg-white focus:outline-hidden transition-all dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:bg-slate-900"
+              className="w-full rounded-xl border border-input bg-muted/50 py-2 pl-9 pr-4 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:bg-card focus:outline-hidden transition-all"
             />
           </div>
 
           {/* Kumpulan & Status Filter Controls */}
           <div className="flex flex-wrap items-center gap-2 w-full lg:w-auto">
             {/* Filter Kumpulan (Grup) */}
-            <div className="flex items-center gap-1 rounded-xl bg-slate-100 p-1 border border-slate-200/80 dark:bg-slate-800 dark:border-slate-700 max-w-full overflow-x-auto scrollbar-none">
+            <div className="flex items-center gap-1 rounded-xl bg-muted p-1 border border-border/80 max-w-full overflow-x-auto scrollbar-none">
               {(["Semua", "Mevlana HE", "Razi HE", "Fatih HE"] as const).map((group) => (
-                <button
-                  type="button"
-                  key={group}
+                <button type="button" key={group}
                   onClick={() => setSelectedGroup(group)}
                   className={`shrink-0 rounded-lg px-2.5 py-1 text-xs font-semibold transition-colors ${
                     selectedGroup === group
-                      ? "bg-white text-slate-900 shadow-2xs dark:bg-slate-700 dark:text-blue-300"
-                      : "text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100"
+                      ? "bg-card text-foreground shadow-2xs"
+                      : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
                   {group}
@@ -933,16 +894,14 @@ function AdminContent() {
             </div>
 
             {/* Filter Status Pembayaran */}
-            <div className="flex items-center gap-1 rounded-xl bg-slate-100 p-1 border border-slate-200/80 dark:bg-slate-800 dark:border-slate-700 max-w-full overflow-x-auto scrollbar-none">
+            <div className="flex items-center gap-1 rounded-xl bg-muted p-1 border border-border/80 max-w-full overflow-x-auto scrollbar-none">
               {(["Semua", "Lunas", "Tunggakan", "Sebagian"] as const).map((status) => (
-                <button
-                  type="button"
-                  key={status}
+                <button type="button" key={status}
                   onClick={() => setSelectedStatus(status)}
                   className={`shrink-0 rounded-lg px-2.5 py-1 text-xs font-semibold transition-colors ${
                     selectedStatus === status
-                      ? "bg-white text-slate-900 shadow-2xs dark:bg-slate-700 dark:text-blue-300"
-                      : "text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100"
+                      ? "bg-card text-foreground shadow-2xs"
+                      : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
                   {status}
@@ -953,103 +912,97 @@ function AdminContent() {
         </div>
 
         {/* Tabel Data_Talebe & Transaksi_Masuk */}
-        <DataTable
-          columns={isSiswa ? siswaColumns : transaksiColumns}
+        <DataTable columns={isSiswa ? siswaColumns : transaksiColumns}
           data={filteredRecords}
           onRowClick={openRecordModal}
           emptyState={emptyState}
         />
 
         {/* Footer Jadual / Paginasi Info */}
-        <div className="p-4 border-t border-slate-100 bg-slate-50/50 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500 dark:border-slate-800 dark:bg-slate-900/50 dark:text-slate-400">
+        <div className="p-4 border-t border-border bg-muted/50 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-muted-foreground">
           <p>
-            Menunjukkan <strong className="text-slate-900 dark:text-slate-200">{filteredRecords.length}</strong> dari{" "}
-            <strong className="text-slate-900 dark:text-slate-200">{records.length}</strong> catatan siswa untuk bulan{" "}
-            <strong className="text-slate-900 dark:text-slate-200">{selectedMonth}</strong>.
+            Menunjukkan <strong className="text-foreground">{filteredRecords.length}</strong> dari{" "}
+            <strong className="text-foreground">{records.length}</strong> catatan siswa untuk bulan{" "}
+            <strong className="text-foreground">{selectedMonth}</strong>.
           </p>
           <div className="flex items-center gap-2">
             <span className="inline-block size-2 rounded-full bg-green-500" />
-            <span className="font-medium text-slate-700 dark:text-slate-300">Tingkat Penagihan Saat Ini: {persentaseKutipan.toFixed(1)}%</span>
+            <span className="font-medium text-foreground">Tingkat Penagihan Saat Ini: {persentaseKutipan.toFixed(1)}%</span>
           </div>
         </div>
       </div>
 
       {/* 5. Modal / Dialog Detail Transaksi Siswa */}
       <CenterMorphModal open={recordOpen} onOpenChange={handleRecordOpenChange}>
-        <CenterMorphModalContent
-          ariaLabel="Detail Transaksi Siswa"
-          className="max-w-lg p-6"
+        <CenterMorphModalContent ariaLabel="Detail Transaksi Siswa" className="max-w-lg p-6"
         >
           {selectedRecord && (
             <>
-              <div className="border-b border-slate-100 pb-4 pr-10 dark:border-slate-800">
-                <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+              <div className="border-b border-border pb-4 pr-10">
+                <span className="text-xs font-bold uppercase tracking-wider text-emerald-600">
                   Kuitansi & Detail Yuran Siswa
                 </span>
-                <h3 className="text-lg font-bold text-slate-900 mt-0.5 dark:text-slate-100">{selectedRecord.nama}</h3>
-                <p className="text-xs text-slate-500 font-mono dark:text-slate-400">
+                <h3 className="text-lg font-bold text-foreground mt-0.5">{selectedRecord.nama}</h3>
+                <p className="text-xs text-muted-foreground font-mono">
                   {selectedRecord.noTransaksi} · {selectedRecord.id}
                 </p>
               </div>
 
             <div className="mt-5 space-y-4 text-sm">
-              <div className="grid grid-cols-2 gap-4 rounded-xl bg-slate-50 p-4 border border-slate-100 dark:bg-slate-800/60 dark:border-slate-800">
+              <div className="grid grid-cols-2 gap-4 rounded-xl bg-muted p-4 border border-border">
                 <div>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">Grup Asrama</p>
-                  <p className="font-semibold text-slate-900 mt-0.5 dark:text-slate-100">{selectedRecord.grup}</p>
+                  <p className="text-xs text-muted-foreground">Grup Asrama</p>
+                  <p className="font-semibold text-foreground mt-0.5">{selectedRecord.grup}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">Bulan Bayaran</p>
-                  <p className="font-semibold text-slate-900 mt-0.5 dark:text-slate-100">{selectedRecord.bulanDibayar}</p>
+                  <p className="text-xs text-muted-foreground">Bulan Bayaran</p>
+                  <p className="font-semibold text-foreground mt-0.5">{selectedRecord.bulanDibayar}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">Yuran Bulanan</p>
-                  <p className="font-semibold text-slate-900 mt-0.5 dark:text-slate-100">{formatRM(selectedRecord.yuranBulanan)}</p>
+                  <p className="text-xs text-muted-foreground">Yuran Bulanan</p>
+                  <p className="font-semibold text-foreground mt-0.5">{formatRM(selectedRecord.yuranBulanan)}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">Jumlah Dibayar</p>
-                  <p className="font-bold text-emerald-600 mt-0.5 dark:text-emerald-400">{formatRM(selectedRecord.jumlahBayar)}</p>
+                  <p className="text-xs text-muted-foreground">Jumlah Dibayar</p>
+                  <p className="font-bold text-emerald-600 mt-0.5">{formatRM(selectedRecord.jumlahBayar)}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">Metode Pembayaran</p>
-                  <p className="font-semibold text-slate-900 mt-0.5 dark:text-slate-100">{selectedRecord.metodeBayar}</p>
+                  <p className="text-xs text-muted-foreground">Metode Pembayaran</p>
+                  <p className="font-semibold text-foreground mt-0.5">{selectedRecord.metodeBayar}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">Tanggal Transaksi</p>
-                  <p className="font-semibold text-slate-900 mt-0.5 dark:text-slate-100">{selectedRecord.tanggal}</p>
+                  <p className="text-xs text-muted-foreground">Tanggal Transaksi</p>
+                  <p className="font-semibold text-foreground mt-0.5">{selectedRecord.tanggal}</p>
                 </div>
               </div>
 
-              <div className="flex items-center justify-between p-3 rounded-xl border border-slate-200 dark:border-slate-800">
-                <span className="text-xs font-medium text-slate-600 dark:text-slate-300">Status Pembayaran Semasa</span>
+              <div className="flex items-center justify-between p-3 rounded-xl border border-border">
+                <span className="text-xs font-medium text-muted-foreground">Status Pembayaran Semasa</span>
                 {selectedRecord.status === "Lunas" && (
-                  <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-700 border border-emerald-200/80 dark:bg-emerald-950/80 dark:text-emerald-300 dark:border-emerald-800/50">
+                  <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-700 border border-emerald-200/80">
                     Lunas Sepenuhnya
                   </span>
                 )}
                 {selectedRecord.status === "Tunggakan" && (
-                  <span className="rounded-full bg-red-100 px-3 py-1 text-xs font-bold text-red-800 border border-red-200 dark:bg-red-950/70 dark:text-red-300 dark:border-red-800">
+                  <span className="rounded-full bg-red-100 px-3 py-1 text-xs font-bold text-red-800 border border-red-200">
                     Tunggakan (Belum Bayar)
                   </span>
                 )}
                 {selectedRecord.status === "Sebagian" && (
-                  <span className="rounded-full bg-yellow-100 px-3 py-1 text-xs font-bold text-yellow-800 border border-yellow-200 dark:bg-yellow-950/70 dark:text-yellow-300 dark:border-yellow-800">
+                  <span className="rounded-full bg-yellow-100 px-3 py-1 text-xs font-bold text-yellow-800 border border-yellow-200">
                     Sebagian (Sisa: {formatRM(selectedRecord.yuranBulanan - selectedRecord.jumlahBayar)})
                   </span>
                 )}
               </div>
             </div>
 
-            <div className="mt-6 flex items-center justify-end gap-3 pt-4 border-t border-slate-100 dark:border-slate-800">
+            <div className="mt-6 flex items-center justify-end gap-3 pt-4 border-t border-border">
               <CenterMorphModalClose>
                 <Button variant="secondary" size="sm">
                   Tutup
                 </Button>
               </CenterMorphModalClose>
-              <ButtonLink
-                variant="primary"
-                size="sm"
-                href="/admin?tab=kwitansi"
+              <ButtonLink variant="primary" size="sm" href="/admin?tab=kwitansi"
               >
                 <Receipt className="size-3.5" />
                 <span>Urus Kwitansi</span>
@@ -1062,25 +1015,20 @@ function AdminContent() {
 
       {/* Modal Catat Bayaran */}
       <CenterMorphModal open={showBayarModal} onOpenChange={setShowBayarModal}>
-        <CenterMorphModalContent
-          ariaLabel="Catat Pembayaran Baru"
-          className="max-w-md p-6"
+        <CenterMorphModalContent ariaLabel="Catat Pembayaran Baru" className="max-w-md p-6"
         >
-            <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">Catat Pembayaran Baru</h2>
-            <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Catatan pembayaran yuran bulanan siswa.</p>
+            <h2 className="text-lg font-bold text-foreground">Catat Pembayaran Baru</h2>
+            <p className="mt-1 text-xs text-muted-foreground">Catatan pembayaran yuran bulanan siswa.</p>
             <div className="mt-4 space-y-4">
               <div>
-                <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Nama Siswa</label>
-                <Combobox
-                  items={daftarSiswa}
+                <label className="text-xs font-semibold text-foreground">Nama Siswa</label>
+                <Combobox items={daftarSiswa}
                   itemToStringValue={(s) => s.nama}
                   value={bayarSiswa}
                   onValueChange={setBayarSiswa}
                   className="mt-1"
                 >
-                  <ComboboxInput
-                    placeholder="Cari nama siswa..."
-                    className="rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 focus:border-blue-600 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-500"
+                  <ComboboxInput placeholder="Cari nama siswa..." className="rounded-xl border border-input bg-card px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
                   />
                   <ComboboxContent>
                     <ComboboxEmpty>Tidak ada siswa ditemukan.</ComboboxEmpty>
@@ -1101,9 +1049,8 @@ function AdminContent() {
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">Bulan</span>
-                  <MorphSelect
-                    value={bayarBulan}
+                  <span className="text-xs font-semibold text-foreground">Bulan</span>
+                  <MorphSelect value={bayarBulan}
                     onValueChange={setBayarBulan}
                     className="mt-1 w-full"
                   >
@@ -1118,12 +1065,10 @@ function AdminContent() {
                   </MorphSelect>
                 </div>
                 <div>
-                  <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Jumlah (RM)</label>
-                  <input
-                    type="number"
-                    value={bayarJumlah}
+                  <label className="text-xs font-semibold text-foreground">Jumlah (RM)</label>
+                  <input type="number" value={bayarJumlah}
                     onChange={(e) => setBayarJumlah(e.target.value)}
-                    className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 focus:border-blue-600 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
+                    className="mt-1 w-full rounded-xl border border-input bg-card px-3 py-2 text-sm text-foreground focus:border-primary focus:outline-none"
                   />
                 </div>
               </div>
@@ -1134,11 +1079,7 @@ function AdminContent() {
                   Batal
                 </Button>
               </CenterMorphModalClose>
-              <Button
-                variant="primary"
-                size="sm"
-                ripple
-                disabled={!bayarSiswa}
+              <Button variant="primary" size="sm" ripple disabled={!bayarSiswa}
                 onClick={() => {
                   if (!bayarSiswa) return;
                   const baru: TalebeRecord = {
@@ -1167,16 +1108,12 @@ function AdminContent() {
 
       {/* Modal Import Siswa */}
       <CenterMorphModal open={showImportModal} onOpenChange={handleImportOpenChange}>
-        <CenterMorphModalContent
-          ariaLabel="Impor Data Siswa"
-          className="max-w-lg p-6"
+        <CenterMorphModalContent ariaLabel="Impor Data Siswa" className="max-w-lg p-6"
         >
-            <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">Impor Data Siswa</h2>
-            <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+            <h2 className="text-lg font-bold text-foreground">Impor Data Siswa</h2>
+            <p className="mt-1 text-xs text-muted-foreground">
               Muat naik fail CSV mengikut template.{" "}
-              <button
-                type="button"
-                onClick={() => {
+              <button type="button" onClick={() => {
                   const tpl = "Nama,Grup,Kelas,Yuran Bulanan (RM),Aktif (Ya/Tidak),Sesi\n\"Ahmad Faiz bin Rosli\",\"Mevlana HE\",\"Tingkatan 1\",500,Ya,2026/2027\n";
                   const blob = new Blob(["\uFEFF" + tpl], { type: "text/csv;charset=utf-8" });
                   const url = URL.createObjectURL(blob);
@@ -1186,37 +1123,32 @@ function AdminContent() {
                   a.click();
                   URL.revokeObjectURL(url);
                 }}
-                className="font-semibold text-blue-700 hover:underline dark:text-blue-300"
+                className="font-semibold text-primary hover:underline"
               >
                 Muat turun template
               </button>
             </p>
             <div className="mt-4">
-              <FileUpload
-                value={uploadItems}
+              <FileUpload value={uploadItems}
                 onValueChange={setUploadItems}
                 onFilesAdded={handleImportFilesAdded}
                 onRemove={handleImportRemove}
                 onRetry={handleImportRetry}
-                accept=".csv"
-                multiple={false}
+                accept=".csv" multiple={false}
                 maxFiles={1}
-                variant="centered"
-                title="Seret & letak fail CSV di sini"
-                description="atau klik untuk pilih fail mengikut template"
-                browseLabel="Pilih Fail"
+                variant="centered" title="Seret & letak fail CSV di sini" description="atau klik untuk pilih fail mengikut template" browseLabel="Pilih Fail"
               />
               {importPreview.length > 0 && (
-                <div className="mt-3 max-h-48 overflow-y-auto rounded-xl border border-slate-200 dark:border-slate-800">
-                  <table className="w-full text-xs text-slate-700 dark:text-slate-300">
-                    <thead className="bg-slate-50 sticky top-0 dark:bg-slate-800 dark:text-slate-400">
+                <div className="mt-3 max-h-48 overflow-y-auto rounded-xl border border-border">
+                  <table className="w-full text-xs text-foreground">
+                    <thead className="bg-muted sticky top-0">
                       <tr>
                         <th className="px-3 py-2 text-left">Nama</th>
                         <th className="px-3 py-2 text-left">Grup</th>
                         <th className="px-3 py-2 text-right">Yuran</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+                    <tbody className="divide-y divide-border">
                       {importPreview.map((r) => (
                         <tr key={r.id}>
                           <td className="px-3 py-2">{r.nama}</td>
@@ -1235,11 +1167,7 @@ function AdminContent() {
                   Batal
                 </Button>
               </CenterMorphModalClose>
-              <Button
-                variant="primary"
-                size="sm"
-                ripple
-                disabled={importPreview.length === 0}
+              <Button variant="primary" size="sm" ripple disabled={importPreview.length === 0}
                 onClick={confirmImport}
               >
                 Import {importPreview.length > 0 ? `(${importPreview.length})` : ""}

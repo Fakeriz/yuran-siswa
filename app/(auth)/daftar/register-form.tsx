@@ -40,25 +40,18 @@ export function RegisterForm({
   const strength = passwordStrength(password);
   const showStrength = password.length > 0;
 
-  if (saved)
-    return (
-      <section
-        className="mt-8 rounded-2xl border border-emerald-300 p-5 dark:border-emerald-800"
-        role="status"
+  if (saved) return (
+      <section className="mt-8 rounded-2xl border border-emerald-300 p-5" role="status"
       >
         <h2 className="font-semibold">menunggu persetujuan</h2>
         <p className="mt-2">
-          Pendaftaran berhasil. Pengajuan anak akan diperiksa oleh admin atau
-          staf. Jika menerima email konfirmasi, konfirmasikan email sebelum
-          masuk.
+          Pendaftaran berhasil. Pengajuan anak akan diperiksa oleh admin atau staf. Jika menerima email konfirmasi, konfirmasikan email sebelum masuk.
         </p>
       </section>
     );
 
   return (
-    <form
-      className="mt-8 space-y-5"
-      aria-busy={pending}
+    <form className="mt-8 space-y-5" aria-busy={pending}
       onSubmit={(event) => {
         event.preventDefault();
         if (pending) return;
@@ -85,46 +78,24 @@ export function RegisterForm({
       }}
     >
       <fieldset disabled={pending} className="space-y-5 disabled:opacity-60">
-        <Input
-          label="Nama"
-          name="nama"
-          autoComplete="name"
-          required
-          placeholder="Nama lengkap"
-          leftIcon={<User />}
+        <Input label="Nama" name="nama" autoComplete="name" required placeholder="Nama lengkap" leftIcon={<User />}
         />
 
-        <Input
-          label="Email"
-          name="email"
-          type="email"
-          autoComplete="email"
-          required
-          placeholder="nama@email.com"
-          leftIcon={<Mail />}
+        <Input label="Email" name="email" type="email" autoComplete="email" required placeholder="nama@email.com" leftIcon={<Mail />}
         />
 
         <div>
-          <Input
-            label="Kata sandi"
-            name="password"
-            type={revealPassword ? "text" : "password"}
-            autoComplete="new-password"
-            required
-            minLength={8}
-            aria-describedby="password-hint"
-            placeholder="Minimal 8 karakter"
-            leftIcon={<Lock />}
+          <Input label="Kata sandi" name="password" type={revealPassword ? "text" : "password"}
+            autoComplete="new-password" required minLength={8}
+            aria-describedby="password-hint" placeholder="Minimal 8 karakter" leftIcon={<Lock />}
             rightIcon={
-              <button
-                type="button"
-                onClick={() => setRevealPassword((prev) => !prev)}
+              <button type="button" onClick={() => setRevealPassword((prev) => !prev)}
                 aria-label={
                   revealPassword
                     ? "Sembunyikan kata sandi"
                     : "Tampilkan kata sandi"
                 }
-                className="text-gray-400 outline-none transition-colors hover:text-gray-600 focus-visible:text-gray-600 dark:text-slate-500 dark:hover:text-slate-300 dark:focus-visible:text-slate-300"
+                className="text-muted-foreground outline-none transition-colors hover:text-muted-foreground focus-visible:text-muted-foreground"
               >
                 {revealPassword ? <EyeOff /> : <Eye />}
               </button>
@@ -136,12 +107,10 @@ export function RegisterForm({
             <div className="mt-2 flex flex-col gap-1.5 px-1">
               <div className="flex gap-1.5" aria-hidden>
                 {[0, 1, 2, 3].map((index) => (
-                  <span
-                    key={index}
-                    className="h-1 flex-1 overflow-hidden rounded-full bg-gray-200 dark:bg-slate-700"
+                  <span key={index}
+                    className="h-1 flex-1 overflow-hidden rounded-full bg-gray-200"
                   >
-                    <span
-                      className={`block h-full w-full origin-left rounded-full transition-transform duration-300 ${STRENGTH_COLORS[strength]}`}
+                    <span className={`block h-full w-full origin-left rounded-full transition-transform duration-300 ${STRENGTH_COLORS[strength]}`}
                       style={{
                         transform: `scaleX(${index < strength ? 1 : 0})`,
                       }}
@@ -149,18 +118,14 @@ export function RegisterForm({
                   </span>
                 ))}
               </div>
-              <p
-                aria-live="polite"
-                className="text-xs text-slate-600 dark:text-slate-400"
+              <p aria-live="polite" className="text-xs text-muted-foreground"
               >
                 Kekuatan kata sandi: {STRENGTH_LABELS[strength]}{" "}
                 <span id="password-hint">(minimal 8 karakter)</span>
               </p>
             </div>
           ) : (
-            <p
-              id="password-hint"
-              className="mt-1 px-1 text-xs text-slate-600 dark:text-slate-400"
+            <p id="password-hint" className="mt-1 px-1 text-xs text-muted-foreground"
             >
               Minimal 8 karakter.
             </p>
@@ -168,14 +133,11 @@ export function RegisterForm({
         </div>
 
         <fieldset>
-          <legend className="text-xs font-semibold text-gray-700 dark:text-slate-300">
+          <legend className="text-xs font-semibold text-foreground">
             Pilih anak (boleh lebih dari satu)
           </legend>
           <div className="mt-1.5">
-            <Input
-              type="search"
-              placeholder="Cari nama atau kelas"
-              leftIcon={<Search />}
+            <Input type="search" placeholder="Cari nama atau kelas" leftIcon={<Search />}
               value={query}
               onChange={setQuery}
               aria-label="Cari nama atau kelas"
@@ -184,7 +146,7 @@ export function RegisterForm({
           <p className="my-3 text-sm" role="status">
             {selected.length} anak dipilih
           </p>
-          <div className="max-h-64 overflow-y-auto rounded-2xl border border-gray-300 p-2 dark:border-slate-700">
+          <div className="max-h-64 overflow-y-auto rounded-2xl border border-input p-2">
             {!students.length && (
               <p className="p-3 text-sm">
                 Belum ada siswa yang dapat dipilih.
@@ -203,8 +165,7 @@ export function RegisterForm({
                   .includes(query.toLocaleLowerCase()),
               )
               .map((student) => (
-                <Checkbox
-                  key={student.id}
+                <Checkbox key={student.id}
                   checked={selected.includes(student.id)}
                   onCheckedChange={(next) =>
                     setSelected(
@@ -216,12 +177,12 @@ export function RegisterForm({
                   label={
                     <span className="break-words">
                       {student.nama}
-                      <span className="block text-sm text-slate-600 dark:text-slate-400">
+                      <span className="block text-sm text-muted-foreground">
                         {student.kelas}
                       </span>
                     </span>
                   }
-                  className="rounded-xl p-3 hover:bg-slate-100 dark:hover:bg-slate-900"
+                  className="rounded-xl p-3 hover:bg-muted"
                 />
               ))}
           </div>
@@ -229,21 +190,14 @@ export function RegisterForm({
       </fieldset>
 
       {message && (
-        <p
-          role="alert"
-          className="rounded-2xl border border-red-300 bg-red-50 p-4 text-sm text-red-800 dark:border-red-800 dark:bg-red-950 dark:text-red-200"
+        <p role="alert" className="rounded-2xl border border-red-300 bg-red-50 p-4 text-sm text-red-800"
         >
           {message}
         </p>
       )}
 
-      <StatefulButton
-        type="submit"
-        size="lg"
-        state={pending ? "loading" : message ? "error" : "idle"}
-        loadingText="Mendaftar…"
-        errorText="Coba lagi"
-        disabled={pending || !students.length}
+      <StatefulButton type="submit" size="lg" state={pending ? "loading" : message ? "error" : "idle"}
+        loadingText="Mendaftar…" errorText="Coba lagi" disabled={pending || !students.length}
         className="w-full"
       >
         Daftar

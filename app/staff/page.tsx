@@ -12,7 +12,7 @@ import { CheckCircle2, AlertCircle, Users, UsersRound, LayoutDashboard } from "l
 
 export const metadata: Metadata = { title: "Dashboard staf | YuranKu" };
 const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
-const field = "min-h-11 rounded-2xl border border-slate-300 bg-white px-3 py-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-slate-700 dark:bg-slate-900";
+const field = "min-h-11 rounded-2xl border border-input bg-card px-3 py-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary";
 
 export default async function StaffPage({ searchParams }: {
   searchParams: Promise<{ bulan?: string; tahun?: string; filter?: string }>;
@@ -73,53 +73,42 @@ export default async function StaffPage({ searchParams }: {
   const period = `${months[bulan - 1]} ${tahun}`;
 
   return (
-    <div className="relative min-h-dvh flex flex-col bg-[#f7f9fc] text-slate-900 dark:bg-[#0b1329] dark:text-slate-100 [&_:focus-visible]:outline-2 [&_:focus-visible]:outline-offset-4 [&_:focus-visible]:outline-blue-600">
+    <div className="relative min-h-dvh flex flex-col bg-background text-foreground [&_:focus-visible]:outline-2 [&_:focus-visible]:outline-offset-4 [&_:focus-visible]:outline-primary">
       <UserBar userRole="staff" userName="Staff Demo" title="YuranKu · Dashboard Staf" />
       <div className="relative flex-1 md:grid md:grid-cols-[220px_minmax(0,1fr)]">
-        <aside className="border-b border-slate-200 p-6 dark:border-slate-800 md:min-h-dvh md:border-r md:border-b-0">
-          <p className="px-3 text-xs font-medium text-slate-400 dark:text-slate-500">Menu</p>
+        <aside className="border-b border-border p-6 md:min-h-dvh md:border-r md:border-b-0">
+          <p className="px-3 text-xs font-medium text-muted-foreground">Menu</p>
           <nav aria-label="Menu staf" className="mt-2 space-y-0.5">
-            <Link href="/staff" aria-current="page" className="flex items-center gap-3 rounded-xl bg-violet-100/80 px-3 py-2.5 text-sm font-semibold text-violet-700 dark:bg-violet-500/15 dark:text-violet-300">
-              <LayoutDashboard className="size-[18px] shrink-0 text-violet-600 dark:text-violet-400" aria-hidden />
+            <Link href="/staff" aria-current="page" className="flex items-center gap-3 rounded-xl bg-primary/10 px-3 py-2.5 text-sm font-semibold text-primary">
+              <LayoutDashboard className="size-[18px] shrink-0 text-primary" aria-hidden />
               Dashboard Staf
             </Link>
-            <Link href="/staff/grup" className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800/70 dark:hover:text-slate-100">
-              <UsersRound className="size-[18px] shrink-0 text-slate-400 dark:text-slate-500" aria-hidden />
+            <Link href="/staff/grup" className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
+              <UsersRound className="size-[18px] shrink-0 text-muted-foreground" aria-hidden />
               Pilih Grup
             </Link>
           </nav>
         </aside>
       <main className="mx-auto w-full max-w-6xl min-w-0 px-4 py-8 sm:px-8 md:py-12">
-        <FinanceHero
-          name="Staf"
-          subtitle={`Kelola dan catat pembayaran yuran siswa dalam grup Anda — ${period}.`}
-          kpiGridClassName="lg:grid-cols-3"
-          actions={
-            <Link
-              href="/staff/grup"
-              className="inline-flex min-h-11 items-center gap-2 rounded-2xl bg-white/95 px-5 py-2 text-sm font-semibold text-violet-700 shadow-md transition hover:bg-white"
+        <FinanceHero name="Staf" subtitle={`Kelola dan catat pembayaran yuran siswa dalam grup Anda — ${period}.`}
+          kpiGridClassName="lg:grid-cols-3" actions={
+            <Link href="/staff/grup" className="inline-flex min-h-11 items-center gap-2 rounded-2xl bg-card/95 px-5 py-2 text-sm font-semibold text-primary shadow-md transition hover:bg-card"
             >
               <UsersRound className="size-4" aria-hidden />
               Pilih Grup
             </Link>
           }
         >
-          <FinanceKpi
-            icon={CheckCircle2}
-            tone="green"
-            value={String(students.length - unpaid.length)}
+          <FinanceKpi icon={CheckCircle2}
+            tone="green" value={String(students.length - unpaid.length)}
             label="Siswa sudah bayar"
           />
-          <FinanceKpi
-            icon={AlertCircle}
-            tone="pink"
-            value={String(unpaid.length)}
+          <FinanceKpi icon={AlertCircle}
+            tone="pink" value={String(unpaid.length)}
             label="Siswa belum bayar"
           />
-          <FinanceKpi
-            icon={Users}
-            tone="blue"
-            value={String(students.length)}
+          <FinanceKpi icon={Users}
+            tone="blue" value={String(students.length)}
             label="Total siswa aktif"
           />
         </FinanceHero>
@@ -131,7 +120,7 @@ export default async function StaffPage({ searchParams }: {
             <input name="tahun" type="number" min="2000" max="2100" required defaultValue={tahun} className={`${field} w-28`} />
           </label>
           <input type="hidden" name="filter" value={filter} />
-          <button className="min-h-11 rounded-2xl bg-neutral-900 px-5 py-2 font-semibold text-white shadow-[inset_2px_2px_5px_0px_rgba(0,0,0,0.5),inset_-2px_-2px_6px_1px_rgba(80,78,78,0.5)] transition hover:bg-black dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200">Tampilkan</button>
+          <button className="min-h-11 rounded-2xl bg-neutral-900 px-5 py-2 font-semibold text-white shadow-[inset_2px_2px_5px_0px_rgba(0,0,0,0.5),inset_-2px_-2px_6px_1px_rgba(80,78,78,0.5)] transition hover:bg-black">Tampilkan</button>
         </form>
 
         <section className="mt-10" aria-labelledby="student-list">
@@ -141,21 +130,21 @@ export default async function StaffPage({ searchParams }: {
             <input type="hidden" name="tahun" value={tahun} />
             {([['semua', 'Semua'], ['sudah', 'Sudah bayar'], ['belum', 'Belum bayar']] as const).map(([value, label]) => (
               <button key={value} type="submit" name="filter" value={value} aria-current={filter === value ? "page" : undefined}
-                className={`rounded-2xl px-4 py-3 text-sm font-medium transition duration-150 ${filter === value ? "bg-neutral-900 text-white shadow-[inset_2px_2px_5px_0px_rgba(0,0,0,0.5),inset_-2px_-2px_6px_1px_rgba(80,78,78,0.5)] dark:bg-white dark:text-slate-900" : "border border-slate-200 bg-white/70 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900/70 dark:hover:bg-slate-800"}`}>{label}</button>
+                className={`rounded-2xl px-4 py-3 text-sm font-medium transition duration-150 ${filter === value ? "bg-neutral-900 text-white shadow-[inset_2px_2px_5px_0px_rgba(0,0,0,0.5),inset_-2px_-2px_6px_1px_rgba(80,78,78,0.5)]" : "border border-border bg-card/70 hover:bg-muted"}`}>{label}</button>
             ))}
           </form>
-          {!visible.length ? <p className="rounded-2xl border border-slate-200 p-6 text-slate-600 dark:border-slate-800 dark:text-slate-400">{!groups.length ? "Anda belum memiliki grup. Buka Pilih grup untuk memilih anak didik Anda." : !students.length ? "Belum ada siswa aktif dalam grup Anda." : "Tidak ada siswa untuk filter ini."}</p> : (
-            <div className="overflow-x-auto rounded-3xl border border-slate-200/70 bg-white/80 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-900/70">
+          {!visible.length ? <p className="rounded-2xl border border-border p-6 text-muted-foreground">{!groups.length ? "Anda belum memiliki grup. Buka Pilih grup untuk memilih anak didik Anda." : !students.length ? "Belum ada siswa aktif dalam grup Anda." : "Tidak ada siswa untuk filter ini."}</p> : (
+            <div className="overflow-x-auto rounded-3xl border border-border/70 bg-card/80 shadow-sm backdrop-blur">
               <table className="w-full text-left text-sm">
                 <caption className="sr-only">Status yuran siswa untuk {period}</caption>
-                <thead className="bg-slate-50/80 text-slate-500 dark:bg-slate-800/60 dark:text-slate-400"><tr>{["Siswa", "Kelas / grup", "Status", "Pembayaran"].map((label) => <th scope="col" key={label} className="px-4 py-4 font-medium">{label}</th>)}</tr></thead>
-                <tbody className="divide-y divide-slate-200 dark:divide-slate-800">{visible.map((student) => {
+                <thead className="bg-muted/80 text-muted-foreground"><tr>{["Siswa", "Kelas / grup", "Status", "Pembayaran"].map((label) => <th scope="col" key={label} className="px-4 py-4 font-medium">{label}</th>)}</tr></thead>
+                <tbody className="divide-y divide-border">{visible.map((student) => {
                   const paid = paymentStatusFor(payments, student.id, bulan, tahun) === "sudah";
                   return <tr key={student.id}>
                     <th scope="row" className="max-w-64 break-words px-4 py-5 font-medium">{student.nama}</th>
-                    <td className="px-4 py-5">{student.kelas}<span className="block text-slate-500 dark:text-slate-400">{student.grup}</span></td>
-                    <td className="px-4 py-5"><span className={`inline-block whitespace-nowrap rounded-lg px-2 py-1 text-xs font-medium ${paid ? "bg-emerald-100 text-emerald-900 dark:bg-emerald-950 dark:text-emerald-200" : "bg-amber-100 text-amber-900 dark:bg-amber-950 dark:text-amber-200"}`}>{paid ? "Sudah bayar" : "Belum bayar"}</span></td>
-                    <td className="px-4 py-5">{paid ? <span className="text-slate-500 dark:text-slate-400">Tercatat</span> : <PaymentForm key={`${student.id}-${bulan}-${tahun}`} student={student} bulan={bulan} tahun={tahun} period={period} today={today} />}</td>
+                    <td className="px-4 py-5">{student.kelas}<span className="block text-muted-foreground">{student.grup}</span></td>
+                    <td className="px-4 py-5"><span className={`inline-block whitespace-nowrap rounded-lg px-2 py-1 text-xs font-medium ${paid ? "bg-emerald-100 text-emerald-900" : "bg-amber-100 text-amber-900"}`}>{paid ? "Sudah bayar" : "Belum bayar"}</span></td>
+                    <td className="px-4 py-5">{paid ? <span className="text-muted-foreground">Tercatat</span> : <PaymentForm key={`${student.id}-${bulan}-${tahun}`} student={student} bulan={bulan} tahun={tahun} period={period} today={today} />}</td>
                   </tr>;
                 })}</tbody>
               </table>

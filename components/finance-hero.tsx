@@ -25,9 +25,9 @@ interface FinanceHeroProps {
 }
 
 /**
- * Panel hero ungu gaya "financial dashboard": sapaan mengikut waktu,
+ * Panel hero biru gaya "financial dashboard": sapaan mengikut waktu,
  * subtajuk, baris tindakan, dan grid kad KPI putih di atasnya.
- * Panel kekal ungu dalam dark mode (panel jenama).
+ * Panel kekal biru dalam dark mode (panel jenama).
  */
 export function FinanceHero({ name, subtitle, actions, children, kpiGridClassName }: FinanceHeroProps) {
   const [sapaan, setSapaan] = useState("Selamat Datang");
@@ -36,10 +36,10 @@ export function FinanceHero({ name, subtitle, actions, children, kpiGridClassNam
   }, []);
 
   return (
-    <section className="relative w-full min-w-0 overflow-hidden rounded-3xl bg-gradient-to-br from-[#7c6cf8] via-[#6f5cf6] to-[#5b48e8] p-5 text-white shadow-[0_24px_60px_-24px_rgba(108,92,246,0.55)] sm:p-7">
+    <section className="relative w-full min-w-0 overflow-hidden rounded-3xl bg-gradient-to-br from-[#007AFF] via-[#0066D6] to-[#004FBF] p-5 text-white shadow-[0_24px_60px_-24px_rgba(0,122,255,0.55)] sm:p-7">
       {/* Hiasan cahaya lembut */}
       <div aria-hidden className="pointer-events-none absolute -top-24 -right-24 size-72 rounded-full bg-white/15 blur-3xl" />
-      <div aria-hidden className="pointer-events-none absolute -bottom-32 -left-16 size-80 rounded-full bg-[#c4b5fd]/25 blur-3xl" />
+      <div aria-hidden className="pointer-events-none absolute -bottom-32 -left-16 size-80 rounded-full bg-[#99CCFF]/25 blur-3xl" />
 
       <div className="relative flex w-full min-w-0 flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
         <div className="min-w-0">

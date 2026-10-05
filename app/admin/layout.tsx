@@ -83,16 +83,12 @@ function SidebarNav({ onNavigate }: { onNavigate: () => void }) {
       {/* Carian menu */}
       <div className="px-1 pb-3 pt-4">
         <div className="relative">
-          <Search className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-slate-400" aria-hidden />
-          <input
-            type="search"
-            value={menuQuery}
+          <Search className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" aria-hidden />
+          <input type="search" value={menuQuery}
             onChange={(e) => setMenuQuery(e.target.value)}
-            placeholder="Cari menu"
-            aria-label="Cari menu navigasi"
-            className="h-10 w-full rounded-xl border border-transparent bg-slate-100/80 pl-10 pr-12 text-sm text-slate-900 placeholder:text-slate-400 focus:border-violet-300 focus:bg-white focus:outline-none dark:bg-slate-800/80 dark:text-slate-100 dark:focus:border-violet-700 dark:focus:bg-slate-900 [&::-webkit-search-cancel-button]:hidden"
+            placeholder="Cari menu" aria-label="Cari menu navigasi" className="h-10 w-full rounded-xl border border-transparent bg-muted/80 pl-10 pr-12 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:bg-card focus:outline-none [&::-webkit-search-cancel-button]:hidden"
           />
-          <kbd className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 rounded-md border border-slate-200 bg-white px-1.5 py-0.5 text-[10px] font-semibold text-slate-400 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-500">
+          <kbd className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 rounded-md border border-border bg-card px-1.5 py-0.5 text-[10px] font-semibold text-muted-foreground">
             ⌘K
           </kbd>
         </div>
@@ -100,11 +96,11 @@ function SidebarNav({ onNavigate }: { onNavigate: () => void }) {
 
       <div className="flex-1 space-y-5 overflow-y-auto px-1 py-1">
         {visibleSections.length === 0 ? (
-          <p className="px-3 py-6 text-center text-xs text-slate-400">Tiada menu sepadan.</p>
+          <p className="px-3 py-6 text-center text-xs text-muted-foreground">Tiada menu sepadan.</p>
         ) : (
           visibleSections.map((section) => (
             <div key={section.title}>
-              <h3 className="px-3 text-xs font-medium text-slate-400 dark:text-slate-500">
+              <h3 className="px-3 text-xs font-medium text-muted-foreground">
                 {section.title}
               </h3>
               <div className="mt-1.5 space-y-0.5">
@@ -114,30 +110,28 @@ function SidebarNav({ onNavigate }: { onNavigate: () => void }) {
                   const isActive = itemTab === currentTab;
 
                   return (
-                    <Link
-                      key={item.name}
+                    <Link key={item.name}
                       href={item.href}
                       onClick={onNavigate}
                       aria-current={isActive ? "page" : undefined}
                       className={`group flex items-center justify-between rounded-xl px-3 py-2.5 text-sm transition-colors ${
                         isActive
-                          ? "bg-violet-100/80 font-semibold text-violet-700 dark:bg-violet-500/15 dark:text-violet-300"
-                          : "font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800/70 dark:hover:text-slate-100"
+                          ? "bg-primary/10 font-semibold text-primary"
+                          : "font-medium text-muted-foreground hover:bg-muted hover:text-foreground"
                       }`}
                     >
                       <span className="flex min-w-0 items-center gap-3">
-                        <Icon
-                          className={`size-[18px] shrink-0 transition-colors ${
+                        <Icon className={`size-[18px] shrink-0 transition-colors ${
                             isActive
-                              ? "text-violet-600 dark:text-violet-400"
-                              : "text-slate-400 group-hover:text-slate-600 dark:text-slate-500 dark:group-hover:text-slate-300"
+                              ? "text-primary"
+                              : "text-muted-foreground group-hover:text-muted-foreground"
                           }`}
                           aria-hidden
                         />
                         <span className="truncate">{item.name}</span>
                       </span>
                       {item.badge && (
-                        <span className="ml-2 shrink-0 rounded-full bg-violet-100 px-2 py-0.5 text-[10px] font-semibold text-violet-700 dark:bg-violet-500/15 dark:text-violet-300">
+                        <span className="ml-2 shrink-0 rounded-full bg-violet-100 px-2 py-0.5 text-[10px] font-semibold text-primary">
                           {item.badge}
                         </span>
                       )}
@@ -173,7 +167,7 @@ function tabTitle(tab: string | null): string {
 function HeaderTitle() {
   const searchParams = useSearchParams();
   return (
-    <h1 className="shrink-0 truncate text-lg font-bold tracking-tight text-slate-900 dark:text-slate-100">
+    <h1 className="shrink-0 truncate text-lg font-bold tracking-tight text-foreground">
       {tabTitle(searchParams.get("tab"))}
     </h1>
   );
@@ -184,12 +178,12 @@ function Breadcrumb() {
   const tab = searchParams.get("tab");
   const current = tabTitle(tab);
   return (
-    <div className="flex items-center gap-2 text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium">
-      <span className="text-slate-800 dark:text-slate-200 font-semibold">YuranKu</span>
-      <ChevronRight className="size-3.5 text-slate-400 dark:text-slate-600" />
+    <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground font-medium">
+      <span className="text-foreground font-semibold">YuranKu</span>
+      <ChevronRight className="size-3.5 text-muted-foreground" />
       <span>Administrasi</span>
-      <ChevronRight className="size-3.5 text-slate-400 dark:text-slate-600" />
-      <span className="text-blue-600 dark:text-blue-400 font-semibold">{current}</span>
+      <ChevronRight className="size-3.5 text-muted-foreground" />
+      <span className="text-primary font-semibold">{current}</span>
     </div>
   );
 }
@@ -276,44 +270,38 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
   const SESI_LIST = ["2026/2027", "2025/2026", "2024/2025"];
 
   return (
-    <div className="min-h-screen flex flex-col lg:flex-row bg-[#f7f9fc] text-slate-900 dark:bg-[#0b1329] dark:text-slate-100 transition-colors duration-150 w-full max-w-full overflow-x-hidden">
+    <div className="min-h-screen flex flex-col lg:flex-row bg-background text-foreground transition-colors duration-150 w-full max-w-full overflow-x-hidden">
       {/* Mobile Sidebar Overlay Backdrop */}
       {sidebarOpen && (
-        <div
-          className="fixed inset-0 z-40 bg-slate-950/70 backdrop-blur-xs lg:hidden transition-opacity"
-          onClick={() => setSidebarOpen(false)}
+        <div className="fixed inset-0 z-40 bg-slate-950/70 backdrop-blur-xs lg:hidden transition-opacity" onClick={() => setSidebarOpen(false)}
           aria-hidden="true"
         />
       )}
 
       {/* Sidebar Navigation (Desktop Persistent + Mobile Slide Drawer) */}
-      <aside
-        className={`fixed inset-y-0 left-0 z-50 flex w-72 max-w-[85vw] flex-col overflow-hidden border border-slate-200/70 bg-white/90 shadow-xl backdrop-blur-xl transition-transform duration-300 ease-in-out lg:bottom-4 lg:left-4 lg:top-4 lg:rounded-3xl lg:shadow-[0_8px_30px_-12px_rgba(15,23,42,0.15)] lg:translate-x-0 dark:bg-[#0b1329] dark:border-slate-800 dark:lg:shadow-[0_8px_30px_-12px_rgba(0,0,0,0.5)] ${
+      <aside className={`fixed inset-y-0 left-0 z-50 flex w-72 max-w-[85vw] flex-col overflow-hidden border border-border/70 bg-card/90 shadow-xl backdrop-blur-xl transition-transform duration-300 ease-in-out lg:bottom-4 lg:left-4 lg:top-4 lg:rounded-3xl lg:shadow-[0_8px_30px_-12px_rgba(15,23,42,0.15)] lg:translate-x-0 dark:lg:shadow-[0_8px_30px_-12px_rgba(0,0,0,0.5)] ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         {/* Brand Logo & Header */}
-        <div className="flex h-16 items-center justify-between px-5 border-b border-slate-100 dark:border-slate-800/80">
-          <Link href="/admin" onClick={() => setSidebarOpen(false)} className="flex items-center gap-2.5 group focus-visible:outline-blue-600">
-            <div className="flex size-9 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 text-white shadow-md transition-all">
+        <div className="flex h-16 items-center justify-between px-5 border-b border-border">
+          <Link href="/admin" onClick={() => setSidebarOpen(false)} className="flex items-center gap-2.5 group focus-visible:outline-primary">
+            <div className="flex size-9 items-center justify-center rounded-xl bg-gradient-to-br from-[#007AFF] to-[#0051D5] text-white shadow-md transition-all">
               <School className="size-4.5" />
             </div>
             <div>
               <div className="flex items-center gap-1.5">
-                <span className="font-bold text-base text-slate-900 tracking-tight dark:text-slate-100">YuranKu</span>
-                <span className="text-[9px] font-semibold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded-md border border-emerald-200/80 dark:bg-emerald-950/80 dark:text-emerald-300 dark:border-emerald-800/60">
+                <span className="font-bold text-base text-foreground tracking-tight">YuranKu</span>
+                <span className="text-[9px] font-semibold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded-md border border-emerald-200/80">
                   Admin
                 </span>
               </div>
-              <p className="text-[11px] text-slate-500 font-medium dark:text-slate-400">Manajemen Yuran Bulanan</p>
+              <p className="text-[11px] text-muted-foreground font-medium">Manajemen Yuran Bulanan</p>
             </div>
           </Link>
 
-          <button
-            type="button"
-            onClick={() => setSidebarOpen(false)}
-            className="lg:hidden p-2 text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-colors dark:text-slate-400 dark:hover:text-slate-100 dark:hover:bg-slate-800"
-            aria-label="Tutup navigasi"
+          <button type="button" onClick={() => setSidebarOpen(false)}
+            className="lg:hidden p-2 text-muted-foreground hover:text-foreground hover:bg-muted rounded-xl transition-colors" aria-label="Tutup navigasi"
           >
             <X className="size-5" />
           </button>
@@ -325,22 +313,19 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
         </Suspense>
 
         {/* User Profile Card & Sign Out — hanya dalam drawer mobile (desktop: sudah ada chip pengguna di bar atas) */}
-        <div className="p-3.5 border-t border-slate-100 bg-slate-50/50 dark:border-slate-800 dark:bg-slate-900/50 lg:hidden">
-          <div className="flex items-center gap-3 rounded-xl p-2.5 border border-slate-200/70 bg-white/80 shadow-2xs dark:bg-slate-800/60 dark:border-slate-700">
-            <div className="size-9 rounded-full bg-violet-600/10 text-violet-700 font-semibold flex items-center justify-center shrink-0 border border-violet-200/70 text-xs dark:bg-violet-500/15 dark:text-violet-300 dark:border-violet-800/50">
+        <div className="p-3.5 border-t border-border bg-muted/50 lg:hidden">
+          <div className="flex items-center gap-3 rounded-xl p-2.5 border border-border/70 bg-card/80 shadow-2xs">
+            <div className="size-9 rounded-full bg-primary/10 text-primary font-semibold flex items-center justify-center shrink-0 border border-primary/30/70 text-xs">
               TU
             </div>
             <div className="min-w-0 flex-1">
-              <p className="text-xs font-semibold text-slate-900 truncate dark:text-slate-100">Pegawai Tata Usaha</p>
-              <p className="text-[11px] text-slate-500 truncate flex items-center gap-1 dark:text-slate-400">
-                <ShieldCheck className="size-3 text-emerald-500 shrink-0 dark:text-emerald-400" />
+              <p className="text-xs font-semibold text-foreground truncate">Pegawai Tata Usaha</p>
+              <p className="text-[11px] text-muted-foreground truncate flex items-center gap-1">
+                <ShieldCheck className="size-3 text-emerald-500 shrink-0" />
                 Administrator Sistem
               </p>
             </div>
-            <Link
-              href="/login"
-              title="Keluar / Masuk Kembali"
-              className="text-slate-400 hover:text-rose-600 p-1.5 rounded-lg transition-colors dark:text-slate-500 dark:hover:text-rose-400"
+            <Link href="/login" title="Keluar / Masuk Kembali" className="text-muted-foreground hover:text-rose-600 p-1.5 rounded-lg transition-colors"
             >
               <LogOut className="size-4" />
             </Link>
@@ -351,22 +336,19 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
       {/* Main Content Area */}
       <div className="lg:pl-80 flex flex-col flex-1 min-w-0 w-full max-w-full overflow-x-hidden">
         {/* Dedicated Mobile Header (lg:hidden) */}
-        <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-slate-200/70 bg-white/85 p-4 backdrop-blur-md dark:border-slate-800 dark:bg-[#0b1329]/85 lg:hidden">
+        <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-border/70 bg-card/85 p-4 backdrop-blur-md lg:hidden">
           <div className="flex items-center gap-3">
-            <button
-              type="button"
-              onClick={() => setSidebarOpen(true)}
-              className="p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-xl focus-visible:outline-blue-600 dark:text-slate-300 dark:hover:text-slate-100 dark:hover:bg-slate-800/80"
-              aria-label="Buka menu navigasi"
+            <button type="button" onClick={() => setSidebarOpen(true)}
+              className="p-2 text-muted-foreground hover:text-foreground hover:bg-muted rounded-xl focus-visible:outline-primary" aria-label="Buka menu navigasi"
             >
               <Menu className="size-5" />
             </button>
             <Link href="/admin" className="flex items-center gap-2">
-              <div className="flex size-8 items-center justify-center rounded-lg bg-blue-600 text-white shadow-xs">
+              <div className="flex size-8 items-center justify-center rounded-lg bg-primary text-white shadow-xs">
                 <School className="size-4" />
               </div>
-              <span className="font-bold text-base text-slate-900 tracking-tight dark:text-slate-100">YuranKu</span>
-              <span className="text-[9px] font-semibold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded-md border border-emerald-200/80 dark:bg-emerald-950/80 dark:text-emerald-300 dark:border-emerald-800/60">
+              <span className="font-bold text-base text-foreground tracking-tight">YuranKu</span>
+              <span className="text-[9px] font-semibold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded-md border border-emerald-200/80">
                 Admin
               </span>
             </Link>
@@ -374,11 +356,8 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
           <div className="flex items-center gap-2">
             <ThemeToggle />
-            <button
-              type="button"
-              onClick={() => setNotifOpen((o) => !o)}
-              className="relative p-2 text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-colors dark:text-slate-400 dark:hover:text-slate-100 dark:hover:bg-slate-800"
-              aria-label={`Notifikasi sistem${unreadCount > 0 ? `, ${unreadCount} belum dibaca` : ""}`}
+            <button type="button" onClick={() => setNotifOpen((o) => !o)}
+              className="relative p-2 text-muted-foreground hover:text-foreground hover:bg-muted rounded-xl transition-colors" aria-label={`Notifikasi sistem${unreadCount > 0 ? `, ${unreadCount} belum dibaca` : ""}`}
             >
               <Bell className="size-4.5" />
               <NotificationBadge count={unreadCount} />
@@ -388,31 +367,25 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
         {/* Desktop Top Navbar — bar terapung gaya financial dashboard */}
         <header className="sticky top-0 z-30 hidden w-full px-6 pt-4 lg:block lg:px-8">
-          <div className="flex h-16 w-full items-center justify-between gap-4 rounded-2xl border border-slate-200/60 bg-white/90 px-5 shadow-[0_8px_30px_-12px_rgba(15,23,42,0.15)] backdrop-blur-md dark:border-slate-800 dark:bg-[#0b1329]/90">
+          <div className="flex h-16 w-full items-center justify-between gap-4 rounded-2xl border border-border/60 bg-card/90 px-5 shadow-[0_8px_30px_-12px_rgba(15,23,42,0.15)] backdrop-blur-md">
             {/* Tajuk tab semasa */}
             <Suspense>
               <HeaderTitle />
             </Suspense>
 
             {/* Carian global */}
-            <form
-              role="search"
-              onSubmit={(e) => {
+            <form role="search" onSubmit={(e) => {
                 e.preventDefault();
                 const q = searchRef.current?.value.trim();
                 if (q) router.push(`/admin?tab=siswa&q=${encodeURIComponent(q)}`);
               }}
               className="relative hidden w-full max-w-md md:block"
             >
-              <Search className="pointer-events-none absolute left-4 top-1/2 size-4 -translate-y-1/2 text-slate-400" aria-hidden />
-              <input
-                ref={searchRef}
-                type="search"
-                placeholder="Cari apa saja..."
-                aria-label="Cari siswa atau transaksi"
-                className="h-11 w-full rounded-full border border-transparent bg-slate-100/80 pl-11 pr-16 text-sm text-slate-900 placeholder:text-slate-400 focus:border-violet-300 focus:bg-white focus:outline-none dark:bg-slate-800/80 dark:text-slate-100 dark:focus:border-violet-700 dark:focus:bg-slate-900 [&::-webkit-search-cancel-button]:hidden"
+              <Search className="pointer-events-none absolute left-4 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" aria-hidden />
+              <input ref={searchRef}
+                type="search" placeholder="Cari apa saja..." aria-label="Cari siswa atau transaksi" className="h-11 w-full rounded-full border border-transparent bg-muted/80 pl-11 pr-16 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:bg-card focus:outline-none [&::-webkit-search-cancel-button]:hidden"
               />
-              <kbd className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 rounded-md border border-slate-200 bg-white px-1.5 py-0.5 text-[10px] font-semibold text-slate-400 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-500">
+              <kbd className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 rounded-md border border-border bg-card px-1.5 py-0.5 text-[10px] font-semibold text-muted-foreground">
                 ⌘K
               </kbd>
             </form>
@@ -423,22 +396,18 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
               {/* Bantuan */}
               <div className="relative">
-                <button
-                  type="button"
-                  onClick={() => { setHelpOpen((o) => !o); setNotifOpen(false); setUserOpen(false); }}
-                  className="rounded-full p-2.5 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100"
-                  aria-label="Bantuan"
-                  aria-expanded={helpOpen}
+                <button type="button" onClick={() => { setHelpOpen((o) => !o); setNotifOpen(false); setUserOpen(false); }}
+                  className="rounded-full p-2.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground" aria-label="Bantuan" aria-expanded={helpOpen}
                 >
                   <CircleHelp className="size-[18px]" />
                 </button>
                 {helpOpen && (
-                  <div className="absolute right-0 z-50 mt-2 w-64 rounded-2xl border border-slate-200 bg-white p-4 shadow-xl dark:border-slate-800 dark:bg-[#0b1329]">
-                    <p className="text-sm font-bold text-slate-900 dark:text-slate-100">Bantuan pantas</p>
-                    <ul className="mt-2 space-y-2 text-xs text-slate-600 dark:text-slate-400">
+                  <div className="absolute right-0 z-50 mt-2 w-64 rounded-2xl border border-border bg-card p-4 shadow-xl">
+                    <p className="text-sm font-bold text-foreground">Bantuan pantas</p>
+                    <ul className="mt-2 space-y-2 text-xs text-muted-foreground">
                       <li className="flex items-center justify-between gap-2">
                         <span>Fokus ke carian</span>
-                        <kbd className="rounded-md border border-slate-200 bg-slate-50 px-1.5 py-0.5 font-semibold dark:border-slate-700 dark:bg-slate-800">⌘K</kbd>
+                        <kbd className="rounded-md border border-border bg-muted px-1.5 py-0.5 font-semibold">⌘K</kbd>
                       </li>
                       <li>Carian akan membuka tab Data Siswa dengan kata kunci Anda.</li>
                       <li>Klik ikon loceng untuk melihat notifikasi sistem terkini.</li>
@@ -449,46 +418,40 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
               {/* Notifikasi */}
               <div className="relative">
-                <button
-                  type="button"
-                  onClick={() => { setNotifOpen((o) => !o); setHelpOpen(false); setUserOpen(false); }}
-                  className="relative rounded-full p-2.5 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100"
-                  aria-label={`Notifikasi sistem${unreadCount > 0 ? `, ${unreadCount} belum dibaca` : ""}`}
+                <button type="button" onClick={() => { setNotifOpen((o) => !o); setHelpOpen(false); setUserOpen(false); }}
+                  className="relative rounded-full p-2.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground" aria-label={`Notifikasi sistem${unreadCount > 0 ? `, ${unreadCount} belum dibaca` : ""}`}
                 >
                   <Bell className="size-[18px]" />
                   <NotificationBadge count={unreadCount} />
                 </button>
                 {notifOpen && (
-                  <div className="absolute right-0 z-50 mt-2 w-80 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl dark:border-slate-800 dark:bg-[#0b1329]">
-                    <div className="flex items-center justify-between border-b border-slate-100 px-4 py-3 dark:border-slate-800">
-                      <p className="text-sm font-bold text-slate-900 dark:text-slate-100">Notifikasi</p>
-                      <button
-                        type="button"
-                        onClick={() => setNotifs((ns) => ns.map((n) => ({ ...n, dibaca: true })))}
-                        className="text-xs font-medium text-blue-700 hover:underline dark:text-blue-300"
+                  <div className="absolute right-0 z-50 mt-2 w-80 overflow-hidden rounded-2xl border border-border bg-card shadow-xl">
+                    <div className="flex items-center justify-between border-b border-border px-4 py-3">
+                      <p className="text-sm font-bold text-foreground">Notifikasi</p>
+                      <button type="button" onClick={() => setNotifs((ns) => ns.map((n) => ({ ...n, dibaca: true })))}
+                        className="text-xs font-medium text-primary hover:underline"
                       >
                         Tandai semua dibaca
                       </button>
                     </div>
-                    <ul className="max-h-80 divide-y divide-slate-100 overflow-y-auto dark:divide-slate-800">
+                    <ul className="max-h-80 divide-y divide-border overflow-y-auto">
                       {notifs.map((n) => (
                         <li key={n.id}>
-                          <Link
-                            href={`/admin?tab=${n.tab}`}
+                          <Link href={`/admin?tab=${n.tab}`}
                             onClick={() => {
                               setNotifs((ns) => ns.map((x) => x.id === n.id ? { ...x, dibaca: true } : x));
                               setNotifOpen(false);
                             }}
-                            className={`block px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-800 ${
-                              !n.dibaca ? "bg-blue-50/60 dark:bg-blue-950/30" : ""
+                            className={`block px-4 py-3 hover:bg-accent ${
+                              !n.dibaca ? "bg-primary/10" : ""
                             }`}
                           >
                             <div className="flex items-start justify-between gap-2">
-                              <p className="text-xs font-semibold text-slate-900 dark:text-slate-100">{n.judul}</p>
-                              {!n.dibaca && <span className="mt-1 size-2 shrink-0 rounded-full bg-blue-600" />}
+                              <p className="text-xs font-semibold text-foreground">{n.judul}</p>
+                              {!n.dibaca && <span className="mt-1 size-2 shrink-0 rounded-full bg-primary" />}
                             </div>
-                            <p className="mt-0.5 text-xs text-slate-600 dark:text-slate-400">{n.pesan}</p>
-                            <p className="mt-1 text-[10px] text-slate-400 dark:text-slate-500">{n.masa}</p>
+                            <p className="mt-0.5 text-xs text-muted-foreground">{n.pesan}</p>
+                            <p className="mt-1 text-[10px] text-muted-foreground">{n.masa}</p>
                           </Link>
                         </li>
                       ))}
@@ -499,48 +462,42 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
               {/* Chip pengguna */}
               <div className="relative">
-                <button
-                  type="button"
-                  onClick={() => { setUserOpen((o) => !o); setNotifOpen(false); setHelpOpen(false); }}
-                  className="flex items-center gap-2.5 rounded-full py-1.5 pl-1.5 pr-2 transition-colors hover:bg-slate-100 dark:hover:bg-slate-800"
-                  aria-label="Menu akun"
-                  aria-expanded={userOpen}
+                <button type="button" onClick={() => { setUserOpen((o) => !o); setNotifOpen(false); setHelpOpen(false); }}
+                  className="flex items-center gap-2.5 rounded-full py-1.5 pl-1.5 pr-2 transition-colors hover:bg-accent" aria-label="Menu akun" aria-expanded={userOpen}
                 >
-                  <span className="flex size-9 items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-purple-600 text-xs font-bold text-white shadow-md" aria-hidden>
+                  <span className="flex size-9 items-center justify-center rounded-full bg-gradient-to-br from-[#007AFF] to-[#0051D5] text-xs font-bold text-white shadow-md" aria-hidden>
                     AD
                   </span>
                   <span className="hidden text-left xl:block">
-                    <span className="block max-w-32 truncate text-xs font-semibold text-slate-900 dark:text-slate-100">Administrator Demo</span>
-                    <span className="block text-[10px] text-slate-400">@admin</span>
+                    <span className="block max-w-32 truncate text-xs font-semibold text-foreground">Administrator Demo</span>
+                    <span className="block text-[10px] text-muted-foreground">@admin</span>
                   </span>
-                  <ChevronDown className="size-4 text-slate-400" aria-hidden />
+                  <ChevronDown className="size-4 text-muted-foreground" aria-hidden />
                 </button>
                 {userOpen && (
-                  <div className="absolute right-0 z-50 mt-2 w-64 rounded-2xl border border-slate-200 bg-white p-4 shadow-xl dark:border-slate-800 dark:bg-[#0b1329]">
+                  <div className="absolute right-0 z-50 mt-2 w-64 rounded-2xl border border-border bg-card p-4 shadow-xl">
                     <div className="flex items-center gap-3">
-                      <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-purple-600 text-sm font-bold text-white" aria-hidden>
+                      <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#007AFF] to-[#0051D5] text-sm font-bold text-white" aria-hidden>
                         AD
                       </span>
                       <div className="min-w-0">
-                        <p className="truncate text-sm font-semibold text-slate-900 dark:text-slate-100">Administrator Demo</p>
-                        <p className="flex items-center gap-1 text-[11px] text-slate-500 dark:text-slate-400">
-                          <ShieldCheck className="size-3 shrink-0 text-emerald-500 dark:text-emerald-400" />
+                        <p className="truncate text-sm font-semibold text-foreground">Administrator Demo</p>
+                        <p className="flex items-center gap-1 text-[11px] text-muted-foreground">
+                          <ShieldCheck className="size-3 shrink-0 text-emerald-500" />
                           Administrator Sistem
                         </p>
                       </div>
                     </div>
-                    <div className="mt-3 border-t border-slate-100 pt-3 dark:border-slate-800">
-                      <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">Tahun Ajaran</p>
+                    <div className="mt-3 border-t border-border pt-3">
+                      <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Tahun Ajaran</p>
                       <div className="mt-1.5 flex flex-wrap gap-1.5">
                         {SESI_LIST.map((s) => (
-                          <button
-                            key={s}
-                            type="button"
-                            onClick={() => { setSesi(s); localStorage.setItem("yuran-sesi", s); }}
+                          <button key={s}
+                            type="button" onClick={() => { setSesi(s); localStorage.setItem("yuran-sesi", s); }}
                             className={`rounded-lg px-2.5 py-1.5 text-[11px] font-semibold transition-colors ${
                               s === sesi
-                                ? "bg-violet-600 text-white"
-                                : "bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
+                                ? "bg-primary text-white"
+                                : "bg-muted text-muted-foreground hover:bg-muted"
                             }`}
                           >
                             {s}
@@ -548,9 +505,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                         ))}
                       </div>
                     </div>
-                    <Link
-                      href="/login"
-                      className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl bg-slate-100 py-2 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+                    <Link href="/login" className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl bg-muted py-2 text-xs font-semibold text-foreground transition-colors hover:bg-muted"
                     >
                       <LogOut className="size-3.5" aria-hidden />
                       Keluar / Masuk Kembali
@@ -564,45 +519,40 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
         {/* Mobile Notification Popover Drawer (when open on mobile) */}
         {notifOpen && (
-          <div className="fixed inset-x-3 top-18 z-50 rounded-2xl border border-slate-200 bg-white shadow-2xl overflow-hidden dark:border-slate-800 dark:bg-[#0b1329] lg:hidden">
-            <div className="flex items-center justify-between px-4 py-3 border-b border-slate-100 dark:border-slate-800">
-              <p className="text-sm font-bold text-slate-900 dark:text-slate-100">Notifikasi</p>
+          <div className="fixed inset-x-3 top-18 z-50 rounded-2xl border border-border bg-card shadow-2xl overflow-hidden lg:hidden">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-border">
+              <p className="text-sm font-bold text-foreground">Notifikasi</p>
               <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => setNotifs((ns) => ns.map((n) => ({ ...n, dibaca: true })))}
-                  className="text-xs font-medium text-blue-700 hover:underline dark:text-blue-300"
+                <button type="button" onClick={() => setNotifs((ns) => ns.map((n) => ({ ...n, dibaca: true })))}
+                  className="text-xs font-medium text-primary hover:underline"
                 >
                   Tandai semua
                 </button>
-                <button
-                  type="button"
-                  onClick={() => setNotifOpen(false)}
-                  className="p-1 text-slate-400 hover:text-slate-600 rounded-lg dark:hover:text-slate-200"
+                <button type="button" onClick={() => setNotifOpen(false)}
+                  className="p-1 text-muted-foreground hover:text-muted-foreground rounded-lg"
                 >
                   <X className="size-4" />
                 </button>
               </div>
             </div>
-            <ul className="max-h-72 overflow-y-auto divide-y divide-slate-100 dark:divide-slate-800">
+            <ul className="max-h-72 overflow-y-auto divide-y divide-border">
               {notifs.map((n) => (
                 <li key={n.id}>
-                  <Link
-                    href={`/admin?tab=${n.tab}`}
+                  <Link href={`/admin?tab=${n.tab}`}
                     onClick={() => {
                       setNotifs((ns) => ns.map((x) => x.id === n.id ? { ...x, dibaca: true } : x));
                       setNotifOpen(false);
                     }}
-                    className={`block px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-800 ${
-                      !n.dibaca ? "bg-blue-50/60 dark:bg-blue-950/30" : ""
+                    className={`block px-4 py-3 hover:bg-accent ${
+                      !n.dibaca ? "bg-primary/10" : ""
                     }`}
                   >
                     <div className="flex items-start justify-between gap-2">
-                      <p className="text-xs font-semibold text-slate-900 dark:text-slate-100">{n.judul}</p>
-                      {!n.dibaca && <span className="mt-1 size-2 shrink-0 rounded-full bg-blue-600" />}
+                      <p className="text-xs font-semibold text-foreground">{n.judul}</p>
+                      {!n.dibaca && <span className="mt-1 size-2 shrink-0 rounded-full bg-primary" />}
                     </div>
-                    <p className="mt-0.5 text-xs text-slate-600 dark:text-slate-400">{n.pesan}</p>
-                    <p className="mt-1 text-[10px] text-slate-400 dark:text-slate-500">{n.masa}</p>
+                    <p className="mt-0.5 text-xs text-muted-foreground">{n.pesan}</p>
+                    <p className="mt-1 text-[10px] text-muted-foreground">{n.masa}</p>
                   </Link>
                 </li>
               ))}

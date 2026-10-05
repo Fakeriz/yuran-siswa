@@ -81,7 +81,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         {label ? (
           <label
             htmlFor={id}
-            className="mb-1.5 block text-xs font-semibold text-gray-700 dark:text-slate-300"
+            className="mb-1.5 block text-xs font-semibold text-foreground"
           >
             {label}
           </label>
@@ -89,7 +89,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
         <div className="relative">
           {leftIcon ? (
-            <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 dark:text-slate-500 [&>svg]:size-4">
+            <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground [&>svg]:size-4">
               {leftIcon}
             </span>
           ) : null}
@@ -103,16 +103,16 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             aria-invalid={Boolean(error)}
             aria-describedby={error ? errorId : undefined}
             className={cx(
-              "w-full rounded-xl border bg-white px-3.5 py-2.5 text-sm text-gray-900 placeholder:text-gray-400",
+              "w-full rounded-xl border bg-card px-3.5 py-2.5 text-sm text-foreground placeholder:text-muted-foreground",
               "outline-none transition-[border-color,box-shadow] duration-150",
               "focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20",
               "disabled:cursor-not-allowed disabled:opacity-60",
-              "dark:bg-slate-900 dark:text-slate-100 dark:placeholder:text-slate-500",
+              "",
               Boolean(leftIcon) && "pl-10",
               Boolean(rightIcon || showSuccess) && "pr-10",
               error
-                ? "border-rose-500 focus:border-rose-500 focus:ring-rose-500/20 dark:border-rose-500"
-                : "border-gray-300 dark:border-slate-700",
+                ? "border-rose-500 focus:border-rose-500 focus:ring-rose-500/20"
+                : "border-input",
               inputClassName,
             )}
             {...rest}
@@ -126,7 +126,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
                   aria-hidden
                 />
               ) : (
-                <span className="text-gray-400 transition-colors hover:text-gray-600 dark:text-slate-500 dark:hover:text-slate-300">
+                <span className="text-muted-foreground transition-colors hover:text-muted-foreground">
                   {rightIcon}
                 </span>
               )}
@@ -139,7 +139,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             <p
               id={errorId}
               role="alert"
-              className="fu-input-error px-1 pt-1 text-xs text-rose-600 dark:text-rose-400"
+              className="fu-input-error px-1 pt-1 text-xs text-rose-600"
             >
               {error}
             </p>

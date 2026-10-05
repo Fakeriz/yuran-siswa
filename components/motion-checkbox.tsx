@@ -99,8 +99,8 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
           className={cx(
             "fu-checkbox-box mt-0.5 grid size-5 shrink-0 place-items-center rounded-md border",
             isChecked
-              ? "border-emerald-600 bg-emerald-600 text-white dark:border-emerald-500 dark:bg-emerald-500"
-              : "border-gray-300 bg-white hover:border-gray-400 dark:border-slate-600 dark:bg-slate-900 dark:hover:border-slate-500",
+              ? "border-emerald-600 bg-emerald-600 text-white"
+              : "border-gray-300 bg-card hover:border-gray-400",
           )}
         >
           {isChecked ? (
@@ -108,7 +108,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
           ) : null}
         </span>
         {label ? (
-          <span className="text-gray-600 dark:text-slate-300">{label}</span>
+          <span className="text-gray-600">{label}</span>
         ) : null}
       </label>
     );

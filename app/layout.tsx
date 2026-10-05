@@ -18,7 +18,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="id" suppressHydrationWarning>
-      <body className="antialiased bg-white text-gray-900 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-150">
+      <body className="antialiased bg-card text-foreground transition-colors duration-150">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

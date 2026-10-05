@@ -260,7 +260,7 @@ export function SignUpForm({
       noValidate
       onSubmit={handleSubmit}
       className={cx(
-        "flex w-full max-w-sm flex-col gap-5 rounded-3xl border border-gray-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900",
+        "flex w-full max-w-sm flex-col gap-5 rounded-3xl border border-gray-200 bg-card p-6",
         className,
         classNames?.root,
       )}
@@ -290,7 +290,7 @@ export function SignUpForm({
           {title ? (
             <h2
               className={cx(
-                "text-xl font-semibold tracking-tight text-gray-900 dark:text-slate-100",
+                "text-xl font-semibold tracking-tight text-gray-900",
                 classNames?.title,
               )}
             >
@@ -300,7 +300,7 @@ export function SignUpForm({
           {description ? (
             <p
               className={cx(
-                "text-sm text-gray-500 dark:text-slate-400",
+                "text-sm text-gray-500",
                 classNames?.description,
               )}
             >
@@ -358,7 +358,7 @@ export function SignUpForm({
                     ? "Sembunyikan kata sandi"
                     : "Tampilkan kata sandi"
                 }
-                className="text-gray-400 outline-none transition-colors hover:text-gray-600 focus-visible:text-gray-600 dark:text-slate-500 dark:hover:text-slate-300 dark:focus-visible:text-slate-300"
+                className="text-gray-400 outline-none transition-colors hover:text-gray-600 focus-visible:text-gray-600"
               >
                 {revealPassword ? <EyeOff /> : <Eye />}
               </button>
@@ -382,7 +382,7 @@ export function SignUpForm({
                 {[0, 1, 2, 3].map((index) => (
                   <span
                     key={index}
-                    className="h-1 flex-1 overflow-hidden rounded-full bg-gray-200 dark:bg-slate-700"
+                    className="h-1 flex-1 overflow-hidden rounded-full bg-gray-200"
                   >
                     <span
                       className={cx(
@@ -398,7 +398,7 @@ export function SignUpForm({
               </div>
               <p
                 aria-live="polite"
-                className="text-xs text-gray-500 dark:text-slate-400"
+                className="text-xs text-gray-500"
               >
                 Kekuatan kata sandi: {STRENGTH_LABELS[strength]}
               </p>
@@ -437,7 +437,7 @@ export function SignUpForm({
           <p
             id={termsErrorId}
             role="alert"
-            className="fu-auth-blur-in px-1 text-xs text-rose-600 dark:text-rose-400"
+            className="fu-auth-blur-in px-1 text-xs text-rose-600"
           >
             {shownError("terms")}
           </p>
@@ -448,7 +448,7 @@ export function SignUpForm({
         <p
           id={formErrorId}
           role="alert"
-          className="fu-auth-in rounded-2xl border border-rose-300/50 bg-rose-500/10 px-3 py-2 text-xs text-rose-600 dark:border-rose-800/50 dark:text-rose-400"
+          className="fu-auth-in rounded-2xl border border-rose-300/50 bg-rose-500/10 px-3 py-2 text-xs text-rose-600"
         >
           {errorMessage}
         </p>
@@ -470,7 +470,7 @@ export function SignUpForm({
       {footer ? (
         <div
           className={cx(
-            "text-center text-sm text-gray-500 dark:text-slate-400",
+            "text-center text-sm text-gray-500",
             classNames?.footer,
           )}
         >

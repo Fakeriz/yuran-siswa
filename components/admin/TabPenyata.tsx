@@ -123,14 +123,14 @@ export function TabPenyata() {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
+            <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
               Penyata Bulanan & Laporan Audit
             </h1>
             <span className="inline-flex items-center rounded-md bg-emerald-50 px-2 py-0.5 text-xs font-semibold text-emerald-800 border border-emerald-200">
               Laporan Rasmi
             </span>
           </div>
-          <p className="mt-1 text-sm text-gray-500">
+          <p className="mt-1 text-sm text-muted-foreground">
             Penyata kutipan kewangan yuran bulanan asrama Talebe untuk semakan pentadbiran dan audit.
           </p>
         </div>
@@ -141,21 +141,21 @@ export function TabPenyata() {
             <select
               value={selectedBulan}
               onChange={(e) => setSelectedBulan(e.target.value)}
-              className="appearance-none rounded-xl border border-gray-300 bg-white py-2 pl-3 pr-8 text-xs font-semibold text-gray-700 shadow-2xs hover:border-gray-400 focus:border-emerald-600 focus:outline-hidden"
+              className="appearance-none rounded-xl border border-input bg-card py-2 pl-3 pr-8 text-xs font-semibold text-foreground shadow-2xs hover:border-gray-400 focus:border-emerald-600 focus:outline-hidden"
             >
               <option value="Oktober 2026">Oktober 2026</option>
               <option value="September 2026">September 2026</option>
               <option value="Ogos 2026">Ogos 2026</option>
             </select>
-            <Calendar className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 size-3.5 text-gray-400" />
+            <Calendar className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 size-3.5 text-muted-foreground" />
           </div>
 
           <button
             type="button"
             onClick={handlePrint}
-            className="inline-flex items-center gap-1.5 rounded-xl border border-gray-300 bg-white px-3.5 py-2 text-xs font-semibold text-gray-700 shadow-2xs hover:bg-gray-50 transition-colors"
+            className="inline-flex items-center gap-1.5 rounded-xl border border-input bg-card px-3.5 py-2 text-xs font-semibold text-foreground shadow-2xs hover:bg-muted transition-colors"
           >
-            <Printer className="size-3.5 text-gray-500" />
+            <Printer className="size-3.5 text-muted-foreground" />
             <span>Cetak Penyata</span>
           </button>
 
@@ -172,22 +172,22 @@ export function TabPenyata() {
 
       {/* 1. Ringkasan Eksekutif Kewangan */}
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-xs">
+        <div className="rounded-2xl border border-border bg-card p-5 shadow-xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wider text-gray-500">
+            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               Sasaran Kutipan Yuran
             </span>
-            <div className="rounded-xl bg-blue-50 p-2 text-blue-800">
+            <div className="rounded-xl bg-primary/10 p-2 text-primary">
               <Building2 className="size-5" />
             </div>
           </div>
-          <p className="mt-3 text-2xl font-bold text-gray-900">RM {summary.sasaran.toLocaleString()}</p>
-          <p className="mt-1 text-xs text-gray-500">{summary.jumlahSiswa} Talebe x RM 500</p>
+          <p className="mt-3 text-2xl font-bold text-foreground">RM {summary.sasaran.toLocaleString()}</p>
+          <p className="mt-1 text-xs text-muted-foreground">{summary.jumlahSiswa} Talebe x RM 500</p>
         </div>
 
-        <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-xs">
+        <div className="rounded-2xl border border-border bg-card p-5 shadow-xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wider text-gray-500">
+            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               Jumlah Kutipan Sebenar
             </span>
             <div className="rounded-xl bg-emerald-50 p-2 text-emerald-800">
@@ -198,9 +198,9 @@ export function TabPenyata() {
           <p className="mt-1 text-xs text-emerald-700 font-semibold">{summary.peratusan}% berjaya dikutip</p>
         </div>
 
-        <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-xs">
+        <div className="rounded-2xl border border-border bg-card p-5 shadow-xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wider text-gray-500">
+            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               Baki Tunggakan
             </span>
             <div className="rounded-xl bg-rose-50 p-2 text-rose-800">
@@ -211,17 +211,17 @@ export function TabPenyata() {
           <p className="mt-1 text-xs text-rose-600 font-medium">11 Talebe belum selesai</p>
         </div>
 
-        <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-xs">
+        <div className="rounded-2xl border border-border bg-card p-5 shadow-xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wider text-gray-500">
+            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               Pencapaian Status Lunas
             </span>
-            <div className="rounded-xl bg-purple-50 p-2 text-purple-800">
+            <div className="rounded-xl bg-primary/10 p-2 text-primary">
               <CheckCircle2 className="size-5" />
             </div>
           </div>
-          <p className="mt-3 text-2xl font-bold text-gray-900">{summary.bilLunas} / {summary.jumlahSiswa}</p>
-          <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-gray-100">
+          <p className="mt-3 text-2xl font-bold text-foreground">{summary.bilLunas} / {summary.jumlahSiswa}</p>
+          <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-muted">
             <div
               className="h-full rounded-full bg-emerald-800 transition-all duration-500"
               style={{ width: `${summary.peratusan}%` }}
@@ -231,16 +231,16 @@ export function TabPenyata() {
       </div>
 
       {/* 2. Jadual Prestasi Kumpulan Asrama (Dorm Groups) */}
-      <div className="rounded-2xl border border-gray-200 bg-white shadow-xs overflow-hidden">
-        <div className="p-5 border-b border-gray-100 flex items-center justify-between">
+      <div className="rounded-2xl border border-border bg-card shadow-xs overflow-hidden">
+        <div className="p-5 border-b border-border flex items-center justify-between">
           <div>
-            <h2 className="text-base font-bold text-gray-900">Prestasi Kutipan Mengikut Kumpulan HE</h2>
-            <p className="mt-0.5 text-xs text-gray-500">Perbandingan kutipan yuran antara ketiga-tiga asrama bagi bulan {selectedBulan}.</p>
+            <h2 className="text-base font-bold text-foreground">Prestasi Kutipan Mengikut Kumpulan HE</h2>
+            <p className="mt-0.5 text-xs text-muted-foreground">Perbandingan kutipan yuran antara ketiga-tiga asrama bagi bulan {selectedBulan}.</p>
           </div>
         </div>
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm text-gray-700">
-            <thead className="bg-gray-50/80 text-xs font-semibold text-gray-500 uppercase tracking-wider border-b border-gray-200">
+          <table className="w-full text-left text-sm text-foreground">
+            <thead className="bg-muted/80 text-xs font-semibold text-muted-foreground uppercase tracking-wider border-b border-border">
               <tr>
                 <th scope="col" className="px-5 py-3.5">Kumpulan Asrama</th>
                 <th scope="col" className="px-5 py-3.5">Staf Pembimbing</th>
@@ -251,13 +251,13 @@ export function TabPenyata() {
                 <th scope="col" className="px-5 py-3.5 text-right">Baki Tunggakan</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-border">
               {groupData.map((g) => (
-                <tr key={g.grup} className="hover:bg-gray-50/50">
-                  <td className="px-5 py-4 font-bold text-gray-900">{g.grup}</td>
-                  <td className="px-5 py-4 text-gray-600">{g.ustaz}</td>
+                <tr key={g.grup} className="hover:bg-muted/50">
+                  <td className="px-5 py-4 font-bold text-foreground">{g.grup}</td>
+                  <td className="px-5 py-4 text-muted-foreground">{g.ustaz}</td>
                   <td className="px-5 py-4 text-center font-medium">{g.talebe} Talebe</td>
-                  <td className="px-5 py-4 text-right font-medium text-gray-900">RM {g.sasaran.toLocaleString()}</td>
+                  <td className="px-5 py-4 text-right font-medium text-foreground">RM {g.sasaran.toLocaleString()}</td>
                   <td className="px-5 py-4 text-right font-bold text-emerald-800">RM {g.kutipan.toLocaleString()}</td>
                   <td className="px-5 py-4 text-center">
                     <span className="inline-flex items-center rounded-md bg-emerald-50 px-2 py-0.5 text-xs font-bold text-emerald-800 border border-emerald-200">
@@ -268,7 +268,7 @@ export function TabPenyata() {
                 </tr>
               ))}
             </tbody>
-            <tfoot className="bg-gray-50 font-bold text-gray-900 border-t border-gray-200 text-sm">
+            <tfoot className="bg-muted font-bold text-foreground border-t border-border text-sm">
               <tr>
                 <td className="px-5 py-3.5" colSpan={2}>JUMLAH KESELURUHAN</td>
                 <td className="px-5 py-3.5 text-center">{summary.jumlahSiswa} Talebe</td>
@@ -284,23 +284,23 @@ export function TabPenyata() {
 
       {/* 3. Pecahan Kaedah Pembayaran */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <div className="rounded-2xl border border-gray-200 bg-white shadow-xs p-5">
-          <h2 className="text-base font-bold text-gray-900">Pecahan Mengikut Kaedah Bayaran</h2>
-          <p className="mt-0.5 text-xs text-gray-500">Statistik saluran kutipan wang masuk asrama.</p>
+        <div className="rounded-2xl border border-border bg-card shadow-xs p-5">
+          <h2 className="text-base font-bold text-foreground">Pecahan Mengikut Kaedah Bayaran</h2>
+          <p className="mt-0.5 text-xs text-muted-foreground">Statistik saluran kutipan wang masuk asrama.</p>
           <div className="mt-5 space-y-4">
             {methodData.map((m) => (
               <div key={m.kaedah} className="space-y-1.5">
                 <div className="flex items-center justify-between text-xs">
                   <div className="flex items-center gap-2">
                     <CreditCard className="size-3.5 text-emerald-800" />
-                    <span className="font-semibold text-gray-800">{m.kaedah}</span>
+                    <span className="font-semibold text-foreground">{m.kaedah}</span>
                   </div>
                   <div className="text-right">
-                    <span className="font-bold text-gray-900">RM {m.jumlah.toLocaleString()}</span>
-                    <span className="text-gray-400 ml-1.5">({m.transaksi} bayaran)</span>
+                    <span className="font-bold text-foreground">RM {m.jumlah.toLocaleString()}</span>
+                    <span className="text-muted-foreground ml-1.5">({m.transaksi} bayaran)</span>
                   </div>
                 </div>
-                <div className="h-2 w-full overflow-hidden rounded-full bg-gray-100">
+                <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
                   <div
                     className="h-full rounded-full bg-emerald-700 transition-all duration-500"
                     style={{ width: `${m.peratus}%` }}
@@ -312,26 +312,26 @@ export function TabPenyata() {
         </div>
 
         {/* 4. Tindakan Susulan Tunggakan Yuran */}
-        <div className="rounded-2xl border border-gray-200 bg-white shadow-xs p-5">
+        <div className="rounded-2xl border border-border bg-card shadow-xs p-5">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-base font-bold text-gray-900">Senarai Tindakan Susulan Tunggakan</h2>
-              <p className="mt-0.5 text-xs text-gray-500">Talebe yang masih belum melunaskan yuran {selectedBulan}.</p>
+              <h2 className="text-base font-bold text-foreground">Senarai Tindakan Susulan Tunggakan</h2>
+              <p className="mt-0.5 text-xs text-muted-foreground">Talebe yang masih belum melunaskan yuran {selectedBulan}.</p>
             </div>
             <span className="text-xs font-bold text-rose-700 bg-rose-50 px-2 py-0.5 rounded-md border border-rose-200">
               6 Perlu Susulan
             </span>
           </div>
-          <div className="mt-4 divide-y divide-gray-100 max-h-60 overflow-y-auto">
+          <div className="mt-4 divide-y divide-border max-h-60 overflow-y-auto">
             {arrearsData.map((item) => (
               <div key={item.nama} className="py-2.5 flex items-center justify-between text-xs">
                 <div>
-                  <p className="font-bold text-gray-900">{item.nama}</p>
-                  <p className="text-[11px] text-gray-500">{item.grup} · {item.telefon}</p>
+                  <p className="font-bold text-foreground">{item.nama}</p>
+                  <p className="text-[11px] text-muted-foreground">{item.grup} · {item.telefon}</p>
                 </div>
                 <div className="text-right">
                   <span className="font-bold text-rose-700">{item.tunggakan}</span>
-                  <p className="text-[11px] text-gray-400">{item.bulan}</p>
+                  <p className="text-[11px] text-muted-foreground">{item.bulan}</p>
                 </div>
               </div>
             ))}

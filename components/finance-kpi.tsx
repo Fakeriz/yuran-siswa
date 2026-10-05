@@ -1,4 +1,3 @@
-import type { ReactNode } from "react";
 import { MoreHorizontal, type LucideIcon } from "lucide-react";
 
 const chipTone: Record<string, string> = {
@@ -15,22 +14,20 @@ interface FinanceKpiProps {
   value: string;
   /** Label kecil di bawah nilai */
   label: string;
-  /** Label pil di kaki kad, cth. "Total Pemasukan" */
+  /** Kapsyen di jalur footer, cth. "Total Pemasukan" */
   caption: string;
   /** Warna ikon: violet | green | pink | blue | amber */
   tone?: keyof typeof chipTone;
-  /** Baris tambahan (lencana delta, progress bar, dll.) */
-  children?: ReactNode;
 }
 
 /**
- * Kad KPI putih di atas hero ungu: ikon gradien berwarna, nilai besar,
- * label kecil, dan pil kaki dengan kapsyen.
+ * Kad KPI putih di atas hero ungu — ikon gradien berwarna, nilai besar,
+ * label kecil, dan jalur footer violet lut sinar selebar kad.
  */
-export function FinanceKpi({ icon: Icon, value, label, caption, tone = "violet", children }: FinanceKpiProps) {
+export function FinanceKpi({ icon: Icon, value, label, caption, tone = "violet" }: FinanceKpiProps) {
   return (
-    <div className="flex min-w-0 flex-col rounded-2xl bg-white p-4 shadow-lg shadow-black/5 dark:bg-slate-900 dark:shadow-black/30">
-      <div className="flex min-w-0 items-center gap-3">
+    <div className="flex min-w-0 flex-col overflow-hidden rounded-2xl bg-white shadow-lg shadow-black/5 dark:bg-slate-900 dark:shadow-black/30">
+      <div className="flex min-w-0 items-center gap-3 p-4 pb-3">
         <div
           className={`flex size-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br text-white shadow-md ${chipTone[tone]}`}
         >
@@ -41,11 +38,10 @@ export function FinanceKpi({ icon: Icon, value, label, caption, tone = "violet",
           <p className="truncate text-xs text-slate-500 dark:text-slate-400">{label}</p>
         </div>
       </div>
-      <div className="mt-3 flex items-center justify-between rounded-lg bg-violet-50/80 px-3 py-1.5 dark:bg-white/5">
-        <span className="truncate text-xs font-medium text-violet-700 dark:text-violet-300">{caption}</span>
-        <MoreHorizontal className="size-4 shrink-0 text-violet-300 dark:text-violet-500/60" aria-hidden />
+      <div className="mt-auto flex items-center justify-between bg-violet-600/40 px-4 py-2.5 dark:bg-violet-400/25">
+        <span className="truncate text-xs font-semibold text-white">{caption}</span>
+        <MoreHorizontal className="size-4 shrink-0 text-white/80" aria-hidden />
       </div>
-      {children ? <div className="mt-2 min-w-0">{children}</div> : null}
     </div>
   );
 }

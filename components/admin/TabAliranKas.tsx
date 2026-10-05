@@ -170,7 +170,7 @@ export function TabAliranKas() {
     <div className="space-y-6">
       {/* Toast Notification */}
       {toastMsg && (
-        <div className="fixed top-5 right-5 z-50 flex items-center gap-2 rounded-xl bg-emerald-800 px-4 py-3 text-sm font-semibold text-white shadow-xl">
+        <div className="fixed top-5 right-5 z-50 flex items-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-white shadow-xl">
           <CheckCircle2 className="size-4 shrink-0" />
           <span>{toastMsg}</span>
         </div>
@@ -194,14 +194,14 @@ export function TabAliranKas() {
 
         <div className="flex flex-wrap items-center gap-2.5">
           <button type="button" onClick={handleExportCSV}
-            className="inline-flex items-center gap-1.5 rounded-xl border border-input bg-card px-3.5 py-2 text-xs font-semibold text-foreground shadow-2xs hover:bg-muted transition-colors"
+            className="inline-flex items-center gap-1.5 rounded-full border border-input bg-card px-3.5 py-2 text-xs font-semibold text-foreground shadow-2xs hover:bg-muted transition-colors"
           >
             <Download className="size-3.5 text-muted-foreground" />
             <span>Eksport Buku Tunai</span>
           </button>
 
           <button type="button" onClick={() => setShowModal(true)}
-            className="inline-flex items-center gap-2 rounded-xl bg-emerald-800 px-4 py-2 text-xs font-semibold text-white shadow-xs hover:bg-emerald-900 transition-colors focus-visible:outline-emerald-600"
+            className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2 text-xs font-semibold text-white shadow-xs hover:bg-primary/90 transition-colors focus-visible:outline-primary"
           >
             <Plus className="size-4" />
             <span>Catat Perbelanjaan</span>
@@ -259,7 +259,7 @@ export function TabAliranKas() {
             <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
             <input type="text" value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Cari transaksi, no. rujukan, kategori..." className="w-full rounded-xl border border-input bg-muted/50 py-2 pl-9 pr-4 text-xs text-foreground focus:border-emerald-600 focus:bg-card focus:outline-none"
+              placeholder="Cari transaksi, no. rujukan, kategori..." className="w-full rounded-xl border border-input bg-muted/50 py-2 pl-9 pr-4 text-xs text-foreground focus:border-primary focus:bg-card focus:outline-none"
             />
           </div>
 
@@ -347,7 +347,7 @@ export function TabAliranKas() {
                 <label className="text-xs font-semibold text-foreground">Perihal / Keterangan Perbelanjaan</label>
                 <input type="text" required value={formKeterangan}
                   onChange={(e) => setFormKeterangan(e.target.value)}
-                  placeholder="cth: Belian lauk basah & beras asrama" className="mt-1 w-full rounded-xl border border-input px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
+                  placeholder="cth: Belian lauk basah & beras asrama" className="mt-1 w-full rounded-xl border border-input px-3 py-2 text-sm focus:border-primary focus:outline-none"
                 />
               </div>
 
@@ -356,7 +356,7 @@ export function TabAliranKas() {
                   <label className="text-xs font-semibold text-foreground">Kategori</label>
                   <select value={formKategori}
                     onChange={(e) => setFormKategori(e.target.value as CashTransaction["kategori"])}
-                    className="mt-1 w-full rounded-xl border border-input px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
+                    className="mt-1 w-full rounded-xl border border-input px-3 py-2 text-sm focus:border-primary focus:outline-none"
                   >
                     <option value="Makanan & Dapur">Makanan & Dapur</option>
                     <option value="Utiliti">Utiliti</option>
@@ -368,7 +368,7 @@ export function TabAliranKas() {
                   <label className="text-xs font-semibold text-foreground">Jumlah (RM)</label>
                   <input type="number" required min="1" step="0.01" value={formJumlah}
                     onChange={(e) => setFormJumlah(e.target.value)}
-                    placeholder="0.00" className="mt-1 w-full rounded-xl border border-input px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
+                    placeholder="0.00" className="mt-1 w-full rounded-xl border border-input px-3 py-2 text-sm focus:border-primary focus:outline-none"
                   />
                 </div>
               </div>
@@ -379,7 +379,7 @@ export function TabAliranKas() {
                 >
                   Batal
                 </button>
-                <button type="submit" className="rounded-xl bg-emerald-800 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-900"
+                <button type="submit" className="rounded-full bg-primary px-4 py-2 text-xs font-semibold text-white hover:bg-primary/90"
                 >
                   Simpan Perbelanjaan
                 </button>

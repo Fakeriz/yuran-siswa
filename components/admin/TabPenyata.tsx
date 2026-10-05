@@ -141,7 +141,7 @@ export function TabPenyata() {
             <select
               value={selectedBulan}
               onChange={(e) => setSelectedBulan(e.target.value)}
-              className="appearance-none rounded-xl border border-input bg-card py-2 pl-3 pr-8 text-xs font-semibold text-foreground shadow-2xs hover:border-gray-400 focus:border-emerald-600 focus:outline-hidden"
+              className="appearance-none rounded-xl border border-input bg-card py-2 pl-3 pr-8 text-xs font-semibold text-foreground shadow-2xs hover:border-gray-400 focus:border-primary focus:outline-hidden"
             >
               <option value="Oktober 2026">Oktober 2026</option>
               <option value="September 2026">September 2026</option>
@@ -153,7 +153,7 @@ export function TabPenyata() {
           <button
             type="button"
             onClick={handlePrint}
-            className="inline-flex items-center gap-1.5 rounded-xl border border-input bg-card px-3.5 py-2 text-xs font-semibold text-foreground shadow-2xs hover:bg-muted transition-colors"
+            className="inline-flex items-center gap-1.5 rounded-full border border-input bg-card px-3.5 py-2 text-xs font-semibold text-foreground shadow-2xs hover:bg-muted transition-colors"
           >
             <Printer className="size-3.5 text-muted-foreground" />
             <span>Cetak Penyata</span>
@@ -162,7 +162,7 @@ export function TabPenyata() {
           <button
             type="button"
             onClick={handleExportCSV}
-            className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-800 px-3.5 py-2 text-xs font-semibold text-white shadow-xs hover:bg-emerald-900 transition-colors focus-visible:outline-emerald-600"
+            className="inline-flex items-center gap-1.5 rounded-full bg-primary px-3.5 py-2 text-xs font-semibold text-white shadow-xs hover:bg-primary/90 transition-colors focus-visible:outline-primary"
           >
             <Download className="size-3.5" />
             <span>Muat Turun CSV</span>
@@ -223,7 +223,7 @@ export function TabPenyata() {
           <p className="mt-3 text-2xl font-bold text-foreground">{summary.bilLunas} / {summary.jumlahSiswa}</p>
           <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-muted">
             <div
-              className="h-full rounded-full bg-emerald-800 transition-all duration-500"
+              className="h-full rounded-full bg-primary transition-all duration-500"
               style={{ width: `${summary.peratusan}%` }}
             />
           </div>

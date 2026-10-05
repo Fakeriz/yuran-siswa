@@ -35,7 +35,7 @@ export default async function RegisterPage() {
         <span className="text-xl font-bold tracking-tight">YuranKu</span>
       </Link>
 
-      <div className="mt-8 rounded-3xl border border-white bg-card/70 p-6 shadow-[0_24px_60px_-20px_rgba(37,99,235,0.3)] backdrop-blur-xl sm:p-8">
+      <div className="mt-8 rounded-3xl border border-border bg-card p-6 sm:p-8">
         <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">Daftar sebagai orang tua</h1>
         <p className="mt-2 text-sm text-muted-foreground">Pilih anak Anda. Data pembayaran tersedia setelah pengajuan disetujui.</p>
         <div className="mt-6">

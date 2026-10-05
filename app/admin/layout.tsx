@@ -279,14 +279,14 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
       )}
 
       {/* Sidebar Navigation (Desktop Persistent + Mobile Slide Drawer) */}
-      <aside className={`fixed inset-y-0 left-0 z-50 flex w-72 max-w-[85vw] flex-col overflow-hidden border border-border/70 bg-card/90 shadow-xl backdrop-blur-xl transition-transform duration-300 ease-in-out lg:bottom-4 lg:left-4 lg:top-4 lg:rounded-3xl lg:shadow-[0_8px_30px_-12px_rgba(15,23,42,0.15)] lg:translate-x-0 dark:lg:shadow-[0_8px_30px_-12px_rgba(0,0,0,0.5)] ${
+      <aside className={`fixed inset-y-0 left-0 z-50 flex w-72 max-w-[85vw] flex-col overflow-hidden border border-border/70 bg-card/95 shadow-xl lg:shadow-none transition-transform duration-300 ease-in-out lg:bottom-4 lg:left-4 lg:top-4 lg:rounded-3xl lg:translate-x-0  ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         {/* Brand Logo & Header */}
         <div className="flex h-16 items-center justify-between px-5 border-b border-border">
           <Link href="/admin" onClick={() => setSidebarOpen(false)} className="flex items-center gap-2.5 group focus-visible:outline-primary">
-            <div className="flex size-9 items-center justify-center rounded-xl bg-gradient-to-br from-[#007AFF] to-[#0051D5] text-white shadow-md transition-all">
+            <div className="flex size-9 items-center justify-center rounded-xl bg-primary text-white shadow-md transition-all">
               <School className="size-4.5" />
             </div>
             <div>
@@ -336,7 +336,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
       {/* Main Content Area */}
       <div className="lg:pl-80 flex flex-col flex-1 min-w-0 w-full max-w-full overflow-x-hidden">
         {/* Dedicated Mobile Header (lg:hidden) */}
-        <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-border/70 bg-card/85 p-4 backdrop-blur-md lg:hidden">
+        <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-border/70 bg-card p-4 lg:hidden">
           <div className="flex items-center gap-3">
             <button type="button" onClick={() => setSidebarOpen(true)}
               className="p-2 text-muted-foreground hover:text-foreground hover:bg-muted rounded-xl focus-visible:outline-primary" aria-label="Buka menu navigasi"
@@ -367,7 +367,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
         {/* Desktop Top Navbar — bar terapung gaya financial dashboard */}
         <header className="sticky top-0 z-30 hidden w-full px-6 pt-4 lg:block lg:px-8">
-          <div className="flex h-16 w-full items-center justify-between gap-4 rounded-2xl border border-border/60 bg-card/90 px-5 shadow-[0_8px_30px_-12px_rgba(15,23,42,0.15)] backdrop-blur-md">
+          <div className="flex h-16 w-full items-center justify-between gap-4 rounded-2xl border border-border/60 bg-card px-5">
             {/* Tajuk tab semasa */}
             <Suspense>
               <HeaderTitle />
@@ -465,7 +465,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                 <button type="button" onClick={() => { setUserOpen((o) => !o); setNotifOpen(false); setHelpOpen(false); }}
                   className="flex items-center gap-2.5 rounded-full py-1.5 pl-1.5 pr-2 transition-colors hover:bg-accent" aria-label="Menu akun" aria-expanded={userOpen}
                 >
-                  <span className="flex size-9 items-center justify-center rounded-full bg-gradient-to-br from-[#007AFF] to-[#0051D5] text-xs font-bold text-white shadow-md" aria-hidden>
+                  <span className="flex size-9 items-center justify-center rounded-full bg-primary text-xs font-bold text-white shadow-md" aria-hidden>
                     AD
                   </span>
                   <span className="hidden text-left xl:block">
@@ -477,7 +477,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                 {userOpen && (
                   <div className="absolute right-0 z-50 mt-2 w-64 rounded-2xl border border-border bg-card p-4 shadow-xl">
                     <div className="flex items-center gap-3">
-                      <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#007AFF] to-[#0051D5] text-sm font-bold text-white" aria-hidden>
+                      <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-white" aria-hidden>
                         AD
                       </span>
                       <div className="min-w-0">

@@ -120,7 +120,7 @@ export default async function StaffPage({ searchParams }: {
             <input name="tahun" type="number" min="2000" max="2100" required defaultValue={tahun} className={`${field} w-28`} />
           </label>
           <input type="hidden" name="filter" value={filter} />
-          <button className="min-h-11 rounded-2xl bg-neutral-900 px-5 py-2 font-semibold text-white shadow-[inset_2px_2px_5px_0px_rgba(0,0,0,0.5),inset_-2px_-2px_6px_1px_rgba(80,78,78,0.5)] transition hover:bg-black">Tampilkan</button>
+          <button className="min-h-11 rounded-full bg-primary px-5 py-2 font-semibold text-primary-foreground transition hover:opacity-90">Tampilkan</button>
         </form>
 
         <section className="mt-10" aria-labelledby="student-list">
@@ -130,11 +130,11 @@ export default async function StaffPage({ searchParams }: {
             <input type="hidden" name="tahun" value={tahun} />
             {([['semua', 'Semua'], ['sudah', 'Sudah bayar'], ['belum', 'Belum bayar']] as const).map(([value, label]) => (
               <button key={value} type="submit" name="filter" value={value} aria-current={filter === value ? "page" : undefined}
-                className={`rounded-2xl px-4 py-3 text-sm font-medium transition duration-150 ${filter === value ? "bg-neutral-900 text-white shadow-[inset_2px_2px_5px_0px_rgba(0,0,0,0.5),inset_-2px_-2px_6px_1px_rgba(80,78,78,0.5)]" : "border border-border bg-card/70 hover:bg-muted"}`}>{label}</button>
+                className={`rounded-full px-4 py-3 text-sm font-medium transition duration-150 ${filter === value ? "bg-primary text-primary-foreground" : "border border-border bg-card hover:bg-muted"}`}>{label}</button>
             ))}
           </form>
           {!visible.length ? <p className="rounded-2xl border border-border p-6 text-muted-foreground">{!groups.length ? "Anda belum memiliki grup. Buka Pilih grup untuk memilih anak didik Anda." : !students.length ? "Belum ada siswa aktif dalam grup Anda." : "Tidak ada siswa untuk filter ini."}</p> : (
-            <div className="overflow-x-auto rounded-3xl border border-border/70 bg-card/80 shadow-sm backdrop-blur">
+            <div className="overflow-x-auto rounded-3xl border border-border/70 bg-card shadow-sm">
               <table className="w-full text-left text-sm">
                 <caption className="sr-only">Status yuran siswa untuk {period}</caption>
                 <thead className="bg-muted/80 text-muted-foreground"><tr>{["Siswa", "Kelas / grup", "Status", "Pembayaran"].map((label) => <th scope="col" key={label} className="px-4 py-4 font-medium">{label}</th>)}</tr></thead>

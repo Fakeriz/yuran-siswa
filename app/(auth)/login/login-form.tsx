@@ -66,12 +66,12 @@ export function LoginForm() {
 
   return (
     <div className="mt-8 space-y-6">
-      <div className="rounded-2xl border border-emerald-300 bg-emerald-50/80 p-5">
+      <div className="rounded-2xl border border-border bg-card p-5">
         <div className="flex items-center justify-between">
-          <p className="text-xs font-bold uppercase tracking-wider text-emerald-900">
+          <p className="text-xs font-bold uppercase tracking-wider text-foreground">
             Akses Demo Instan (1-Klik Masuk)
           </p>
-          <span className="inline-block rounded-full bg-emerald-200 px-2.5 py-0.5 text-[10px] font-semibold text-emerald-800">
+          <span className="inline-block rounded-full bg-primary/10 px-2.5 py-0.5 text-[10px] font-semibold text-primary">
             Tersedia
           </span>
         </div>
@@ -83,15 +83,15 @@ export function LoginForm() {
             <button key={d.role}
               type="button" disabled={isLoading}
               onClick={() => handleInstantDemo(d.role)}
-              className="flex flex-col items-center justify-center rounded-xl border border-emerald-300 bg-card p-3 text-center shadow-xs transition hover:bg-emerald-100 active:scale-[0.98] disabled:opacity-60"
+              className="flex flex-col items-center justify-center rounded-xl border border-border bg-card p-3 text-center shadow-xs transition hover:bg-muted active:scale-[0.98] disabled:opacity-60"
             >
-              <span className="text-xs font-bold text-emerald-950">
+              <span className="text-xs font-bold text-foreground">
                 {d.title}
               </span>
               <span className="mt-0.5 text-[11px] text-muted-foreground">
                 {d.desc}
               </span>
-              <span className="mt-2 rounded-lg bg-emerald-800 px-2.5 py-1 text-[11px] font-medium text-white">
+              <span className="mt-2 rounded-lg bg-primary px-2.5 py-1 text-[11px] font-medium text-white">
                 {d.cta}
               </span>
             </button>

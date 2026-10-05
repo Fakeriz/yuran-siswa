@@ -149,7 +149,7 @@ export function TabPenugasan() {
     <div className="space-y-6">
       {/* Toast Notifikasi */}
       {toastMsg && (
-        <div className="fixed top-5 right-5 z-50 flex items-center gap-2 rounded-xl bg-emerald-800 px-4 py-3 text-sm font-semibold text-white shadow-xl">
+        <div className="fixed top-5 right-5 z-50 flex items-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-white shadow-xl">
           <CheckCircle2 className="size-4 shrink-0" />
           <span>{toastMsg}</span>
         </div>
@@ -181,7 +181,7 @@ export function TabPenugasan() {
             setFormGrup("Mevlana HE");
             setShowAssignModal(true);
           }}
-          className="inline-flex items-center gap-2 rounded-xl bg-emerald-800 px-4 py-2.5 text-xs font-semibold text-white shadow-xs hover:bg-emerald-900 transition-colors focus-visible:outline-emerald-600"
+          className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-xs font-semibold text-white shadow-xs hover:bg-primary/90 transition-colors focus-visible:outline-primary"
         >
           <Plus className="size-4" />
           <span>Tugaskan Staf Baharu</span>
@@ -240,7 +240,7 @@ export function TabPenugasan() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Cari nama ustaz, grup, atau emel..."
-              className="w-full rounded-xl border border-input bg-card py-2 pl-9 pr-4 text-xs text-foreground focus:border-emerald-600 focus:outline-none"
+              className="w-full rounded-xl border border-input bg-card py-2 pl-9 pr-4 text-xs text-foreground focus:border-primary focus:outline-none"
             />
           </div>
           <span className="text-xs text-muted-foreground">
@@ -361,7 +361,7 @@ export function TabPenugasan() {
                   value={formNama}
                   onChange={(e) => setFormNama(e.target.value)}
                   placeholder="cth: Ustaz Mohd Danial"
-                  className="mt-1 w-full rounded-xl border border-input px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
+                  className="mt-1 w-full rounded-xl border border-input px-3 py-2 text-sm focus:border-primary focus:outline-none"
                 />
               </div>
 
@@ -374,7 +374,7 @@ export function TabPenugasan() {
                     value={formEmail}
                     onChange={(e) => setFormEmail(e.target.value)}
                     placeholder="emel@yuran.demo"
-                    className="mt-1 w-full rounded-xl border border-input px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
+                    className="mt-1 w-full rounded-xl border border-input px-3 py-2 text-sm focus:border-primary focus:outline-none"
                   />
                 </div>
                 <div>
@@ -384,7 +384,7 @@ export function TabPenugasan() {
                     value={formTelefon}
                     onChange={(e) => setFormTelefon(e.target.value)}
                     placeholder="+60 1X-XXX XXXX"
-                    className="mt-1 w-full rounded-xl border border-input px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
+                    className="mt-1 w-full rounded-xl border border-input px-3 py-2 text-sm focus:border-primary focus:outline-none"
                   />
                 </div>
               </div>
@@ -394,7 +394,7 @@ export function TabPenugasan() {
                 <select
                   value={formGrup}
                   onChange={(e) => setFormGrup(e.target.value as StaffAssignment["grup"])}
-                  className="mt-1 w-full rounded-xl border border-input px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
+                  className="mt-1 w-full rounded-xl border border-input px-3 py-2 text-sm focus:border-primary focus:outline-none"
                 >
                   <option value="Mevlana HE">Mevlana HE (20 Talebe)</option>
                   <option value="Razi HE">Razi HE (20 Talebe)</option>
@@ -415,7 +415,7 @@ export function TabPenugasan() {
                 </button>
                 <button
                   type="submit"
-                  className="rounded-xl bg-emerald-800 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-900"
+                  className="rounded-full bg-primary px-4 py-2 text-xs font-semibold text-white hover:bg-primary/90"
                 >
                   {selectedStaff ? "Simpan Perubahan" : "Sahkan Penugasan"}
                 </button>

@@ -159,7 +159,7 @@ export function TabResit() {
     <div className="space-y-6">
       {/* Toast Notifikasi */}
       {toastMsg && (
-        <div className="fixed top-5 right-5 z-50 flex items-center gap-2 rounded-xl bg-emerald-800 px-4 py-3 text-sm font-semibold text-white shadow-xl">
+        <div className="fixed top-5 right-5 z-50 flex items-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-white shadow-xl">
           <CheckCircle2 className="size-4 shrink-0" />
           <span>{toastMsg}</span>
         </div>
@@ -188,7 +188,7 @@ export function TabResit() {
             setSelectedReceipt(firstPending || receipts[0]);
             setShowUploadModal(true);
           }}
-          className="inline-flex items-center gap-2 rounded-xl bg-emerald-800 px-4 py-2.5 text-xs font-semibold text-white shadow-xs hover:bg-emerald-900 transition-colors focus-visible:outline-emerald-600"
+          className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-xs font-semibold text-white shadow-xs hover:bg-primary/90 transition-colors focus-visible:outline-primary"
         >
           <Upload className="size-4" />
           <span>Muat Naik Kwitansi Rasmi</span>
@@ -246,7 +246,7 @@ export function TabResit() {
             <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
             <input type="text" value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Cari no. resit, talebe, grup..." className="w-full rounded-xl border border-input bg-muted/50 py-2 pl-9 pr-4 text-xs text-foreground focus:border-emerald-600 focus:bg-card focus:outline-none"
+              placeholder="Cari no. resit, talebe, grup..." className="w-full rounded-xl border border-input bg-muted/50 py-2 pl-9 pr-4 text-xs text-foreground focus:border-primary focus:bg-card focus:outline-none"
             />
           </div>
 
@@ -339,7 +339,7 @@ export function TabResit() {
                           setSelectedReceipt(item);
                           setShowUploadModal(true);
                         }}
-                        className="inline-flex items-center gap-1 rounded-xl bg-emerald-800 px-3 py-1.5 text-xs font-semibold text-white hover:bg-emerald-900 transition-colors shadow-2xs"
+                        className="inline-flex items-center gap-1 rounded-xl bg-primary px-3 py-1.5 text-xs font-semibold text-white hover:bg-primary/90 transition-colors shadow-2xs"
                       >
                         <Upload className="size-3" />
                         <span>Upload Kwitansi</span>
@@ -411,7 +411,7 @@ export function TabResit() {
                   Batal
                 </button>
                 <button type="submit" disabled={!uploadFile}
-                  className="rounded-xl bg-emerald-800 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-900 disabled:opacity-50"
+                  className="rounded-full bg-primary px-4 py-2 text-xs font-semibold text-white hover:bg-primary/90 disabled:opacity-50"
                 >
                   Simpan ke Google Drive
                 </button>

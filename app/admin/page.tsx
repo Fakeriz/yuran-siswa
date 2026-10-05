@@ -802,17 +802,17 @@ function AdminContent() {
       {/* Ringkasan Aliran Kas (tab aliran-kas sahaja) */}
       {isAliranKas && (
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-5 w-full min-w-0">
-        <div className="rounded-xl sm:rounded-2xl border border-border/70 bg-card/80 backdrop-blur p-4 sm:p-5 shadow-xs min-w-0">
+        <div className="rounded-xl sm:rounded-2xl border border-border/70 bg-card p-4 sm:p-5 shadow-xs min-w-0">
           <p className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-muted-foreground">Jumlah Masuk</p>
           <p className="mt-2 text-xl sm:text-2xl font-bold text-emerald-600">RM 24,500</p>
           <p className="mt-1 text-xs text-muted-foreground">Oktober 2026 · 49 transaksi</p>
         </div>
-        <div className="rounded-xl sm:rounded-2xl border border-border/70 bg-card/80 backdrop-blur p-4 sm:p-5 shadow-xs min-w-0">
+        <div className="rounded-xl sm:rounded-2xl border border-border/70 bg-card p-4 sm:p-5 shadow-xs min-w-0">
           <p className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-muted-foreground">Jumlah Keluar</p>
           <p className="mt-2 text-xl sm:text-2xl font-bold text-rose-600">RM 3,200</p>
           <p className="mt-1 text-xs text-muted-foreground">Oktober 2026 · pengeluaran operasional</p>
         </div>
-        <div className="rounded-xl sm:rounded-2xl border border-border/70 bg-card/80 backdrop-blur p-4 sm:p-5 shadow-xs min-w-0">
+        <div className="rounded-xl sm:rounded-2xl border border-border/70 bg-card p-4 sm:p-5 shadow-xs min-w-0">
           <p className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-muted-foreground">Saldo Bersih</p>
           <p className="mt-2 text-xl sm:text-2xl font-bold text-foreground">RM 21,300</p>
           <p className="mt-1 text-xs text-muted-foreground">Selisih masuk dan keluar bulan ini</p>
@@ -822,7 +822,7 @@ function AdminContent() {
 
       {/* Daftar Kuitansi (tab kuitansi sahaja) */}
       {isResit && (
-      <div className="rounded-xl sm:rounded-2xl border border-border/70 bg-card/80 backdrop-blur shadow-xs overflow-hidden w-full min-w-0">
+      <div className="rounded-xl sm:rounded-2xl border border-border/70 bg-card shadow-xs overflow-hidden w-full min-w-0">
         <div className="p-4 sm:p-5 border-b border-border">
           <h2 className="text-base font-bold text-foreground">Kuitansi Terkini</h2>
           <p className="mt-1 text-xs text-muted-foreground">Dokumen bukti pembayaran yang dimuat naik.</p>
@@ -863,7 +863,7 @@ function AdminContent() {
       )}
 
       {/* 4. Bagian Utama: Filter & Tabel Status Yuran Siswa */}
-      <div className="rounded-2xl border border-border/70 bg-card/80 backdrop-blur shadow-xs overflow-hidden w-full min-w-0">
+      <div className="rounded-2xl border border-border/70 bg-card shadow-xs overflow-hidden w-full min-w-0">
         {/* Toolbar Carian & Penapis */}
         <div className="p-4 sm:p-5 border-b border-border flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between bg-card w-full min-w-0">
           {/* Carian Input */}

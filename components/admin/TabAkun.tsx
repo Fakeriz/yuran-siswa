@@ -171,7 +171,7 @@ export function TabAkun() {
     <div className="space-y-6">
       {/* Toast Notifikasi */}
       {toastMsg && (
-        <div className="fixed top-5 right-5 z-50 flex items-center gap-2 rounded-xl bg-emerald-800 px-4 py-3 text-sm font-semibold text-white shadow-xl">
+        <div className="fixed top-5 right-5 z-50 flex items-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-white shadow-xl">
           <CheckCircle2 className="size-4 shrink-0" />
           <span>{toastMsg}</span>
         </div>
@@ -206,7 +206,7 @@ export function TabAkun() {
           <button
             type="button"
             onClick={() => setShowCreateModal(true)}
-            className="inline-flex items-center gap-2 rounded-xl bg-emerald-800 px-4 py-2 text-xs font-semibold text-white shadow-xs hover:bg-emerald-900 transition-colors focus-visible:outline-emerald-600"
+            className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2 text-xs font-semibold text-white shadow-xs hover:bg-primary/90 transition-colors focus-visible:outline-primary"
           >
             <UserPlus className="size-4" />
             <span>Cipta Akaun Baharu</span>
@@ -272,7 +272,7 @@ export function TabAkun() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Cari nama atau emel pengguna..."
-              className="w-full rounded-xl border border-input bg-muted/50 py-2 pl-9 pr-4 text-xs text-foreground focus:border-emerald-600 focus:bg-card focus:outline-none"
+              className="w-full rounded-xl border border-input bg-muted/50 py-2 pl-9 pr-4 text-xs text-foreground focus:border-primary focus:bg-card focus:outline-none"
             />
           </div>
 
@@ -404,7 +404,7 @@ export function TabAkun() {
                   value={nama}
                   onChange={(e) => setNama(e.target.value)}
                   placeholder="cth: Haji Ahmad bin Mansor"
-                  className="mt-1 w-full rounded-xl border border-input px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
+                  className="mt-1 w-full rounded-xl border border-input px-3 py-2 text-sm focus:border-primary focus:outline-none"
                 />
               </div>
 
@@ -416,7 +416,7 @@ export function TabAkun() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="pengguna@emel.com"
-                  className="mt-1 w-full rounded-xl border border-input px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
+                  className="mt-1 w-full rounded-xl border border-input px-3 py-2 text-sm focus:border-primary focus:outline-none"
                 />
               </div>
 
@@ -429,7 +429,7 @@ export function TabAkun() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="mt-1 w-full rounded-xl border border-input px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
+                  className="mt-1 w-full rounded-xl border border-input px-3 py-2 text-sm focus:border-primary focus:outline-none"
                 />
               </div>
 
@@ -438,7 +438,7 @@ export function TabAkun() {
                 <select
                   value={peran}
                   onChange={(e) => setPeran(e.target.value as AccountItem["peran"])}
-                  className="mt-1 w-full rounded-xl border border-input px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
+                  className="mt-1 w-full rounded-xl border border-input px-3 py-2 text-sm focus:border-primary focus:outline-none"
                 >
                   <option value="orang_tua">Ibu Bapa / Penjaga</option>
                   <option value="staff">Staf Asrama (Ustaz Pembimbing)</option>
@@ -455,7 +455,7 @@ export function TabAkun() {
                 </button>
                 <button
                   type="submit"
-                  className="rounded-xl bg-emerald-800 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-900"
+                  className="rounded-full bg-primary px-4 py-2 text-xs font-semibold text-white hover:bg-primary/90"
                 >
                   Cipta Akaun
                 </button>
@@ -489,7 +489,7 @@ export function TabAkun() {
                   required
                   value={selectedParentId}
                   onChange={(e) => setSelectedParentId(e.target.value)}
-                  className="mt-1 w-full rounded-xl border border-input px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
+                  className="mt-1 w-full rounded-xl border border-input px-3 py-2 text-sm focus:border-primary focus:outline-none"
                 >
                   <option value="">-- Pilih Ibu Bapa --</option>
                   {parentAccounts.map((p) => (
@@ -506,7 +506,7 @@ export function TabAkun() {
                   required
                   value={selectedChildName}
                   onChange={(e) => setSelectedChildName(e.target.value)}
-                  className="mt-1 w-full rounded-xl border border-input px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
+                  className="mt-1 w-full rounded-xl border border-input px-3 py-2 text-sm focus:border-primary focus:outline-none"
                 >
                   <option value="">-- Pilih Talebe --</option>
                   <option value="Ahmad bin Ali">Ahmad bin Ali (Mevlana HE · Tahun 1 Amanah)</option>
@@ -529,7 +529,7 @@ export function TabAkun() {
                 <button
                   type="submit"
                   disabled={!selectedParentId || !selectedChildName}
-                  className="rounded-xl bg-emerald-800 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-900 disabled:opacity-50"
+                  className="rounded-full bg-primary px-4 py-2 text-xs font-semibold text-white hover:bg-primary/90 disabled:opacity-50"
                 >
                   Sahkan Pautan Anak
                 </button>

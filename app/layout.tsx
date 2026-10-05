@@ -1,8 +1,15 @@
 import type { Metadata } from "next";
+import { Geist } from "next/font/google";
 import { ThemeProvider } from "../components/theme-provider";
 import "./globals.css";
 
 export const runtime = "edge";
+
+const geist = Geist({
+  subsets: ["latin"],
+  variable: "--font-geist-sans",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "YuranKu",
@@ -18,7 +25,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="id" suppressHydrationWarning>
-      <body className="antialiased bg-card text-foreground transition-colors duration-150">
+      <body className={`${geist.variable} antialiased bg-card text-foreground transition-colors duration-150`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

@@ -47,8 +47,8 @@ export function PaymentForm({ student, bulan, tahun, period, today }: {
   }
 
   return <>
-    <button type="button" onClick={() => { setMessage(""); dialog.current?.showModal(); }} className="min-h-11 rounded-2xl bg-neutral-900 px-4 py-2 font-semibold text-white shadow-[inset_2px_2px_5px_0px_rgba(0,0,0,0.5),inset_-2px_-2px_6px_1px_rgba(80,78,78,0.5)] transition hover:bg-black" aria-label={`Catat pembayaran ${student.nama}`}>Catat</button>
-    <dialog ref={dialog} aria-labelledby={titleId} onCancel={(event) => { if (pending) event.preventDefault(); }} onClose={() => { if (saved) router.refresh(); }} className="m-auto max-h-[90dvh] w-[calc(100%-2rem)] max-w-lg overflow-y-auto rounded-3xl border border-white bg-card/90 p-6 text-foreground shadow-[0_24px_60px_-20px_rgba(37,99,235,0.3)] backdrop-blur-xl backdrop:bg-black/50">
+    <button type="button" onClick={() => { setMessage(""); dialog.current?.showModal(); }} className="min-h-11 rounded-full bg-primary px-4 py-2 font-semibold text-primary-foreground transition hover:opacity-90" aria-label={`Catat pembayaran ${student.nama}`}>Catat</button>
+    <dialog ref={dialog} aria-labelledby={titleId} onCancel={(event) => { if (pending) event.preventDefault(); }} onClose={() => { if (saved) router.refresh(); }} className="m-auto max-h-[90dvh] w-[calc(100%-2rem)] max-w-lg overflow-y-auto rounded-3xl border border-border bg-card p-6 text-foreground shadow-2xl backdrop:bg-black/50">
       <h2 id={titleId} className="text-xl font-semibold">Catat pembayaran</h2>
       <p className="mt-2 break-words font-medium">{student.nama}</p>
       <p className="mt-1 text-muted-foreground">{period}</p>
@@ -62,8 +62,8 @@ export function PaymentForm({ student, bulan, tahun, period, today }: {
         </fieldset>
         {message && <p role={saved ? "status" : "alert"} className={`rounded-2xl p-3 text-sm ${saved ? "bg-emerald-100 text-emerald-900" : "bg-red-50 text-red-800"}`}>{message}</p>}
         <div className="flex flex-wrap justify-end gap-3 pt-2">
-          <button type="button" onClick={close} disabled={pending} className="min-h-11 rounded-2xl border border-input px-4 py-2 disabled:opacity-60">{saved ? "Selesai" : "Batal"}</button>
-          {!saved && <button disabled={pending} className="min-h-11 rounded-2xl bg-neutral-900 px-5 py-2 font-semibold text-white shadow-[inset_2px_2px_5px_0px_rgba(0,0,0,0.5),inset_-2px_-2px_6px_1px_rgba(80,78,78,0.5)] transition hover:bg-black disabled:opacity-60">{pending ? "Menyimpan…" : "Simpan"}</button>}
+          <button type="button" onClick={close} disabled={pending} className="min-h-11 rounded-full border border-input px-4 py-2 disabled:opacity-60">{saved ? "Selesai" : "Batal"}</button>
+          {!saved && <button disabled={pending} className="min-h-11 rounded-full bg-primary px-5 py-2 font-semibold text-primary-foreground transition hover:opacity-90 disabled:opacity-60">{pending ? "Menyimpan…" : "Simpan"}</button>}
         </div>
       </form>
     </dialog>

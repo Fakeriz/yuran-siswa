@@ -67,11 +67,11 @@ export default async function ParentPage() {
               label={`Lunas bulan ${months[currentMonth - 1]}`}
             />
           </FinanceHero>
-      {!ids.length ? <section className="mt-8 rounded-3xl border border-border/70 bg-card/80 p-6 backdrop-blur" role="status">
+      {!ids.length ? <section className="mt-8 rounded-3xl border border-border/70 bg-card p-6" role="status">
         <h2 className="text-xl font-semibold">menunggu persetujuan</h2>
         <p className="mt-3 text-muted-foreground">Data anak akan tampil setelah pengajuan disetujui oleh admin atau staf.</p>
-      </section> : !students.length ? <p role="status" className="mt-8 rounded-3xl border border-border/70 bg-card/80 p-6 backdrop-blur">Data anak belum tersedia. Hubungi admin untuk memeriksa hubungan akun Anda.</p> : <div className="mt-8 space-y-5">
-        {students.map((student, si) => <details key={student.id} className={`rounded-3xl border border-border/70 bg-card/80 shadow-sm backdrop-blur ${si === 0 ? "shadow-[0_24px_60px_-20px_rgba(37,99,235,0.25)]" : ""}`} open={students.length === 1}>
+      </section> : !students.length ? <p role="status" className="mt-8 rounded-3xl border border-border/70 bg-card p-6">Data anak belum tersedia. Hubungi admin untuk memeriksa hubungan akun Anda.</p> : <div className="mt-8 space-y-5">
+        {students.map((student, si) => <details key={student.id} className="rounded-3xl border border-border/70 bg-card shadow-sm" open={students.length === 1}>
           <summary className="cursor-pointer rounded-3xl p-5 sm:p-6">
             <span className="ml-2 break-words text-lg font-semibold">{student.nama}</span>
             <span className="mt-2 block text-sm text-muted-foreground">Kelas {student.kelas} · {money(student.yuran_per_bulan)} per bulan</span>

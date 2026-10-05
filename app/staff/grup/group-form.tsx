@@ -33,6 +33,6 @@ export function GroupForm({ groups, initialSelected }: { groups: string[]; initi
     </fieldset>
     <p className="text-sm text-muted-foreground">Kosongkan semua pilihan untuk melepas seluruh grup Anda.</p>
     {message && <p role={success ? "status" : "alert"} className={`rounded-2xl p-4 ${success ? "bg-emerald-100 text-emerald-900" : "bg-red-50 text-red-900"}`}>{message}</p>}
-    <button disabled={pending || !groups.length} className="min-h-12 rounded-2xl bg-neutral-900 px-6 py-3 font-semibold text-white shadow-[inset_2px_2px_5px_0px_rgba(0,0,0,0.5),inset_-2px_-2px_6px_1px_rgba(80,78,78,0.5)] transition hover:bg-black disabled:opacity-60">{pending ? "Menyimpan…" : "Simpan"}</button>
+    <button disabled={pending || !groups.length} className="min-h-12 rounded-full bg-primary px-6 py-3 font-semibold text-primary-foreground transition hover:opacity-90 disabled:opacity-60">{pending ? "Menyimpan…" : "Simpan"}</button>
   </form>;
 }

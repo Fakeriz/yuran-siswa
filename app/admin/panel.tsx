@@ -9,7 +9,7 @@ import { UserBar } from "../../components/user-bar";
 type Data = Awaited<ReturnType<typeof listAdminData>>;
 type Result = { ok: true } | { ok: false; error: string };
 const field = "mt-2 block min-h-12 w-full rounded-2xl border border-input bg-card px-3 py-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary";
-const card = "rounded-3xl border border-border/70 bg-card/80 p-5 shadow-sm backdrop-blur";
+const card = "rounded-3xl border border-border/70 bg-card p-5 shadow-sm";
 const text = (data: FormData, key: string) => String(data.get(key) ?? "");
 const money = (amount: number) => `RM ${Number(amount).toLocaleString("en-MY", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
@@ -27,7 +27,7 @@ function ActionForm({ children, action, label = "Simpan", confirm, disabled = fa
       try { const next = await action(data); setResult(next); if (next.ok) router.refresh(); }
       catch { setResult({ ok: false, error: "Perubahan gagal dikirim. Silakan coba lagi." }); }
     });
-  }}><fieldset disabled={pending || disabled} className="space-y-4 disabled:opacity-60">{children}<button className="min-h-12 rounded-2xl bg-neutral-900 px-5 py-2 font-semibold text-white shadow-[inset_2px_2px_5px_0px_rgba(0,0,0,0.5),inset_-2px_-2px_6px_1px_rgba(80,78,78,0.5)] transition hover:bg-black disabled:opacity-60">{pending ? "Menyimpan…" : label}</button></fieldset>{result && <p role={result.ok ? "status" : "alert"} className={`rounded-2xl p-3 text-sm ${result.ok ? "bg-emerald-100 text-emerald-900" : "bg-red-50 text-red-900"}`}>{result.ok ? "Perubahan berhasil disimpan." : result.error}</p>}</form>;
+  }}><fieldset disabled={pending || disabled} className="space-y-4 disabled:opacity-60">{children}<button className="min-h-12 rounded-full bg-primary px-5 py-2 font-semibold text-primary-foreground transition hover:opacity-90 disabled:opacity-60">{pending ? "Menyimpan…" : label}</button></fieldset>{result && <p role={result.ok ? "status" : "alert"} className={`rounded-2xl p-3 text-sm ${result.ok ? "bg-emerald-100 text-emerald-900" : "bg-red-50 text-red-900"}`}>{result.ok ? "Perubahan berhasil disimpan." : result.error}</p>}</form>;
 }
 function StudentFields({ student }: { student?: Data["students"][number] }) {
   return <><label className="block text-sm font-medium">Nama<input name="nama" required defaultValue={student?.nama} className={field} /></label><div className="grid gap-4 sm:grid-cols-2"><label className="block text-sm font-medium">Grup<input name="grup" required defaultValue={student?.grup} className={field} /></label><label className="block text-sm font-medium">Kelas<input name="kelas" required defaultValue={student?.kelas} className={field} /></label></div><label className="block text-sm font-medium">Yuran per bulan (RM)<input name="yuran" required type="number" min="0" step="0.01" defaultValue={student?.yuran_per_bulan} className={field} /></label><label className="flex min-h-12 items-center gap-3"><input name="aktif" type="checkbox" defaultChecked={student?.is_active ?? true} className="size-5 accent-primary" />Siswa aktif</label></>;
@@ -75,7 +75,7 @@ export function AdminPanel({ initialTab, data }: { initialTab?: string; data: Da
                 aria-current={activeTab === id ? "page" : undefined}
                 className={`rounded-2xl px-4 py-3 text-sm text-left font-medium transition-colors duration-150 ${
                   activeTab === id
-                    ? "bg-neutral-900 text-white shadow-[inset_2px_2px_5px_0px_rgba(0,0,0,0.5),inset_-2px_-2px_6px_1px_rgba(80,78,78,0.5)]"
+                    ? "bg-primary/10 text-primary font-semibold"
                     : "text-foreground hover:bg-muted"
                 }`}
               >

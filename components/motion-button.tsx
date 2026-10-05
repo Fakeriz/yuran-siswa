@@ -62,7 +62,7 @@ type Ripple = { id: number; x: number; y: number; size: number };
 
 const VARIANT_CLASS: Record<ButtonVariant, string> = {
   primary:
-    "bg-neutral-900 text-white shadow-[inset_2px_2px_5px_0px_rgba(0,0,0,0.5),inset_-2px_-2px_6px_1px_rgba(80,78,78,0.5)] hover:bg-black",
+    "bg-primary text-primary-foreground hover:opacity-90",
   secondary:
     "border border-input bg-card text-foreground hover:bg-muted",
   ghost:
@@ -72,10 +72,10 @@ const VARIANT_CLASS: Record<ButtonVariant, string> = {
 };
 
 const SIZE_CLASS: Record<ButtonSize, string> = {
-  sm: "h-8 px-3 text-xs gap-1.5 rounded-xl",
-  md: "h-10 px-5 text-sm gap-2 rounded-xl",
-  lg: "h-12 px-6 text-base gap-2 rounded-xl",
-  icon: "size-8 rounded-xl",
+  sm: "h-8 px-3 text-xs gap-1.5 rounded-full",
+  md: "h-10 px-5 text-sm gap-2 rounded-full",
+  lg: "h-12 px-6 text-base gap-2 rounded-full",
+  icon: "size-8 rounded-full",
 };
 
 const RIPPLE_MS = 700;

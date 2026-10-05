@@ -8,13 +8,13 @@ type DemoVariant = "default" | "landing";
 
 export function DemoButtons({ variant = "default" }: { variant?: DemoVariant }) {
   const [isPending, startTransition] = useTransition();
-  const cardClass = variant === "landing" ? "border-border" : "border-emerald-200";
-  const titleClass = variant === "landing" ? "text-foreground" : "text-emerald-950";
-  const detailClass = variant === "landing" ? "text-muted-foreground" : "text-zinc-600";
-  const passwordClass = variant === "landing" ? "text-muted-foreground" : "text-zinc-400";
+  const cardClass = "border-border";
+  const titleClass = "text-foreground";
+  const detailClass = "text-muted-foreground";
+  const passwordClass = "text-muted-foreground";
   const buttonClass = variant === "landing"
     ? "bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-    : "bg-emerald-800 text-white hover:bg-emerald-900";
+    : "bg-primary text-primary-foreground hover:bg-primary/90";
 
   const handleLogin = (role: Role) => {
     startTransition(async () => {
@@ -89,7 +89,7 @@ export function DemoRoleCardAction({ role, label, variant = "default" }: { role:
       type="button"
       disabled={isPending}
       onClick={handleLogin}
-      className={`mt-4 inline-flex items-center gap-1.5 rounded-sm text-sm font-semibold underline underline-offset-4 disabled:opacity-60 ${variant === "landing" ? "text-primary hover:decoration-2 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" : "text-emerald-800 hover:text-emerald-900"}`}
+      className={`mt-4 inline-flex items-center gap-1.5 rounded-sm text-sm font-semibold underline underline-offset-4 disabled:opacity-60 "text-primary hover:decoration-2 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"`}
     >
       {isPending ? "Memproses..." : `${label} →`}
     </button>

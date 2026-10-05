@@ -33,9 +33,25 @@ import {
   MorphSelectValue,
 } from "../../components/morph-select";
 import { Button, ButtonLink } from "../../components/motion-button";
+import {
+  Combobox,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxInput,
+  ComboboxItem,
+  ComboboxList,
+} from "../../components/ui/combobox";
+import { Item, ItemContent, ItemDescription, ItemTitle } from "../../components/ui/item";
 import { FinanceHero } from "../../components/finance-hero";
 import { FinanceKpi } from "../../components/finance-kpi";
 import { CartaTahunan, PanelKemajuanGrup } from "../../components/finance-charts";
+
+/** Ringkasan siswa untuk combobox (nama + grup) */
+interface SiswaRingkas {
+  id: string;
+  nama: string;
+  grup: string;
+}
 
 // Struktur jenis data berasaskan skema logik Data_Talebe & Transaksi_Masuk
 export interface TalebeRecord {
@@ -199,7 +215,15 @@ function AdminContent() {
   const [recordOpen, setRecordOpen] = useState(false);
   const recordCloseTimer = useRef<number | null>(null);
   const [showBayarModal, setShowBayarModal] = useState(false);
-  const [bayarNama, setBayarNama] = useState("");
+  const [bayarSiswa, setBayarSiswa] = useState<SiswaRingkas | null>(null);
+  // Senarai unik siswa (nama + grup) untuk combobox — diperoleh dari rekod sedia ada
+  const daftarSiswa = useMemo(() => {
+    const map = new Map<string, SiswaRingkas>();
+    for (const r of records) {
+      if (!map.has(r.nama)) map.set(r.nama, { id: r.id, nama: r.nama, grup: r.grup });
+    }
+    return [...map.values()];
+  }, [records]);
   const [bayarJumlah, setBayarJumlah] = useState("500");
   const [bayarBulan, setBayarBulan] = useState("Oktober 2026");
   const [showImportModal, setShowImportModal] = useState(false);
@@ -1006,13 +1030,33 @@ function AdminContent() {
             <div className="mt-4 space-y-4">
               <div>
                 <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Nama Siswa</label>
-                <input
-                  type="text"
-                  value={bayarNama}
-                  onChange={(e) => setBayarNama(e.target.value)}
-                  placeholder="cth: Ahmad bin Ali"
-                  className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 focus:border-blue-600 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-500"
-                />
+                <Combobox
+                  items={daftarSiswa}
+                  itemToStringValue={(s) => s.nama}
+                  value={bayarSiswa}
+                  onValueChange={setBayarSiswa}
+                  className="mt-1"
+                >
+                  <ComboboxInput
+                    placeholder="Cari nama siswa..."
+                    className="rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 focus:border-blue-600 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-500"
+                  />
+                  <ComboboxContent>
+                    <ComboboxEmpty>Tidak ada siswa ditemukan.</ComboboxEmpty>
+                    <ComboboxList>
+                      {(siswa: SiswaRingkas) => (
+                        <ComboboxItem key={siswa.id}>
+                          <Item className="p-0">
+                            <ItemContent>
+                              <ItemTitle className="whitespace-nowrap">{siswa.nama}</ItemTitle>
+                              <ItemDescription>{siswa.grup}</ItemDescription>
+                            </ItemContent>
+                          </Item>
+                        </ComboboxItem>
+                      )}
+                    </ComboboxList>
+                  </ComboboxContent>
+                </Combobox>
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
@@ -1053,13 +1097,14 @@ function AdminContent() {
                 variant="primary"
                 size="sm"
                 ripple
-                disabled={!bayarNama.trim()}
+                disabled={!bayarSiswa}
                 onClick={() => {
+                  if (!bayarSiswa) return;
                   const baru: TalebeRecord = {
                     id: `T-${Date.now()}`,
-                    nama: bayarNama.trim(),
+                    nama: bayarSiswa.nama,
                     noTransaksi: `TRX-${Date.now().toString().slice(-6)}`,
-                    grup: "Mevlana HE",
+                    grup: bayarSiswa.grup as TalebeRecord["grup"],
                     yuranBulanan: 500,
                     jumlahBayar: Number(bayarJumlah) || 500,
                     bulanDibayar: bayarBulan,
@@ -1070,7 +1115,7 @@ function AdminContent() {
                   };
                   setRecords((r) => [baru, ...r]);
                   setShowBayarModal(false);
-                  window.setTimeout(() => setBayarNama(""), 460);
+                  window.setTimeout(() => setBayarSiswa(null), 460);
                 }}
               >
                 Simpan Bayaran

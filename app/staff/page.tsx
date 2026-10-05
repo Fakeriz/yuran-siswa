@@ -5,6 +5,7 @@ import { paymentStatusFor, unpaidStudents } from "../../lib/fees";
 import { createClient } from "../../lib/supabase/server";
 import type { Payment, Student } from "../../lib/types";
 import { PaymentForm } from "./payment-form";
+import { REAL_STUDENTS, REAL_PAYMENTS } from "../../lib/data/real-data";
 import { UserBar } from "../../components/user-bar";
 import { FinanceHero } from "../../components/finance-hero";
 import { FinanceKpi } from "../../components/finance-kpi";
@@ -40,13 +41,11 @@ export default async function StaffPage({ searchParams }: {
       // fallback to demo below
     }
     if (!students.length) {
-      const demoList: Student[] = [
-        { id: "demo-student-1", nama: "Ahmad Albab", grup: "Grup A", kelas: "Tahun 1 Amanah", yuran_per_bulan: 50, status: "aktif" },
-        { id: "demo-student-2", nama: "Siti Nurhaliza", grup: "Grup A", kelas: "Tahun 2 Bestari", yuran_per_bulan: 60, status: "aktif" },
-        { id: "demo-student-3", nama: "Muhammad Faiz", grup: "Grup B", kelas: "Tahun 3 Cerdas", yuran_per_bulan: 55, status: "aktif" },
-        { id: "demo-student-4", nama: "Nur Aisyah", grup: "Grup B", kelas: "Tahun 1 Amanah", yuran_per_bulan: 50, status: "aktif" },
-      ];
-      students = demoList.filter((s) => groups.includes(s.grup));
+      const realList: Student[] = REAL_STUDENTS.map((s) => ({
+        id: s.id, nama: s.nama, grup: s.grup, kelas: s.kelas,
+        yuran_per_bulan: s.yuran_per_bulan, status: s.is_active ? "aktif" : "nonaktif",
+      }));
+      students = realList.filter((s) => groups.includes(s.grup));
     }
     if (students.length) {
       try {
@@ -56,14 +55,18 @@ export default async function StaffPage({ searchParams }: {
         if (!result.error && result.data && result.data.length > 0) {
           payments = result.data;
         } else {
-          payments = [
-            { id: "demo-pay-1", student_id: "demo-student-1", bulan, tahun, jumlah: 50, tanggal_bayar: `${tahun}-${String(bulan).padStart(2, "0")}-15`, bukti_drive_file_id: "demo-file", kwitansi_drive_file_id: null, dicatat_oleh: null, catatan: "Transfer Bank" },
-          ];
+          payments = REAL_PAYMENTS.filter((p) => p.bulan === bulan && p.tahun === tahun).map((p) => ({
+            id: p.id, student_id: p.student_id, bulan: p.bulan, tahun: p.tahun, jumlah: p.jumlah,
+            tanggal_bayar: p.tanggal_bayar || `${tahun}-${String(bulan).padStart(2, "0")}-01`,
+            bukti_drive_file_id: "demo-file", kwitansi_drive_file_id: null, dicatat_oleh: null, catatan: p.catatan,
+          }));
         }
       } catch {
-        payments = [
-          { id: "demo-pay-1", student_id: "demo-student-1", bulan, tahun, jumlah: 50, tanggal_bayar: `${tahun}-${String(bulan).padStart(2, "0")}-15`, bukti_drive_file_id: "demo-file", kwitansi_drive_file_id: null, dicatat_oleh: null, catatan: "Transfer Bank" },
-        ];
+        payments = REAL_PAYMENTS.filter((p) => p.bulan === bulan && p.tahun === tahun).map((p) => ({
+          id: p.id, student_id: p.student_id, bulan: p.bulan, tahun: p.tahun, jumlah: p.jumlah,
+          tanggal_bayar: p.tanggal_bayar || `${tahun}-${String(bulan).padStart(2, "0")}-01`,
+          bukti_drive_file_id: "demo-file", kwitansi_drive_file_id: null, dicatat_oleh: null, catatan: p.catatan,
+        }));
       }
     }
   }

@@ -1,4 +1,5 @@
 import { myStudentIds } from "../../lib/auth";
+import { REAL_STUDENTS, REAL_PAYMENTS } from "../../lib/data/real-data";
 import { getViewUrl } from "../../lib/drive";
 import { paymentStatusFor } from "../../lib/fees";
 import { createClient } from "../../lib/supabase/server";
@@ -39,16 +40,17 @@ export default async function ParentPage() {
   }
 
   if (!students.length) {
-    const demoStudents: Student[] = [
-      { id: "demo-student-1", nama: "Ahmad Albab", grup: "Grup A", kelas: "Tahun 1 Amanah", yuran_per_bulan: 50, status: "aktif" },
-      { id: "demo-student-2", nama: "Siti Nurhaliza", grup: "Grup A", kelas: "Tahun 2 Bestari", yuran_per_bulan: 60, status: "aktif" },
-    ];
-    students = demoStudents;
-    payments = [
-      { id: "demo-pay-1", student_id: "demo-student-1", bulan: 1, tahun, jumlah: 50, tanggal_bayar: `${tahun}-01-15`, bukti_drive_file_id: "demo-file", kwitansi_drive_file_id: null, dicatat_oleh: null, catatan: "Transfer Bank" },
-      { id: "demo-pay-2", student_id: "demo-student-1", bulan: 2, tahun, jumlah: 50, tanggal_bayar: `${tahun}-02-14`, bukti_drive_file_id: "demo-file", kwitansi_drive_file_id: null, dicatat_oleh: null, catatan: "Transfer Bank" },
-      { id: "demo-pay-3", student_id: "demo-student-2", bulan: 1, tahun, jumlah: 60, tanggal_bayar: `${tahun}-01-10`, bukti_drive_file_id: "demo-file", kwitansi_drive_file_id: "demo-kwitansi", dicatat_oleh: null, catatan: "Setoran Tunai" },
-    ];
+    // Data asli: 2 siswa pertama sebagai contoh akun orang tua demo
+    const realDemoIds = ["siswa-1", "siswa-2"];
+    students = REAL_STUDENTS.filter((s) => realDemoIds.includes(s.id)).map((s) => ({
+      id: s.id, nama: s.nama, grup: s.grup, kelas: s.kelas,
+      yuran_per_bulan: s.yuran_per_bulan, status: s.is_active ? "aktif" : "nonaktif",
+    }));
+    payments = REAL_PAYMENTS.filter((p) => realDemoIds.includes(p.student_id) && p.tahun === tahun).map((p) => ({
+      id: p.id, student_id: p.student_id, bulan: p.bulan, tahun: p.tahun, jumlah: p.jumlah,
+      tanggal_bayar: p.tanggal_bayar || `${p.tahun}-${String(p.bulan).padStart(2, "0")}-01`,
+      bukti_drive_file_id: "demo-file", kwitansi_drive_file_id: null, dicatat_oleh: null, catatan: p.catatan,
+    }));
   }
 
   return (

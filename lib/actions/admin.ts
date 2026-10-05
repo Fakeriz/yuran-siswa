@@ -1,5 +1,7 @@
 "use server";
 
+import { REAL_STUDENTS, REAL_PAYMENTS } from "../data/real-data";
+
 import { getProfile, myGroups } from "../auth";
 import { createClient } from "../supabase/server";
 
@@ -146,12 +148,7 @@ export async function listAdminData() {
   ]);
 
   if (!students.length) {
-    students.push(
-      { id: "demo-student-1", nama: "Ahmad Albab", grup: "Grup A", kelas: "Tahun 1 Amanah", yuran_per_bulan: 50, is_active: true },
-      { id: "demo-student-2", nama: "Siti Nurhaliza", grup: "Grup A", kelas: "Tahun 2 Bestari", yuran_per_bulan: 60, is_active: true },
-      { id: "demo-student-3", nama: "Muhammad Faiz", grup: "Grup B", kelas: "Tahun 3 Cerdas", yuran_per_bulan: 55, is_active: true },
-      { id: "demo-student-4", nama: "Nur Aisyah", grup: "Grup B", kelas: "Tahun 1 Amanah", yuran_per_bulan: 50, is_active: true },
-    );
+    students.push(...REAL_STUDENTS);
   }
   if (!profiles.length) {
     profiles.push(
@@ -173,10 +170,14 @@ export async function listAdminData() {
     );
   }
   if (!payments.length) {
-    payments.push(
-      { id: "demo-pay-1", student_id: "demo-student-1", bulan: 10, tahun: 2026, jumlah: 50, kwitansi_drive_file_id: null },
-      { id: "demo-pay-2", student_id: "demo-student-3", bulan: 10, tahun: 2026, jumlah: 55, kwitansi_drive_file_id: null },
-    );
+    payments.push(...REAL_PAYMENTS.map((p) => ({
+      id: p.id,
+      student_id: p.student_id,
+      bulan: p.bulan,
+      tahun: p.tahun,
+      jumlah: p.jumlah,
+      kwitansi_drive_file_id: null,
+    })));
   }
 
   return { students, profiles, links, groups, payments };

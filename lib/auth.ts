@@ -111,7 +111,7 @@ export async function myStudentIds(): Promise<string[]> {
     // Supabase belum dikonfigurasi — pakai demo fallback
   }
   // Demo fallback
-  return ["demo-student-1", "demo-student-2"];
+  return ["siswa-1", "siswa-2"];
 }
 
 export async function myGroups(): Promise<string[]> {
@@ -132,5 +132,5 @@ export async function myGroups(): Promise<string[]> {
     // Supabase belum dikonfigurasi — pakai demo fallback
   }
   // Demo fallback
-  return ["Grup A", "Grup B"];
+  return ["Umum"];
 }

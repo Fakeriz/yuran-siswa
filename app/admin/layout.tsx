@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect, Suspense, type ReactNode } from "react";
+import { useState, useEffect, useRef, Suspense, type ReactNode } from "react";
 import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   LayoutDashboard,
   Users,
@@ -17,7 +17,10 @@ import {
   LogOut,
   ShieldCheck,
   ChevronRight,
+  ChevronDown,
+  CircleHelp,
   School,
+  Search,
   Wallet,
 } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -123,21 +126,36 @@ function SidebarNav({ onNavigate }: { onNavigate: () => void }) {
   );
 }
 
+const TAB_NAMES: Record<string, string> = {
+  "aliran-kas": "Arus Kas & Yuran",
+  siswa: "Data Siswa",
+  transaksi: "Transaksi Masuk",
+  penugasan: "Penugasan Staf",
+  persetujuan: "Persetujuan Orang Tua",
+  resit: "Kuitansi",
+  kwitansi: "Kuitansi",
+  penyata: "Laporan Bulanan",
+  akun: "Pengelolaan Akun",
+};
+
+function tabTitle(tab: string | null): string {
+  return tab && TAB_NAMES[tab] ? TAB_NAMES[tab] : "Dasbor Utama";
+}
+
+/** Tajuk tab semasa untuk bar header atas (gaya financial dashboard). */
+function HeaderTitle() {
+  const searchParams = useSearchParams();
+  return (
+    <h1 className="shrink-0 truncate text-lg font-bold tracking-tight text-slate-900 dark:text-slate-100">
+      {tabTitle(searchParams.get("tab"))}
+    </h1>
+  );
+}
+
 function Breadcrumb() {
   const searchParams = useSearchParams();
   const tab = searchParams.get("tab");
-  const names: Record<string, string> = {
-    "aliran-kas": "Arus Kas & Yuran",
-    siswa: "Data Siswa",
-    transaksi: "Transaksi Masuk",
-    penugasan: "Penugasan Staf",
-    persetujuan: "Persetujuan Orang Tua",
-    resit: "Kuitansi",
-    kwitansi: "Kuitansi",
-    penyata: "Laporan Bulanan",
-    akun: "Pengelolaan Akun",
-  };
-  const current = tab && names[tab] ? names[tab] : "Dasbor Utama";
+  const current = tabTitle(tab);
   return (
     <div className="flex items-center gap-2 text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium">
       <span className="text-slate-800 dark:text-slate-200 font-semibold">YuranKu</span>
@@ -151,9 +169,23 @@ function Breadcrumb() {
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [sesiOpen, setSesiOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
+  const [helpOpen, setHelpOpen] = useState(false);
+  const [userOpen, setUserOpen] = useState(false);
+  const searchRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
   const [sesi, setSesi] = useState("2026/2027");
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        searchRef.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
 
   useEffect(() => {
     const saved = localStorage.getItem("yuran-sesi");
@@ -178,7 +210,8 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
       if (e.key === "Escape") {
         setSidebarOpen(false);
         setNotifOpen(false);
-        setSesiOpen(false);
+        setHelpOpen(false);
+        setUserOpen(false);
       }
     };
     window.addEventListener("keydown", handleKeyDown);
@@ -326,110 +359,179 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
           </div>
         </header>
 
-        {/* Desktop Top Navbar (hidden on mobile, visible on lg) */}
-        <header className="sticky top-0 z-30 hidden lg:flex h-16 w-full items-center justify-between border-b border-slate-200/70 bg-white/85 backdrop-blur-md px-6 lg:px-8 dark:border-slate-800 dark:bg-[#0b1329]/85">
-          <div className="flex items-center gap-3">
+        {/* Desktop Top Navbar — bar terapung gaya financial dashboard */}
+        <header className="sticky top-0 z-30 hidden w-full px-6 pt-4 lg:block lg:px-8">
+          <div className="flex h-16 w-full items-center justify-between gap-4 rounded-2xl border border-slate-200/60 bg-white/90 px-5 shadow-[0_8px_30px_-12px_rgba(15,23,42,0.15)] backdrop-blur-md dark:border-slate-800 dark:bg-[#0b1329]/90">
+            {/* Tajuk tab semasa */}
             <Suspense>
-              <Breadcrumb />
+              <HeaderTitle />
             </Suspense>
-          </div>
 
-          {/* Topbar Right Controls */}
-          <div className="flex items-center gap-2 sm:gap-3">
-            {/* Pemilih Tahun Ajaran */}
-            <div className="relative">
-              <button
-                type="button"
-                onClick={() => { setSesiOpen((o) => !o); setNotifOpen(false); }}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 rounded-full text-xs font-medium text-slate-600 border border-slate-200 hover:border-slate-300 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700 dark:hover:border-slate-600"
-              >
-                <span className="size-2 rounded-full bg-blue-600 animate-pulse" />
-                <span>Tahun Ajaran {sesi}</span>
-              </button>
-              {sesiOpen && (
-                <div className="absolute right-0 mt-2 w-48 rounded-xl border border-slate-200 bg-white shadow-lg z-50 dark:border-slate-800 dark:bg-[#0b1329]">
-                  {SESI_LIST.map((s) => (
-                    <button
-                      key={s}
-                      type="button"
-                      onClick={() => {
-                        setSesi(s);
-                        localStorage.setItem("yuran-sesi", s);
-                        setSesiOpen(false);
-                      }}
-                      className={`block w-full text-left px-4 py-2.5 text-xs font-medium hover:bg-slate-50 first:rounded-t-xl last:rounded-b-xl dark:hover:bg-slate-800 ${
-                        s === sesi
-                          ? "text-blue-700 bg-blue-50 dark:bg-blue-950 dark:text-blue-300"
-                          : "text-slate-700 dark:text-slate-300"
-                      }`}
-                    >
-                      Sesi {s}{s === sesi && " ✓"}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Tombol Theme Toggle */}
-            <ThemeToggle />
-
-            {/* Notifikasi Dropdown */}
-            <div className="relative">
-              <button
-                type="button"
-                onClick={() => { setNotifOpen((o) => !o); setSesiOpen(false); }}
-                className="relative p-2 text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-colors dark:text-slate-400 dark:hover:text-slate-100 dark:hover:bg-slate-800"
-                aria-label={`Notifikasi sistem${unreadCount > 0 ? `, ${unreadCount} belum dibaca` : ""}`}
-              >
-                <Bell className="size-4.5" />
-                <NotificationBadge count={unreadCount} />
-              </button>
-              {notifOpen && (
-                <div className="absolute right-0 mt-2 w-80 rounded-2xl border border-slate-200 bg-white shadow-xl z-50 overflow-hidden dark:border-slate-800 dark:bg-[#0b1329]">
-                  <div className="flex items-center justify-between px-4 py-3 border-b border-slate-100 dark:border-slate-800">
-                    <p className="text-sm font-bold text-slate-900 dark:text-slate-100">Notifikasi</p>
-                    <button
-                      type="button"
-                      onClick={() => setNotifs((ns) => ns.map((n) => ({ ...n, dibaca: true })))}
-                      className="text-xs font-medium text-blue-700 hover:underline dark:text-blue-300"
-                    >
-                      Tandai semua dibaca
-                    </button>
-                  </div>
-                  <ul className="max-h-80 overflow-y-auto divide-y divide-slate-100 dark:divide-slate-800">
-                    {notifs.map((n) => (
-                      <li key={n.id}>
-                        <Link
-                          href={`/admin?tab=${n.tab}`}
-                          onClick={() => {
-                            setNotifs((ns) => ns.map((x) => x.id === n.id ? { ...x, dibaca: true } : x));
-                            setNotifOpen(false);
-                          }}
-                          className={`block px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-800 ${
-                            !n.dibaca ? "bg-blue-50/60 dark:bg-blue-950/30" : ""
-                          }`}
-                        >
-                          <div className="flex items-start justify-between gap-2">
-                            <p className="text-xs font-semibold text-slate-900 dark:text-slate-100">{n.judul}</p>
-                            {!n.dibaca && <span className="mt-1 size-2 shrink-0 rounded-full bg-blue-600" />}
-                          </div>
-                          <p className="mt-0.5 text-xs text-slate-600 dark:text-slate-400">{n.pesan}</p>
-                          <p className="mt-1 text-[10px] text-slate-400 dark:text-slate-500">{n.masa}</p>
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-
-            <Link
-              href="/admin?tab=resit"
-              className="hidden md:inline-flex items-center gap-2 rounded-xl bg-neutral-900 px-3.5 py-2 text-xs font-semibold text-white shadow-[inset_2px_2px_5px_0px_rgba(0,0,0,0.5),inset_-2px_-2px_6px_1px_rgba(80,78,78,0.5)] transition-all hover:bg-black active:scale-[0.98] focus-visible:outline-blue-600 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200"
+            {/* Carian global */}
+            <form
+              role="search"
+              onSubmit={(e) => {
+                e.preventDefault();
+                const q = searchRef.current?.value.trim();
+                if (q) router.push(`/admin?tab=siswa&q=${encodeURIComponent(q)}`);
+              }}
+              className="relative hidden w-full max-w-md md:block"
             >
-              <CreditCard className="size-3.5" />
-              <span>Kuitansi & Pembayaran</span>
-            </Link>
+              <Search className="pointer-events-none absolute left-4 top-1/2 size-4 -translate-y-1/2 text-slate-400" aria-hidden />
+              <input
+                ref={searchRef}
+                type="search"
+                placeholder="Cari apa saja..."
+                aria-label="Cari siswa atau transaksi"
+                className="h-11 w-full rounded-full border border-transparent bg-slate-100/80 pl-11 pr-16 text-sm text-slate-900 placeholder:text-slate-400 focus:border-violet-300 focus:bg-white focus:outline-none dark:bg-slate-800/80 dark:text-slate-100 dark:focus:border-violet-700 dark:focus:bg-slate-900 [&::-webkit-search-cancel-button]:hidden"
+              />
+              <kbd className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 rounded-md border border-slate-200 bg-white px-1.5 py-0.5 text-[10px] font-semibold text-slate-400 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-500">
+                ⌘K
+              </kbd>
+            </form>
+
+            {/* Kluster kanan */}
+            <div className="flex shrink-0 items-center gap-1">
+              <ThemeToggle />
+
+              {/* Bantuan */}
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={() => { setHelpOpen((o) => !o); setNotifOpen(false); setUserOpen(false); }}
+                  className="rounded-full p-2.5 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100"
+                  aria-label="Bantuan"
+                  aria-expanded={helpOpen}
+                >
+                  <CircleHelp className="size-[18px]" />
+                </button>
+                {helpOpen && (
+                  <div className="absolute right-0 z-50 mt-2 w-64 rounded-2xl border border-slate-200 bg-white p-4 shadow-xl dark:border-slate-800 dark:bg-[#0b1329]">
+                    <p className="text-sm font-bold text-slate-900 dark:text-slate-100">Bantuan pantas</p>
+                    <ul className="mt-2 space-y-2 text-xs text-slate-600 dark:text-slate-400">
+                      <li className="flex items-center justify-between gap-2">
+                        <span>Fokus ke carian</span>
+                        <kbd className="rounded-md border border-slate-200 bg-slate-50 px-1.5 py-0.5 font-semibold dark:border-slate-700 dark:bg-slate-800">⌘K</kbd>
+                      </li>
+                      <li>Carian akan membuka tab Data Siswa dengan kata kunci Anda.</li>
+                      <li>Klik ikon loceng untuk melihat notifikasi sistem terkini.</li>
+                    </ul>
+                  </div>
+                )}
+              </div>
+
+              {/* Notifikasi */}
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={() => { setNotifOpen((o) => !o); setHelpOpen(false); setUserOpen(false); }}
+                  className="relative rounded-full p-2.5 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100"
+                  aria-label={`Notifikasi sistem${unreadCount > 0 ? `, ${unreadCount} belum dibaca` : ""}`}
+                >
+                  <Bell className="size-[18px]" />
+                  <NotificationBadge count={unreadCount} />
+                </button>
+                {notifOpen && (
+                  <div className="absolute right-0 z-50 mt-2 w-80 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl dark:border-slate-800 dark:bg-[#0b1329]">
+                    <div className="flex items-center justify-between border-b border-slate-100 px-4 py-3 dark:border-slate-800">
+                      <p className="text-sm font-bold text-slate-900 dark:text-slate-100">Notifikasi</p>
+                      <button
+                        type="button"
+                        onClick={() => setNotifs((ns) => ns.map((n) => ({ ...n, dibaca: true })))}
+                        className="text-xs font-medium text-blue-700 hover:underline dark:text-blue-300"
+                      >
+                        Tandai semua dibaca
+                      </button>
+                    </div>
+                    <ul className="max-h-80 divide-y divide-slate-100 overflow-y-auto dark:divide-slate-800">
+                      {notifs.map((n) => (
+                        <li key={n.id}>
+                          <Link
+                            href={`/admin?tab=${n.tab}`}
+                            onClick={() => {
+                              setNotifs((ns) => ns.map((x) => x.id === n.id ? { ...x, dibaca: true } : x));
+                              setNotifOpen(false);
+                            }}
+                            className={`block px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-800 ${
+                              !n.dibaca ? "bg-blue-50/60 dark:bg-blue-950/30" : ""
+                            }`}
+                          >
+                            <div className="flex items-start justify-between gap-2">
+                              <p className="text-xs font-semibold text-slate-900 dark:text-slate-100">{n.judul}</p>
+                              {!n.dibaca && <span className="mt-1 size-2 shrink-0 rounded-full bg-blue-600" />}
+                            </div>
+                            <p className="mt-0.5 text-xs text-slate-600 dark:text-slate-400">{n.pesan}</p>
+                            <p className="mt-1 text-[10px] text-slate-400 dark:text-slate-500">{n.masa}</p>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+
+              {/* Chip pengguna */}
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={() => { setUserOpen((o) => !o); setNotifOpen(false); setHelpOpen(false); }}
+                  className="flex items-center gap-2.5 rounded-full py-1.5 pl-1.5 pr-2 transition-colors hover:bg-slate-100 dark:hover:bg-slate-800"
+                  aria-label="Menu akun"
+                  aria-expanded={userOpen}
+                >
+                  <span className="flex size-9 items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-purple-600 text-xs font-bold text-white shadow-md" aria-hidden>
+                    AD
+                  </span>
+                  <span className="hidden text-left xl:block">
+                    <span className="block max-w-32 truncate text-xs font-semibold text-slate-900 dark:text-slate-100">Administrator Demo</span>
+                    <span className="block text-[10px] text-slate-400">@admin</span>
+                  </span>
+                  <ChevronDown className="size-4 text-slate-400" aria-hidden />
+                </button>
+                {userOpen && (
+                  <div className="absolute right-0 z-50 mt-2 w-64 rounded-2xl border border-slate-200 bg-white p-4 shadow-xl dark:border-slate-800 dark:bg-[#0b1329]">
+                    <div className="flex items-center gap-3">
+                      <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-purple-600 text-sm font-bold text-white" aria-hidden>
+                        AD
+                      </span>
+                      <div className="min-w-0">
+                        <p className="truncate text-sm font-semibold text-slate-900 dark:text-slate-100">Administrator Demo</p>
+                        <p className="flex items-center gap-1 text-[11px] text-slate-500 dark:text-slate-400">
+                          <ShieldCheck className="size-3 shrink-0 text-emerald-500 dark:text-emerald-400" />
+                          Administrator Sistem
+                        </p>
+                      </div>
+                    </div>
+                    <div className="mt-3 border-t border-slate-100 pt-3 dark:border-slate-800">
+                      <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">Tahun Ajaran</p>
+                      <div className="mt-1.5 flex flex-wrap gap-1.5">
+                        {SESI_LIST.map((s) => (
+                          <button
+                            key={s}
+                            type="button"
+                            onClick={() => { setSesi(s); localStorage.setItem("yuran-sesi", s); }}
+                            className={`rounded-lg px-2.5 py-1.5 text-[11px] font-semibold transition-colors ${
+                              s === sesi
+                                ? "bg-violet-600 text-white"
+                                : "bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
+                            }`}
+                          >
+                            {s}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                    <Link
+                      href="/login"
+                      className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl bg-slate-100 py-2 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+                    >
+                      <LogOut className="size-3.5" aria-hidden />
+                      Keluar / Masuk Kembali
+                    </Link>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </header>
 

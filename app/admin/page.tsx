@@ -185,7 +185,12 @@ function AdminContent() {
   const tab = searchParams.get("tab");
 
   const [records, setRecords] = useState<TalebeRecord[]>(initialTalebeData);
-  const [searchQuery, setSearchQuery] = useState("");
+  const qParam = searchParams.get("q") ?? "";
+  const [searchQuery, setSearchQuery] = useState(qParam);
+  // Segerakkan carian jadual apabila carian global header menghantar ?q=
+  useEffect(() => {
+    setSearchQuery(qParam);
+  }, [qParam]);
   const [selectedGroup, setSelectedGroup] = useState<string>("Semua");
   const [selectedStatus, setSelectedStatus] = useState<string>("Semua");
   const [selectedMonth, setSelectedMonth] = useState("Oktober 2026");

@@ -2,14 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ReceiptText } from "lucide-react";
 import { LoginForm } from "./login-form";
-import { GlowBackground } from "../../../components/glow-background";
 
 export const metadata: Metadata = { title: "Masuk | YuranKu" };
 
 export default function LoginPage() {
   return (
     <main className="relative min-h-dvh bg-background text-foreground">
-      <GlowBackground />
       <div className="relative mx-auto flex min-h-dvh w-full max-w-md flex-col justify-center px-6 py-12">
         <Link href="/" className="flex w-fit items-center gap-2 rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" aria-label="Kembali ke halaman utama"
         >

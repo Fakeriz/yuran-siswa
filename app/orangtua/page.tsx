@@ -5,6 +5,8 @@ import { paymentStatusFor } from "../../lib/fees";
 import { createClient } from "../../lib/supabase/server";
 import type { Payment, Student } from "../../lib/types";
 import { PaymentForm } from "../staff/payment-form";
+import Link from "next/link";
+import { LayoutDashboard } from "lucide-react";
 import { UserBar } from "../../components/user-bar";
 import { FinanceHero } from "../../components/finance-hero";
 import { FinanceKpi } from "../../components/finance-kpi";
@@ -56,7 +58,17 @@ export default async function ParentPage() {
   return (
     <div className="relative min-h-dvh flex flex-col bg-background text-foreground [&_:focus-visible]:outline-2 [&_:focus-visible]:outline-offset-4 [&_:focus-visible]:outline-primary">
       <UserBar userRole="orang_tua" userName="Orang Tua Demo" title="YuranKu · Portal Orang Tua" />
-      <main className="relative flex-1 px-4 py-8 sm:px-6 sm:py-12">
+      <div className="relative flex-1 md:grid md:grid-cols-[240px_minmax(0,1fr)] md:gap-6 md:p-6">
+        <aside className="border-b border-border bg-card p-4 md:rounded-2xl md:border md:p-4">
+          <p className="px-3 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Menu</p>
+          <nav aria-label="Menu orang tua" className="mt-2 space-y-1">
+            <Link href="/orangtua" aria-current="page" className="flex items-center gap-3 rounded-xl bg-primary px-3 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm">
+              <LayoutDashboard className="size-[18px] shrink-0" aria-hidden />
+              Dashboard
+            </Link>
+          </nav>
+        </aside>
+      <main className="relative flex-1 px-4 py-8 sm:px-6 md:px-2 md:py-2">
         <div className="mx-auto max-w-3xl">
           <FinanceHero name="Orang Tua" subtitle={`Pantau status yuran anak Anda — riwayat pembayaran tahun ${tahun}.`}
           >
@@ -106,6 +118,7 @@ export default async function ParentPage() {
       </div>}
         </div>
       </main>
+      </div>
     </div>
   );
 }

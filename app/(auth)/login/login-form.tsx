@@ -29,11 +29,6 @@ export function LoginForm() {
     });
   };
 
-  const setDemo = (e: string, p: string) => {
-    setEmail(e);
-    setPassword(p);
-  };
-
   const isLoading = pending || demoPending;
   const submitState = pending ? "loading" : state.error ? "error" : "idle";
 
@@ -41,24 +36,18 @@ export function LoginForm() {
     {
       role: "admin" as const,
       title: "Admin",
-      desc: "Kelola & Persetujuan",
-      cta: "Masuk Admin →",
       email: "admin@yuran.demo",
       password: "admin12345",
     },
     {
       role: "staff" as const,
       title: "Staff",
-      desc: "Pilih Grup & Catat Bayar",
-      cta: "Masuk Staff →",
       email: "staff@yuran.demo",
       password: "staff12345",
     },
     {
       role: "orang_tua" as const,
       title: "Orang Tua",
-      desc: "Pantau Anak & Kwitansi",
-      cta: "Masuk Ortu →",
       email: "ortu@yuran.demo",
       password: "ortu12345",
     },
@@ -66,34 +55,23 @@ export function LoginForm() {
 
   return (
     <div className="mt-8 space-y-6">
-      <div className="rounded-2xl border border-border bg-card p-5">
+      <div>
         <div className="flex items-center justify-between">
-          <p className="text-xs font-bold uppercase tracking-wider text-foreground">
-            Akses Demo Instan (1-Klik Masuk)
+          <p className="text-xs font-semibold text-muted-foreground">
+            Coba demo instan
           </p>
           <span className="inline-block rounded-full bg-primary/10 px-2.5 py-0.5 text-[10px] font-semibold text-primary">
-            Tersedia
+            1-klik masuk
           </span>
         </div>
-        <p className="mt-1 text-xs text-muted-foreground">
-          Pilih salah satu peran di bawah untuk langsung mencoba aplikasi tanpa perlu mengetik:
-        </p>
-        <div className="mt-4 grid gap-2.5 sm:grid-cols-3">
+        <div className="mt-2.5 grid grid-cols-3 gap-2">
           {demoRoles.map((d) => (
             <button key={d.role}
               type="button" disabled={isLoading}
               onClick={() => handleInstantDemo(d.role)}
-              className="flex flex-col items-center justify-center rounded-xl border border-border bg-card p-3 text-center shadow-xs transition hover:bg-muted active:scale-[0.98] disabled:opacity-60"
+              className="rounded-xl border border-border bg-card px-3 py-2.5 text-center text-xs font-semibold text-foreground transition hover:border-primary/50 hover:bg-muted active:scale-[0.98] disabled:opacity-60"
             >
-              <span className="text-xs font-bold text-foreground">
-                {d.title}
-              </span>
-              <span className="mt-0.5 text-[11px] text-muted-foreground">
-                {d.desc}
-              </span>
-              <span className="mt-2 rounded-lg bg-primary px-2.5 py-1 text-[11px] font-medium text-white">
-                {d.cta}
-              </span>
+              {d.title}
             </button>
           ))}
         </div>
@@ -116,25 +94,6 @@ export function LoginForm() {
             <span className="text-xs font-semibold text-foreground">
               Email
             </span>
-            <div className="flex gap-1.5 text-xs text-muted-foreground">
-              <button type="button" onClick={() => setDemo("admin@yuran.demo", "admin12345")}
-                className="underline hover:text-primary"
-              >
-                Isi Admin
-              </button>
-              <span>·</span>
-              <button type="button" onClick={() => setDemo("staff@yuran.demo", "staff12345")}
-                className="underline hover:text-primary"
-              >
-                Isi Staff
-              </button>
-              <span>·</span>
-              <button type="button" onClick={() => setDemo("ortu@yuran.demo", "ortu12345")}
-                className="underline hover:text-primary"
-              >
-                Isi Ortu
-              </button>
-            </div>
           </div>
           <Input id="email" name="email" type="email" autoComplete="email" required placeholder="admin@yuran.demo" leftIcon={<Mail />}
             disabled={isLoading}

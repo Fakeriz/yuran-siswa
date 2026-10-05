@@ -4,6 +4,7 @@ import { useTransition } from "react";
 import Link from "next/link";
 import { LogOut, ReceiptText } from "lucide-react";
 import { loginDemo, logout } from "../app/(auth)/login/actions";
+import { ThemeToggle } from "./theme-toggle";
 import type { Role } from "../lib/types";
 
 interface UserBarProps {
@@ -36,18 +37,18 @@ export function UserBar({ userName, userRole, title = "YuranKu" }: UserBarProps)
   };
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-7xl flex-wrap items-center justify-between gap-3 px-5">
+    <header className="sticky top-0 z-40 w-full px-4 pt-4 sm:px-6">
+      <div className="flex h-16 w-full items-center justify-between gap-4 rounded-2xl border border-border/60 bg-card px-5">
         <div className="flex items-center gap-3">
           <Link href="/" className="flex items-center gap-2 rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary">
-            <span className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+            <span className="flex size-8 items-center justify-center rounded-lg bg-primary text-white shadow-xs">
               <ReceiptText className="size-4" aria-hidden="true" />
             </span>
             <span className="font-bold tracking-tight text-foreground">
               {title}
             </span>
           </Link>
-          <span className="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-semibold text-primary">
+          <span className="rounded-md border border-primary/20 bg-primary/10 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-primary">
             {roleLabels[userRole]}
           </span>
           {userName && (
@@ -57,9 +58,9 @@ export function UserBar({ userName, userRole, title = "YuranKu" }: UserBarProps)
           )}
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1">
           {/* Quick role switcher for demo */}
-          <div className="hidden items-center rounded-full border border-border bg-card p-1 text-xs md:flex">
+          <div className="hidden items-center rounded-full border border-border bg-muted/60 p-1 text-xs lg:flex">
             <span className="px-3 text-[11px] font-medium text-muted-foreground">Ganti Akun Demo:</span>
             {(["admin", "staff", "orang_tua"] as const).map((r) => (
               <button
@@ -78,11 +79,13 @@ export function UserBar({ userName, userRole, title = "YuranKu" }: UserBarProps)
             ))}
           </div>
 
+          <ThemeToggle />
+
           <button
             type="button"
             disabled={isPending}
             onClick={handleLogout}
-            className="inline-flex items-center gap-1.5 rounded-full border border-border px-4 py-2 text-xs font-medium text-muted-foreground transition hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:opacity-50"
+            className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-4 py-2 text-xs font-medium text-muted-foreground shadow-2xs transition hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:opacity-50"
           >
             <LogOut className="size-3.5" aria-hidden="true" />
             {isPending ? "Keluar…" : "Keluar"}

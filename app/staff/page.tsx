@@ -6,10 +6,11 @@ import { createClient } from "../../lib/supabase/server";
 import type { Payment, Student } from "../../lib/types";
 import { PaymentForm } from "./payment-form";
 import { UserBar } from "../../components/user-bar";
+import { GlowBackground } from "../../components/glow-background";
 
 export const metadata: Metadata = { title: "Dashboard staf | Yuran Siswa" };
 const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
-const field = "min-h-11 rounded-2xl border border-zinc-300 bg-white px-3 py-2 dark:border-zinc-700 dark:bg-zinc-900";
+const field = "min-h-11 rounded-2xl border border-slate-300 bg-white px-3 py-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-slate-700 dark:bg-slate-900";
 
 export default async function StaffPage({ searchParams }: {
   searchParams: Promise<{ bulan?: string; tahun?: string; filter?: string }>;
@@ -70,19 +71,20 @@ export default async function StaffPage({ searchParams }: {
   const period = `${months[bulan - 1]} ${tahun}`;
 
   return (
-    <div className="min-h-dvh flex flex-col bg-white text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100 [&_:focus-visible]:outline-2 [&_:focus-visible]:outline-offset-4 [&_:focus-visible]:outline-emerald-700">
+    <div className="relative min-h-dvh flex flex-col bg-[#f7f9fc] text-slate-900 dark:bg-[#0b1329] dark:text-slate-100 [&_:focus-visible]:outline-2 [&_:focus-visible]:outline-offset-4 [&_:focus-visible]:outline-blue-600">
+      <GlowBackground />
       <UserBar userRole="staff" userName="Staff Demo" title="Yuran Siswa · Dashboard Staf" />
-      <div className="flex-1 md:grid md:grid-cols-[220px_minmax(0,1fr)]">
-        <aside className="border-b border-zinc-200 p-6 dark:border-zinc-800 md:min-h-dvh md:border-r md:border-b-0">
+      <div className="relative flex-1 md:grid md:grid-cols-[220px_minmax(0,1fr)]">
+        <aside className="border-b border-slate-200 p-6 dark:border-slate-800 md:min-h-dvh md:border-r md:border-b-0">
           <p className="text-lg font-semibold">Menu Staf</p>
           <nav aria-label="Menu staf" className="mt-6 space-y-2">
-            <Link href="/staff" aria-current="page" className="block rounded-2xl bg-zinc-100 px-4 py-3 font-medium dark:bg-zinc-900">Dashboard staf</Link>
-            <Link href="/staff/grup" className="block rounded-2xl px-4 py-3 hover:bg-zinc-100 dark:hover:bg-zinc-900">Pilih grup</Link>
+            <Link href="/staff" aria-current="page" className="block rounded-2xl bg-blue-600/10 px-4 py-3 font-semibold text-blue-800 dark:bg-blue-500/15 dark:text-blue-300">Dashboard staf</Link>
+            <Link href="/staff/grup" className="block rounded-2xl px-4 py-3 hover:bg-slate-100 dark:hover:bg-slate-900">Pilih grup</Link>
           </nav>
         </aside>
       <main className="mx-auto w-full max-w-6xl min-w-0 px-4 py-8 sm:px-8 md:py-12">
-        <h1 className="text-3xl font-semibold tracking-tight">Yuran bulanan</h1>
-        <p className="mt-2 text-zinc-600 dark:text-zinc-400">Pembayaran siswa aktif dalam grup Anda.</p>
+        <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50">Yuran bulanan</h1>
+        <p className="mt-2 text-slate-500 dark:text-slate-400">Pembayaran siswa aktif dalam grup Anda.</p>
         <form key={`${bulan}-${tahun}`} className="mt-8 flex flex-wrap items-end gap-3" action="/staff">
           <label className="grid gap-2 text-sm font-medium">Bulan
             <select name="bulan" defaultValue={bulan} className={field}>{months.map((month, index) => <option value={index + 1} key={month}>{month}</option>)}</select>
@@ -91,32 +93,34 @@ export default async function StaffPage({ searchParams }: {
             <input name="tahun" type="number" min="2000" max="2100" required defaultValue={tahun} className={`${field} w-28`} />
           </label>
           <input type="hidden" name="filter" value={filter} />
-          <button className="min-h-11 rounded-2xl bg-zinc-900 px-5 py-2 font-medium text-white transition-colors duration-150 hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300">Tampilkan</button>
+          <button className="min-h-11 rounded-2xl bg-neutral-900 px-5 py-2 font-semibold text-white shadow-[inset_2px_2px_5px_0px_rgba(0,0,0,0.5),inset_-2px_-2px_6px_1px_rgba(80,78,78,0.5)] transition hover:bg-black dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200">Tampilkan</button>
         </form>
         <section aria-label={`Ringkasan ${period}`} className="mt-8 grid grid-cols-2 gap-4">
-          <div className="rounded-2xl border border-zinc-200 p-5 shadow-sm dark:border-zinc-800"><p className="text-sm text-zinc-600 dark:text-zinc-400">Sudah bayar</p><p className="mt-2 text-3xl font-semibold tabular-nums">{students.length - unpaid.length}</p></div>
-          <div className="rounded-2xl border border-zinc-200 p-5 shadow-sm dark:border-zinc-800"><p className="text-sm text-zinc-600 dark:text-zinc-400">Belum bayar</p><p className="mt-2 text-3xl font-semibold tabular-nums">{unpaid.length}</p></div>
+          <div className="rounded-3xl border border-slate-200/70 bg-white/80 p-5 shadow-[0_24px_60px_-20px_rgba(37,99,235,0.3)] backdrop-blur dark:border-slate-800 dark:bg-slate-900/70"><p className="text-sm text-slate-500 dark:text-slate-400">Sudah bayar</p><p className="mt-2 text-3xl font-semibold tabular-nums">{students.length - unpaid.length}</p></div>
+          <div className="rounded-3xl border border-slate-200/70 bg-white/80 p-5 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-900/70"><p className="text-sm text-slate-500 dark:text-slate-400">Belum bayar</p><p className="mt-2 text-3xl font-semibold tabular-nums">{unpaid.length}</p></div>
         </section>
         <section className="mt-10" aria-labelledby="student-list">
           <h2 id="student-list" className="text-xl font-semibold">Daftar siswa · {period}</h2>
-          <nav aria-label="Filter pembayaran" className="my-5 flex flex-wrap gap-2">
+          <form aria-label="Filter pembayaran" className="my-5 flex flex-wrap gap-2" action="/staff" method="GET">
+            <input type="hidden" name="bulan" value={bulan} />
+            <input type="hidden" name="tahun" value={tahun} />
             {([['semua', 'Semua'], ['sudah', 'Sudah bayar'], ['belum', 'Belum bayar']] as const).map(([value, label]) => (
-              <Link key={value} href={`/staff?bulan=${bulan}&tahun=${tahun}&filter=${value}`} aria-current={filter === value ? "page" : undefined}
-                className={`rounded-2xl px-4 py-3 text-sm font-medium transition-colors duration-150 ${filter === value ? "bg-emerald-800 text-white" : "bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-900 dark:hover:bg-zinc-800"}`}>{label}</Link>
+              <button key={value} type="submit" name="filter" value={value} aria-current={filter === value ? "page" : undefined}
+                className={`rounded-2xl px-4 py-3 text-sm font-medium transition duration-150 ${filter === value ? "bg-neutral-900 text-white shadow-[inset_2px_2px_5px_0px_rgba(0,0,0,0.5),inset_-2px_-2px_6px_1px_rgba(80,78,78,0.5)] dark:bg-white dark:text-slate-900" : "border border-slate-200 bg-white/70 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900/70 dark:hover:bg-slate-800"}`}>{label}</button>
             ))}
-          </nav>
-          {!visible.length ? <p className="rounded-2xl border border-zinc-200 p-6 text-zinc-600 dark:border-zinc-800 dark:text-zinc-400">{!groups.length ? "Anda belum memiliki grup. Buka Pilih grup untuk memilih anak didik Anda." : !students.length ? "Belum ada siswa aktif dalam grup Anda." : "Tidak ada siswa untuk filter ini."}</p> : (
-            <div className="overflow-x-auto rounded-2xl border border-zinc-200 dark:border-zinc-800">
+          </form>
+          {!visible.length ? <p className="rounded-2xl border border-slate-200 p-6 text-slate-600 dark:border-slate-800 dark:text-slate-400">{!groups.length ? "Anda belum memiliki grup. Buka Pilih grup untuk memilih anak didik Anda." : !students.length ? "Belum ada siswa aktif dalam grup Anda." : "Tidak ada siswa untuk filter ini."}</p> : (
+            <div className="overflow-x-auto rounded-3xl border border-slate-200/70 bg-white/80 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-900/70">
               <table className="w-full text-left text-sm">
                 <caption className="sr-only">Status yuran siswa untuk {period}</caption>
-                <thead className="bg-zinc-50 text-zinc-600 dark:bg-zinc-900 dark:text-zinc-400"><tr>{["Siswa", "Kelas / grup", "Status", "Pembayaran"].map((label) => <th scope="col" key={label} className="px-4 py-4 font-medium">{label}</th>)}</tr></thead>
-                <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800">{visible.map((student) => {
+                <thead className="bg-slate-50/80 text-slate-500 dark:bg-slate-800/60 dark:text-slate-400"><tr>{["Siswa", "Kelas / grup", "Status", "Pembayaran"].map((label) => <th scope="col" key={label} className="px-4 py-4 font-medium">{label}</th>)}</tr></thead>
+                <tbody className="divide-y divide-slate-200 dark:divide-slate-800">{visible.map((student) => {
                   const paid = paymentStatusFor(payments, student.id, bulan, tahun) === "sudah";
                   return <tr key={student.id}>
                     <th scope="row" className="max-w-64 break-words px-4 py-5 font-medium">{student.nama}</th>
-                    <td className="px-4 py-5">{student.kelas}<span className="block text-zinc-600 dark:text-zinc-400">{student.grup}</span></td>
+                    <td className="px-4 py-5">{student.kelas}<span className="block text-slate-500 dark:text-slate-400">{student.grup}</span></td>
                     <td className="px-4 py-5"><span className={`inline-block whitespace-nowrap rounded-lg px-2 py-1 text-xs font-medium ${paid ? "bg-emerald-100 text-emerald-900 dark:bg-emerald-950 dark:text-emerald-200" : "bg-amber-100 text-amber-900 dark:bg-amber-950 dark:text-amber-200"}`}>{paid ? "Sudah bayar" : "Belum bayar"}</span></td>
-                    <td className="px-4 py-5">{paid ? <span className="text-zinc-600 dark:text-zinc-400">Tercatat</span> : <PaymentForm key={`${student.id}-${bulan}-${tahun}`} student={student} bulan={bulan} tahun={tahun} period={period} today={today} />}</td>
+                    <td className="px-4 py-5">{paid ? <span className="text-slate-500 dark:text-slate-400">Tercatat</span> : <PaymentForm key={`${student.id}-${bulan}-${tahun}`} student={student} bulan={bulan} tahun={tahun} period={period} today={today} />}</td>
                   </tr>;
                 })}</tbody>
               </table>

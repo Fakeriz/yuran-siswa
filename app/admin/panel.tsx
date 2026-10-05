@@ -8,8 +8,8 @@ import { UserBar } from "../../components/user-bar";
 
 type Data = Awaited<ReturnType<typeof listAdminData>>;
 type Result = { ok: true } | { ok: false; error: string };
-const field = "mt-2 block min-h-12 w-full rounded-2xl border border-zinc-300 bg-white px-3 py-2 dark:border-zinc-700 dark:bg-zinc-900";
-const card = "rounded-2xl border border-zinc-200 p-5 dark:border-zinc-800";
+const field = "mt-2 block min-h-12 w-full rounded-2xl border border-slate-300 bg-white px-3 py-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-slate-700 dark:bg-slate-900";
+const card = "rounded-3xl border border-slate-200/70 bg-white/80 p-5 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-900/70";
 const text = (data: FormData, key: string) => String(data.get(key) ?? "");
 const money = (amount: number) => `RM ${Number(amount).toLocaleString("en-MY", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
@@ -27,10 +27,10 @@ function ActionForm({ children, action, label = "Simpan", confirm, disabled = fa
       try { const next = await action(data); setResult(next); if (next.ok) router.refresh(); }
       catch { setResult({ ok: false, error: "Perubahan gagal dikirim. Silakan coba lagi." }); }
     });
-  }}><fieldset disabled={pending || disabled} className="space-y-4 disabled:opacity-60">{children}<button className="min-h-12 rounded-2xl bg-emerald-800 px-5 py-2 font-medium text-white transition-colors duration-150 hover:bg-emerald-900 disabled:opacity-60">{pending ? "Menyimpan…" : label}</button></fieldset>{result && <p role={result.ok ? "status" : "alert"} className={`rounded-2xl p-3 text-sm ${result.ok ? "bg-emerald-100 text-emerald-900 dark:bg-emerald-950 dark:text-emerald-200" : "bg-red-50 text-red-900 dark:bg-red-950 dark:text-red-200"}`}>{result.ok ? "Perubahan berhasil disimpan." : result.error}</p>}</form>;
+  }}><fieldset disabled={pending || disabled} className="space-y-4 disabled:opacity-60">{children}<button className="min-h-12 rounded-2xl bg-neutral-900 px-5 py-2 font-semibold text-white shadow-[inset_2px_2px_5px_0px_rgba(0,0,0,0.5),inset_-2px_-2px_6px_1px_rgba(80,78,78,0.5)] transition hover:bg-black disabled:opacity-60 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200">{pending ? "Menyimpan…" : label}</button></fieldset>{result && <p role={result.ok ? "status" : "alert"} className={`rounded-2xl p-3 text-sm ${result.ok ? "bg-emerald-100 text-emerald-900 dark:bg-emerald-950 dark:text-emerald-200" : "bg-red-50 text-red-900 dark:bg-red-950 dark:text-red-200"}`}>{result.ok ? "Perubahan berhasil disimpan." : result.error}</p>}</form>;
 }
 function StudentFields({ student }: { student?: Data["students"][number] }) {
-  return <><label className="block text-sm font-medium">Nama<input name="nama" required defaultValue={student?.nama} className={field} /></label><div className="grid gap-4 sm:grid-cols-2"><label className="block text-sm font-medium">Grup<input name="grup" required defaultValue={student?.grup} className={field} /></label><label className="block text-sm font-medium">Kelas<input name="kelas" required defaultValue={student?.kelas} className={field} /></label></div><label className="block text-sm font-medium">Yuran per bulan (RM)<input name="yuran" required type="number" min="0" step="0.01" defaultValue={student?.yuran_per_bulan} className={field} /></label><label className="flex min-h-12 items-center gap-3"><input name="aktif" type="checkbox" defaultChecked={student?.is_active ?? true} className="size-5 accent-emerald-800" />Siswa aktif</label></>;
+  return <><label className="block text-sm font-medium">Nama<input name="nama" required defaultValue={student?.nama} className={field} /></label><div className="grid gap-4 sm:grid-cols-2"><label className="block text-sm font-medium">Grup<input name="grup" required defaultValue={student?.grup} className={field} /></label><label className="block text-sm font-medium">Kelas<input name="kelas" required defaultValue={student?.kelas} className={field} /></label></div><label className="block text-sm font-medium">Yuran per bulan (RM)<input name="yuran" required type="number" min="0" step="0.01" defaultValue={student?.yuran_per_bulan} className={field} /></label><label className="flex min-h-12 items-center gap-3"><input name="aktif" type="checkbox" defaultChecked={student?.is_active ?? true} className="size-5 accent-blue-600" />Siswa aktif</label></>;
 }
 function studentInput(form: FormData) { return { nama: text(form, "nama"), grup: text(form, "grup"), kelas: text(form, "kelas"), yuran_per_bulan: Number(form.get("yuran")), is_active: form.has("aktif") }; }
 
@@ -61,10 +61,10 @@ export function AdminPanel({ initialTab, data }: { initialTab?: string; data: Da
   };
 
   return (
-    <div className="min-h-dvh flex flex-col bg-white text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100 [&_:focus-visible]:outline-2 [&_:focus-visible]:outline-offset-4 [&_:focus-visible]:outline-emerald-700">
+    <div className="min-h-dvh flex flex-col bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100 [&_:focus-visible]:outline-2 [&_:focus-visible]:outline-offset-4 [&_:focus-visible]:outline-emerald-700">
       <UserBar userRole="admin" userName="Administrator Demo" title="Yuran Siswa · Panel Admin" />
       <div className="flex-1 md:grid md:grid-cols-[220px_minmax(0,1fr)]">
-        <aside className="border-b border-zinc-200 p-6 dark:border-zinc-800 md:border-r md:border-b-0">
+        <aside className="border-b border-slate-200 p-6 dark:border-slate-800 md:border-r md:border-b-0">
           <p className="text-lg font-semibold">Menu Admin</p>
           <nav aria-label="Tab administrasi" className="mt-6 flex flex-wrap gap-2 md:flex-col">
             {tabs.map(([id, title]) => (
@@ -75,8 +75,8 @@ export function AdminPanel({ initialTab, data }: { initialTab?: string; data: Da
                 aria-current={activeTab === id ? "page" : undefined}
                 className={`rounded-2xl px-4 py-3 text-sm text-left font-medium transition-colors duration-150 ${
                   activeTab === id
-                    ? "bg-emerald-800 text-white"
-                    : "text-zinc-700 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-900"
+                    ? "bg-neutral-900 text-white shadow-[inset_2px_2px_5px_0px_rgba(0,0,0,0.5),inset_-2px_-2px_6px_1px_rgba(80,78,78,0.5)] dark:bg-white dark:text-slate-900"
+                    : "text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-900"
                 }`}
               >
                 {title}
@@ -85,7 +85,7 @@ export function AdminPanel({ initialTab, data }: { initialTab?: string; data: Da
           </nav>
         </aside>
         <main className="mx-auto w-full min-w-0 max-w-5xl px-4 py-8 sm:px-8 md:py-12">
-          <p className="text-sm text-zinc-600 dark:text-zinc-400">Administrasi</p>
+          <p className="text-sm text-slate-600 dark:text-slate-400">Administrasi</p>
           <h1 className="mt-2 text-3xl font-semibold">
             {tabs.find(([id]) => id === activeTab)?.[1]}
           </h1>
@@ -102,7 +102,7 @@ export function AdminPanel({ initialTab, data }: { initialTab?: string; data: Da
                   <h2 className="break-words text-lg font-semibold">
                     {profileName(link.parent_id)} · {studentName(link.student_id)}
                   </h2>
-                  <p className="mt-3 text-sm text-zinc-600 dark:text-zinc-400">
+                  <p className="mt-3 text-sm text-slate-600 dark:text-slate-400">
                     Orang tua yang sudah disetujui:{" "}
                     {data.links
                       .filter((other) => other.student_id === link.student_id && other.status === "approved")
@@ -120,7 +120,7 @@ export function AdminPanel({ initialTab, data }: { initialTab?: string; data: Da
 
         {activeTab === "penugasan" && (
           <div className="mt-8 space-y-3">
-            <p className="text-zinc-600 dark:text-zinc-400">
+            <p className="text-slate-600 dark:text-slate-400">
               Penugasan dipilih langsung oleh staf. Daftar ini hanya untuk dilihat.
             </p>
             {!data.groups.length && <p className={card}>Belum ada penugasan grup.</p>}
@@ -150,28 +150,28 @@ export function AdminPanel({ initialTab, data }: { initialTab?: string; data: Da
             {!data.students.some((s) => s.nama.toLowerCase().includes(query.toLowerCase())) ? (
               <p className={card}>Tidak ada siswa yang cocok.</p>
             ) : (
-              <div className="overflow-x-auto rounded-2xl border border-zinc-200 dark:border-zinc-800">
+              <div className="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800">
                 <table className="w-full text-left text-sm">
                   <caption className="sr-only">Data siswa</caption>
-                  <thead className="bg-zinc-50 dark:bg-zinc-900">
+                  <thead className="bg-slate-50 dark:bg-slate-900">
                     <tr>
                       {["Siswa", "Kelas / grup", "Yuran bulanan", "Status", "Kelola"].map((label) => (
                         <th key={label} scope="col" className="px-4 py-4 font-medium">{label}</th>
                       ))}
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800">
+                  <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
                     {data.students
                       .filter((s) => s.nama.toLowerCase().includes(query.toLowerCase()))
                       .map((student) => (
                         <tr key={student.id}>
                           <th scope="row" className="px-4 py-4 font-medium">{student.nama}</th>
-                          <td className="px-4 py-4">{student.kelas}<span className="block text-zinc-600 dark:text-zinc-400">{student.grup}</span></td>
+                          <td className="px-4 py-4">{student.kelas}<span className="block text-slate-600 dark:text-slate-400">{student.grup}</span></td>
                           <td className="whitespace-nowrap px-4 py-4">{money(student.yuran_per_bulan)}</td>
                           <td className="px-4 py-4">{student.is_active ? "Aktif" : "Nonaktif"}</td>
                           <td className="px-4 py-4">
                             <details>
-                              <summary className="cursor-pointer rounded-lg py-3 font-medium text-emerald-800 dark:text-emerald-300">Edit</summary>
+                              <summary className="cursor-pointer rounded-lg py-3 font-medium text-blue-700 dark:text-blue-300">Edit</summary>
                               <div className="mt-4 min-w-56 space-y-6">
                                 <ActionForm action={(form) => saveStudent({ id: student.id, ...studentInput(form) })}>
                                   <StudentFields student={student} />
@@ -237,7 +237,7 @@ export function AdminPanel({ initialTab, data }: { initialTab?: string; data: Da
                     {data.students.map((s) => <option key={s.id} value={s.id}>{s.nama} · {s.kelas}</option>)}
                   </select>
                 </label>
-                <p className="text-sm text-zinc-600 dark:text-zinc-400">Hubungan yang dibuat admin langsung disetujui. Hubungan orang tua lain tetap dipertahankan.</p>
+                <p className="text-sm text-slate-600 dark:text-slate-400">Hubungan yang dibuat admin langsung disetujui. Hubungan orang tua lain tetap dipertahankan.</p>
               </ActionForm>
             </section>
             <section className="space-y-3">
@@ -246,14 +246,14 @@ export function AdminPanel({ initialTab, data }: { initialTab?: string; data: Da
                 <article key={p.id} className={card}>
                   <h3 className="font-semibold">
                     {p.nama}{" "}
-                    <span className="font-normal text-zinc-600 dark:text-zinc-400">
+                    <span className="font-normal text-slate-600 dark:text-slate-400">
                       ({p.peran === "orang_tua" ? "Orang tua" : p.peran === "staff" ? "Staff" : "Admin"})
                     </span>
                   </h3>
                   {data.links
                     .filter((link) => link.parent_id === p.id)
                     .map((link) => (
-                      <div key={link.id} className="mt-4 space-y-3 border-t border-zinc-200 pt-4 dark:border-zinc-800">
+                      <div key={link.id} className="mt-4 space-y-3 border-t border-slate-200 pt-4 dark:border-slate-800">
                         <p>{studentName(link.student_id)} · {link.status === "approved" ? "Disetujui" : link.approved_by ? "Ditolak" : "Menunggu persetujuan"}</p>
                         <ActionForm label="Lepas anak" confirm="Lepas hubungan anak dari akun ini?" action={() => unlinkChild(link.id)} />
                       </div>
@@ -288,7 +288,7 @@ export function AdminPanel({ initialTab, data }: { initialTab?: string; data: Da
                   File kwitansi
                   <input name="file" type="file" accept="image/*,application/pdf" required className={field} />
                 </label>
-                <p className="text-sm text-zinc-600 dark:text-zinc-400">Gambar atau PDF, maksimal 10 MB.</p>
+                <p className="text-sm text-slate-600 dark:text-slate-400">Gambar atau PDF, maksimal 10 MB.</p>
               </ActionForm>
             )}
           </section>

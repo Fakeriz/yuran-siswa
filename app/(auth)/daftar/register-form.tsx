@@ -151,7 +151,7 @@ export function RegisterForm({
               </div>
               <p
                 aria-live="polite"
-                className="text-xs text-zinc-600 dark:text-zinc-400"
+                className="text-xs text-slate-600 dark:text-slate-400"
               >
                 Kekuatan kata sandi: {STRENGTH_LABELS[strength]}{" "}
                 <span id="password-hint">(minimal 8 karakter)</span>
@@ -160,7 +160,7 @@ export function RegisterForm({
           ) : (
             <p
               id="password-hint"
-              className="mt-1 px-1 text-xs text-zinc-600 dark:text-zinc-400"
+              className="mt-1 px-1 text-xs text-slate-600 dark:text-slate-400"
             >
               Minimal 8 karakter.
             </p>
@@ -216,12 +216,12 @@ export function RegisterForm({
                   label={
                     <span className="break-words">
                       {student.nama}
-                      <span className="block text-sm text-zinc-600 dark:text-zinc-400">
+                      <span className="block text-sm text-slate-600 dark:text-slate-400">
                         {student.kelas}
                       </span>
                     </span>
                   }
-                  className="rounded-xl p-3 hover:bg-zinc-100 dark:hover:bg-zinc-900"
+                  className="rounded-xl p-3 hover:bg-slate-100 dark:hover:bg-slate-900"
                 />
               ))}
           </div>

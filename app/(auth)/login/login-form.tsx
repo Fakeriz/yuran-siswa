@@ -75,7 +75,7 @@ export function LoginForm() {
             Tersedia
           </span>
         </div>
-        <p className="mt-1 text-xs text-zinc-600 dark:text-zinc-400">
+        <p className="mt-1 text-xs text-slate-600 dark:text-slate-400">
           Pilih salah satu peran di bawah untuk langsung mencoba aplikasi tanpa
           perlu mengetik:
         </p>
@@ -86,12 +86,12 @@ export function LoginForm() {
               type="button"
               disabled={isLoading}
               onClick={() => handleInstantDemo(d.role)}
-              className="flex flex-col items-center justify-center rounded-xl border border-emerald-300 bg-white p-3 text-center shadow-xs transition hover:bg-emerald-100 active:scale-[0.98] dark:border-emerald-700 dark:bg-zinc-900 dark:hover:bg-zinc-800 disabled:opacity-60"
+              className="flex flex-col items-center justify-center rounded-xl border border-emerald-300 bg-white p-3 text-center shadow-xs transition hover:bg-emerald-100 active:scale-[0.98] dark:border-emerald-700 dark:bg-slate-900 dark:hover:bg-slate-800 disabled:opacity-60"
             >
               <span className="text-xs font-bold text-emerald-950 dark:text-emerald-300">
                 {d.title}
               </span>
-              <span className="mt-0.5 text-[11px] text-zinc-600 dark:text-zinc-400">
+              <span className="mt-0.5 text-[11px] text-slate-600 dark:text-slate-400">
                 {d.desc}
               </span>
               <span className="mt-2 rounded-lg bg-emerald-800 px-2.5 py-1 text-[11px] font-medium text-white dark:bg-emerald-700">
@@ -104,10 +104,10 @@ export function LoginForm() {
 
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-zinc-200 dark:border-zinc-800" />
+          <div className="w-full border-t border-slate-200 dark:border-slate-800" />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-white px-3 text-zinc-500 dark:bg-zinc-950 dark:text-zinc-400">
+          <span className="bg-white px-3 text-slate-500 dark:bg-slate-950 dark:text-slate-400">
             Atau masuk manual dengan email
           </span>
         </div>
@@ -119,11 +119,11 @@ export function LoginForm() {
             <span className="text-xs font-semibold text-gray-700 dark:text-slate-300">
               Email
             </span>
-            <div className="flex gap-1.5 text-xs text-zinc-500">
+            <div className="flex gap-1.5 text-xs text-slate-500">
               <button
                 type="button"
                 onClick={() => setDemo("admin@yuran.demo", "admin12345")}
-                className="underline hover:text-emerald-800 dark:hover:text-emerald-400"
+                className="underline hover:text-blue-700 dark:hover:text-blue-300"
               >
                 Isi Admin
               </button>
@@ -131,7 +131,7 @@ export function LoginForm() {
               <button
                 type="button"
                 onClick={() => setDemo("staff@yuran.demo", "staff12345")}
-                className="underline hover:text-emerald-800 dark:hover:text-emerald-400"
+                className="underline hover:text-blue-700 dark:hover:text-blue-300"
               >
                 Isi Staff
               </button>
@@ -139,7 +139,7 @@ export function LoginForm() {
               <button
                 type="button"
                 onClick={() => setDemo("ortu@yuran.demo", "ortu12345")}
-                className="underline hover:text-emerald-800 dark:hover:text-emerald-400"
+                className="underline hover:text-blue-700 dark:hover:text-blue-300"
               >
                 Isi Ortu
               </button>

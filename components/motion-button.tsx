@@ -6,8 +6,9 @@
 // - @/lib/ease (EASE_OUT, SPRING_PRESS) replaced with inline easings.
 // - @/lib/hooks/use-hover-capable replaced with the (hover: hover) media query.
 // - @/lib/utils (cn) replaced with a local cx helper.
-// - Variants themed to the app: primary = emerald gradient, secondary/ghost/
-//   outline in gray/slate with class-based dark mode.
+// - Variants themed to the app: primary = machined dark CTA (financial glow
+//   signature: opposing inset shadows), secondary/ghost/outline in slate
+//   with class-based dark mode.
 
 import { AlertCircle, Check, Loader2 } from "lucide-react";
 import {
@@ -61,13 +62,13 @@ type Ripple = { id: number; x: number; y: number; size: number };
 
 const VARIANT_CLASS: Record<ButtonVariant, string> = {
   primary:
-    "bg-gradient-to-r from-emerald-600 to-teal-500 text-white hover:from-emerald-500 hover:to-teal-400 shadow-sm shadow-emerald-950/30 dark:shadow-emerald-950/50",
+    "bg-neutral-900 text-white shadow-[inset_2px_2px_5px_0px_rgba(0,0,0,0.5),inset_-2px_-2px_6px_1px_rgba(80,78,78,0.5)] hover:bg-black dark:bg-white dark:text-slate-900 dark:shadow-[inset_2px_2px_4px_0px_rgba(0,0,0,0.08)] dark:hover:bg-slate-200",
   secondary:
-    "border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800",
+    "border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800",
   ghost:
-    "text-gray-500 hover:text-gray-900 hover:bg-gray-100/60 dark:text-slate-400 dark:hover:text-slate-100 dark:hover:bg-slate-800/60",
+    "text-slate-500 hover:text-slate-900 hover:bg-slate-100/60 dark:text-slate-400 dark:hover:text-slate-100 dark:hover:bg-slate-800/60",
   outline:
-    "border border-gray-300 bg-transparent text-gray-900 hover:bg-gray-100/60 dark:border-slate-700 dark:text-slate-100 dark:hover:bg-slate-800/60",
+    "border border-slate-300 bg-transparent text-slate-900 hover:bg-slate-100/60 dark:border-slate-700 dark:text-slate-100 dark:hover:bg-slate-800/60",
 };
 
 const SIZE_CLASS: Record<ButtonSize, string> = {

@@ -41,17 +41,17 @@ export function UserBar({ userName, userRole, title = "Yuran Siswa" }: UserBarPr
   };
 
   return (
-    <header className="border-b border-zinc-200 bg-white/80 px-4 py-3 backdrop-blur-md dark:border-zinc-800 dark:bg-zinc-950/80 sm:px-6">
+    <header className="border-b border-slate-200/70 bg-white/80 px-4 py-3 backdrop-blur-md dark:border-slate-800 dark:bg-[#0b1329]/80 sm:px-6">
       <div className="mx-auto flex flex-wrap items-center justify-between gap-3 max-w-7xl">
         <div className="flex items-center gap-3">
-          <Link href="/" className="font-bold tracking-tight text-zinc-900 dark:text-zinc-100 hover:text-emerald-800 dark:hover:text-emerald-400">
+          <Link href="/" className="font-bold tracking-tight text-slate-900 hover:text-blue-700 dark:text-slate-100 dark:hover:text-blue-300">
             {title}
           </Link>
           <span className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold ${roleColors[userRole]}`}>
             {roleLabels[userRole]}
           </span>
           {userName && (
-            <span className="hidden text-xs text-zinc-500 sm:inline">
+            <span className="hidden text-xs text-slate-500 sm:inline dark:text-slate-400">
               · {userName}
             </span>
           )}
@@ -59,8 +59,8 @@ export function UserBar({ userName, userRole, title = "Yuran Siswa" }: UserBarPr
 
         <div className="flex items-center gap-2">
           {/* Quick role switcher for demo */}
-          <div className="hidden items-center rounded-xl border border-zinc-200 bg-zinc-50 p-1 text-xs dark:border-zinc-800 dark:bg-zinc-900 md:flex">
-            <span className="px-2 text-zinc-500 text-[11px] font-medium">Ganti Akun Demo:</span>
+          <div className="hidden items-center rounded-xl border border-slate-200 bg-slate-50 p-1 text-xs dark:border-slate-700 dark:bg-slate-800 md:flex">
+            <span className="px-2 text-[11px] font-medium text-slate-500 dark:text-slate-400">Ganti Akun Demo:</span>
             {(["admin", "staff", "orang_tua"] as const).map((r) => (
               <button
                 key={r}
@@ -69,8 +69,8 @@ export function UserBar({ userName, userRole, title = "Yuran Siswa" }: UserBarPr
                 onClick={() => handleSwitch(r)}
                 className={`rounded-lg px-2.5 py-1 font-medium transition ${
                   userRole === r
-                    ? "bg-white text-zinc-900 shadow-xs dark:bg-zinc-800 dark:text-white"
-                    : "text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white"
+                    ? "bg-white text-slate-900 shadow-xs dark:bg-slate-700 dark:text-white"
+                    : "text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
                 } disabled:cursor-default`}
               >
                 {roleLabels[r]}
@@ -82,7 +82,7 @@ export function UserBar({ userName, userRole, title = "Yuran Siswa" }: UserBarPr
             type="button"
             disabled={isPending}
             onClick={handleLogout}
-            className="rounded-xl border border-zinc-300 px-3 py-1.5 text-xs font-medium text-zinc-700 transition hover:bg-zinc-100 hover:text-zinc-900 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800 dark:hover:text-white disabled:opacity-50"
+            className="rounded-xl border border-slate-300 px-3 py-1.5 text-xs font-medium text-slate-700 transition hover:bg-slate-100 hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white disabled:opacity-50"
           >
             {isPending ? "Keluar…" : "Keluar"}
           </button>

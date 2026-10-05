@@ -132,5 +132,5 @@ export async function myGroups(): Promise<string[]> {
     // Supabase belum dikonfigurasi — pakai demo fallback
   }
   // Demo fallback
-  return ["Umum"];
+  return ["Adhwa HE", "Adnan HE ve Syukri HE", "Ameer HE", "Arif HE", "Azwar HE", "Herian HE", "Mevlana HE", "Razi HE", "Rizky HE", "Tamimi HE"];
 }

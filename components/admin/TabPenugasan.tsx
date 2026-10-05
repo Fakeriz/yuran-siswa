@@ -20,7 +20,7 @@ export interface StaffAssignment {
   nama: string;
   email: string;
   telefon: string;
-  grup: "Mevlana HE" | "Razi HE" | "Fatih HE";
+  grup: string;
   jawatan: string;
   bilanganSiswa: number;
   kadarKutipan: number; // percentage
@@ -35,7 +35,7 @@ const INITIAL_STAFF: StaffAssignment[] = [
     nama: "Ustaz Ahmad Farhan",
     email: "farhan@yuran.demo",
     telefon: "+60 12-345 6789",
-    grup: "Mevlana HE",
+    grup: "Umum",
     jawatan: "Ketua Bimbingan Asrama Mevlana",
     bilanganSiswa: 20,
     kadarKutipan: 85,
@@ -48,7 +48,7 @@ const INITIAL_STAFF: StaffAssignment[] = [
     nama: "Ustaz Mohd Haziq",
     email: "haziq@yuran.demo",
     telefon: "+60 13-987 6543",
-    grup: "Razi HE",
+    grup: "Umum",
     jawatan: "Staf Pembimbing Asrama Razi",
     bilanganSiswa: 20,
     kadarKutipan: 80,
@@ -61,7 +61,7 @@ const INITIAL_STAFF: StaffAssignment[] = [
     nama: "Ustaz Luqman Hakim",
     email: "luqman@yuran.demo",
     telefon: "+60 11-234 5678",
-    grup: "Fatih HE",
+    grup: "Umum",
     jawatan: "Staf Pembimbing Asrama Fatih",
     bilanganSiswa: 20,
     kadarKutipan: 80,

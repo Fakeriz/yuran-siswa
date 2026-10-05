@@ -66,7 +66,7 @@ const INITIAL_ACCOUNTS: AccountItem[] = [
     email: "khadijah.ismail@yahoo.com",
     peran: "orang_tua",
     tarikhDicipta: "05 Feb 2026",
-    anakDihubung: ["Siti Nurhaliza"],
+    anakDihubung: ["Mohd Amirul Afiq Bin Haris"],
   },
   {
     id: "acc-7",
@@ -509,12 +509,12 @@ export function TabAkun() {
                   className="mt-1 w-full rounded-xl border border-input px-3 py-2 text-sm focus:border-primary focus:outline-none"
                 >
                   <option value="">-- Pilih Siswa --</option>
-                  <option value="Ahmad bin Ali">Ahmad bin Ali (Mevlana HE · Tahun 1 Amanah)</option>
-                  <option value="Siti Nurhaliza">Siti Nurhaliza (Mevlana HE · Tahun 2 Bestari)</option>
-                  <option value="Muhammad Faiz">Muhammad Faiz (Razi HE · Tahun 3 Cerdas)</option>
-                  <option value="Danial Hakimi">Danial Hakimi (Razi HE · Tahun 2 Bestari)</option>
-                  <option value="Nur Aisyah">Nur Aisyah (Fatih HE · Tahun 1 Amanah)</option>
-                  <option value="Mohd Rizal">Mohd Rizal (Fatih HE · Tahun 2 Bestari)</option>
+                  <option value="Mohd Amirul Afiq Bin Haris">Mohd Amirul Afiq Bin Haris (Umum)</option>
+                  <option value="Muhammad Danish Danial bin Abdullah">Muhammad Danish Danial bin Abdullah (Umum)</option>
+                  <option value="Muhammad Haziq Hashari Bin Mohd Norhan">Muhammad Haziq Hashari Bin Mohd Norhan (Umum)</option>
+                  <option value="Muhammad Wafrie Danish Bin Abdul Sani">Muhammad Wafrie Danish Bin Abdul Sani (Umum)</option>
+                  <option value="Mohamad Dzulkarnain Riduan Bin Mohmad Jamil">Mohamad Dzulkarnain Riduan Bin Mohmad Jamil (Umum)</option>
+                  <option value="Wan Ahmad Baihaqi Bin Wan Noorul Hisham">Wan Ahmad Baihaqi Bin Wan Noorul Hisham (Umum)</option>
                 </select>
               </div>
 

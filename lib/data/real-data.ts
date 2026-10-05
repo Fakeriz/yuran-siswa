@@ -32,7 +32,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-1",
     "nama": "Mohd Amirul Afiq Bin Haris",
-    "grup": "Umum",
+    "grup": "Herian HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -40,7 +40,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-2",
     "nama": "Muhammad Danish Danial bin Abdullah",
-    "grup": "Umum",
+    "grup": "Herian HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -48,7 +48,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-3",
     "nama": "Muhammad Haziq Hashari Bin Mohd Norhan",
-    "grup": "Umum",
+    "grup": "Razi HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -56,7 +56,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-4",
     "nama": "Muhammad Wafrie Danish Bin Abdul Sani",
-    "grup": "Umum",
+    "grup": "Razi HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -64,7 +64,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-5",
     "nama": "Mohamad Dzulkarnain Riduan Bin Mohmad Jamil",
-    "grup": "Umum",
+    "grup": "Herian HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -72,7 +72,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-6",
     "nama": "Wan Ahmad Baihaqi Bin Wan Noorul Hisham",
-    "grup": "Umum",
+    "grup": "Rizky HE",
     "kelas": "-",
     "yuran_per_bulan": 375,
     "is_active": true
@@ -80,7 +80,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-7",
     "nama": "Wan Taji Mustafa Bin Wan Noorul Hisham",
-    "grup": "Umum",
+    "grup": "Rizky HE",
     "kelas": "-",
     "yuran_per_bulan": 375,
     "is_active": true
@@ -88,7 +88,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-8",
     "nama": "Ahmad Ashraf Ihtisyam Bin Isidang",
-    "grup": "Umum",
+    "grup": "Mevlana HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -96,7 +96,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-9",
     "nama": "Abdul Muhaimin Bin Yusuf",
-    "grup": "Umum",
+    "grup": "Adnan HE ve Syukri HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -104,7 +104,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-10",
     "nama": "Muhammad Rayyan Zakwan Bin Yusman",
-    "grup": "Umum",
+    "grup": "Rizky HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -112,7 +112,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-11",
     "nama": "Muhammad Raihan Shafee Bin Samsu",
-    "grup": "Umum",
+    "grup": "Adnan HE ve Syukri HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -120,7 +120,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-12",
     "nama": "Muhammad Aqif Syahmi Bin Syamsul",
-    "grup": "Umum",
+    "grup": "Herian HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -128,7 +128,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-13",
     "nama": "Muhammad Mikhailluqman Bin Zulkifli",
-    "grup": "Umum",
+    "grup": "Adhwa HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -136,7 +136,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-14",
     "nama": "Ahmad Furqan Bin Ahmad Fahmi",
-    "grup": "Umum",
+    "grup": "Arif HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -144,7 +144,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-15",
     "nama": "Amrullah Rizq Qhusyairi Bin Anzar",
-    "grup": "Umum",
+    "grup": "Ameer HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -152,7 +152,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-16",
     "nama": "Aqil Zafran Bin Firman",
-    "grup": "Umum",
+    "grup": "Arif HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -160,7 +160,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-17",
     "nama": "Mikail Bin Andi Idro",
-    "grup": "Umum",
+    "grup": "Arif HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -168,7 +168,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-18",
     "nama": "Mohammad Khairul Azman Bin Salihuddin",
-    "grup": "Umum",
+    "grup": "Adnan HE ve Syukri HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -176,7 +176,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-19",
     "nama": "Muhammad Arifsyah Bin Mohd Adnan",
-    "grup": "Umum",
+    "grup": "Mevlana HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -184,7 +184,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-20",
     "nama": "Muhammad Fudayl Azfar Bin Azman",
-    "grup": "Umum",
+    "grup": "Rizky HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -192,7 +192,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-21",
     "nama": "Muhammad Ilman Hazim Bin Mokhtar",
-    "grup": "Umum",
+    "grup": "Azwar HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -200,7 +200,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-22",
     "nama": "Muhammad Iqbal Alqawiy Bin Asse",
-    "grup": "Umum",
+    "grup": "Herian HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -208,7 +208,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-23",
     "nama": "Muhammad Naim Nasrullah Bin Abdullah",
-    "grup": "Umum",
+    "grup": "Rizky HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -216,7 +216,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-24",
     "nama": "Muhammad Nur Hafiz Bin Burhanuddin",
-    "grup": "Umum",
+    "grup": "Adnan HE ve Syukri HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -224,7 +224,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-25",
     "nama": "Adam Hafiy Ziqri Bin Hasmat",
-    "grup": "Umum",
+    "grup": "Adnan HE ve Syukri HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -232,7 +232,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-26",
     "nama": "Aidyl Razi Bin Hardi",
-    "grup": "Umum",
+    "grup": "Arif HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -240,7 +240,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-27",
     "nama": "Aqil Hamiz Bin Mustafa",
-    "grup": "Umum",
+    "grup": "Azwar HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -248,7 +248,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-28",
     "nama": "Danial Darwisy Bin Mohd Suhaimi",
-    "grup": "Umum",
+    "grup": "Razi HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -256,7 +256,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-29",
     "nama": "Erdieyan Syah Bin Yusof",
-    "grup": "Umum",
+    "grup": "Arif HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -264,7 +264,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-30",
     "nama": "Faid Ziqri Bin Tukirin",
-    "grup": "Umum",
+    "grup": "Mevlana HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -272,7 +272,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-31",
     "nama": "Ismail Bin Jalain",
-    "grup": "Umum",
+    "grup": "Arif HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -280,7 +280,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-32",
     "nama": "Mirza Danish Ahmad Bin Mansor",
-    "grup": "Umum",
+    "grup": "Adhwa HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -288,7 +288,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-33",
     "nama": "Mohammad Wafir Firdaus Bin Umar",
-    "grup": "Umum",
+    "grup": "Tamimi HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -296,7 +296,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-34",
     "nama": "Mohd Gufron Bin Saharudin",
-    "grup": "Umum",
+    "grup": "Ameer HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -304,7 +304,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-35",
     "nama": "Muhammad Adam Haiqal Bin Mohd Zaidy",
-    "grup": "Umum",
+    "grup": "Tamimi HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -312,7 +312,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-36",
     "nama": "Muhammad Aideel Rayyan Jamallan Bin Rahman",
-    "grup": "Umum",
+    "grup": "Rizky HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -320,7 +320,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-37",
     "nama": "Muhammad Alif Firdaus Bin Aprisal",
-    "grup": "Umum",
+    "grup": "Razi HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -328,7 +328,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-38",
     "nama": "Muhammad Bin Abdullah",
-    "grup": "Umum",
+    "grup": "Adnan HE ve Syukri HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -336,7 +336,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-39",
     "nama": "Muhammad Danish Iman Bin Iswan",
-    "grup": "Umum",
+    "grup": "Adnan HE ve Syukri HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -344,7 +344,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-40",
     "nama": "Muhammad Firas Bin Dile",
-    "grup": "Umum",
+    "grup": "Ameer HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -352,7 +352,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-41",
     "nama": "Muhammad Sakhrul Al Mujahid Bin Juffri",
-    "grup": "Umum",
+    "grup": "Rizky HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -360,7 +360,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-42",
     "nama": "Muhammad Syahmi Bin Jupri",
-    "grup": "Umum",
+    "grup": "Adnan HE ve Syukri HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -368,7 +368,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-43",
     "nama": "Muhammad Firas Fahmi Bin Mattamase",
-    "grup": "Umum",
+    "grup": "Arif HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -376,7 +376,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-44",
     "nama": "Nor Zakwan Bin Nor Azman",
-    "grup": "Umum",
+    "grup": "Adnan HE ve Syukri HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -384,7 +384,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-45",
     "nama": "Zawawi Bin Salim",
-    "grup": "Umum",
+    "grup": "Tamimi HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -392,7 +392,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-90",
     "nama": "Aziman Bin Azis",
-    "grup": "Umum",
+    "grup": "Razi HE",
     "kelas": "-",
     "yuran_per_bulan": 375,
     "is_active": true
@@ -400,7 +400,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-46",
     "nama": "Azman Bin Azis",
-    "grup": "Umum",
+    "grup": "Mevlana HE",
     "kelas": "-",
     "yuran_per_bulan": 375,
     "is_active": true
@@ -408,7 +408,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-48",
     "nama": "Muhammad Izzat Fadhli Bin Ismail (Muhammad Izzat Fadhil Bin Ismail)",
-    "grup": "Umum",
+    "grup": "Razi HE",
     "kelas": "-",
     "yuran_per_bulan": 375,
     "is_active": true
@@ -416,7 +416,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-49",
     "nama": "Muhammad Izzul Fadhil Bin Ismail (Muhammad Izzul Fadhil Bin Ismail)",
-    "grup": "Umum",
+    "grup": "Razi HE",
     "kelas": "-",
     "yuran_per_bulan": 375,
     "is_active": true
@@ -424,7 +424,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-50",
     "nama": "Muhammad Saiful Adam Bin Saiful Sumardi",
-    "grup": "Umum",
+    "grup": "Adnan HE ve Syukri HE",
     "kelas": "-",
     "yuran_per_bulan": 375,
     "is_active": true
@@ -432,7 +432,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-51",
     "nama": "Muhammad Saiful Alfayyadh Bin Saiful Sumardi",
-    "grup": "Umum",
+    "grup": "Azwar HE",
     "kelas": "-",
     "yuran_per_bulan": 375,
     "is_active": true
@@ -440,7 +440,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-52",
     "nama": "Afiq Zahran Bin Ali",
-    "grup": "Umum",
+    "grup": "Herian HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -448,7 +448,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-53",
     "nama": "Ahmad Danial Syahri Bin Mohd Adnan",
-    "grup": "Umum",
+    "grup": "Arif HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -456,7 +456,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-54",
     "nama": "Akhil Khairi Bin Atong",
-    "grup": "Umum",
+    "grup": "Arif HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -464,7 +464,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-55",
     "nama": "Althaf Ahmad Bin Azrul",
-    "grup": "Umum",
+    "grup": "Azwar HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -472,7 +472,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-56",
     "nama": "Ammar Asyraf Bin Hadmar",
-    "grup": "Umum",
+    "grup": "Ameer HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -480,7 +480,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-57",
     "nama": "Farien Bin Mohd Adam",
-    "grup": "Umum",
+    "grup": "Mevlana HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -488,7 +488,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-58",
     "nama": "Irfan Suhaid Bin Sulaiman",
-    "grup": "Umum",
+    "grup": "Herian HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -496,7 +496,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-59",
     "nama": "Mohammad Danish Izzat Bin Syafruddin",
-    "grup": "Umum",
+    "grup": "Adhwa HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -504,7 +504,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-60",
     "nama": "Mohammad Farhan Zaqwan Bin Haris",
-    "grup": "Umum",
+    "grup": "Arif HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -512,7 +512,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-61",
     "nama": "Mohammad Rian Hidayat Bin Mohd Dehlan",
-    "grup": "Umum",
+    "grup": "Adhwa HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -520,7 +520,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-62",
     "nama": "Mohammad Syed Bin Mohd Asarie",
-    "grup": "Umum",
+    "grup": "Adnan HE ve Syukri HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -528,7 +528,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-63",
     "nama": "Mohammad Yusri Bin Mohd Ali",
-    "grup": "Umum",
+    "grup": "Adnan HE ve Syukri HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -536,7 +536,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-64",
     "nama": "Mohammad Zuhaily Izzuddin Bin Azman",
-    "grup": "Umum",
+    "grup": "Adnan HE ve Syukri HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -544,7 +544,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-65",
     "nama": "Mohd Adiq Qayyum Bin Mulyamin",
-    "grup": "Umum",
+    "grup": "Adhwa HE",
     "kelas": "-",
     "yuran_per_bulan": 375,
     "is_active": true
@@ -552,7 +552,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-66",
     "nama": "Muhammad Adam Izzuddin Bin Mazmin",
-    "grup": "Umum",
+    "grup": "Rizky HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -560,7 +560,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-67",
     "nama": "Muhammad Aiman Hafeez Bin Hasnizan",
-    "grup": "Umum",
+    "grup": "Adnan HE ve Syukri HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -568,7 +568,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-68",
     "nama": "Muhammad Alfatih Bin Edhin Halik",
-    "grup": "Umum",
+    "grup": "Azwar HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -576,7 +576,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-69",
     "nama": "Muhammad Aniq Ieqram Bin Jumadin",
-    "grup": "Umum",
+    "grup": "Ameer HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -584,7 +584,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-70",
     "nama": "Muhammad Aqil Nufail Bin Sulaiman",
-    "grup": "Umum",
+    "grup": "Ameer HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -592,7 +592,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-71",
     "nama": "Muhammad Asyraf Bin Sakka",
-    "grup": "Umum",
+    "grup": "Adnan HE ve Syukri HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -600,7 +600,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-72",
     "nama": "Muhammad Azeem Eskandar Bin Rudy",
-    "grup": "Umum",
+    "grup": "Adhwa HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -608,7 +608,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-73",
     "nama": "Muhammad Danish Ashraf Bin Mohd Azri",
-    "grup": "Umum",
+    "grup": "Adnan HE ve Syukri HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -616,7 +616,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-74",
     "nama": "Muhammad Danish Bin S Achmadi",
-    "grup": "Umum",
+    "grup": "Adhwa HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -624,7 +624,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-75",
     "nama": "Muhammad Fadhil Aiman Bin Mohd Fadlie",
-    "grup": "Umum",
+    "grup": "Azwar HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -632,7 +632,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-76",
     "nama": "Muhammad Faiz Bin Mohamad Rosdi",
-    "grup": "Umum",
+    "grup": "Rizky HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -640,7 +640,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-77",
     "nama": "Muhammad Ghazi Ziqri Bin Sabrie",
-    "grup": "Umum",
+    "grup": "Ameer HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -648,7 +648,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-78",
     "nama": "Muhammad Hafizul Bin Aziz",
-    "grup": "Umum",
+    "grup": "Ameer HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -656,7 +656,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-79",
     "nama": "Muhammad Miqhael Muadzamshah Bin Zuhermansha",
-    "grup": "Umum",
+    "grup": "Adhwa HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -664,7 +664,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-80",
     "nama": "Muhammad Muazzam Haikal Bin Abd Malik",
-    "grup": "Umum",
+    "grup": "Adnan HE ve Syukri HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -672,7 +672,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-81",
     "nama": "Muhammad Nazmi Bin Jainal",
-    "grup": "Umum",
+    "grup": "Tamimi HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -680,7 +680,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-82",
     "nama": "Muhammad Nuaim Bin Nasrol",
-    "grup": "Umum",
+    "grup": "Rizky HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -688,7 +688,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-83",
     "nama": "Muhammad Saifullah Bin Sabaruddin",
-    "grup": "Umum",
+    "grup": "Arif HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -696,7 +696,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-84",
     "nama": "Muhammad Syafie Bin Risal",
-    "grup": "Umum",
+    "grup": "Ameer HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -704,7 +704,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-85",
     "nama": "Muhammad Syah Niezam Bin Abdullah",
-    "grup": "Umum",
+    "grup": "Tamimi HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -712,7 +712,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-86",
     "nama": "Muhammad Syaz Redzuan Bin Suardi",
-    "grup": "Umum",
+    "grup": "Mevlana HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -720,7 +720,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-87",
     "nama": "Muhammad Zulfadhli Bin Roslan",
-    "grup": "Umum",
+    "grup": "Razi HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -728,7 +728,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-88",
     "nama": "Muhammad Abdurrahman Bin Muhammat Ruslan",
-    "grup": "Umum",
+    "grup": "Azwar HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -736,7 +736,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-89",
     "nama": "Samsul Hafeez Bin Samsualam",
-    "grup": "Umum",
+    "grup": "Ameer HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -744,7 +744,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-91",
     "nama": "Abi Izz Rayyan Bin Sabran Zabur",
-    "grup": "Umum",
+    "grup": "Azwar HE",
     "kelas": "-",
     "yuran_per_bulan": 375,
     "is_active": true
@@ -752,7 +752,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-92",
     "nama": "Addin Bin Agus",
-    "grup": "Umum",
+    "grup": "Razi HE",
     "kelas": "-",
     "yuran_per_bulan": 375,
     "is_active": true
@@ -760,7 +760,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-93",
     "nama": "Alif Bin Agus",
-    "grup": "Umum",
+    "grup": "Mevlana HE",
     "kelas": "-",
     "yuran_per_bulan": 375,
     "is_active": true
@@ -768,7 +768,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-94",
     "nama": "Ammar Khalish Naim Bin Ruslih",
-    "grup": "Umum",
+    "grup": "Azwar HE",
     "kelas": "-",
     "yuran_per_bulan": 375,
     "is_active": true
@@ -776,7 +776,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-95",
     "nama": "Danial Khalish Bin Ruslih",
-    "grup": "Umum",
+    "grup": "Azwar HE",
     "kelas": "-",
     "yuran_per_bulan": 375,
     "is_active": true
@@ -784,7 +784,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-96",
     "nama": "Muhammad Aniq Hafizie Bin Amil Hamzah (Muhammad Aniq Hafizie)",
-    "grup": "Umum",
+    "grup": "Azwar HE",
     "kelas": "-",
     "yuran_per_bulan": 375,
     "is_active": true
@@ -792,7 +792,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-97",
     "nama": "Muhammad Aniq Hamizie Bin Amil Hamzah",
-    "grup": "Umum",
+    "grup": "Azwar HE",
     "kelas": "-",
     "yuran_per_bulan": 375,
     "is_active": true
@@ -800,7 +800,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-98",
     "nama": "Muhammad Fadhillah Wajih",
-    "grup": "Umum",
+    "grup": "Rizky HE",
     "kelas": "-",
     "yuran_per_bulan": 375,
     "is_active": true
@@ -808,7 +808,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-99",
     "nama": "Ali Ammar Bin Abd Rahman",
-    "grup": "Umum",
+    "grup": "Razi HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -816,7 +816,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-100",
     "nama": "Denish Mikhail Bin Rafai",
-    "grup": "Umum",
+    "grup": "Azwar HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -824,7 +824,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-101",
     "nama": "Muaz Bin Jamal",
-    "grup": "Umum",
+    "grup": "Ameer HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -832,7 +832,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-102",
     "nama": "Muhammad Qusyairi Wasim Amar Bin Kahar",
-    "grup": "Umum",
+    "grup": "Ameer HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -840,7 +840,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-103",
     "nama": "Muhammad Thaqif Bin Alfian",
-    "grup": "Umum",
+    "grup": "Ameer HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -848,7 +848,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-104",
     "nama": "Mohd Rasul Iman Mustaqim Bin Abdullah",
-    "grup": "Umum",
+    "grup": "Mevlana HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -856,7 +856,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-105",
     "nama": "Ungku Aiman Harraz Bin Ungku Anis Fadilah",
-    "grup": "Umum",
+    "grup": "Adhwa HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -864,7 +864,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-106",
     "nama": "Ahmad Tarmizi Bin Samsu",
-    "grup": "Umum",
+    "grup": "Mevlana HE",
     "kelas": "-",
     "yuran_per_bulan": 375,
     "is_active": true
@@ -872,7 +872,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-107",
     "nama": "Mohamad Aqil Haziq Bin Azril",
-    "grup": "Umum",
+    "grup": "Tamimi HE",
     "kelas": "-",
     "yuran_per_bulan": 375,
     "is_active": true
@@ -880,7 +880,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-108",
     "nama": "Mohamad Aqil Razaq Bin Azril",
-    "grup": "Umum",
+    "grup": "Razi HE",
     "kelas": "-",
     "yuran_per_bulan": 375,
     "is_active": true
@@ -888,7 +888,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-109",
     "nama": "Muhammad Hadif Izzat Bin Mohd Hasbi",
-    "grup": "Umum",
+    "grup": "Tamimi HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true
@@ -896,7 +896,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-110",
     "nama": "Muhammad Nizam Bin Saripuddin",
-    "grup": "Umum",
+    "grup": "Mevlana HE",
     "kelas": "-",
     "yuran_per_bulan": 375,
     "is_active": true
@@ -904,7 +904,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-111",
     "nama": "Abdul Kahar Bin Dahli",
-    "grup": "Umum",
+    "grup": "Adnan HE ve Syukri HE",
     "kelas": "-",
     "yuran_per_bulan": 375,
     "is_active": true
@@ -912,7 +912,7 @@ export const REAL_STUDENTS: RealStudent[] = [
   {
     "id": "siswa-114",
     "nama": "Muhaimin Darwishah Bin Mustamin",
-    "grup": "Umum",
+    "grup": "Azwar HE",
     "kelas": "-",
     "yuran_per_bulan": 500,
     "is_active": true

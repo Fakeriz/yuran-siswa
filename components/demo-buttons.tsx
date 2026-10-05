@@ -4,8 +4,17 @@ import { useTransition } from "react";
 import { loginDemo } from "../app/(auth)/login/actions";
 import type { Role } from "../lib/types";
 
-export function DemoButtons() {
+type DemoVariant = "default" | "landing";
+
+export function DemoButtons({ variant = "default" }: { variant?: DemoVariant }) {
   const [isPending, startTransition] = useTransition();
+  const cardClass = variant === "landing" ? "border-border" : "border-emerald-200";
+  const titleClass = variant === "landing" ? "text-foreground" : "text-emerald-950";
+  const detailClass = variant === "landing" ? "text-muted-foreground" : "text-zinc-600";
+  const passwordClass = variant === "landing" ? "text-muted-foreground" : "text-zinc-400";
+  const buttonClass = variant === "landing"
+    ? "bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+    : "bg-emerald-800 text-white hover:bg-emerald-900";
 
   const handleLogin = (role: Role) => {
     startTransition(async () => {
@@ -15,58 +24,58 @@ export function DemoButtons() {
 
   return (
     <div className="mt-3 grid gap-3 text-sm sm:grid-cols-3">
-      <div className="flex flex-col justify-between rounded-2xl border border-emerald-200 bg-card p-3.5 shadow-xs">
+      <div className={`flex flex-col justify-between rounded-2xl border ${cardClass} bg-card p-3.5 shadow-xs`}>
         <div>
-          <span className="font-semibold text-emerald-950">Admin</span>
-          <p className="mt-1 font-mono text-xs text-zinc-600">admin@yuran.demo</p>
-          <p className="font-mono text-xs text-zinc-400">admin12345</p>
+          <span className={`font-semibold ${titleClass}`}>Admin</span>
+          <p className={`mt-1 font-mono text-xs ${detailClass}`}>admin@yuran.demo</p>
+          <p className={`font-mono text-xs ${passwordClass}`}>admin12345</p>
         </div>
         <button
           type="button"
           disabled={isPending}
           onClick={() => handleLogin("admin")}
-          className="mt-3 w-full rounded-xl bg-emerald-800 px-3 py-2 text-xs font-semibold text-white transition hover:bg-emerald-900 disabled:opacity-60"
+          className={`mt-3 w-full rounded-xl px-3 py-2 text-xs font-semibold transition disabled:opacity-60 ${buttonClass}`}
         >
           {isPending ? "Memproses…" : "Masuk Admin →"}
         </button>
       </div>
 
-      <div className="flex flex-col justify-between rounded-2xl border border-emerald-200 bg-card p-3.5 shadow-xs">
+      <div className={`flex flex-col justify-between rounded-2xl border ${cardClass} bg-card p-3.5 shadow-xs`}>
         <div>
-          <span className="font-semibold text-emerald-950">Staff</span>
-          <p className="mt-1 font-mono text-xs text-zinc-600">staff@yuran.demo</p>
-          <p className="font-mono text-xs text-zinc-400">staff12345</p>
+          <span className={`font-semibold ${titleClass}`}>Staf</span>
+          <p className={`mt-1 font-mono text-xs ${detailClass}`}>staff@yuran.demo</p>
+          <p className={`font-mono text-xs ${passwordClass}`}>staff12345</p>
         </div>
         <button
           type="button"
           disabled={isPending}
           onClick={() => handleLogin("staff")}
-          className="mt-3 w-full rounded-xl bg-emerald-800 px-3 py-2 text-xs font-semibold text-white transition hover:bg-emerald-900 disabled:opacity-60"
+          className={`mt-3 w-full rounded-xl px-3 py-2 text-xs font-semibold transition disabled:opacity-60 ${buttonClass}`}
         >
-          {isPending ? "Memproses…" : "Masuk Staff →"}
+          {isPending ? "Memproses…" : "Masuk Staf →"}
         </button>
       </div>
 
-      <div className="flex flex-col justify-between rounded-2xl border border-emerald-200 bg-card p-3.5 shadow-xs">
+      <div className={`flex flex-col justify-between rounded-2xl border ${cardClass} bg-card p-3.5 shadow-xs`}>
         <div>
-          <span className="font-semibold text-emerald-950">Orang Tua</span>
-          <p className="mt-1 font-mono text-xs text-zinc-600">ortu@yuran.demo</p>
-          <p className="font-mono text-xs text-zinc-400">ortu12345</p>
+          <span className={`font-semibold ${titleClass}`}>Orang Tua</span>
+          <p className={`mt-1 font-mono text-xs ${detailClass}`}>ortu@yuran.demo</p>
+          <p className={`font-mono text-xs ${passwordClass}`}>ortu12345</p>
         </div>
         <button
           type="button"
           disabled={isPending}
           onClick={() => handleLogin("orang_tua")}
-          className="mt-3 w-full rounded-xl bg-emerald-800 px-3 py-2 text-xs font-semibold text-white transition hover:bg-emerald-900 disabled:opacity-60"
+          className={`mt-3 w-full rounded-xl px-3 py-2 text-xs font-semibold transition disabled:opacity-60 ${buttonClass}`}
         >
-          {isPending ? "Memproses…" : "Masuk Ortu →"}
+          {isPending ? "Memproses…" : "Masuk Orang Tua →"}
         </button>
       </div>
     </div>
   );
 }
 
-export function DemoRoleCardAction({ role, label }: { role: Role; label: string }) {
+export function DemoRoleCardAction({ role, label, variant = "default" }: { role: Role; label: string; variant?: DemoVariant }) {
   const [isPending, startTransition] = useTransition();
 
   const handleLogin = () => {
@@ -80,7 +89,7 @@ export function DemoRoleCardAction({ role, label }: { role: Role; label: string 
       type="button"
       disabled={isPending}
       onClick={handleLogin}
-      className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-emerald-800 underline underline-offset-4 hover:text-emerald-900 disabled:opacity-60"
+      className={`mt-4 inline-flex items-center gap-1.5 rounded-sm text-sm font-semibold underline underline-offset-4 disabled:opacity-60 ${variant === "landing" ? "text-primary hover:decoration-2 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" : "text-emerald-800 hover:text-emerald-900"}`}
     >
       {isPending ? "Memproses..." : `${label} →`}
     </button>

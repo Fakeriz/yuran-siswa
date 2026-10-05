@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { DashboardMock } from "./dashboard-mock";
 import { DemoButtons, DemoRoleCardAction } from "../demo-buttons";
+import styles from "./landing-theme.module.css";
 
 // Muncul saat digulir ke viewport. Sekali terlihat, tetap terlihat.
 function Reveal({
@@ -70,10 +71,10 @@ function LatarGlow() {
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
       {/* Sapuan gradien atas ala sumber: from-blue-50 via-blue-100 */}
-      <div className="absolute top-0 left-0 h-[560px] w-full bg-gradient-to-b from-blue-50 via-blue-100/70 to-transparent" />
+      <div className="absolute top-0 left-0 h-[560px] w-full bg-gradient-to-b from-blue-50 via-blue-100/70 to-transparent dark:from-primary/10 dark:via-primary/5 dark:to-transparent" />
       {/* Gumpalan sudut */}
-      <div className="absolute -top-32 -left-32 size-[480px] rounded-full bg-blue-200/50 blur-3xl" />
-      <div className="absolute top-24 -right-40 size-[560px] rounded-full bg-blue-100/70 blur-3xl" />
+      <div className="absolute -top-32 -left-32 size-[480px] rounded-full bg-blue-200/50 blur-3xl dark:bg-primary/10" />
+      <div className="absolute top-24 -right-40 size-[560px] rounded-full bg-blue-100/70 blur-3xl dark:bg-primary/10" />
       {/* Pola ikon samar: tekstur identitas produk, bukan dekorasi acak */}
       <div className="absolute inset-0 text-primary opacity-[0.05] dark:opacity-[0.06]">
         <ReceiptText className="absolute top-[12%] left-[6%] size-16 -rotate-12" />
@@ -116,21 +117,21 @@ const PERAN = [
     ikon: ShieldCheck,
     nama: "Admin",
     teks: "Setujui pendaftaran orang tua, kelola data siswa dan akun pengguna, serta terbitkan kwitansi resmi untuk setiap pembayaran yang disahkan.",
-    aksi: <DemoRoleCardAction role="admin" label="Coba Panel Admin" />,
+    aksi: <DemoRoleCardAction role="admin" label="Coba Portal Admin" variant="landing" />,
   },
   {
     id: "staff",
     ikon: GraduationCap,
-    nama: "Staff",
+    nama: "Staf",
     teks: "Pilih grup kelas yang diampu, lihat siapa yang belum membayar bulan berjalan, dan catat pembayaran langsung dari kelas.",
-    aksi: <DemoRoleCardAction role="staff" label="Coba Dashboard Staf" />,
+    aksi: <DemoRoleCardAction role="staff" label="Coba Portal Staf" variant="landing" />,
   },
   {
     id: "orang_tua",
     ikon: HeartHandshake,
     nama: "Orang Tua",
     teks: "Pantau status yuran setiap anak per bulan, unggah bukti pembayaran, dan unduh kwitansi resmi yang sudah diterbitkan sekolah.",
-    aksi: <DemoRoleCardAction role="orang_tua" label="Coba Portal Orang Tua" />,
+    aksi: <DemoRoleCardAction role="orang_tua" label="Coba Portal Orang Tua" variant="landing" />,
   },
 ];
 
@@ -154,7 +155,7 @@ export function LandingPage() {
   const peran = PERAN.find((p) => p.id === peranAktif) ?? PERAN[0];
 
   return (
-    <div className="relative min-h-dvh bg-background text-foreground">
+    <div className={`${styles.landing} relative min-h-dvh bg-background text-foreground`}>
       <style>{`
         @keyframes lp-fade-up {
           from { opacity: 0; transform: translateY(28px); }
@@ -185,7 +186,7 @@ export function LandingPage() {
       <header className="lp-enter sticky top-4 z-40 mx-auto w-[calc(100%-2rem)] max-w-6xl" style={{ animationDelay: "0ms" }}>
         <div className="flex items-center justify-between rounded-2xl border border-white bg-card/80 p-2 pl-5 shadow-sm backdrop-blur-xl">
           <Link href="/" className="flex items-center gap-2 rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary">
-            <span className="flex size-8 items-center justify-center rounded-lg bg-primary text-white">
+            <span className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
               <ReceiptText className="size-4.5" aria-hidden="true" />
             </span>
             <span className="text-lg font-bold tracking-tight text-foreground">
@@ -228,7 +229,7 @@ export function LandingPage() {
           <div className="lp-drawer absolute top-0 left-0 flex h-full w-72 flex-col border-r border-border bg-card p-5">
             <div className="flex items-center justify-between">
               <span className="flex items-center gap-2">
-                <span className="flex size-8 items-center justify-center rounded-lg bg-primary text-white">
+                <span className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
                   <ReceiptText className="size-4.5" aria-hidden="true" />
                 </span>
                 <span className="text-lg font-bold tracking-tight text-foreground">YuranKu</span>
@@ -266,39 +267,39 @@ export function LandingPage() {
 
       <main className="relative">
         {/* Hero */}
-        <section className="relative mx-auto max-w-6xl px-5 pt-16 pb-10 text-center sm:pt-24">
+        <section className="relative mx-auto max-w-6xl px-5 pt-12 pb-8 text-center sm:pt-14">
           <Link href="#demo" className="lp-enter mx-auto inline-flex w-fit items-center gap-2 rounded-full border-2 border-white bg-card px-1.5 py-1 pr-4 shadow-lg shadow-blue-500/20 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" style={{ animationDelay: "80ms" }}
           >
-            <span className="rounded-full bg-gradient-to-br from-blue-600 to-blue-300 px-2.5 py-0.5 text-xs font-bold tracking-wide text-white uppercase">
+            <span className="rounded-full bg-primary px-2.5 py-0.5 text-xs font-bold tracking-wide text-primary-foreground uppercase">
               Demo
             </span>
             <span className="text-sm font-medium text-foreground">
-              Jelajahi portal tanpa mendaftar, cukup satu klik
+              Coba portal tanpa mendaftar
             </span>
           </Link>
 
-          <h1 className="lp-enter mx-auto mt-7 max-w-4xl text-5xl font-bold tracking-tight text-foreground sm:text-6xl lg:text-7xl" style={{ animationDelay: "160ms" }}
+          <h1 className="lp-enter mx-auto mt-5 max-w-4xl text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl" style={{ animationDelay: "160ms" }}
           >
             Yuran bulanan siswa, tercatat rapi setiap bulan.
           </h1>
 
-          <p className="lp-enter mx-auto mt-6 max-w-2xl text-lg leading-relaxed font-medium text-muted-foreground sm:text-xl" style={{ animationDelay: "240ms" }}
+          <p className="lp-enter mx-auto mt-4 max-w-2xl text-base leading-relaxed font-medium text-muted-foreground sm:text-lg" style={{ animationDelay: "240ms" }}
           >
-            Satu portal untuk staf mencatat pembayaran, orang tua memantau status dan mengunggah bukti, serta admin menerbitkan kwitansi. Semua tersimpan rapi dan mudah ditelusuri kembali.
+            Staf mencatat pembayaran, orang tua memantau status dan mengunggah bukti, admin menerbitkan kwitansi. Semua dalam satu portal.
           </p>
 
-          <div className="lp-enter mt-9 flex flex-wrap items-center justify-center gap-4" style={{ animationDelay: "320ms" }}>
+          <div className="lp-enter mt-6 flex flex-wrap items-center justify-center gap-3" style={{ animationDelay: "320ms" }}>
             <Link href="/login" className="rounded-2xl bg-neutral-900 px-7 py-3.5 text-base font-bold text-white shadow-[inset_2px_2px_5px_0px_rgba(0,0,0,0.5),inset_-2px_-2px_6px_1px_rgba(80,78,78,0.5)] transition hover:-translate-y-0.5 hover:bg-black focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
             >
-              Masuk ke Portal
+              Masuk
             </Link>
             <Link href="/daftar" className="rounded-2xl border border-blue-200 bg-card/70 px-7 py-3.5 text-base font-semibold text-primary backdrop-blur transition hover:-translate-y-0.5 hover:bg-card focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
             >
-              Daftar sebagai Orang Tua
+              Daftar
             </Link>
           </div>
 
-          <div className="lp-enter mx-auto mt-14 max-w-4xl text-left" style={{ animationDelay: "400ms" }}>
+          <div className="lp-enter mx-auto mt-8 max-w-4xl text-left" style={{ animationDelay: "400ms" }}>
             <DashboardMock />
           </div>
         </section>
@@ -308,10 +309,7 @@ export function LandingPage() {
           <div className="grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
             <div className="lg:sticky lg:top-28 lg:self-start">
               <Reveal>
-                <p className="text-sm font-bold tracking-widest text-primary uppercase">
-                  Fitur
-                </p>
-                <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
                   Dibuat untuk cara kerja sekolah yang sebenarnya.
                 </h2>
                 <p className="mt-4 leading-relaxed text-muted-foreground">
@@ -338,13 +336,10 @@ export function LandingPage() {
         </section>
 
         {/* Peran: tab interaktif */}
-        <section id="peran" className="relative scroll-mt-24 border-y border-blue-100/70 bg-card/40 py-16 backdrop-blur-sm sm:py-24">
+        <section id="peran" className="relative scroll-mt-24 border-y border-blue-100/70 bg-card/40 py-16 backdrop-blur-sm sm:py-24 dark:border-border">
           <div className="mx-auto max-w-4xl px-5 text-center">
             <Reveal>
-              <p className="text-sm font-bold tracking-widest text-primary uppercase">
-                Peran
-              </p>
-              <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+              <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
                 Satu portal, tiga cara pakai.
               </h2>
               <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
@@ -359,7 +354,7 @@ export function LandingPage() {
                     onClick={() => setPeranAktif(p.id)}
                     className={`flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:px-6 ${
                       peranAktif === p.id
-                        ? "bg-primary text-white shadow-sm"
+                        ? "bg-primary text-primary-foreground shadow-sm"
                         : "text-muted-foreground hover:bg-muted hover:text-foreground"
                     }`}
                   >
@@ -370,7 +365,7 @@ export function LandingPage() {
               </div>
               <div role="tabpanel" className="mx-auto mt-6 max-w-2xl rounded-3xl border border-white bg-card/70 p-7 text-left shadow-sm backdrop-blur sm:p-8">
                 <div className="flex items-center gap-3">
-                  <span className="flex size-11 items-center justify-center rounded-2xl bg-primary text-white">
+                  <span className="flex size-11 items-center justify-center rounded-2xl bg-primary text-primary-foreground">
                     <peran.ikon className="size-5" aria-hidden="true" />
                   </span>
                   <h3 className="text-xl font-bold text-foreground">
@@ -390,21 +385,18 @@ export function LandingPage() {
             <div className="overflow-hidden rounded-3xl border border-white bg-card/60 p-7 shadow-[0_30px_80px_-20px_rgba(37,99,235,0.25)] backdrop-blur-xl sm:p-10">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div>
-                  <p className="text-sm font-bold tracking-widest text-primary uppercase">
-                    Demo
-                  </p>
-                  <h2 className="mt-2 text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+                  <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
                     Jelajahi tanpa mendaftar.
                   </h2>
                 </div>
-                <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-800">
+                <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-bold text-primary">
                   Semua peran aktif
                 </span>
               </div>
               <p className="mt-3 max-w-2xl text-muted-foreground">
                 Pilih salah satu peran di bawah untuk langsung masuk ke dashboard masing-masing tanpa mengisi kata sandi.
               </p>
-              <DemoButtons />
+              <DemoButtons variant="landing" />
             </div>
           </Reveal>
         </section>
@@ -425,11 +417,11 @@ export function LandingPage() {
               <div className="relative mt-8 flex flex-wrap justify-center gap-4">
                 <Link href="/daftar" className="rounded-2xl bg-card px-7 py-3.5 text-base font-bold text-foreground transition hover:-translate-y-0.5 hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
                 >
-                  Daftar sebagai Orang Tua
+                  Daftar
                 </Link>
                 <Link href="/login" className="rounded-2xl border border-white/25 px-7 py-3.5 text-base font-semibold text-white transition hover:-translate-y-0.5 hover:bg-card/10 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
                 >
-                  Masuk ke Portal
+                  Masuk
                 </Link>
               </div>
             </div>
@@ -441,7 +433,7 @@ export function LandingPage() {
       <footer className="relative border-t border-border">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-5 py-8 sm:flex-row">
           <span className="flex items-center gap-2">
-            <span className="flex size-7 items-center justify-center rounded-lg bg-primary text-white">
+            <span className="flex size-7 items-center justify-center rounded-lg bg-primary text-primary-foreground">
               <ReceiptText className="size-4" aria-hidden="true" />
             </span>
             <span className="font-bold tracking-tight text-foreground">YuranKu</span>

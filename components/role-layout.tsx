@@ -3,9 +3,10 @@
 import { useState, type ReactNode } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, UsersRound, ReceiptText, X } from "lucide-react";
+import { LayoutDashboard, UsersRound, ReceiptText, X, School } from "lucide-react";
 import { UserBar } from "./user-bar";
 import { AppSidebar } from "./app-sidebar";
+import { DashboardHeader } from "./dashboard-header";
 import type { Role } from "../lib/types";
 
 interface NavItem {
@@ -49,10 +50,27 @@ export function RoleLayout({ role, userName, children }: { role: Exclude<Role, "
 
   return (
     <div className="relative min-h-dvh flex flex-col bg-background text-foreground">
-      <UserBar userRole={role} userName={userName} onMenuClick={() => {
-        if (window.innerWidth >= 1024) setDesktopCollapsed((c) => !c);
-        else setSidebarOpen((o) => !o);
-      }} />
+      <div className="lg:hidden">
+        <UserBar userRole={role} userName={userName} onMenuClick={() => setSidebarOpen((o) => !o)} />
+      </div>
+      <DashboardHeader
+        title={role === "staff" ? "Dashboard Staf" : "Dashboard"}
+        titleIcon={
+          <span className="flex size-8 items-center justify-center rounded-lg bg-primary text-white shadow-xs">
+            <School className="size-4" />
+          </span>
+        }
+        userName={userName ?? (role === "staff" ? "Staff Demo" : "Orang Tua Demo")}
+        userHandle={role === "staff" ? "staff" : "orangtua"}
+        userInitials={role === "staff" ? "ST" : "OT"}
+        searchPlaceholder={role === "staff" ? "Cari siswa..." : "Cari..."}
+        onSearch={(q) => {
+          // TODO: implementasi search per role
+          console.log("Search:", q);
+        }}
+        onCollapseSidebar={() => setDesktopCollapsed((c) => !c)}
+        collapseIcon={<LayoutDashboard className="size-4" />}
+      />
 
       {/* Mobile drawer */}
       {sidebarOpen && (

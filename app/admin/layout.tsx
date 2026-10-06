@@ -185,30 +185,6 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        {/* Brand Logo & Header */}
-        <div className="flex h-16 items-center justify-between px-5 border-b border-border">
-          <button type="button" onClick={() => { if (window.innerWidth >= 1024) setDesktopCollapsed((c) => !c); else setSidebarOpen(false); }} className="flex items-center gap-2.5 group focus-visible:outline-primary" aria-label="Buka/tutup navigasi">
-            <div className="flex size-9 items-center justify-center rounded-xl bg-primary text-white shadow-md transition-all">
-              <School className="size-4.5" />
-            </div>
-            <div>
-              <div className="flex items-center gap-1.5">
-                <span className="font-bold text-base text-foreground tracking-tight">YuranKu</span>
-                <span className="text-[9px] font-semibold uppercase tracking-wider text-primary bg-primary/10 px-1.5 py-0.5 rounded-md border border-primary/20">
-                  Admin
-                </span>
-              </div>
-              <p className="text-[11px] text-muted-foreground font-medium">Manajemen Yuran Bulanan</p>
-            </div>
-          </button>
-
-          <button type="button" onClick={() => setSidebarOpen(false)}
-            className="lg:hidden p-2 text-muted-foreground hover:text-foreground hover:bg-muted rounded-xl transition-colors" aria-label="Tutup navigasi"
-          >
-            <X className="size-5" />
-          </button>
-        </div>
-
         {/* Sidebar Nav Items */}
         <Suspense>
           <AppSidebar

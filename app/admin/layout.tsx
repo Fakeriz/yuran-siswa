@@ -23,6 +23,8 @@ import {
   Wallet,
 } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { UserBar } from "@/components/user-bar";
+import { AppSidebar } from "@/components/app-sidebar";
 import { NotificationBadge } from "@/components/notification-badge";
 
 interface NavItem {
@@ -62,88 +64,6 @@ const navigation: NavSection[] = [
     ],
   },
 ];
-
-function SidebarNav({ onNavigate }: { onNavigate: () => void }) {
-  const searchParams = useSearchParams();
-  const currentTab = searchParams ? searchParams.get("tab") : null; // null = Dasbor Utama
-  const [menuQuery, setMenuQuery] = useState("");
-
-  const q = menuQuery.trim().toLowerCase();
-  const visibleSections = navigation
-    .map((section) => ({
-      ...section,
-      items: section.items.filter((item) => !q || item.name.toLowerCase().includes(q)),
-    }))
-    .filter((section) => section.items.length > 0);
-
-  return (
-    <div className="flex flex-1 min-h-0 flex-col px-4 pb-4">
-      {/* Carian menu */}
-      <div className="px-1 pb-3 pt-4">
-        <div className="relative">
-          <Search className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" aria-hidden />
-          <input type="search" value={menuQuery}
-            onChange={(e) => setMenuQuery(e.target.value)}
-            placeholder="Cari menu" aria-label="Cari menu navigasi" className="h-10 w-full rounded-xl border border-transparent bg-muted/80 pl-10 pr-12 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:bg-card focus:outline-none [&::-webkit-search-cancel-button]:hidden"
-          />
-          <kbd className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 rounded-md border border-border bg-card px-1.5 py-0.5 text-[10px] font-semibold text-muted-foreground">
-            ⌘K
-          </kbd>
-        </div>
-      </div>
-
-      <div className="flex-1 space-y-5 overflow-y-auto px-1 py-1">
-        {visibleSections.length === 0 ? (
-          <p className="px-3 py-6 text-center text-xs text-muted-foreground">Tiada menu sepadan.</p>
-        ) : (
-          visibleSections.map((section) => (
-            <div key={section.title}>
-              <h3 className="px-3 text-xs font-medium text-muted-foreground">
-                {section.title}
-              </h3>
-              <div className="mt-1.5 space-y-0.5">
-                {section.items.map((item) => {
-                  const Icon = item.icon;
-                  const itemTab = item.href.includes("?tab=") ? item.href.split("?tab=")[1] : null;
-                  const isActive = itemTab === currentTab;
-
-                  return (
-                    <Link key={item.name}
-                      href={item.href}
-                      onClick={onNavigate}
-                      aria-current={isActive ? "page" : undefined}
-                      className={`group flex items-center justify-between rounded-xl px-3 py-2.5 text-sm transition-colors ${
-                        isActive
-                          ? "bg-primary/10 font-semibold text-primary"
-                          : "font-medium text-muted-foreground hover:bg-muted hover:text-foreground"
-                      }`}
-                    >
-                      <span className="flex min-w-0 items-center gap-3">
-                        <Icon className={`size-[18px] shrink-0 transition-colors ${
-                            isActive
-                              ? "text-primary"
-                              : "text-muted-foreground group-hover:text-muted-foreground"
-                          }`}
-                          aria-hidden
-                        />
-                        <span className="truncate">{item.name}</span>
-                      </span>
-                      {item.badge && (
-                        <span className="ml-2 shrink-0 rounded-full bg-violet-100 px-2 py-0.5 text-[10px] font-semibold text-primary">
-                          {item.badge}
-                        </span>
-                      )}
-                    </Link>
-                  );
-                })}
-              </div>
-            </div>
-          ))
-        )}
-      </div>
-    </div>
-  );
-}
 
 const TAB_NAMES: Record<string, string> = {
   siswa: "Data Siswa",
@@ -186,6 +106,8 @@ function Breadcrumb() {
 }
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
+  const searchParams = useSearchParams();
+  const currentTab = searchParams ? searchParams.get("tab") : null;
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [desktopCollapsed, setDesktopCollapsed] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
@@ -289,7 +211,30 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
         {/* Sidebar Nav Items */}
         <Suspense>
-          <SidebarNav onNavigate={() => setSidebarOpen(false)} />
+          <AppSidebar
+          sections={navigation}
+          homeHref="/admin"
+          onNavigate={() => setSidebarOpen(false)}
+          isActive={(item) => {
+            const tab = item.href.includes("?tab=") ? item.href.split("?tab=")[1] : null;
+            return tab === currentTab;
+          }}
+          searchable
+          footer={
+            <div className="p-3.5 border-t border-border bg-muted/50 lg:hidden">
+              <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground px-1 mb-2">Sesi</p>
+              <div className="flex gap-1.5">
+                {SESI_LIST.map((s) => (
+                  <button key={s} type="button" onClick={() => setSesi(s)}
+                    className={`flex-1 rounded-lg px-2 py-1.5 text-[11px] font-medium transition-colors ${sesi === s ? "bg-primary text-primary-foreground" : "bg-card text-muted-foreground hover:bg-muted"}`}
+                  >
+                    {s}
+                  </button>
+                ))}
+              </div>
+            </div>
+          }
+        />
         </Suspense>
 
         {/* User Profile Card & Sign Out — hanya dalam drawer mobile (desktop: sudah ada chip pengguna di bar atas) */}
@@ -315,32 +260,20 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
       {/* Main Content Area */}
       <div className={`flex flex-col flex-1 min-w-0 w-full max-w-full ${desktopCollapsed ? "" : "lg:pl-80"}`}>
-        {/* Dedicated Mobile Header (lg:hidden) */}
-        <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-border/70 bg-background/80 p-4 backdrop-blur-md lg:hidden">
-          <div className="flex items-center gap-3">
-            <button type="button" onClick={() => setSidebarOpen((o) => !o)}
-              className="flex items-center gap-2 rounded-lg focus-visible:outline-primary" aria-label="Buka/tutup menu navigasi" aria-expanded={sidebarOpen}
-            >
-              <div className="flex size-8 items-center justify-center rounded-lg bg-primary text-white shadow-xs">
-                <School className="size-4" />
-              </div>
-              <span className="font-bold text-base text-foreground tracking-tight">YuranKu</span>
-              <span className="text-[9px] font-semibold uppercase tracking-wider text-primary bg-primary/10 px-1.5 py-0.5 rounded-md border border-primary/20">
-                Admin
-              </span>
-            </button>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <ThemeToggle />
+        {/* Mobile Header — pakai UserBar bersama */}
+        <UserBar
+          userRole="admin"
+          userName="Administrator"
+          onMenuClick={() => setSidebarOpen((o) => !o)}
+          actions={
             <button type="button" onClick={() => setNotifOpen((o) => !o)}
               className="relative flex size-9 items-center justify-center rounded-xl border border-border bg-card text-muted-foreground shadow-2xs hover:bg-muted hover:text-foreground transition-colors" aria-label={`Notifikasi sistem${unreadCount > 0 ? `, ${unreadCount} belum dibaca` : ""}`}
             >
               <Bell className="size-4.5" />
               <NotificationBadge count={unreadCount} />
             </button>
-          </div>
-        </header>
+          }
+        />
 
         {/* Desktop Top Navbar — bar terapung gaya financial dashboard */}
         <header className="sticky top-0 z-30 hidden w-full px-6 pt-4 lg:block lg:px-8">

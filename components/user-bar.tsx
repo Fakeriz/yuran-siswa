@@ -11,9 +11,10 @@ interface UserBarProps {
   userRole: Role;
   onMenuClick?: () => void;
   title?: string; // deprecated, tidak dipakai lagi
+  actions?: React.ReactNode; // tombol aksi kustom di kanan (ganti tombol logout default)
 }
 
-export function UserBar({ userName, userRole, onMenuClick }: UserBarProps) {
+export function UserBar({ userName, userRole, onMenuClick, actions }: UserBarProps) {
   const [isPending, startTransition] = useTransition();
 
   const handleSwitch = (role: Role) => {
@@ -56,11 +57,13 @@ export function UserBar({ userName, userRole, onMenuClick }: UserBarProps) {
         </div>
         <div className="flex items-center gap-2">
           <ThemeToggle />
-          <button type="button" disabled={isPending} onClick={handleLogout}
-            className="relative flex size-9 items-center justify-center rounded-xl border border-border bg-card text-muted-foreground shadow-2xs hover:bg-muted hover:text-foreground transition-colors" aria-label="Keluar"
-          >
-            <LogOut className="size-4" aria-hidden="true" />
-          </button>
+          {actions ?? (
+            <button type="button" disabled={isPending} onClick={handleLogout}
+              className="relative flex size-9 items-center justify-center rounded-xl border border-border bg-card text-muted-foreground shadow-2xs hover:bg-muted hover:text-foreground transition-colors" aria-label="Keluar"
+            >
+              <LogOut className="size-4" aria-hidden="true" />
+            </button>
+          )}
         </div>
       </header>
 

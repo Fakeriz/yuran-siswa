@@ -46,7 +46,7 @@ export function UserBar({ userName, userRole, onMenuClick, actions }: UserBarPro
           <button type="button" onClick={onMenuClick}
             className="flex items-center gap-2 rounded-lg focus-visible:outline-primary" aria-label="Buka/tutup menu navigasi"
           >
-            <span className="flex size-8 items-center justify-center rounded-lg bg-primary text-white shadow-xs">
+            <span className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-xs">
               <ReceiptText className="size-4" aria-hidden="true" />
             </span>
             <span className="font-bold text-base text-foreground tracking-tight">YuranKu</span>
@@ -74,7 +74,7 @@ export function UserBar({ userName, userRole, onMenuClick, actions }: UserBarPro
             <button type="button" onClick={onMenuClick}
               className="flex items-center gap-2 rounded-lg focus-visible:outline-primary" aria-label="Buka/tutup menu navigasi"
             >
-              <span className="flex size-8 items-center justify-center rounded-lg bg-primary text-white shadow-xs">
+              <span className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-xs">
                 <ReceiptText className="size-4" aria-hidden="true" />
               </span>
               <span className="font-bold text-base text-foreground tracking-tight">YuranKu</span>

@@ -56,7 +56,7 @@ export function RoleLayout({ role, userName, children }: { role: Exclude<Role, "
       <DashboardHeader
         title={role === "staff" ? "Dashboard Staf" : "Dashboard"}
         titleIcon={
-          <span className="flex size-8 items-center justify-center rounded-lg bg-primary text-white shadow-xs">
+          <span className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-xs">
             <School className="size-4" />
           </span>
         }

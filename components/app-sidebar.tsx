@@ -38,7 +38,7 @@ export function AppSidebar({ sections, homeHref, onNavigate, isActive, searchabl
     <>
       <div className="flex min-h-16 items-center justify-between px-5 py-3 border-b border-border">
         <Link href={homeHref} onClick={onNavigate} className="flex items-center gap-2.5">
-          <span className="flex size-9 items-center justify-center rounded-xl bg-primary text-white shadow-md shrink-0">
+          <span className="flex size-9 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-md shrink-0">
             <ReceiptText className="size-4.5" />
           </span>
           <span className="flex flex-col">

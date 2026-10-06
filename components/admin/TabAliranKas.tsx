@@ -170,7 +170,7 @@ export function TabAliranKas() {
     <div className="space-y-6">
       {/* Toast Notification */}
       {toastMsg && (
-        <div className="fixed top-5 right-5 z-50 flex items-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-white shadow-xl">
+        <div className="fixed top-5 right-5 z-50 flex items-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground shadow-xl">
           <CheckCircle2 className="size-4 shrink-0" />
           <span>{toastMsg}</span>
         </div>
@@ -201,7 +201,7 @@ export function TabAliranKas() {
           </button>
 
           <button type="button" onClick={() => setShowModal(true)}
-            className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2 text-xs font-semibold text-white shadow-xs hover:bg-primary/90 transition-colors focus-visible:outline-primary"
+            className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground shadow-xs hover:bg-primary/90 transition-colors focus-visible:outline-primary"
           >
             <Plus className="size-4" />
             <span>Catat Perbelanjaan</span>
@@ -379,7 +379,7 @@ export function TabAliranKas() {
                 >
                   Batal
                 </button>
-                <button type="submit" className="rounded-full bg-primary px-4 py-2 text-xs font-semibold text-white hover:bg-primary/90"
+                <button type="submit" className="rounded-full bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground hover:bg-primary/90"
                 >
                   Simpan Perbelanjaan
                 </button>

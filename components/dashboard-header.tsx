@@ -77,7 +77,7 @@ export function DashboardHeader({
         <div className="flex items-center gap-3">
           {onCollapseSidebar && (
             <button type="button" onClick={onCollapseSidebar}
-              className="flex size-8 items-center justify-center rounded-lg bg-primary text-white shadow-xs" aria-label="Buka/tutup navigasi"
+              className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-xs" aria-label="Buka/tutup navigasi"
             >
               {collapseIcon}
             </button>
@@ -174,7 +174,7 @@ export function DashboardHeader({
             <button type="button" onClick={() => { setUserOpen((o) => !o); setNotifOpen(false); setHelpOpen(false); }}
               className="flex items-center gap-2.5 rounded-full py-1.5 pl-1.5 pr-2 transition-colors hover:bg-accent" aria-label="Menu akun" aria-expanded={userOpen}
             >
-              <span className="flex size-9 items-center justify-center rounded-full bg-primary text-xs font-bold text-white shadow-md" aria-hidden>
+              <span className="flex size-9 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground shadow-md" aria-hidden>
                 {userInitials}
               </span>
               <span className="hidden text-left xl:block">
@@ -186,7 +186,7 @@ export function DashboardHeader({
             {userOpen && (
               <div className="absolute right-0 z-50 mt-2 w-64 rounded-2xl border border-border bg-card p-4 shadow-xl">
                 <div className="flex items-center gap-3">
-                  <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-white" aria-hidden>
+                  <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground" aria-hidden>
                     {userInitials}
                   </span>
                   <div className="min-w-0">

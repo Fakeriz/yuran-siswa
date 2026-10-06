@@ -29,7 +29,7 @@ export default async function RegisterPage() {
     <div className="relative mx-auto max-w-lg">
       <Link href="/" className="flex w-fit items-center gap-2 rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" aria-label="Kembali ke halaman utama"
       >
-        <span className="flex size-9 items-center justify-center rounded-xl bg-primary text-white">
+        <span className="flex size-9 items-center justify-center rounded-xl bg-primary text-primary-foreground">
           <ReceiptText className="size-4.5" aria-hidden="true" />
         </span>
         <span className="text-xl font-bold tracking-tight">YuranKu</span>

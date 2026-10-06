@@ -171,7 +171,7 @@ export function TabAkun() {
     <div className="space-y-6">
       {/* Toast Notifikasi */}
       {toastMsg && (
-        <div className="fixed top-5 right-5 z-50 flex items-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-white shadow-xl">
+        <div className="fixed top-5 right-5 z-50 flex items-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground shadow-xl">
           <CheckCircle2 className="size-4 shrink-0" />
           <span>{toastMsg}</span>
         </div>
@@ -206,7 +206,7 @@ export function TabAkun() {
           <button
             type="button"
             onClick={() => setShowCreateModal(true)}
-            className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2 text-xs font-semibold text-white shadow-xs hover:bg-primary/90 transition-colors focus-visible:outline-primary"
+            className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground shadow-xs hover:bg-primary/90 transition-colors focus-visible:outline-primary"
           >
             <UserPlus className="size-4" />
             <span>Cipta Akun Baru</span>
@@ -455,7 +455,7 @@ export function TabAkun() {
                 </button>
                 <button
                   type="submit"
-                  className="rounded-full bg-primary px-4 py-2 text-xs font-semibold text-white hover:bg-primary/90"
+                  className="rounded-full bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground hover:bg-primary/90"
                 >
                   Cipta Akun
                 </button>
@@ -529,7 +529,7 @@ export function TabAkun() {
                 <button
                   type="submit"
                   disabled={!selectedParentId || !selectedChildName}
-                  className="rounded-full bg-primary px-4 py-2 text-xs font-semibold text-white hover:bg-primary/90 disabled:opacity-50"
+                  className="rounded-full bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground hover:bg-primary/90 disabled:opacity-50"
                 >
                   Sahkan Pautan Anak
                 </button>

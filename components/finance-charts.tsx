@@ -28,7 +28,7 @@ export function CartaTahunan({ dataBulanan }: { dataBulanan?: number[] }) {
   const menyerlah = -1;
 
   return (
-    <div className="flex min-w-0 flex-col rounded-2xl border border-border bg-card p-4 sm:p-5 ">
+    <div className="flex min-w-0 h-full flex-col justify-between rounded-2xl border border-border bg-card p-4 sm:p-5 lg:p-6 shadow-xs">
       <div className="flex items-start justify-between gap-3">
         <div>
           <h2 className="text-base font-semibold text-foreground sm:text-lg">
@@ -109,7 +109,7 @@ export function PanelKemajuanGrup({ grup }: { grup: KemajuanGrup[] }) {
   const jumlahTerkumpul = grup.reduce((a, g) => a + g.terkumpul, 0);
 
   return (
-    <div className="flex min-w-0 flex-col rounded-2xl border border-border bg-card p-4 sm:p-5 ">
+    <div className="flex min-w-0 h-full flex-col rounded-2xl border border-border bg-card p-4 sm:p-5 lg:p-6 shadow-xs">
       <div className="flex items-center gap-2.5">
         <span className="flex size-9 items-center justify-center rounded-xl bg-muted text-muted-foreground" aria-hidden>
           <Wallet className="size-4.5" />

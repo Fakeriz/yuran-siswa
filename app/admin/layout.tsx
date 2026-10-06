@@ -12,7 +12,6 @@ import {
   Receipt,
   UserCheck,
   ShieldCheck,
-  HelpCircle,
   Settings,
   LayoutDashboard,
   Bell,
@@ -24,27 +23,15 @@ import { NotificationBadge } from "@/components/notification-badge";
 
 const navigation: SidebarSection[] = [
   {
-    title: "Menu",
     items: [
       { name: "Dasbor Utama", href: "/admin", icon: LayoutDashboard },
       { name: "Data Siswa", href: "/admin?tab=siswa", icon: Users },
       { name: "Transaksi Masuk", href: "/admin?tab=transaksi", icon: CreditCard },
       { name: "Penyata Bulanan", href: "/admin?tab=penyata", icon: FileSpreadsheet },
       { name: "Kuitansi Rasmi", href: "/admin?tab=resit", icon: Receipt },
-    ],
-  },
-  {
-    title: "Pengurusan",
-    items: [
       { name: "Penugasan Staf", href: "/admin?tab=penugasan", icon: Building2 },
       { name: "Persetujuan Orang Tua", href: "/admin?tab=persetujuan", icon: UserCheck },
       { name: "Pengelolaan Akun", href: "/admin?tab=akun", icon: ShieldCheck },
-    ],
-  },
-  {
-    title: "Bantuan",
-    items: [
-      { name: "Bantuan & Dokumen", href: "/admin?tab=bantuan", icon: HelpCircle },
       { name: "Tetapan Sistem", href: "/admin?tab=tetapan", icon: Settings },
     ],
   },
@@ -127,7 +114,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ type: "spring", stiffness: 350, damping: 32 }}
-              className="fixed inset-y-0 left-0 z-50 flex w-76 max-w-[85vw] flex-col p-3 pt-[calc(env(safe-area-inset-top,0px)+0.75rem)] lg:hidden"
+              className="fixed inset-y-0 left-0 z-50 flex w-[235px] max-w-[85vw] flex-col p-3 pt-[calc(env(safe-area-inset-top,0px)+0.75rem)] lg:hidden"
             >
               <Suspense>
                 <AppSidebar
@@ -175,7 +162,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
       </AnimatePresence>
 
       {/* Main Content Area */}
-      <div className={`flex flex-col flex-1 min-w-0 w-full max-w-full transition-[padding] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${desktopCollapsed ? "lg:pl-[104px]" : "lg:pl-[304px]"}`}>
+      <div className={`flex flex-col flex-1 min-w-0 w-full max-w-full transition-[padding] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${desktopCollapsed ? "lg:pl-[108px]" : "lg:pl-[267px]"}`}>
         {/* Mobile Header — pakai UserBar bersama (desktop disembunyikan) */}
         <div className="lg:hidden">
           <UserBar
@@ -236,8 +223,8 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
           </div>
         )}
 
-        {/* Page Children Container */}
-        <main className="relative flex-1 p-3.5 sm:p-6 lg:p-8 max-w-7xl w-full min-w-0 mx-auto overflow-x-hidden">
+        {/* Page Children Container — Jarak sejajar & selaras dengan kad sidebar */}
+        <main className="relative flex-1 p-3.5 sm:p-5 lg:pt-4 lg:pb-6 lg:pl-0 lg:pr-4 xl:pr-6 w-full min-w-0 overflow-x-hidden">
           <div className="relative">{children}</div>
         </main>
       </div>

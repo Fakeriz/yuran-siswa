@@ -27,8 +27,8 @@ interface FinanceKpiProps {
  */
 export function FinanceKpi({ icon: Icon, value, label, tone = "violet", children }: FinanceKpiProps) {
   return (
-    <div className="flex min-w-0 flex-col rounded-2xl border border-border bg-card p-4 text-card-foreground">
-      <div className="flex min-w-0 items-center gap-3">
+    <div className="flex min-w-0 flex-col justify-between rounded-2xl border border-border bg-card p-4 sm:p-5 text-card-foreground shadow-xs transition-shadow hover:shadow-sm">
+      <div className="flex min-w-0 items-center gap-3.5">
         <div
           className={`flex size-11 shrink-0 items-center justify-center rounded-xl ${chipTone[tone]}`}
         >
@@ -40,7 +40,7 @@ export function FinanceKpi({ icon: Icon, value, label, tone = "violet", children
         </div>
       </div>
       {children ? (
-        <div className="mt-3 border-t border-border pt-3">{children}</div>
+        <div className="mt-3.5 border-t border-border/80 pt-3">{children}</div>
       ) : null}
     </div>
   );

@@ -149,7 +149,8 @@ export function AppSidebar({
     <motion.aside
       layout
       transition={{ type: "spring", stiffness: 350, damping: 32 }}
-      animate={{ width: isCollapsed ? 76 : 268 }}
+      animate={{ width: isCollapsed ? 76 : 235 }}
+      style={{ width: isCollapsed ? 76 : 235 }}
       className={`relative flex h-full flex-col overflow-visible rounded-3xl border border-border bg-card text-card-foreground shadow-lg transition-colors duration-200 ${className}`}
     >
       {/* ============================================================
@@ -293,24 +294,14 @@ export function AppSidebar({
         ) : (
           filteredSections.map((section, sIndex) => (
             <div key={section.title ?? sIndex} className="space-y-1">
-              {/* Section Header */}
-              {section.title && (
-                <div
-                  className={`flex items-center px-2.5 pb-1 ${
-                    isCollapsed ? "justify-center" : ""
-                  }`}
-                >
-                  {!isCollapsed ? (
-                    <span className="text-[11px] font-semibold text-muted-foreground">
-                      {section.title}
-                    </span>
-                  ) : (
-                    <span className="text-[9px] font-bold text-muted-foreground/70 uppercase tracking-wider">
-                      {section.title.slice(0, 3)}
-                    </span>
-                  )}
+              {/* Section Header (only when title is present and expanded) */}
+              {section.title && !isCollapsed ? (
+                <div className="flex items-center px-2.5 pb-1">
+                  <span className="text-[11px] font-semibold text-muted-foreground">
+                    {section.title}
+                  </span>
                 </div>
-              )}
+              ) : null}
 
               {/* Items in Section — Direct, Clean, No Numbers */}
               <div className="space-y-1">

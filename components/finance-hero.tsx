@@ -35,12 +35,12 @@ export function FinanceHero({ name, subtitle, actions, children, kpiGridClassNam
 
   return (
     <section className="w-full min-w-0">
-      <div className="flex w-full min-w-0 flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+      <div className="flex w-full min-w-0 flex-col gap-3.5 sm:gap-4 lg:flex-row lg:items-start lg:justify-between">
         <div className="min-w-0">
-          <h1 className="truncate text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
+          <h1 className="truncate text-xl font-bold tracking-tight text-foreground sm:text-2xl lg:text-3xl">
             {sapaan}, {name}
           </h1>
-          <p className="mt-1 max-w-xl text-sm text-muted-foreground">{subtitle}</p>
+          <p className="mt-1 max-w-xl text-xs sm:text-sm text-muted-foreground">{subtitle}</p>
         </div>
         {actions ? (
           <div className="flex w-full flex-wrap items-center gap-2 lg:w-auto lg:justify-end">{actions}</div>
@@ -48,7 +48,7 @@ export function FinanceHero({ name, subtitle, actions, children, kpiGridClassNam
       </div>
 
       {children ? (
-        <div className={`mt-6 grid w-full min-w-0 grid-cols-1 gap-4 sm:grid-cols-2 ${kpiGridClassName ?? "xl:grid-cols-4"}`}>
+        <div className={`mt-4 sm:mt-5 grid w-full min-w-0 grid-cols-1 gap-3 sm:grid-cols-2 ${kpiGridClassName ?? "lg:grid-cols-4"} lg:gap-4 xl:gap-5`}>
           {children}
         </div>
       ) : null}

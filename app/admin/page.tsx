@@ -703,7 +703,7 @@ function AdminContent() {
   );
 
   return (
-    <div className="space-y-6 sm:space-y-8 w-full min-w-0 max-w-full">
+    <div className="space-y-4 sm:space-y-5 lg:space-y-6 w-full min-w-0 max-w-full">
       {/* 1. Hero kewangan (tab utama) / header biasa (tab lain) */}
       {isDashboard ? (
         <FinanceHero name="Admin" subtitle="Dapatkan gambaran jelas tentang kinerja keuangan dan transaksi terkini." actions={quickActions}
@@ -787,7 +787,7 @@ function AdminContent() {
 
       {/* 3. Carta tahunan + kemajuan grup */}
       {showSummary && (
-      <div className="grid grid-cols-1 gap-3 sm:gap-4 lg:grid-cols-3 w-full min-w-0">
+      <div className="grid grid-cols-1 gap-3 sm:gap-4 lg:grid-cols-3 lg:gap-4 xl:gap-5 w-full min-w-0 items-stretch">
         <div className="lg:col-span-2 min-w-0">
           <CartaTahunan dataBulanan={dataBulananChart} />
         </div>
@@ -798,7 +798,7 @@ function AdminContent() {
       )}
 
       {/* 4. Bagian Utama: Filter & Tabel Status Yuran Siswa */}
-      <div className="rounded-2xl border border-border/70 bg-card shadow-xs overflow-hidden w-full min-w-0">
+      <div className="rounded-2xl border border-border bg-card shadow-xs overflow-hidden w-full min-w-0">
         {/* Toolbar Carian & Penapis */}
         <div className="p-4 sm:p-5 border-b border-border flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between bg-card w-full min-w-0">
           {/* Carian Input */}

@@ -1,17 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDown, Wallet } from "lucide-react";
+import { Wallet } from "lucide-react";
 
 const BULAN_PENDEK = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
 
-/** Kutipan bulanan sebenar (RM) — dari spreadsheet "Aylik Talebe 2026". */
-const DATA_TAHUNAN: Record<string, number[]> = {
-  "2026": [46000, 51375, 50500, 50500, 49500, 49500, 48500, 42125, 31125, 7250, 0, 0],
-};
-
+/** Data bulanan diterima via props — disinkron dari data transaksi aktual. */
 const TAHUN_TERKINI = "2026";
-const BULAN_SEMASA = 9; // Oktober (index 0)
 
 function formatRM(n: number): string {
   return `RM ${n.toLocaleString("en-MY", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
@@ -26,12 +21,11 @@ function formatPadat(n: number): string {
  * Carta bar pendapatan tahunan — 12 batang bulanan, bulan semasa
  * diserlahkan ungu dengan tooltip nilai.
  */
-export function CartaTahunan() {
+export function CartaTahunan({ dataBulanan }: { dataBulanan?: number[] }) {
   const [tahun, setTahun] = useState(TAHUN_TERKINI);
-  const [menuTahun, setMenuTahun] = useState(false);
-  const data = DATA_TAHUNAN[tahun];
+  const data = dataBulanan ?? [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   const maks = Math.max(...data, 1);
-  const menyerlah = tahun === TAHUN_TERKINI ? BULAN_SEMASA : -1;
+  const menyerlah = -1;
 
   return (
     <div className="flex min-w-0 flex-col rounded-2xl border border-border bg-card p-4 sm:p-5 ">
@@ -42,38 +36,10 @@ export function CartaTahunan() {
           </h2>
 
         </div>
-        <div className="relative shrink-0">
-          <button
-            type="button"
-            onClick={() => setMenuTahun((o) => !o)}
-            className="flex items-center gap-1.5 rounded-full bg-muted px-3.5 py-2 text-xs font-semibold text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
-            aria-haspopup="listbox"
-            aria-expanded={menuTahun}
-          >
+        <div className="shrink-0">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-muted px-3.5 py-2 text-xs font-semibold text-muted-foreground">
             Tahun {tahun}
-            <ChevronDown className="size-3.5" aria-hidden />
-          </button>
-          {menuTahun && (
-            <div
-              role="listbox"
-              className="absolute right-0 z-20 mt-2 w-32 overflow-hidden rounded-xl border border-border bg-popover text-popover-foreground shadow-lg"
-            >
-              {Object.keys(DATA_TAHUNAN).map((t) => (
-                <button
-                  key={t}
-                  role="option"
-                  aria-selected={t === tahun}
-                  type="button"
-                  onClick={() => { setTahun(t); setMenuTahun(false); }}
-                  className={`block w-full px-4 py-2.5 text-left text-xs font-semibold transition-colors hover:bg-accent ${
-                    t === tahun ? "text-primary" : "text-muted-foreground"
-                  }`}
-                >
-                  {t}
-                </button>
-              ))}
-            </div>
-          )}
+          </span>
         </div>
       </div>
 

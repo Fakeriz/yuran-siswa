@@ -188,6 +188,33 @@ function AdminContent() {
   const [showBayarModal, setShowBayarModal] = useState(false);
   const [bayarSiswa, setBayarSiswa] = useState<SiswaRingkas | null>(null);
   // Senarai unik siswa (nama + grup) untuk combobox — diperoleh dari rekod sedia ada
+  // Data bulanan untuk chart — agregasi jumlahBayar per bulan dari records
+  const dataBulananChart = useMemo(() => {
+    const bulanMap: Record<string, number> = {
+      "Januari": 0, "Februari": 1, "Maret": 2, "April": 3, "Mei": 4, "Juni": 5,
+      "Juli": 6, "Agustus": 7, "September": 8, "Oktober": 9, "November": 10, "Desember": 11,
+    };
+    const hasil = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    for (const r of records) {
+      const parts = r.bulanDibayar.split(" ");
+      const idx = bulanMap[parts[0]];
+      if (idx !== undefined) hasil[idx] += r.jumlahBayar;
+    }
+    return hasil;
+  }, [records]);
+
+  // Kemajuan per grup — terkumpul vs sasaran dari records
+  const kemajuanGrup = useMemo(() => {
+    const map = new Map<string, { terkumpul: number; sasaran: number }>();
+    for (const r of records) {
+      const g = map.get(r.grup) ?? { terkumpul: 0, sasaran: 0 };
+      g.terkumpul += r.jumlahBayar;
+      g.sasaran += r.yuranBulanan;
+      map.set(r.grup, g);
+    }
+    return [...map.entries()].map(([nama, v]) => ({ nama, ...v }));
+  }, [records]);
+
   const daftarSiswa = useMemo(() => {
     const map = new Map<string, SiswaRingkas>();
     for (const r of records) {

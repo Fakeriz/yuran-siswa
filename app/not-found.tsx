@@ -1,7 +1,5 @@
 import Link from "next/link";
 
-export const runtime = "edge";
-
 export default function NotFound() {
   return (
     <main className="flex min-h-dvh flex-col items-center justify-center bg-card px-6 text-center text-zinc-900">

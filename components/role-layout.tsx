@@ -42,6 +42,8 @@ export function RoleLayout({ role, userName, children }: { role: Exclude<Role, "
       homeHref={role === "staff" ? "/staff" : "/orangtua"}
       onNavigate={onNavigate}
       isActive={(item) => pathname === item.href}
+      roleBadge={role === "staff" ? "Staf" : "Orang Tua"}
+      subtitle={role === "staff" ? "Dashboard Staf" : "Portal Orang Tua"}
     />
   );
 

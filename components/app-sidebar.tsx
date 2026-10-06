@@ -23,9 +23,11 @@ interface AppSidebarProps {
   isActive: (item: SidebarItem) => boolean;
   searchable?: boolean;
   footer?: ReactNode;
+  roleBadge?: string;
+  subtitle?: string;
 }
 
-export function AppSidebar({ sections, homeHref, onNavigate, isActive, searchable = false, footer }: AppSidebarProps) {
+export function AppSidebar({ sections, homeHref, onNavigate, isActive, searchable = false, footer, roleBadge, subtitle }: AppSidebarProps) {
   const [query, setQuery] = useState("");
   const q = query.trim().toLowerCase();
   const visible = sections
@@ -34,12 +36,24 @@ export function AppSidebar({ sections, homeHref, onNavigate, isActive, searchabl
 
   return (
     <>
-      <div className="flex h-16 items-center justify-between px-5 border-b border-border">
+      <div className="flex min-h-16 items-center justify-between px-5 py-3 border-b border-border">
         <Link href={homeHref} onClick={onNavigate} className="flex items-center gap-2.5">
-          <span className="flex size-9 items-center justify-center rounded-xl bg-primary text-white shadow-md">
+          <span className="flex size-9 items-center justify-center rounded-xl bg-primary text-white shadow-md shrink-0">
             <ReceiptText className="size-4.5" />
           </span>
-          <span className="font-bold text-base text-foreground tracking-tight">YuranKu</span>
+          <span className="flex flex-col">
+            <span className="flex items-center gap-1.5">
+              <span className="font-bold text-base text-foreground tracking-tight">YuranKu</span>
+              {roleBadge && (
+                <span className="text-[9px] font-semibold uppercase tracking-wider text-primary bg-primary/10 px-1.5 py-0.5 rounded-md border border-primary/20">
+                  {roleBadge}
+                </span>
+              )}
+            </span>
+            {subtitle && (
+              <span className="text-xs text-muted-foreground">{subtitle}</span>
+            )}
+          </span>
         </Link>
         <button type="button" onClick={onNavigate}
           className="lg:hidden p-2 text-muted-foreground hover:text-foreground hover:bg-muted rounded-xl transition-colors" aria-label="Tutup navigasi"

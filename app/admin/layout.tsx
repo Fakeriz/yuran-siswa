@@ -214,6 +214,8 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
           <AppSidebar
           sections={navigation}
           homeHref="/admin"
+          roleBadge="Admin"
+          subtitle="Manajemen Yuran Bulanan"
           onNavigate={() => setSidebarOpen(false)}
           isActive={(item) => {
             const tab = item.href.includes("?tab=") ? item.href.split("?tab=")[1] : null;
@@ -260,7 +262,8 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
       {/* Main Content Area */}
       <div className={`flex flex-col flex-1 min-w-0 w-full max-w-full ${desktopCollapsed ? "" : "lg:pl-80"}`}>
-        {/* Mobile Header — pakai UserBar bersama */}
+        {/* Mobile Header — pakai UserBar bersama (desktop disembunyikan, admin punya header sendiri) */}
+        <div className="lg:hidden">
         <UserBar
           userRole="admin"
           userName="Administrator"
@@ -274,6 +277,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
             </button>
           }
         />
+        </div>
 
         {/* Desktop Top Navbar — bar terapung gaya financial dashboard */}
         <header className="sticky top-0 z-30 hidden w-full px-6 pt-4 lg:block lg:px-8">

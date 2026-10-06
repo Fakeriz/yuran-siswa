@@ -193,7 +193,7 @@ export function TabPersetujuan() {
               <UserCheck className="size-5" />
             </div>
           </div>
-          <p className="mt-3 text-2xl font-bold text-emerald-800">{approvedCount} Hubungan</p>
+          <p className="mt-3 text-2xl font-bold text-[var(--success)]">{approvedCount} Hubungan</p>
           <p className="mt-1 text-xs text-muted-foreground">Orang tua mempunyai akses portal rasmi</p>
         </div>
 
@@ -234,7 +234,7 @@ export function TabPersetujuan() {
                 type="button" onClick={() => setFilterStatus(val)}
                 className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-all ${
                   filterStatus === val
-                    ? "bg-card text-emerald-800 shadow-2xs"
+                    ? "bg-card text-[var(--success)] shadow-2xs"
                     : "text-muted-foreground hover:text-foreground"
                 }`}
               >
@@ -247,7 +247,7 @@ export function TabPersetujuan() {
         {/* Senarai Permohonan */}
         {filtered.length === 0 ? (
           <div className="p-12 text-center">
-            <CheckCircle2 className="mx-auto size-8 text-emerald-700 mb-2" />
+            <CheckCircle2 className="mx-auto size-8 text-[var(--success)] mb-2" />
             <p className="text-sm font-semibold text-foreground">
               {filterStatus === "pending"
                 ? "Tiada permohonan yang menunggu pengesahan!"
@@ -315,7 +315,7 @@ export function TabPersetujuan() {
                       {claim.disahkanOleh && (
                         <>
                           <span>·</span>
-                          <span className="text-emerald-700 font-medium">Disahkan oleh: {claim.disahkanOleh}</span>
+                          <span className="text-[var(--success)] font-medium">Disahkan oleh: {claim.disahkanOleh}</span>
                         </>
                       )}
                     </div>

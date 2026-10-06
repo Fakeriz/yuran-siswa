@@ -83,7 +83,7 @@ const STATUS_LABEL: Record<FileUploadStatus, string> = {
 const STATUS_TONE: Record<FileUploadStatus, string> = {
   queued: "text-muted-foreground",
   uploading: "text-foreground",
-  success: "text-emerald-600",
+  success: "text-[var(--success)]",
   error: "text-rose-600",
 };
 
@@ -500,7 +500,7 @@ export function FileUpload({
           "group relative flex w-full overflow-hidden rounded-3xl border border-dashed border-input bg-card outline-none",
           "transition-[border-color,transform] duration-200 active:scale-[0.99]",
           "hover:border-gray-400 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2",
-          "data-[dragging=true]:border-emerald-500 data-[dragging=true]:bg-emerald-50/50",
+          "data-[dragging=true]:border-emerald-500 data-[dragging=true]:bg-[var(--success-bg)]/50",
           "disabled:pointer-events-none disabled:opacity-55",
           "dark:data-[dragging=true]:border-emerald-500 dark:data-[dragging=true]:bg-emerald-950/30",
           centered

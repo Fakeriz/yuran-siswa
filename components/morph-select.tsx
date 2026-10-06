@@ -471,7 +471,7 @@ export function MorphSelectItem({
       >
         {children}
         {selected ? (
-          <Check className="size-3.5 shrink-0 text-emerald-600" />
+          <Check className="size-3.5 shrink-0 text-[var(--success)]" />
         ) : null}
       </button>
     </li>

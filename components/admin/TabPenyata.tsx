@@ -126,7 +126,7 @@ export function TabPenyata() {
             <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
               Penyata Bulanan & Laporan Audit
             </h1>
-            <span className="inline-flex items-center rounded-md bg-emerald-50 px-2 py-0.5 text-xs font-semibold text-emerald-800 border border-emerald-200">
+            <span className="inline-flex items-center rounded-md bg-[var(--success-bg)] px-2 py-0.5 text-xs font-semibold text-[var(--success)] border border-[var(--success-border)]">
               Laporan Rasmi
             </span>
           </div>
@@ -190,12 +190,12 @@ export function TabPenyata() {
             <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               Jumlah Kutipan Sebenar
             </span>
-            <div className="rounded-xl bg-emerald-50 p-2 text-emerald-800">
+            <div className="rounded-xl bg-[var(--success-bg)] p-2 text-[var(--success)]">
               <TrendingUp className="size-5" />
             </div>
           </div>
-          <p className="mt-3 text-2xl font-bold text-emerald-800">RM {summary.kutipan.toLocaleString()}</p>
-          <p className="mt-1 text-xs text-emerald-700 font-semibold">{summary.peratusan}% berhasil dikutip</p>
+          <p className="mt-3 text-2xl font-bold text-[var(--success)]">RM {summary.kutipan.toLocaleString()}</p>
+          <p className="mt-1 text-xs text-[var(--success)] font-semibold">{summary.peratusan}% berhasil dikutip</p>
         </div>
 
         <div className="rounded-2xl border border-border bg-card p-5 shadow-xs">
@@ -258,9 +258,9 @@ export function TabPenyata() {
                   <td className="px-5 py-4 text-muted-foreground">{g.ustaz}</td>
                   <td className="px-5 py-4 text-center font-medium">{g.siswa} Siswa</td>
                   <td className="px-5 py-4 text-right font-medium text-foreground">RM {g.sasaran.toLocaleString()}</td>
-                  <td className="px-5 py-4 text-right font-bold text-emerald-800">RM {g.kutipan.toLocaleString()}</td>
+                  <td className="px-5 py-4 text-right font-bold text-[var(--success)]">RM {g.kutipan.toLocaleString()}</td>
                   <td className="px-5 py-4 text-center">
-                    <span className="inline-flex items-center rounded-md bg-emerald-50 px-2 py-0.5 text-xs font-bold text-emerald-800 border border-emerald-200">
+                    <span className="inline-flex items-center rounded-md bg-[var(--success-bg)] px-2 py-0.5 text-xs font-bold text-[var(--success)] border border-[var(--success-border)]">
                       {g.peratus}%
                     </span>
                   </td>
@@ -273,8 +273,8 @@ export function TabPenyata() {
                 <td className="px-5 py-3.5" colSpan={2}>JUMLAH KESELURUHAN</td>
                 <td className="px-5 py-3.5 text-center">{summary.jumlahSiswa} Siswa</td>
                 <td className="px-5 py-3.5 text-right">RM {summary.sasaran.toLocaleString()}</td>
-                <td className="px-5 py-3.5 text-right text-emerald-800">RM {summary.kutipan.toLocaleString()}</td>
-                <td className="px-5 py-3.5 text-center text-emerald-800">{summary.peratusan}%</td>
+                <td className="px-5 py-3.5 text-right text-[var(--success)]">RM {summary.kutipan.toLocaleString()}</td>
+                <td className="px-5 py-3.5 text-center text-[var(--success)]">{summary.peratusan}%</td>
                 <td className="px-5 py-3.5 text-right text-rose-700">RM {summary.tunggakan.toLocaleString()}</td>
               </tr>
             </tfoot>
@@ -292,7 +292,7 @@ export function TabPenyata() {
               <div key={m.kaedah} className="space-y-1.5">
                 <div className="flex items-center justify-between text-xs">
                   <div className="flex items-center gap-2">
-                    <CreditCard className="size-3.5 text-emerald-800" />
+                    <CreditCard className="size-3.5 text-[var(--success)]" />
                     <span className="font-semibold text-foreground">{m.kaedah}</span>
                   </div>
                   <div className="text-right">

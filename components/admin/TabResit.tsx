@@ -202,11 +202,11 @@ export function TabResit() {
             <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               Kwitansi Rasmi Dikeluarkan
             </span>
-            <div className="rounded-xl bg-emerald-50 p-2 text-emerald-800">
+            <div className="rounded-xl bg-[var(--success-bg)] p-2 text-[var(--success)]">
               <CheckCircle2 className="size-5" />
             </div>
           </div>
-          <p className="mt-3 text-2xl font-bold text-emerald-800">
+          <p className="mt-3 text-2xl font-bold text-[var(--success)]">
             {receipts.filter((r) => r.kwitansiUploaded).length} Resit
           </p>
           <p className="mt-1 text-xs text-muted-foreground">Tersedia di Google Drive & portal orang tua</p>
@@ -262,7 +262,7 @@ export function TabResit() {
                 type="button" onClick={() => setFilterType(val)}
                 className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-all ${
                   filterType === val
-                    ? "bg-card text-emerald-800 shadow-2xs"
+                    ? "bg-card text-[var(--success)] shadow-2xs"
                     : "text-muted-foreground hover:text-foreground"
                 }`}
               >
@@ -295,7 +295,7 @@ export function TabResit() {
                   </td>
                   <td className="px-5 py-4">
                     <p className="font-bold text-foreground">{item.namaSiswa}</p>
-                    <p className="text-xs text-emerald-800 font-medium">{item.grup}</p>
+                    <p className="text-xs text-[var(--success)] font-medium">{item.grup}</p>
                   </td>
                   <td className="px-5 py-4 whitespace-nowrap text-xs text-foreground">
                     {item.bulan}
@@ -325,7 +325,7 @@ export function TabResit() {
                         <button type="button" onClick={() => alert(`Membuka fail kwitansi rasmi: ${item.kwitansiFileName} daripada Google Drive.`)}
                           className="inline-flex items-center gap-1 rounded-lg border border-input bg-card px-2.5 py-1 text-xs font-semibold text-foreground hover:bg-muted"
                         >
-                          <FileText className="size-3 text-emerald-700" />
+                          <FileText className="size-3 text-[var(--success)]" />
                           <span>Lihat</span>
                         </button>
                         <button type="button" onClick={() => window.print()}
@@ -376,7 +376,7 @@ export function TabResit() {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Bulan & Jumlah:</span>
-                  <span className="font-bold text-emerald-800">
+                  <span className="font-bold text-[var(--success)]">
                     {selectedReceipt.bulan} (RM {selectedReceipt.jumlah.toFixed(2)})
                   </span>
                 </div>

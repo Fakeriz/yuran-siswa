@@ -253,7 +253,7 @@ export function TabPenugasan() {
             <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
               Penugasan Staf Asrama
             </h1>
-            <span className="inline-flex items-center rounded-md bg-emerald-50 px-2 py-0.5 text-xs font-semibold text-emerald-800 border border-emerald-200">
+            <span className="inline-flex items-center rounded-md bg-[var(--success-bg)] px-2 py-0.5 text-xs font-semibold text-[var(--success)] border border-[var(--success-border)]">
               3 Kumpulan HE
             </span>
           </div>
@@ -286,7 +286,7 @@ export function TabPenugasan() {
             <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               Jumlah Staf Pembimbing
             </span>
-            <div className="rounded-xl bg-emerald-50 p-2 text-emerald-800">
+            <div className="rounded-xl bg-[var(--success-bg)] p-2 text-[var(--success)]">
               <UserCheck className="size-5" />
             </div>
           </div>
@@ -317,7 +317,7 @@ export function TabPenugasan() {
             </div>
           </div>
           <p className="mt-3 text-2xl font-bold text-foreground">81.7%</p>
-          <p className="mt-1 text-xs text-emerald-700 font-medium">49 daripada 60 Siswa lunas</p>
+          <p className="mt-1 text-xs text-[var(--success)] font-medium">49 daripada 60 Siswa lunas</p>
         </div>
       </div>
 
@@ -347,7 +347,7 @@ export function TabPenugasan() {
               className="p-5 sm:p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4 hover:bg-muted/60 transition-colors"
             >
               <div className="flex items-start gap-4">
-                <div className="size-12 rounded-2xl bg-emerald-100 text-emerald-800 font-bold flex items-center justify-center shrink-0 border border-emerald-200 text-base">
+                <div className="size-12 rounded-2xl bg-[var(--success-bg)] text-[var(--success)] font-bold flex items-center justify-center shrink-0 border border-[var(--success-border)] text-base">
                   {staff.nama
                     .split(" ")
                     .slice(0, 2)
@@ -357,7 +357,7 @@ export function TabPenugasan() {
                 <div>
                   <div className="flex items-center gap-2 flex-wrap">
                     <h3 className="font-bold text-base text-foreground">{staff.nama}</h3>
-                    <span className="inline-flex items-center rounded-md bg-emerald-50 px-2 py-0.5 text-xs font-semibold text-emerald-800 border border-emerald-200">
+                    <span className="inline-flex items-center rounded-md bg-[var(--success-bg)] px-2 py-0.5 text-xs font-semibold text-[var(--success)] border border-[var(--success-border)]">
                       {staff.grup}
                     </span>
                     <span className="inline-flex items-center gap-1 rounded-full bg-green-100 px-2 py-0.5 text-[11px] font-medium text-green-800">
@@ -384,7 +384,7 @@ export function TabPenugasan() {
                 <div className="min-w-44">
                   <div className="flex items-center justify-between text-xs">
                     <span className="text-muted-foreground">Kutipan {staff.grup}</span>
-                    <span className="font-bold text-emerald-800">{staff.kadarKutipan}%</span>
+                    <span className="font-bold text-[var(--success)]">{staff.kadarKutipan}%</span>
                   </div>
                   <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-muted">
                     <div
@@ -408,7 +408,7 @@ export function TabPenugasan() {
                   </button>
                   <Link
                     href={`/admin?tab=siswa&grup=${encodeURIComponent(staff.grup)}`}
-                    className="inline-flex items-center gap-1 rounded-xl bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-800 hover:bg-emerald-100 transition-colors"
+                    className="inline-flex items-center gap-1 rounded-xl bg-[var(--success-bg)] px-3 py-1.5 text-xs font-semibold text-[var(--success)] hover:bg-[var(--success-bg)] transition-colors"
                   >
                     <span>Lihat Siswa</span>
                     <ArrowRight className="size-3.5" />

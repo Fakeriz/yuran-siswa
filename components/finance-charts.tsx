@@ -60,7 +60,7 @@ export function CartaTahunan({ dataBulanan }: { dataBulanan?: number[] }) {
                 <div
                   className={`w-full max-w-10 rounded-t-lg transition-all ${
                     aktif
-                      ? "bg-gradient-to-t from-[#0051D5] to-[#007AFF] shadow-[0_8px_20px_-6px_rgba(0,122,255,0.7)]"
+                      ? "bg-gradient-to-t from-[#1a44b8] to-[#235BD8] shadow-[0_8px_20px_-6px_rgba(35,91,216,0.7)]"
                       : nilai > 0
                         ? "bg-[repeating-linear-gradient(-45deg,#D2D2D7_0px,#D2D2D7_3px,#E8E8ED_3px,#E8E8ED_6px)] dark:bg-[repeating-linear-gradient(-45deg,#48484A_0px,#48484A_3px,#2C2C2E_3px,#2C2C2E_6px)]"
                         : "bg-transparent"
@@ -124,7 +124,7 @@ export function PanelKemajuanGrup({ grup }: { grup: KemajuanGrup[] }) {
         <p className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
           {formatRM(jumlahTerkumpul)}
         </p>
-        <span className="rounded-md bg-emerald-50 px-1.5 py-0.5 text-[11px] font-semibold text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300">
+        <span className="rounded-md bg-[var(--success-bg)] px-1.5 py-0.5 text-[11px] font-semibold text-[var(--success)] dark:bg-emerald-500/10 dark:text-emerald-300">
           ↑ 12.4%
         </span>
       </div>
@@ -147,7 +147,7 @@ export function PanelKemajuanGrup({ grup }: { grup: KemajuanGrup[] }) {
                 aria-label={`Kemajuan ${g.nama}`}
               >
                 <div
-                  className="h-full rounded-full bg-gradient-to-r from-[#0051D5] to-[#007AFF] transition-all duration-500"
+                  className="h-full rounded-full bg-gradient-to-r from-[#1a44b8] to-[#235BD8] transition-all duration-500"
                   style={{ width: `${peratus}%` }}
                 />
               </div>

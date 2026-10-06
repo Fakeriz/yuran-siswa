@@ -183,7 +183,7 @@ export function TabAliranKas() {
             <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
               Aliran Kas & Perbelanjaan
             </h1>
-            <span className="inline-flex items-center rounded-md bg-emerald-50 px-2 py-0.5 text-xs font-semibold text-emerald-800 border border-emerald-200">
+            <span className="inline-flex items-center rounded-md bg-[var(--success-bg)] px-2 py-0.5 text-xs font-semibold text-[var(--success)] border border-[var(--success-border)]">
               Buku Tunai
             </span>
           </div>
@@ -216,11 +216,11 @@ export function TabAliranKas() {
             <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               Jumlah Tunai Masuk
             </span>
-            <div className="rounded-xl bg-emerald-50 p-2 text-emerald-800">
+            <div className="rounded-xl bg-[var(--success-bg)] p-2 text-[var(--success)]">
               <ArrowDownLeft className="size-5" />
             </div>
           </div>
-          <p className="mt-3 text-2xl font-bold text-emerald-800">RM {totalMasuk.toLocaleString()}</p>
+          <p className="mt-3 text-2xl font-bold text-[var(--success)]">RM {totalMasuk.toLocaleString()}</p>
           <p className="mt-1 text-xs text-muted-foreground">Kutipan yuran bulanan 49 siswa</p>
         </div>
 
@@ -247,7 +247,7 @@ export function TabAliranKas() {
             </div>
           </div>
           <p className="mt-3 text-2xl font-bold text-foreground">RM {bakiBersih.toLocaleString()}</p>
-          <p className="mt-1 text-xs text-emerald-700 font-semibold">+87.0% lebihan tunai semasa</p>
+          <p className="mt-1 text-xs text-[var(--success)] font-semibold">+87.0% lebihan tunai semasa</p>
         </div>
       </div>
 
@@ -275,7 +275,7 @@ export function TabAliranKas() {
                 type="button" onClick={() => setFilterJenis(val)}
                 className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-all ${
                   filterJenis === val
-                    ? "bg-card text-emerald-800 shadow-2xs"
+                    ? "bg-card text-[var(--success)] shadow-2xs"
                     : "text-muted-foreground hover:text-foreground"
                 }`}
               >
@@ -313,7 +313,7 @@ export function TabAliranKas() {
                       {tx.kategori}
                     </span>
                   </td>
-                  <td className="px-5 py-4 text-right whitespace-nowrap font-bold text-emerald-800">
+                  <td className="px-5 py-4 text-right whitespace-nowrap font-bold text-[var(--success)]">
                     {tx.jenis === "masuk" ? `+ RM ${tx.jumlah.toLocaleString()}` : "-"}
                   </td>
                   <td className="px-5 py-4 text-right whitespace-nowrap font-bold text-rose-700">

@@ -77,8 +77,8 @@ function tanggalKeTimestamp(tanggal: string): number {
 function LencanaStatus({ status }: { status: SiswaRecord["status"] }) {
   if (status === "Lunas") {
     return (
-      <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-700 border border-emerald-200/80">
-        <CheckCircle2 className="size-3 text-emerald-600" />
+      <span className="inline-flex items-center gap-1 rounded-full bg-[var(--success-bg)] px-2.5 py-0.5 text-xs font-semibold text-[var(--success)] border border-[var(--success-border)]">
+        <CheckCircle2 className="size-3 text-[var(--success)]" />
         <span>Lunas</span>
       </span>
     );
@@ -103,8 +103,8 @@ function LencanaStatus({ status }: { status: SiswaRecord["status"] }) {
 function LencanaStatusSiswa({ status }: { status: SiswaRecord["status"] }) {
   if (status === "Lunas") {
     return (
-      <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-700 border border-emerald-200/80">
-        <CheckCircle2 className="size-3 text-emerald-600" />
+      <span className="inline-flex items-center gap-1 rounded-full bg-[var(--success-bg)] px-2.5 py-0.5 text-xs font-semibold text-[var(--success)] border border-[var(--success-border)]">
+        <CheckCircle2 className="size-3 text-[var(--success)]" />
         <span>Lunas</span>
       </span>
     );
@@ -120,7 +120,7 @@ function LencanaStatusSiswa({ status }: { status: SiswaRecord["status"] }) {
 /** Lencana keaktifan siswa. */
 function LencanaAktif({ aktif }: { aktif: boolean }) {
   return (
-    <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${aktif ? "bg-emerald-50 text-emerald-700 border border-emerald-200/60" : "bg-muted text-muted-foreground border border-border/60"}`}>
+    <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${aktif ? "bg-[var(--success-bg)] text-[var(--success)] border border-[var(--success-border)]/60" : "bg-muted text-muted-foreground border border-border/60"}`}>
       {aktif ? "Aktif" : "Tidak Aktif"}
     </span>
   );
@@ -462,7 +462,7 @@ function AdminContent() {
                   {formatRM(row.original.jumlahBayar)}
                 </div>
                 {lebihan > 0 && (
-                  <div className="text-[11px] text-emerald-600 font-medium">
+                  <div className="text-[11px] text-[var(--success)] font-medium">
                     +{formatRM(lebihan)} baki
                   </div>
                 )}
@@ -713,7 +713,7 @@ function AdminContent() {
             label="Total pemasukan bulan ini"
           >
             <div className="flex items-center gap-2">
-              <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-semibold text-emerald-700">
+              <span className="rounded-full bg-[var(--success-bg)] px-2 py-0.5 text-xs font-semibold text-[var(--success)]">
                 {jumlahLunas} siswa
               </span>
               <span className="text-xs text-muted-foreground">sudah lunas bulan ini</span>
@@ -851,7 +851,7 @@ function AdminContent() {
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-5">
             <div className="rounded-xl sm:rounded-2xl border border-border/70 bg-card p-4 sm:p-5 shadow-xs min-w-0">
               <p className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-muted-foreground">Total Pemasukan</p>
-              <p className="mt-2 text-xl sm:text-2xl font-bold text-emerald-600">
+              <p className="mt-2 text-xl sm:text-2xl font-bold text-[var(--success)]">
                 {formatRM(records.reduce((s, r) => s + r.jumlahBayar, 0))}
               </p>
               <p className="mt-1 text-xs text-muted-foreground">{records.length} transaksi</p>
@@ -905,7 +905,7 @@ function AdminContent() {
           {selectedRecord && (
             <>
               <div className="border-b border-border pb-4 pr-10">
-                <span className="text-xs font-bold uppercase tracking-wider text-emerald-600">
+                <span className="text-xs font-bold uppercase tracking-wider text-[var(--success)]">
                   Kuitansi & Detail Yuran Siswa
                 </span>
                 <h3 className="text-lg font-bold text-foreground mt-0.5">{selectedRecord.nama}</h3>
@@ -930,7 +930,7 @@ function AdminContent() {
                 </div>
                 <div>
                   <p className="text-xs text-muted-foreground">Jumlah Dibayar</p>
-                  <p className="font-bold text-emerald-600 mt-0.5">{formatRM(selectedRecord.jumlahBayar)}</p>
+                  <p className="font-bold text-[var(--success)] mt-0.5">{formatRM(selectedRecord.jumlahBayar)}</p>
                 </div>
                 <div>
                   <p className="text-xs text-muted-foreground">Metode Pembayaran</p>
@@ -945,7 +945,7 @@ function AdminContent() {
               <div className="flex items-center justify-between p-3 rounded-xl border border-border">
                 <span className="text-xs font-medium text-muted-foreground">Status Pembayaran Semasa</span>
                 {selectedRecord.status === "Lunas" && (
-                  <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-700 border border-emerald-200/80">
+                  <span className="rounded-full bg-[var(--success-bg)] px-3 py-1 text-xs font-bold text-[var(--success)] border border-[var(--success-border)]">
                     Lunas Sepenuhnya
                   </span>
                 )}

@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 
 const chipTone: Record<string, string> = {
   violet: "bg-primary/10 text-primary",
-  green: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+  green: "bg-emerald-500/10 text-[var(--success)] dark:text-emerald-400",
   pink: "bg-rose-500/10 text-rose-600 dark:text-rose-400",
   blue: "bg-primary/10 text-primary",
   amber: "bg-amber-500/10 text-amber-600 dark:text-amber-400",

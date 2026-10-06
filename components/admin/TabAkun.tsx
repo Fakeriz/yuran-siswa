@@ -184,7 +184,7 @@ export function TabAkun() {
             <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
               Pengurusan Akun Pengguna
             </h1>
-            <span className="inline-flex items-center rounded-md bg-emerald-50 px-2 py-0.5 text-xs font-semibold text-emerald-800 border border-emerald-200">
+            <span className="inline-flex items-center rounded-md bg-[var(--success-bg)] px-2 py-0.5 text-xs font-semibold text-[var(--success)] border border-[var(--success-border)]">
               {accounts.length} Akun
             </span>
           </div>
@@ -236,11 +236,11 @@ export function TabAkun() {
             <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               Staf Asrama (Ustaz)
             </span>
-            <div className="rounded-xl bg-emerald-50 p-2 text-emerald-800">
+            <div className="rounded-xl bg-[var(--success-bg)] p-2 text-[var(--success)]">
               <ShieldCheck className="size-5" />
             </div>
           </div>
-          <p className="mt-3 text-2xl font-bold text-emerald-800">
+          <p className="mt-3 text-2xl font-bold text-[var(--success)]">
             {accounts.filter((a) => a.peran === "staff").length} Pengguna
           </p>
           <p className="mt-1 text-xs text-muted-foreground">Pencatat bayaran & pembimbing grup</p>
@@ -291,7 +291,7 @@ export function TabAkun() {
                 onClick={() => setFilterRole(val)}
                 className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-all ${
                   filterRole === val
-                    ? "bg-card text-emerald-800 shadow-2xs"
+                    ? "bg-card text-[var(--success)] shadow-2xs"
                     : "text-muted-foreground hover:text-foreground"
                 }`}
               >
@@ -318,7 +318,7 @@ export function TabAkun() {
                 <tr key={acc.id} className="hover:bg-muted/50">
                   <td className="px-5 py-4 whitespace-nowrap">
                     <div className="flex items-center gap-3">
-                      <div className="size-9 rounded-full bg-emerald-100 text-emerald-800 font-bold flex items-center justify-center text-xs shrink-0 border border-emerald-200">
+                      <div className="size-9 rounded-full bg-[var(--success-bg)] text-[var(--success)] font-bold flex items-center justify-center text-xs shrink-0 border border-[var(--success-border)]">
                         {acc.nama.slice(0, 2).toUpperCase()}
                       </div>
                       <span className="font-bold text-foreground">{acc.nama}</span>
@@ -333,7 +333,7 @@ export function TabAkun() {
                         acc.peran === "admin"
                           ? "bg-purple-100 text-primary border border-purple-200"
                           : acc.peran === "staff"
-                          ? "bg-emerald-100 text-emerald-800 border border-emerald-200"
+                          ? "bg-[var(--success-bg)] text-[var(--success)] border border-[var(--success-border)]"
                           : "bg-blue-100 text-primary border border-blue-200"
                       }`}
                     >

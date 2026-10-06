@@ -131,7 +131,7 @@ export default async function StaffPage({ searchParams }: {
                   return <tr key={student.id}>
                     <th scope="row" className="max-w-64 break-words px-4 py-5 font-medium">{student.nama}</th>
                     <td className="px-4 py-5">{student.kelas}<span className="block text-muted-foreground">{student.grup}</span></td>
-                    <td className="px-4 py-5"><span className={`inline-block whitespace-nowrap rounded-lg px-2 py-1 text-xs font-medium ${paid ? "bg-emerald-100 text-emerald-900" : "bg-amber-100 text-amber-900"}`}>{paid ? "Sudah bayar" : "Belum bayar"}</span></td>
+                    <td className="px-4 py-5"><span className={`inline-block whitespace-nowrap rounded-lg px-2 py-1 text-xs font-medium ${paid ? "bg-[var(--success-bg)] text-emerald-900" : "bg-amber-100 text-amber-900"}`}>{paid ? "Sudah bayar" : "Belum bayar"}</span></td>
                     <td className="px-4 py-5">{paid ? <span className="text-muted-foreground">Tercatat</span> : <PaymentForm key={`${student.id}-${bulan}-${tahun}`} student={student} bulan={bulan} tahun={tahun} period={period} today={today} />}</td>
                   </tr>;
                 })}</tbody>

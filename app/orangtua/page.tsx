@@ -85,7 +85,7 @@ export default async function ParentPage() {
                 const paid = paymentStatusFor(payments, student.id, bulan, tahun) === "sudah";
                 const payment = payments.find((item) => item.student_id === student.id && item.bulan === bulan && item.tahun === tahun);
                 return <details key={bulan} className="min-w-0 rounded-2xl border border-border/70 bg-card/60">
-                  <summary className={`cursor-pointer rounded-2xl p-4 text-sm ${paid ? "bg-emerald-100 text-emerald-900" : "bg-red-50 text-red-900"}`}>
+                  <summary className={`cursor-pointer rounded-2xl p-4 text-sm ${paid ? "bg-[var(--success-bg)] text-emerald-900" : "bg-red-50 text-red-900"}`}>
                     <span className="font-semibold">{month}</span><span className="mt-2 block">{paid ? "Sudah bayar" : "Belum bayar"}</span>
                   </summary>
                   <div className="space-y-3 break-words p-4 text-sm">

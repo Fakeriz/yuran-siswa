@@ -237,32 +237,14 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  const [notifs, setNotifs] = useState([
-    {
-      id: "n-1",
-      judul: "Kuitansi perlu diunggah",
-      pesan: "Kuitansi R-2026-1040 (Mohd Rizal) menunggu file kuitansi resmi.",
-      masa: "10 min lalu",
-      dibaca: false,
-      tab: "resit",
-    },
-    {
-      id: "n-2",
-      judul: "Pengajuan orang tua baru",
-      pesan: "Hassan bin Abdullah mengajukan pendaftaran untuk Ahmad bin Ali.",
-      masa: "1 jam lalu",
-      dibaca: false,
-      tab: "persetujuan",
-    },
-    {
-      id: "n-3",
-      judul: "Pembayaran yuran diterima",
-      pesan: "RM 500 diterima dari Siti Nurhaliza via FPX.",
-      masa: "3 jam lalu",
-      dibaca: true,
-      tab: "transaksi",
-    },
-  ]);
+  const [notifs, setNotifs] = useState<Array<{
+    id: string;
+    judul: string;
+    pesan: string;
+    masa: string;
+    dibaca: boolean;
+    tab: string;
+  }>>([]);
 
   const unreadCount = notifs.filter((n) => !n.dibaca).length;
   const SESI_LIST = ["2026/2027", "2025/2026", "2024/2025"];

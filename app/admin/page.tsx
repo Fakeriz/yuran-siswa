@@ -776,21 +776,12 @@ function AdminContent() {
           <h2 className="text-base font-bold text-foreground">Kuitansi Terkini</h2>
           <p className="mt-1 text-xs text-muted-foreground">Dokumen bukti pembayaran yang dimuat naik.</p>
         </div>
-        <ul className="divide-y divide-border">
-          {[
-            { no: "R-2026-1042", siswa: "Ahmad bin Ali", jumlah: "RM 500", tarikh: "02 Okt 2026" },
-            { no: "R-2026-1041", siswa: "Siti binti Hassan", jumlah: "RM 500", tarikh: "02 Okt 2026" },
-            { no: "R-2026-1040", siswa: "Mohd Rizal", jumlah: "RM 500", tarikh: "01 Okt 2026" },
-          ].map((r) => (
-            <li key={r.no} className="flex items-center justify-between p-4 sm:p-5">
-              <div>
-                <p className="text-sm font-semibold text-foreground">{r.no} · {r.siswa}</p>
-                <p className="mt-0.5 text-xs text-muted-foreground">{r.tarikh}</p>
-              </div>
-              <span className="text-sm font-bold text-foreground">{r.jumlah}</span>
-            </li>
-          ))}
-        </ul>
+        <div className="p-12 text-center">
+          <p className="text-sm font-semibold text-foreground">Belum ada kuitansi</p>
+          <p className="mt-1 text-xs text-muted-foreground">
+            Kuitansi akan tampil di sini setelah ada transaksi.
+          </p>
+        </div>
       </div>
       )}
 
@@ -798,22 +789,10 @@ function AdminContent() {
       {showSummary && (
       <div className="grid grid-cols-1 gap-3 sm:gap-4 lg:grid-cols-3 w-full min-w-0">
         <div className="lg:col-span-2 min-w-0">
-          <CartaTahunan />
+          <CartaTahunan dataBulanan={dataBulananChart} />
         </div>
         <div className="min-w-0">
-          <PanelKemajuanGrup grup={[
-              { nama: "Adhwa HE", terkumpul: 1500, sasaran: 4375 },
-              { nama: "Adnan HE ve Syukri HE", terkumpul: 0, sasaran: 8750 },
-              { nama: "Ameer HE", terkumpul: 1000, sasaran: 6500 },
-              { nama: "Arif HE", terkumpul: 1000, sasaran: 5500 },
-              { nama: "Azwar HE", terkumpul: 1250, sasaran: 6250 },
-              { nama: "Herian HE", terkumpul: 0, sasaran: 3500 },
-              { nama: "Mevlana HE", terkumpul: 1000, sasaran: 4500 },
-              { nama: "Razi HE", terkumpul: 1500, sasaran: 4875 },
-              { nama: "Rizky HE", terkumpul: 0, sasaran: 5125 },
-              { nama: "Tamimi HE", terkumpul: 0, sasaran: 3375 },
-            ]}
-          />
+          <PanelKemajuanGrup grup={kemajuanGrup} />
         </div>
       </div>
       )}

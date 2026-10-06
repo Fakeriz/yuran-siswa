@@ -3,10 +3,9 @@
 import { useState, type ReactNode } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, UsersRound, ReceiptText, X, School } from "lucide-react";
+import { LayoutDashboard, UsersRound } from "lucide-react";
 import { UserBar } from "./user-bar";
 import { AppSidebar } from "./app-sidebar";
-import { DashboardHeader } from "./dashboard-header";
 import type { Role } from "../lib/types";
 
 interface NavItem {
@@ -37,55 +36,52 @@ export function RoleLayout({ role, userName, children }: { role: Exclude<Role, "
   const pathname = usePathname();
   const nav = NAVS[role];
 
-  const sidebarContent = (onNavigate: () => void) => (
-    <AppSidebar
-      sections={[{ title: "Menu", items: nav.items }]}
-      homeHref={role === "staff" ? "/staff" : "/orangtua"}
-      onNavigate={onNavigate}
-      isActive={(item) => pathname === item.href}
-      roleBadge={role === "staff" ? "Staf" : "Orang Tua"}
-      subtitle={role === "staff" ? "Dashboard Staf" : "Portal Orang Tua"}
-    />
-  );
-
   return (
-    <div className="relative min-h-dvh flex flex-col bg-background text-foreground">
+    <div className="relative min-h-dvh flex flex-col bg-background text-foreground overflow-x-hidden">
       <div className="lg:hidden">
         <UserBar userRole={role} userName={userName} onMenuClick={() => setSidebarOpen((o) => !o)} />
       </div>
-      <DashboardHeader
-        title={role === "staff" ? "Dashboard Staf" : "Dashboard"}
-        titleIcon={
-          <span className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-xs">
-            <School className="size-4" />
-          </span>
-        }
-        userName={userName ?? (role === "staff" ? "Staff Demo" : "Orang Tua Demo")}
-        userHandle={role === "staff" ? "staff" : "orangtua"}
-        userInitials={role === "staff" ? "ST" : "OT"}
-        searchPlaceholder={role === "staff" ? "Cari siswa..." : "Cari..."}
-        onSearch={(q) => {
-          // TODO: implementasi search per role
-          console.log("Search:", q);
-        }}
-        onCollapseSidebar={() => setDesktopCollapsed((c) => !c)}
-        collapseIcon={<LayoutDashboard className="size-4" />}
-      />
 
-      {/* Mobile drawer */}
+      {/* Mobile Drawer (lg:hidden) */}
       {sidebarOpen && (
         <div className="fixed inset-0 z-40 bg-black/50 lg:hidden" onClick={() => setSidebarOpen(false)} aria-hidden />
       )}
-      <aside className={`fixed inset-y-0 left-0 z-50 flex w-72 max-w-[85vw] flex-col overflow-hidden border border-border/70 bg-background pt-[env(safe-area-inset-top,0px)] shadow-xl transition-transform duration-300 ease-in-out lg:hidden ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}>
-        {sidebarContent(() => setSidebarOpen(false))}
+      <aside className={`fixed inset-y-0 left-0 z-50 flex w-76 max-w-[85vw] flex-col p-3 pt-[calc(env(safe-area-inset-top,0px)+0.75rem)] transition-transform duration-300 ease-in-out lg:hidden ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}>
+        <AppSidebar
+          sections={[{ title: "Menu", items: nav.items }]}
+          homeHref={role === "staff" ? "/staff" : "/orangtua"}
+          onNavigate={() => setSidebarOpen(false)}
+          isActive={(item) => pathname === item.href}
+          roleBadge={role === "staff" ? "Staf" : "Orang Tua"}
+          subtitle={role === "staff" ? "Dashboard Staf" : "Portal Orang Tua"}
+          userName={userName ?? (role === "staff" ? "Staff Demo" : "Orang Tua Demo")}
+          userEmail={role === "staff" ? "staff@yuranku.com" : "wali@yuranku.com"}
+          userRole={role === "staff" ? "Staf Asrama" : "Orang Tua / Wali"}
+          isCollapsed={false}
+          onToggleCollapse={() => setSidebarOpen(false)}
+        />
       </aside>
 
-      {/* Desktop layout */}
-      <div className={`relative flex-1 lg:gap-6 lg:p-6 lg:pt-2 ${desktopCollapsed ? "lg:block" : "lg:grid lg:grid-cols-[240px_minmax(0,1fr)]"}`}>
-        <aside className={`hidden lg:flex lg:rounded-2xl lg:border lg:border-border lg:bg-card lg:p-4 flex-col overflow-hidden ${desktopCollapsed ? "lg:hidden" : ""}`}>
-          {sidebarContent(() => {})}
-        </aside>
-        <main className="min-w-0 flex-1 px-4 py-6 sm:px-6 lg:px-2 lg:py-2">
+      {/* Desktop Floating Sidebar (Persistent, Animated Expand/Collapse) */}
+      <div className="fixed top-4 bottom-4 left-4 z-40 hidden lg:flex">
+        <AppSidebar
+          sections={[{ title: "Menu", items: nav.items }]}
+          homeHref={role === "staff" ? "/staff" : "/orangtua"}
+          onNavigate={() => {}}
+          isActive={(item) => pathname === item.href}
+          roleBadge={role === "staff" ? "Staf" : "Orang Tua"}
+          subtitle={role === "staff" ? "Dashboard Staf" : "Portal Orang Tua"}
+          userName={userName ?? (role === "staff" ? "Staff Demo" : "Orang Tua Demo")}
+          userEmail={role === "staff" ? "staff@yuranku.com" : "wali@yuranku.com"}
+          userRole={role === "staff" ? "Staf Asrama" : "Orang Tua / Wali"}
+          isCollapsed={desktopCollapsed}
+          onToggleCollapse={() => setDesktopCollapsed((c) => !c)}
+        />
+      </div>
+
+      {/* Main Content Area */}
+      <div className={`flex flex-col flex-1 min-w-0 w-full max-w-full transition-[padding] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${desktopCollapsed ? "lg:pl-[104px]" : "lg:pl-[304px]"}`}>
+        <main className="min-w-0 flex-1 px-4 py-6 sm:px-6 lg:px-8">
           {children}
         </main>
       </div>

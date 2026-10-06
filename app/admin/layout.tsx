@@ -42,7 +42,6 @@ const navigation: NavSection[] = [
     title: "Ringkasan",
     items: [
       { name: "Dasbor Utama", href: "/admin", icon: LayoutDashboard },
-      { name: "Arus Kas & Yuran", href: "/admin?tab=aliran-kas", icon: Wallet },
     ],
   },
   {
@@ -147,7 +146,6 @@ function SidebarNav({ onNavigate }: { onNavigate: () => void }) {
 }
 
 const TAB_NAMES: Record<string, string> = {
-  "aliran-kas": "Arus Kas & Yuran",
   siswa: "Data Siswa",
   transaksi: "Transaksi Masuk",
   penugasan: "Penugasan Staf",

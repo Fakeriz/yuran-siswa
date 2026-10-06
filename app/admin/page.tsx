@@ -553,10 +553,10 @@ function AdminContent() {
           ),
           sortFn: "basic",
         }),
-        columnHelper.accessor("status", {
+        columnHelper.accessor("statusAktif", {
           header: ({ column }) => <DataTableColumnHeader column={column} title="Status" align="center" />,
-          cell: ({ row }) => <div className="whitespace-nowrap text-center"><LencanaStatusSiswa status={row.original.status} /></div>,
-          sortFn: "text",
+          cell: ({ row }) => <div className="whitespace-nowrap text-center"><LencanaAktif aktif={row.original.statusAktif} /></div>,
+          sortFn: "basic",
         }),
       ]),
     []

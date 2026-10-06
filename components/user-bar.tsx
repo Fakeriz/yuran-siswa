@@ -40,7 +40,7 @@ export function UserBar({ userName, userRole, onMenuClick }: UserBarProps) {
   return (
     <>
       {/* Mobile header — ikut pola admin */}
-      <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-border/70 bg-background/80 p-4 backdrop-blur-md lg:hidden">
+      <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-transparent bg-background/70 p-4 backdrop-blur-md lg:hidden">
         <div className="flex items-center gap-3">
           <button type="button" onClick={onMenuClick}
             className="flex items-center gap-2 rounded-lg focus-visible:outline-primary" aria-label="Buka/tutup menu navigasi"

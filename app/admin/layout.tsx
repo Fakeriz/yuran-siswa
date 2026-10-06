@@ -65,7 +65,7 @@ const navigation: NavSection[] = [
 
 function SidebarNav({ onNavigate }: { onNavigate: () => void }) {
   const searchParams = useSearchParams();
-  const currentTab = searchParams.get("tab"); // null = Dasbor Utama
+  const currentTab = searchParams ? searchParams.get("tab") : null; // null = Dasbor Utama
   const [menuQuery, setMenuQuery] = useState("");
 
   const q = menuQuery.trim().toLowerCase();
@@ -165,14 +165,14 @@ function HeaderTitle() {
   const searchParams = useSearchParams();
   return (
     <h1 className="shrink-0 truncate text-lg font-bold tracking-tight text-foreground">
-      {tabTitle(searchParams.get("tab"))}
+      {tabTitle(searchParams ? searchParams.get("tab") : null)}
     </h1>
   );
 }
 
 function Breadcrumb() {
   const searchParams = useSearchParams();
-  const tab = searchParams.get("tab");
+  const tab = searchParams ? searchParams.get("tab") : null;
   const current = tabTitle(tab);
   return (
     <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground font-medium">

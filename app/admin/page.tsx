@@ -170,10 +170,10 @@ function formatRM(amount: number): string {
 
 function AdminContent() {
   const searchParams = useSearchParams();
-  const tab = searchParams.get("tab");
+  const tab = searchParams ? searchParams.get("tab") : null;
 
   const [records, setRecords] = useState<SiswaRecord[]>(initialSiswaData);
-  const qParam = searchParams.get("q") ?? "";
+  const qParam = (searchParams ? searchParams.get("q") : null) ?? "";
   const [searchQuery, setSearchQuery] = useState(qParam);
   // Segerakkan carian jadual apabila carian global header menghantar ?q=
   useEffect(() => {

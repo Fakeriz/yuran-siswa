@@ -37,7 +37,6 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [desktopCollapsed, setDesktopCollapsed] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
-  const [sesi, setSesi] = useState("2026/2027");
 
   // Handle ESC key to dismiss drawers/menus
   useEffect(() => {
@@ -58,10 +57,38 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
     masa: string;
     dibaca: boolean;
     tab: string;
-  }>>([]);
+    href?: string;
+  }>>([
+    {
+      id: "a1",
+      judul: "Persetujuan Wali Baru",
+      pesan: "Orang tua mengajukan persetujuan hubungan siswa.",
+      masa: "5 menit lalu",
+      dibaca: false,
+      tab: "persetujuan",
+      href: "/admin?tab=persetujuan",
+    },
+    {
+      id: "a2",
+      judul: "Pembayaran Yuran Masuk",
+      pesan: "Yuran bulanan atas nama Adnan (RM 250.00) berhasil dicatat.",
+      masa: "1 jam lalu",
+      dibaca: false,
+      tab: "siswa",
+      href: "/admin?tab=siswa",
+    },
+    {
+      id: "a3",
+      judul: "Kuitansi Menunggu Unggah",
+      pesan: "Kuitansi pembayaran baru siap diunggah ke Google Drive.",
+      masa: "3 jam lalu",
+      dibaca: true,
+      tab: "kwitansi",
+      href: "/admin?tab=kwitansi",
+    },
+  ]);
 
   const unreadCount = notifs.filter((n) => !n.dibaca).length;
-  const SESI_LIST = ["2026/2027", "2025/2026", "2024/2025"];
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground transition-colors duration-150 w-full max-w-full overflow-x-hidden">
@@ -129,25 +156,6 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                     return tab === currentTab || (!tab && !currentTab && item.href === "/admin");
                   }}
                   searchable
-                  footerExtra={
-                    <div className="p-3 border-t border-border bg-muted/40">
-                      <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground mb-1.5 px-1">Sesi Persekolahan</p>
-                      <div className="flex gap-1.5">
-                        {SESI_LIST.map((s) => (
-                          <button
-                            key={s}
-                            type="button"
-                            onClick={() => setSesi(s)}
-                            className={`flex-1 rounded-lg px-2 py-1.5 text-[11px] font-medium transition-colors ${
-                              sesi === s ? "bg-primary text-primary-foreground" : "bg-card text-muted-foreground hover:bg-muted"
-                            }`}
-                          >
-                            {s}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  }
                 />
               </Suspense>
             </motion.div>

@@ -70,11 +70,11 @@ export function DashboardMock() {
             className={`flex flex-col items-center gap-1 rounded-xl border px-2 py-2.5 text-xs font-semibold ${
               b.lunas
                 ? "border-[var(--success-border)] bg-[var(--success-bg)] text-[var(--success)]"
-                : "border-rose-200 bg-rose-50 text-rose-700"
+                : "border-destructive/20 bg-destructive/10 text-destructive"
             }`}
           >
             <span>{b.nama}</span>
-            <span className={`size-2 rounded-full ${b.lunas ? "bg-emerald-500" : "bg-rose-500"}`}
+            <span className={`size-2 rounded-full ${b.lunas ? "bg-[var(--success)]" : "bg-destructive"}`}
               aria-hidden="true"
             />
             <span className="sr-only">{b.lunas ? "sudah bayar" : "belum bayar"}</span>

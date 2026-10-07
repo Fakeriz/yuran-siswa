@@ -203,12 +203,12 @@ export function TabPenyata() {
             <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               Baki Tunggakan
             </span>
-            <div className="rounded-xl bg-rose-50 p-2 text-rose-800">
+            <div className="rounded-xl bg-destructive/10 p-2 text-destructive">
               <AlertCircle className="size-5" />
             </div>
           </div>
-          <p className="mt-3 text-2xl font-bold text-rose-700">RM {summary.tunggakan.toLocaleString()}</p>
-          <p className="mt-1 text-xs text-rose-600 font-medium">11 Siswa belum selesai</p>
+          <p className="mt-3 text-2xl font-bold text-destructive">RM {summary.tunggakan.toLocaleString()}</p>
+          <p className="mt-1 text-xs text-destructive font-medium">11 Siswa belum selesai</p>
         </div>
 
         <div className="rounded-2xl border border-border bg-card p-5 shadow-xs">
@@ -264,7 +264,7 @@ export function TabPenyata() {
                       {g.peratus}%
                     </span>
                   </td>
-                  <td className="px-5 py-4 text-right font-semibold text-rose-700">RM {g.tunggakan.toLocaleString()}</td>
+                  <td className="px-5 py-4 text-right font-semibold text-destructive">RM {g.tunggakan.toLocaleString()}</td>
                 </tr>
               ))}
             </tbody>
@@ -275,7 +275,7 @@ export function TabPenyata() {
                 <td className="px-5 py-3.5 text-right">RM {summary.sasaran.toLocaleString()}</td>
                 <td className="px-5 py-3.5 text-right text-[var(--success)]">RM {summary.kutipan.toLocaleString()}</td>
                 <td className="px-5 py-3.5 text-center text-[var(--success)]">{summary.peratusan}%</td>
-                <td className="px-5 py-3.5 text-right text-rose-700">RM {summary.tunggakan.toLocaleString()}</td>
+                <td className="px-5 py-3.5 text-right text-destructive">RM {summary.tunggakan.toLocaleString()}</td>
               </tr>
             </tfoot>
           </table>
@@ -318,7 +318,7 @@ export function TabPenyata() {
               <h2 className="text-base font-bold text-foreground">Daftar Tindakan Susulan Tunggakan</h2>
               <p className="mt-0.5 text-xs text-muted-foreground">Siswa yang masih belum melunaskan yuran {selectedBulan}.</p>
             </div>
-            <span className="text-xs font-bold text-rose-700 bg-rose-50 px-2 py-0.5 rounded-md border border-rose-200">
+            <span className="text-xs font-bold text-destructive bg-destructive/10 px-2 py-0.5 rounded-md border border-destructive/20">
               6 Perlu Susulan
             </span>
           </div>
@@ -330,7 +330,7 @@ export function TabPenyata() {
                   <p className="text-[11px] text-muted-foreground">{item.grup} · {item.telefon}</p>
                 </div>
                 <div className="text-right">
-                  <span className="font-bold text-rose-700">{item.tunggakan}</span>
+                  <span className="font-bold text-destructive">{item.tunggakan}</span>
                   <p className="text-[11px] text-muted-foreground">{item.bulan}</p>
                 </div>
               </div>

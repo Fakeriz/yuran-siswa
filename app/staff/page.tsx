@@ -6,7 +6,6 @@ import { createClient } from "../../lib/supabase/server";
 import type { Payment, Student } from "../../lib/types";
 import { PaymentForm } from "./payment-form";
 import { REAL_STUDENTS, REAL_PAYMENTS } from "../../lib/data/real-data";
-import { RoleLayout } from "../../components/role-layout";
 import { FinanceHero } from "../../components/finance-hero";
 import { FinanceKpi } from "../../components/finance-kpi";
 import { CheckCircle2, AlertCircle, Users, UsersRound, LayoutDashboard } from "lucide-react";
@@ -76,9 +75,8 @@ export default async function StaffPage({ searchParams }: {
   const period = `${months[bulan - 1]} ${tahun}`;
 
   return (
-    <RoleLayout role="staff" userName="Staff Demo">
-      <div className="mx-auto w-full max-w-6xl min-w-0">
-        <FinanceHero name="Staf" subtitle={`Kelola dan catat pembayaran yuran siswa dalam grup Anda, ${period}.`}
+    <div className="space-y-4 sm:space-y-5 lg:space-y-6 w-full min-w-0 max-w-full">
+      <FinanceHero name="Staf" subtitle={`Kelola dan catat pembayaran yuran siswa dalam grup Anda, ${period}.`}
           kpiGridClassName="lg:grid-cols-3" actions={
             <Link href="/staff/grup" className="inline-flex min-h-11 items-center gap-2 rounded-full border border-border bg-card px-5 py-2 text-sm font-semibold text-primary transition hover:bg-muted"
             >
@@ -140,6 +138,5 @@ export default async function StaffPage({ searchParams }: {
           )}
         </section>
       </div>
-    </RoleLayout>
   );
 }

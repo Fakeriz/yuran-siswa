@@ -176,7 +176,7 @@ export function TabPersetujuan() {
             <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               Menunggu Keputusan
             </span>
-            <div className="rounded-xl bg-amber-50 p-2 text-[var(--warning)]">
+            <div className="rounded-xl bg-[var(--warning-bg)] p-2 text-[var(--warning)]">
               <AlertCircle className="size-5" />
             </div>
           </div>
@@ -277,13 +277,13 @@ export function TabPersetujuan() {
                         </span>
                       )}
                       {claim.status === "approved" && (
-                        <span className="inline-flex items-center gap-1 rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-semibold text-green-800 border border-green-200">
+                        <span className="inline-flex items-center gap-1 rounded-full bg-[var(--success-bg)] px-2.5 py-0.5 text-xs font-semibold text-[var(--success)] border border-[var(--success-border)]">
                           <CheckCircle2 className="size-3" />
                           <span>Telah Disahkan</span>
                         </span>
                       )}
                       {claim.status === "rejected" && (
-                        <span className="inline-flex items-center gap-1 rounded-full bg-rose-100 px-2.5 py-0.5 text-xs font-semibold text-rose-800 border border-rose-200">
+                        <span className="inline-flex items-center gap-1 rounded-full bg-destructive/10 px-2.5 py-0.5 text-xs font-semibold text-destructive border border-destructive/20">
                           <XCircle className="size-3" />
                           <span>Ditolak</span>
                         </span>
@@ -300,7 +300,7 @@ export function TabPersetujuan() {
                     </div>
 
                     {claim.ibuBapaSediaAda && (
-                      <div className="mt-2 flex items-center gap-1 text-[11px] text-[var(--warning)] bg-amber-50 px-2.5 py-1 rounded-lg border border-[var(--warning-border)]/60 max-w-fit">
+                      <div className="mt-2 flex items-center gap-1 text-[11px] text-[var(--warning)] bg-[var(--warning-bg)] px-2.5 py-1 rounded-lg border border-[var(--warning-border)]/60 max-w-fit">
                         <Info className="size-3.5 shrink-0" />
                         <span>Perhatian: Siswa ini sudah mempunyai penjaga berdaftar: <strong>{claim.ibuBapaSediaAda}</strong></span>
                       </div>
@@ -333,7 +333,7 @@ export function TabPersetujuan() {
                         <span>Sahkan Hubungan</span>
                       </button>
                       <button type="button" onClick={() => handleDecision(claim.id, "rejected")}
-                        className="inline-flex items-center gap-1.5 rounded-xl border border-input bg-card px-3.5 py-2 text-xs font-semibold text-rose-700 hover:bg-rose-50 hover:border-rose-300 transition-colors"
+                        className="inline-flex items-center gap-1.5 rounded-xl border border-input bg-card px-3.5 py-2 text-xs font-semibold text-destructive hover:bg-destructive/10 hover:border-destructive/30 transition-colors"
                       >
                         <XCircle className="size-3.5" />
                         <span>Tolak</span>
@@ -341,7 +341,7 @@ export function TabPersetujuan() {
                     </>
                   ) : (
                     <button type="button" onClick={() => handleUnlink(claim.id)}
-                      className="rounded-xl border border-input bg-card px-3 py-1.5 text-xs font-semibold text-muted-foreground hover:bg-muted hover:text-rose-600 transition-colors"
+                      className="rounded-xl border border-input bg-card px-3 py-1.5 text-xs font-semibold text-muted-foreground hover:bg-muted hover:text-destructive transition-colors"
                     >
                       Lepas Hubungan
                     </button>

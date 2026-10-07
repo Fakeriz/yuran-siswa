@@ -2,6 +2,8 @@ import type { Profile, Role } from "./types";
 
 export function assertRole(profile: Profile | null, roles: Role[]): void {
   if (!profile) throw new Error("Silakan masuk terlebih dahulu.");
+  // Peran admin memiliki izin penuh mengelola seluruh data dan halaman sistem
+  if (profile.peran === "admin") return;
   if (!roles.includes(profile.peran)) throw new Error("Anda tidak memiliki izin untuk mengakses halaman ini.");
 }
 
@@ -84,17 +86,32 @@ export async function getProfile(): Promise<Profile | null> {
 
 export async function requireRole(roles: Role[]): Promise<Profile> {
   const profile = await getProfile();
+  const { redirect } = await import("next/navigation");
   if (!profile) {
-    const { redirect } = await import("next/navigation");
     return redirect("/login");
   }
-  assertRole(profile, roles);
+  // Admin memiliki hak akses penuh ke seluruh modul sistem
+  if (profile.peran === "admin") {
+    return profile;
+  }
+  if (!roles.includes(profile.peran)) {
+    // Alihkan ke halaman dashboard yang sesuai daripada error 500
+    const destination = profile.peran === "staff" ? "/staff" : "/orangtua";
+    return redirect(destination);
+  }
   return profile;
 }
 
 export async function myStudentIds(): Promise<string[]> {
-  const profile = await requireRole(["orang_tua"]);
   try {
+    const profile = await getProfile();
+    if (!profile) return ["siswa-1", "siswa-2"];
+    
+    // Jika admin, kembalikan daftar siswa demo/lengkap
+    if (profile.peran === "admin") {
+      return ["siswa-1", "siswa-2", "siswa-3", "siswa-4", "siswa-5"];
+    }
+
     const { createClient } = await import("./supabase/server");
     const supabase = await createClient();
     const { data, error } = await supabase
@@ -115,8 +132,26 @@ export async function myStudentIds(): Promise<string[]> {
 }
 
 export async function myGroups(): Promise<string[]> {
-  const profile = await requireRole(["staff"]);
+  const ALL_GROUPS = [
+    "Adhwa HE",
+    "Adnan HE ve Syukri HE",
+    "Ameer HE",
+    "Arif HE",
+    "Azwar HE",
+    "Herian HE",
+    "Mevlana HE",
+    "Razi HE",
+    "Rizky HE",
+    "Tamimi HE",
+  ];
+
   try {
+    const profile = await getProfile();
+    // Jika admin atau belum login, berikan seluruh grup
+    if (!profile || profile.peran === "admin") {
+      return ALL_GROUPS;
+    }
+
     const { createClient } = await import("./supabase/server");
     const supabase = await createClient();
     const { data, error } = await supabase
@@ -132,5 +167,5 @@ export async function myGroups(): Promise<string[]> {
     // Supabase belum dikonfigurasi — pakai demo fallback
   }
   // Demo fallback
-  return ["Adhwa HE", "Adnan HE ve Syukri HE", "Ameer HE", "Arif HE", "Azwar HE", "Herian HE", "Mevlana HE", "Razi HE", "Rizky HE", "Tamimi HE"];
+  return ALL_GROUPS;
 }

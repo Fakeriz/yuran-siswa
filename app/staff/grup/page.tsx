@@ -1,7 +1,6 @@
 import { myGroups } from "../../../lib/auth";
 import { createClient } from "../../../lib/supabase/server";
 import { GroupForm } from "./group-form";
-import { RoleLayout } from "../../../components/role-layout";
 import { REAL_STUDENTS } from "../../../lib/data/real-data";
 
 export const metadata = { title: "Pilih grup | YuranKu" };
@@ -27,12 +26,10 @@ export default async function GroupPage() {
   }
 
   return (
-    <RoleLayout role="staff" userName="Staff Demo">
-      <div className="w-full max-w-2xl rounded-2xl border border-border bg-card p-6 md:p-8">
-          <h1 className="text-3xl font-bold tracking-tight text-foreground">Pilih grup</h1>
-          <p className="mt-3 text-muted-foreground">Pilih grup siswa Anda. Pilihan langsung berlaku setelah disimpan, tanpa persetujuan admin.</p>
-          <GroupForm groups={groups} initialSelected={selected} />
-      </div>
-    </RoleLayout>
+    <div className="w-full max-w-2xl rounded-2xl border border-border bg-card p-6 md:p-8">
+      <h1 className="text-3xl font-bold tracking-tight text-foreground">Pilih grup</h1>
+      <p className="mt-3 text-muted-foreground">Pilih grup siswa Anda. Pilihan langsung berlaku setelah disimpan, tanpa persetujuan admin.</p>
+      <GroupForm groups={groups} initialSelected={selected} />
+    </div>
   );
 }

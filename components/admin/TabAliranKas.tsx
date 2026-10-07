@@ -229,11 +229,11 @@ export function TabAliranKas() {
             <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               Jumlah Perbelanjaan Keluar
             </span>
-            <div className="rounded-xl bg-rose-50 p-2 text-rose-800">
+            <div className="rounded-xl bg-destructive/10 p-2 text-destructive">
               <ArrowUpRight className="size-5" />
             </div>
           </div>
-          <p className="mt-3 text-2xl font-bold text-rose-700">RM {totalKeluar.toLocaleString()}</p>
+          <p className="mt-3 text-2xl font-bold text-destructive">RM {totalKeluar.toLocaleString()}</p>
           <p className="mt-1 text-xs text-muted-foreground">Dapur, utiliti & penyelenggaraan</p>
         </div>
 
@@ -316,7 +316,7 @@ export function TabAliranKas() {
                   <td className="px-5 py-4 text-right whitespace-nowrap font-bold text-[var(--success)]">
                     {tx.jenis === "masuk" ? `+ RM ${tx.jumlah.toLocaleString()}` : "-"}
                   </td>
-                  <td className="px-5 py-4 text-right whitespace-nowrap font-bold text-rose-700">
+                  <td className="px-5 py-4 text-right whitespace-nowrap font-bold text-destructive">
                     {tx.jenis === "keluar" ? `- RM ${tx.jumlah.toLocaleString()}` : "-"}
                   </td>
                   <td className="px-5 py-4 text-right whitespace-nowrap font-bold text-foreground">

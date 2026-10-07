@@ -5,7 +5,6 @@ import { paymentStatusFor } from "../../lib/fees";
 import { createClient } from "../../lib/supabase/server";
 import type { Payment, Student } from "../../lib/types";
 import { PaymentForm } from "../staff/payment-form";
-import { RoleLayout } from "../../components/role-layout";
 import { FinanceHero } from "../../components/finance-hero";
 import { FinanceKpi } from "../../components/finance-kpi";
 import { Users, CheckCircle2 } from "lucide-react";
@@ -54,9 +53,8 @@ export default async function ParentPage() {
   }
 
   return (
-    <RoleLayout role="orang_tua" userName="Orang Tua Demo">
-      <div className="mx-auto max-w-3xl">
-          <FinanceHero name="Orang Tua" subtitle={`Pantau status yuran anak Anda, riwayat pembayaran tahun ${tahun}.`}
+    <div className="space-y-4 sm:space-y-5 lg:space-y-6 w-full min-w-0 max-w-full">
+      <FinanceHero name="Orang Tua" subtitle={`Pantau status yuran anak Anda, riwayat pembayaran tahun ${tahun}.`}
           >
             <FinanceKpi icon={Users}
               tone="neutral" value={String(students.length)}
@@ -102,7 +100,6 @@ export default async function ParentPage() {
           </div>
         </details>)}
       </div>}
-        </div>
-    </RoleLayout>
+    </div>
   );
 }

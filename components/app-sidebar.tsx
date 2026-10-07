@@ -18,6 +18,7 @@ import {
   X,
 } from "lucide-react";
 import { useTheme } from "next-themes";
+import { loginDemo } from "@/app/(auth)/login/actions";
 
 export interface SidebarItem {
   name: string;
@@ -28,6 +29,16 @@ export interface SidebarItem {
 export interface SidebarSection {
   title?: string;
   items: SidebarItem[];
+}
+
+export interface SidebarNotification {
+  id: string;
+  judul: string;
+  pesan: string;
+  masa: string;
+  dibaca: boolean;
+  href?: string;
+  tab?: string;
 }
 
 export interface AppSidebarProps {
@@ -49,6 +60,9 @@ export interface AppSidebarProps {
   userInitials?: string;
   userRole?: string;
   onLogout?: () => void;
+  notifications?: SidebarNotification[];
+  onNotificationClick?: (notif: SidebarNotification) => void;
+  onMarkAllNotificationsRead?: () => void;
   footerExtra?: ReactNode;
   className?: string;
 }
@@ -72,6 +86,9 @@ export function AppSidebar({
   userInitials = "AD",
   userRole,
   onLogout,
+  notifications,
+  onNotificationClick,
+  onMarkAllNotificationsRead,
   footerExtra,
   className = "",
 }: AppSidebarProps) {
@@ -120,18 +137,33 @@ export function AppSidebar({
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
 
-  // Close popover on outside click
+  // Notifications popover state
+  const [notifOpen, setNotifOpen] = useState(false);
+  const notifRef = useRef<HTMLDivElement>(null);
+  const notifPanelRef = useRef<HTMLDivElement>(null);
+  const collapsedNotifRef = useRef<HTMLDivElement>(null);
+  const unreadCount = notifications ? notifications.filter((n) => !n.dibaca).length : 0;
+
+  // Close popovers on outside click
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
+      const target = e.target as Node;
+      if (userMenuRef.current && !userMenuRef.current.contains(target)) {
         setUserMenuOpen(false);
       }
+      const isInsideNotif =
+        (notifRef.current && notifRef.current.contains(target)) ||
+        (notifPanelRef.current && notifPanelRef.current.contains(target)) ||
+        (collapsedNotifRef.current && collapsedNotifRef.current.contains(target));
+      if (!isInsideNotif) {
+        setNotifOpen(false);
+      }
     };
-    if (userMenuOpen) {
+    if (userMenuOpen || notifOpen) {
       document.addEventListener("mousedown", handleClickOutside);
     }
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [userMenuOpen]);
+  }, [userMenuOpen, notifOpen]);
 
   // Filter sections based on search query (no numbers, no sub pages)
   const q = searchQuery.trim().toLowerCase();
@@ -212,17 +244,19 @@ export function AppSidebar({
             </button>
           </div>
 
-          {/* Collapse Toggle Button (Top Right when expanded) */}
+          {/* Top Actions: Collapse Toggle */}
           {!isCollapsed ? (
-            <button
-              type="button"
-              onClick={toggleCollapse}
-              className="flex size-8 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-              aria-label="Ciutkan navigasi (⌘B)"
-              title="Ciutkan navigasi (⌘B)"
-            >
-              <PanelLeftClose className="size-4" aria-hidden="true" />
-            </button>
+            <div className="flex items-center gap-1">
+              <button
+                type="button"
+                onClick={toggleCollapse}
+                className="flex size-8 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                aria-label="Ciutkan navigasi (⌘B)"
+                title="Ciutkan navigasi (⌘B)"
+              >
+                <PanelLeftClose className="size-4" aria-hidden="true" />
+              </button>
+            </div>
           ) : null}
         </div>
       </div>
@@ -518,6 +552,46 @@ export function AppSidebar({
                     <Laptop className="size-3.5" />
                     <span>Auto</span>
                   </button>
+                </div>
+              </div>
+
+              {/* Ganti Akun Demo */}
+              <div className="py-1 border-t border-border">
+                <p className="px-2 py-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                  Ganti Akun Demo
+                </p>
+                <div className="grid grid-cols-3 gap-1 px-1">
+                  {(
+                    [
+                      { role: "admin", label: "Admin" },
+                      { role: "staff", label: "Staf" },
+                      { role: "orang_tua", label: "Orang Tua" },
+                    ] as const
+                  ).map((r) => {
+                    const isCurrent =
+                      (r.role === "admin" && roleBadge?.toLowerCase() === "admin") ||
+                      (r.role === "staff" && roleBadge?.toLowerCase() === "staf") ||
+                      (r.role === "orang_tua" && (roleBadge?.toLowerCase() === "orang tua" || roleBadge?.toLowerCase() === "wali"));
+                    return (
+                      <button
+                        key={r.role}
+                        type="button"
+                        disabled={isCurrent}
+                        onClick={async () => {
+                          setUserMenuOpen(false);
+                          const dest = await loginDemo(r.role);
+                          router.push(dest);
+                        }}
+                        className={`flex items-center justify-center rounded-lg py-1.5 text-xs font-medium transition-colors ${
+                          isCurrent
+                            ? "bg-primary text-primary-foreground font-bold"
+                            : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                        }`}
+                      >
+                        <span>{r.label}</span>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 

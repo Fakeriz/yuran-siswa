@@ -729,7 +729,7 @@ function AdminContent() {
             tone="warning" value={formatRM(totalTunggakan)}
             label="Total tunggakan"
           >
-            <span className="inline-flex w-fit rounded-full bg-rose-100 px-2.5 py-1 text-xs font-semibold text-rose-700">
+            <span className="inline-flex w-fit items-center rounded-full bg-destructive/10 px-2.5 py-0.5 text-xs font-semibold text-destructive border border-destructive/20">
               {dataBulanIni.length - jumlahLunas} Siswa belum bayar
             </span>
           </FinanceKpi>

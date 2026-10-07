@@ -217,7 +217,7 @@ export function TabResit() {
             <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               Menunggu Muat Naik Kwitansi
             </span>
-            <div className="rounded-xl bg-amber-50 p-2 text-[var(--warning)]">
+            <div className="rounded-xl bg-[var(--warning-bg)] p-2 text-[var(--warning)]">
               <AlertCircle className="size-5" />
             </div>
           </div>

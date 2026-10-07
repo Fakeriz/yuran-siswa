@@ -17,16 +17,16 @@ export default function GlobalError({
 
   return (
     <html lang="id">
-      <body className="flex min-h-dvh flex-col items-center justify-center bg-white px-6 text-center text-zinc-900 antialiased dark:bg-zinc-950 dark:text-zinc-100">
+      <body className="flex min-h-dvh flex-col items-center justify-center bg-background px-6 text-center text-foreground antialiased">
         <main className="max-w-md">
           <h1 className="text-2xl font-bold tracking-tight">Terjadi kesalahan sistem</h1>
-          <p className="mt-3 text-sm text-zinc-600 dark:text-zinc-400">
+          <p className="mt-3 text-sm text-muted-foreground">
             Aplikasi mengalami kendala teknis sementara. Silakan coba muat ulang halaman.
           </p>
           <button
             type="button"
             onClick={() => reset()}
-            className="mt-6 rounded-full bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 transition"
+            className="mt-6 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-xs transition hover:opacity-90"
           >
             Muat ulang
           </button>

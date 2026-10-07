@@ -173,7 +173,7 @@ export function TabResit() {
               Resit & Kwitansi Rasmi
             </h1>
             {pendingKwitansiCount > 0 && (
-              <span className="inline-flex items-center rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-semibold text-amber-800 border border-amber-200">
+              <span className="inline-flex items-center rounded-full bg-[var(--warning-bg)] px-2.5 py-0.5 text-xs font-semibold text-[var(--warning)] border border-[var(--warning-border)]">
                 {pendingKwitansiCount} Menunggu Kwitansi
               </span>
             )}
@@ -217,11 +217,11 @@ export function TabResit() {
             <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               Menunggu Muat Naik Kwitansi
             </span>
-            <div className="rounded-xl bg-amber-50 p-2 text-amber-800">
+            <div className="rounded-xl bg-amber-50 p-2 text-[var(--warning)]">
               <AlertCircle className="size-5" />
             </div>
           </div>
-          <p className="mt-3 text-2xl font-bold text-amber-800">{pendingKwitansiCount} Resit</p>
+          <p className="mt-3 text-2xl font-bold text-[var(--warning)]">{pendingKwitansiCount} Resit</p>
           <p className="mt-1 text-xs text-muted-foreground">Perlu dimuat naik oleh admin</p>
         </div>
 
@@ -313,7 +313,7 @@ export function TabResit() {
                         <span>Kwitansi Dikeluarkan</span>
                       </span>
                     ) : (
-                      <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-semibold text-amber-800 border border-amber-200">
+                      <span className="inline-flex items-center gap-1 rounded-full bg-[var(--warning-bg)] px-2.5 py-0.5 text-xs font-semibold text-[var(--warning)] border border-[var(--warning-border)]">
                         <AlertCircle className="size-3" />
                         <span>Belum Dimuat Naik</span>
                       </span>

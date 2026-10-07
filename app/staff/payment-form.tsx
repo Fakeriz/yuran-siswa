@@ -60,7 +60,7 @@ export function PaymentForm({ student, bulan, tahun, period, today }: {
           <p id={`${titleId}-hint`} className="text-sm text-muted-foreground">Foto atau PDF, maksimal 10 MB.</p>
           <label className="block text-sm font-medium">Catatan (opsional)<textarea className={field} name="catatan" rows={3} /></label>
         </fieldset>
-        {message && <p role={saved ? "status" : "alert"} className={`rounded-2xl p-3 text-sm ${saved ? "bg-[var(--success-bg)] text-emerald-900" : "bg-red-50 text-red-800"}`}>{message}</p>}
+        {message && <p role={saved ? "status" : "alert"} className={`rounded-2xl p-3 text-sm ${saved ? "bg-[var(--success-bg)] text-[var(--success)]" : "bg-destructive/10 text-destructive"}`}>{message}</p>}
         <div className="flex flex-wrap justify-end gap-3 pt-2">
           <button type="button" onClick={close} disabled={pending} className="min-h-11 rounded-full border border-input px-4 py-2 disabled:opacity-60">{saved ? "Selesai" : "Batal"}</button>
           {!saved && <button disabled={pending} className="min-h-11 rounded-full bg-primary px-5 py-2 font-semibold text-primary-foreground transition hover:opacity-90 disabled:opacity-60">{pending ? "Menyimpan…" : "Simpan"}</button>}

@@ -108,7 +108,7 @@ export function RegisterForm({
               <div className="flex gap-1.5" aria-hidden>
                 {[0, 1, 2, 3].map((index) => (
                   <span key={index}
-                    className="h-1 flex-1 overflow-hidden rounded-full bg-gray-200"
+                    className="h-1 flex-1 overflow-hidden rounded-full bg-muted"
                   >
                     <span className={`block h-full w-full origin-left rounded-full transition-transform duration-300 ${STRENGTH_COLORS[strength]}`}
                       style={{
@@ -190,7 +190,7 @@ export function RegisterForm({
       </fieldset>
 
       {message && (
-        <p role="alert" className="rounded-2xl border border-red-300 bg-red-50 p-4 text-sm text-red-800"
+        <p role="alert" className="rounded-2xl border border-destructive/30 bg-destructive/10 p-4 text-sm text-destructive"
         >
           {message}
         </p>

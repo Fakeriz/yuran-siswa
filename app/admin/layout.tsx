@@ -6,13 +6,10 @@ import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "motion/react";
 import {
   Users,
-  CreditCard,
   Building2,
-  FileSpreadsheet,
   Receipt,
   UserCheck,
   ShieldCheck,
-  Settings,
   LayoutDashboard,
   Bell,
   X,
@@ -26,13 +23,10 @@ const navigation: SidebarSection[] = [
     items: [
       { name: "Dasbor Utama", href: "/admin", icon: LayoutDashboard },
       { name: "Data Siswa", href: "/admin?tab=siswa", icon: Users },
-      { name: "Transaksi Masuk", href: "/admin?tab=transaksi", icon: CreditCard },
-      { name: "Penyata Bulanan", href: "/admin?tab=penyata", icon: FileSpreadsheet },
-      { name: "Kuitansi Rasmi", href: "/admin?tab=resit", icon: Receipt },
+      { name: "Kuitansi", href: "/admin?tab=kwitansi", icon: Receipt },
       { name: "Penugasan Staf", href: "/admin?tab=penugasan", icon: Building2 },
       { name: "Persetujuan Orang Tua", href: "/admin?tab=persetujuan", icon: UserCheck },
       { name: "Pengelolaan Akun", href: "/admin?tab=akun", icon: ShieldCheck },
-      { name: "Tetapan Sistem", href: "/admin?tab=tetapan", icon: Settings },
     ],
   },
 ];

@@ -124,9 +124,6 @@ export function PanelKemajuanGrup({ grup }: { grup: KemajuanGrup[] }) {
         <p className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
           {formatRM(jumlahTerkumpul)}
         </p>
-        <span className="rounded-md bg-[var(--success-bg)] px-1.5 py-0.5 text-[11px] font-semibold text-[var(--success)] dark:bg-emerald-500/10 dark:text-emerald-300">
-          ↑ 12.4%
-        </span>
       </div>
 
       <div className="mt-5 space-y-4">

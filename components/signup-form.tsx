@@ -382,7 +382,7 @@ export function SignUpForm({
                 {[0, 1, 2, 3].map((index) => (
                   <span
                     key={index}
-                    className="h-1 flex-1 overflow-hidden rounded-full bg-gray-200"
+                    className="h-1 flex-1 overflow-hidden rounded-full bg-muted"
                   >
                     <span
                       className={cx(

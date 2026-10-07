@@ -158,7 +158,7 @@ export function TabPersetujuan() {
               Pengesahan Pendaftaran Orang Tua
             </h1>
             {pendingCount > 0 && (
-              <span className="inline-flex items-center rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-semibold text-amber-800 border border-amber-200">
+              <span className="inline-flex items-center rounded-full bg-[var(--warning-bg)] px-2.5 py-0.5 text-xs font-semibold text-[var(--warning)] border border-[var(--warning-border)]">
                 {pendingCount} Menunggu
               </span>
             )}
@@ -176,11 +176,11 @@ export function TabPersetujuan() {
             <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               Menunggu Keputusan
             </span>
-            <div className="rounded-xl bg-amber-50 p-2 text-amber-800">
+            <div className="rounded-xl bg-amber-50 p-2 text-[var(--warning)]">
               <AlertCircle className="size-5" />
             </div>
           </div>
-          <p className="mt-3 text-2xl font-bold text-amber-800">{pendingCount} Permohonan</p>
+          <p className="mt-3 text-2xl font-bold text-[var(--warning)]">{pendingCount} Permohonan</p>
           <p className="mt-1 text-xs text-muted-foreground">Perlu diperiksa & disahkan oleh admin</p>
         </div>
 
@@ -264,14 +264,14 @@ export function TabPersetujuan() {
                 className="p-5 sm:p-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 hover:bg-muted/50 transition-colors"
               >
                 <div className="flex items-start gap-4">
-                  <div className="size-11 rounded-2xl bg-amber-100 text-amber-800 font-bold flex items-center justify-center shrink-0 border border-amber-200 text-sm">
+                  <div className="size-11 rounded-2xl bg-[var(--warning-bg)] text-[var(--warning)] font-bold flex items-center justify-center shrink-0 border border-[var(--warning-border)] text-sm">
                     {claim.namaIbuBapa.slice(0, 2).toUpperCase()}
                   </div>
                   <div>
                     <div className="flex items-center gap-2 flex-wrap">
                       <h3 className="font-bold text-base text-foreground">{claim.namaIbuBapa}</h3>
                       {claim.status === "pending" && (
-                        <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-semibold text-amber-800 border border-amber-200">
+                        <span className="inline-flex items-center gap-1 rounded-full bg-[var(--warning-bg)] px-2.5 py-0.5 text-xs font-semibold text-[var(--warning)] border border-[var(--warning-border)]">
                           <AlertCircle className="size-3" />
                           <span>Menunggu Pengesahan</span>
                         </span>
@@ -300,7 +300,7 @@ export function TabPersetujuan() {
                     </div>
 
                     {claim.ibuBapaSediaAda && (
-                      <div className="mt-2 flex items-center gap-1 text-[11px] text-amber-800 bg-amber-50 px-2.5 py-1 rounded-lg border border-amber-200/60 max-w-fit">
+                      <div className="mt-2 flex items-center gap-1 text-[11px] text-[var(--warning)] bg-amber-50 px-2.5 py-1 rounded-lg border border-[var(--warning-border)]/60 max-w-fit">
                         <Info className="size-3.5 shrink-0" />
                         <span>Perhatian: Siswa ini sudah mempunyai penjaga berdaftar: <strong>{claim.ibuBapaSediaAda}</strong></span>
                       </div>

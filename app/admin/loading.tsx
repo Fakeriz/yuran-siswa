@@ -5,18 +5,18 @@ export default function AdminLoading() {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <div className="flex items-center gap-3">
-            <div className="h-8 w-64 rounded-xl bg-gray-200" />
-            <div className="h-6 w-24 rounded-md bg-gray-200" />
+            <div className="h-8 w-64 rounded-xl bg-muted" />
+            <div className="h-6 w-24 rounded-md bg-muted" />
           </div>
-          <div className="mt-2 h-4 w-96 rounded-md bg-gray-200" />
+          <div className="mt-2 h-4 w-96 rounded-md bg-muted" />
         </div>
 
         {/* Action Buttons Skeleton */}
         <div className="flex flex-wrap items-center gap-3">
-          <div className="h-9 w-36 rounded-xl bg-gray-200" />
-          <div className="h-9 w-28 rounded-xl bg-gray-200" />
-          <div className="h-9 w-32 rounded-xl bg-gray-200" />
-          <div className="h-9 w-36 rounded-xl bg-gray-200" />
+          <div className="h-9 w-36 rounded-xl bg-muted" />
+          <div className="h-9 w-28 rounded-xl bg-muted" />
+          <div className="h-9 w-32 rounded-xl bg-muted" />
+          <div className="h-9 w-36 rounded-xl bg-muted" />
         </div>
       </div>
 
@@ -28,15 +28,15 @@ export default function AdminLoading() {
             className="rounded-2xl border border-border bg-card p-5 shadow-xs"
           >
             <div className="flex items-center justify-between">
-              <div className="h-3 w-28 rounded-md bg-gray-200" />
-              <div className="size-9 rounded-xl bg-gray-200" />
+              <div className="h-3 w-28 rounded-md bg-muted" />
+              <div className="size-9 rounded-xl bg-muted" />
             </div>
             <div className="mt-4">
-              <div className="h-8 w-36 rounded-lg bg-gray-200" />
-              <div className="mt-2 h-4 w-24 rounded-md bg-gray-200" />
+              <div className="h-8 w-36 rounded-lg bg-muted" />
+              <div className="mt-2 h-4 w-24 rounded-md bg-muted" />
             </div>
             {i === 4 && (
-              <div className="mt-3 h-2 w-full rounded-full bg-gray-200" />
+              <div className="mt-3 h-2 w-full rounded-full bg-muted" />
             )}
           </div>
         ))}
@@ -50,10 +50,10 @@ export default function AdminLoading() {
             className="rounded-xl border border-border bg-card p-4 shadow-2xs"
           >
             <div className="flex items-center justify-between">
-              <div className="h-4 w-28 rounded-md bg-gray-200" />
-              <div className="h-5 w-20 rounded-md bg-gray-200" />
+              <div className="h-4 w-28 rounded-md bg-muted" />
+              <div className="h-5 w-20 rounded-md bg-muted" />
             </div>
-            <div className="mt-2 h-3.5 w-48 rounded-md bg-gray-200" />
+            <div className="mt-2 h-3.5 w-48 rounded-md bg-muted" />
           </div>
         ))}
       </div>
@@ -62,35 +62,35 @@ export default function AdminLoading() {
       <div className="rounded-2xl border border-border bg-card shadow-xs overflow-hidden">
         {/* Toolbar */}
         <div className="p-5 border-b border-border flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-          <div className="h-10 w-full max-w-sm rounded-xl bg-gray-200" />
+          <div className="h-10 w-full max-w-sm rounded-xl bg-muted" />
           <div className="flex flex-wrap items-center gap-2">
-            <div className="h-9 w-64 rounded-xl bg-gray-200" />
-            <div className="h-9 w-64 rounded-xl bg-gray-200" />
+            <div className="h-9 w-64 rounded-xl bg-muted" />
+            <div className="h-9 w-64 rounded-xl bg-muted" />
           </div>
         </div>
 
         {/* Tabel Header & Rows */}
         <div className="p-5 space-y-4">
           <div className="grid grid-cols-6 gap-4 border-b border-border pb-3">
-            <div className="h-4 w-20 rounded bg-gray-200" />
-            <div className="h-4 w-32 rounded bg-gray-200" />
-            <div className="h-4 w-24 rounded bg-gray-200" />
-            <div className="h-4 w-24 rounded bg-gray-200" />
-            <div className="h-4 w-20 rounded bg-gray-200" />
-            <div className="h-4 w-16 rounded bg-gray-200 justify-self-end" />
+            <div className="h-4 w-20 rounded bg-muted" />
+            <div className="h-4 w-32 rounded bg-muted" />
+            <div className="h-4 w-24 rounded bg-muted" />
+            <div className="h-4 w-24 rounded bg-muted" />
+            <div className="h-4 w-20 rounded bg-muted" />
+            <div className="h-4 w-16 rounded bg-muted justify-self-end" />
           </div>
 
           {[1, 2, 3, 4, 5, 6].map((row) => (
             <div key={row} className="grid grid-cols-6 items-center gap-4 py-3">
-              <div className="h-4 w-16 rounded bg-gray-200" />
+              <div className="h-4 w-16 rounded bg-muted" />
               <div className="space-y-1.5">
-                <div className="h-4 w-36 rounded bg-gray-200" />
-                <div className="h-3 w-20 rounded bg-gray-200" />
+                <div className="h-4 w-36 rounded bg-muted" />
+                <div className="h-3 w-20 rounded bg-muted" />
               </div>
-              <div className="h-4 w-20 rounded bg-gray-200" />
-              <div className="h-4 w-20 rounded bg-gray-200" />
-              <div className="h-6 w-20 rounded-full bg-gray-200" />
-              <div className="h-8 w-8 rounded-lg bg-gray-200 justify-self-end" />
+              <div className="h-4 w-20 rounded bg-muted" />
+              <div className="h-4 w-20 rounded bg-muted" />
+              <div className="h-6 w-20 rounded-full bg-muted" />
+              <div className="h-8 w-8 rounded-lg bg-muted justify-self-end" />
             </div>
           ))}
         </div>

@@ -85,14 +85,14 @@ function LencanaStatus({ status }: { status: SiswaRecord["status"] }) {
   }
   if (status === "Tunggakan") {
     return (
-      <span className="inline-flex items-center gap-1 rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-semibold text-red-800 border border-red-200">
+      <span className="inline-flex items-center gap-1 rounded-full bg-destructive/10 px-2.5 py-0.5 text-xs font-semibold text-destructive border border-destructive/20">
         <AlertCircle className="size-3 text-red-700" />
         <span>Tunggakan</span>
       </span>
     );
   }
   return (
-    <span className="inline-flex items-center gap-1 rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-semibold text-yellow-800 border border-yellow-200">
+    <span className="inline-flex items-center gap-1 rounded-full bg-[var(--warning-bg)] px-2.5 py-0.5 text-xs font-semibold text-[var(--warning)] border border-[var(--warning-border)]">
       <Clock className="size-3 text-yellow-700" />
       <span>Sebagian</span>
     </span>
@@ -110,7 +110,7 @@ function LencanaStatusSiswa({ status }: { status: SiswaRecord["status"] }) {
     );
   }
   return (
-    <span className="inline-flex items-center gap-1 rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-semibold text-red-800 border border-red-200">
+    <span className="inline-flex items-center gap-1 rounded-full bg-destructive/10 px-2.5 py-0.5 text-xs font-semibold text-destructive border border-destructive/20">
       <AlertCircle className="size-3 text-red-700" />
       <span>{status}</span>
     </span>
@@ -950,12 +950,12 @@ function AdminContent() {
                   </span>
                 )}
                 {selectedRecord.status === "Tunggakan" && (
-                  <span className="rounded-full bg-red-100 px-3 py-1 text-xs font-bold text-red-800 border border-red-200">
+                  <span className="rounded-full bg-destructive/10 px-3 py-1 text-xs font-bold text-destructive border border-destructive/20">
                     Tunggakan (Belum Bayar)
                   </span>
                 )}
                 {selectedRecord.status === "Sebagian" && (
-                  <span className="rounded-full bg-yellow-100 px-3 py-1 text-xs font-bold text-yellow-800 border border-yellow-200">
+                  <span className="rounded-full bg-[var(--warning-bg)] px-3 py-1 text-xs font-bold text-[var(--warning)] border border-[var(--warning-border)]">
                     Sebagian (Sisa: {formatRM(selectedRecord.yuranBulanan - selectedRecord.jumlahBayar)})
                   </span>
                 )}

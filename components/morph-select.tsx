@@ -419,7 +419,7 @@ export function MorphSelectContent({
 
           <div className={cx("fu-select-list-wrap", isOpen && "fu-open")}>
             <div className="fu-select-list-inner">
-              <div className="h-px bg-gray-200" />
+              <div className="h-px bg-muted" />
               <ul className="p-1">{children}</ul>
             </div>
           </div>

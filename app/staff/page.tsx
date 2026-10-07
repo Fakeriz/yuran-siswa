@@ -78,7 +78,7 @@ export default async function StaffPage({ searchParams }: {
   return (
     <RoleLayout role="staff" userName="Staff Demo">
       <div className="mx-auto w-full max-w-6xl min-w-0">
-        <FinanceHero name="Staf" subtitle={`Kelola dan catat pembayaran yuran siswa dalam grup Anda — ${period}.`}
+        <FinanceHero name="Staf" subtitle={`Kelola dan catat pembayaran yuran siswa dalam grup Anda, ${period}.`}
           kpiGridClassName="lg:grid-cols-3" actions={
             <Link href="/staff/grup" className="inline-flex min-h-11 items-center gap-2 rounded-full border border-border bg-card px-5 py-2 text-sm font-semibold text-primary transition hover:bg-muted"
             >
@@ -131,7 +131,7 @@ export default async function StaffPage({ searchParams }: {
                   return <tr key={student.id}>
                     <th scope="row" className="max-w-64 break-words px-4 py-5 font-medium">{student.nama}</th>
                     <td className="px-4 py-5">{student.kelas}<span className="block text-muted-foreground">{student.grup}</span></td>
-                    <td className="px-4 py-5"><span className={`inline-block whitespace-nowrap rounded-lg px-2 py-1 text-xs font-medium ${paid ? "bg-[var(--success-bg)] text-emerald-900" : "bg-amber-100 text-amber-900"}`}>{paid ? "Sudah bayar" : "Belum bayar"}</span></td>
+                    <td className="px-4 py-5"><span className={`inline-block whitespace-nowrap rounded-lg px-2 py-1 text-xs font-medium ${paid ? "bg-[var(--success-bg)] text-[var(--success)]" : "bg-[var(--warning-bg)] text-[var(--warning)]"}`}>{paid ? "Sudah bayar" : "Belum bayar"}</span></td>
                     <td className="px-4 py-5">{paid ? <span className="text-muted-foreground">Tercatat</span> : <PaymentForm key={`${student.id}-${bulan}-${tahun}`} student={student} bulan={bulan} tahun={tahun} period={period} today={today} />}</td>
                   </tr>;
                 })}</tbody>

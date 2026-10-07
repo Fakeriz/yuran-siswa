@@ -200,13 +200,13 @@ export function TabPersetujuan() {
         <div className="rounded-2xl border border-border bg-card p-5 shadow-xs">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-              Jumlah Rekod Tuntutan
+              Jumlah Catatan Tuntutan
             </span>
             <div className="rounded-xl bg-primary/10 p-2 text-primary">
               <ShieldCheck className="size-5" />
             </div>
           </div>
-          <p className="mt-3 text-2xl font-bold text-foreground">{claims.length} Rekod</p>
+          <p className="mt-3 text-2xl font-bold text-foreground">{claims.length} Catatan</p>
           <p className="mt-1 text-xs text-muted-foreground">Sistem pendaftaran Siswa Sesi 2026/2027</p>
         </div>
       </div>
@@ -244,14 +244,14 @@ export function TabPersetujuan() {
           </div>
         </div>
 
-        {/* Senarai Permohonan */}
+        {/* Daftar Permohonan */}
         {filtered.length === 0 ? (
           <div className="p-12 text-center">
             <CheckCircle2 className="mx-auto size-8 text-[var(--success)] mb-2" />
             <p className="text-sm font-semibold text-foreground">
               {filterStatus === "pending"
-                ? "Tiada permohonan yang menunggu pengesahan!"
-                : "Tiada rekod dijumpai mengikut tapisan."}
+                ? "Tidak ada permohonan yang menunggu pengesahan!"
+                : "Tidak ada catatan dijumpai sesuai tapisan."}
             </p>
             <p className="text-xs text-muted-foreground mt-1">
               Semua akun orang tua telah diperiksa dan diperbarui.

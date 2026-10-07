@@ -339,7 +339,7 @@ export function TabPenugasan() {
           </span>
         </div>
 
-        {/* Senarai Kad Staf */}
+        {/* Daftar Kad Staf */}
         <div className="divide-y divide-border">
           {filteredStaff.map((staff) => (
             <div

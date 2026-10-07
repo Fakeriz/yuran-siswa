@@ -214,7 +214,7 @@ export function TabAkun() {
         </div>
       </div>
 
-      {/* Ringkasan Peranan */}
+      {/* Ringkasan Peran */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <div className="rounded-2xl border border-border bg-card p-5 shadow-xs">
           <div className="flex items-center justify-between">
@@ -279,7 +279,7 @@ export function TabAkun() {
           <div className="flex items-center gap-1 rounded-xl bg-muted p-1 border border-border/80">
             {(
               [
-                ["semua", "Semua Peranan"],
+                ["semua", "Semua Peran"],
                 ["orang_tua", "Orang Tua"],
                 ["staff", "Staf"],
                 ["admin", "Admin"],
@@ -308,7 +308,7 @@ export function TabAkun() {
               <tr>
                 <th scope="col" className="px-5 py-3.5">Pengguna</th>
                 <th scope="col" className="px-5 py-3.5">Email</th>
-                <th scope="col" className="px-5 py-3.5 text-center">Peranan</th>
+                <th scope="col" className="px-5 py-3.5 text-center">Peran</th>
                 <th scope="col" className="px-5 py-3.5">Anak Dihubungkan</th>
                 <th scope="col" className="px-5 py-3.5 text-right">Tarikh Daftar</th>
               </tr>
@@ -421,7 +421,7 @@ export function TabAkun() {
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-foreground">Kata Laluan (Min. 8 Aksara)</label>
+                <label className="text-xs font-semibold text-foreground">Kata Sandi (Min. 8 Karakter)</label>
                 <input
                   type="password"
                   required
@@ -434,7 +434,7 @@ export function TabAkun() {
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-foreground">Peranan Pengguna</label>
+                <label className="text-xs font-semibold text-foreground">Peran Pengguna</label>
                 <select
                   value={peran}
                   onChange={(e) => setPeran(e.target.value as AccountItem["peran"])}

@@ -24,7 +24,7 @@ interface FinanceHeroProps {
 }
 
 /**
- * Kepala dasbor minimal: sapaan mengikut waktu, subtajuk,
+ * Kepala dasbor minimal: sapaan sesuai waktu, subtajuk,
  * baris tindakan, dan grid kad KPI. Tanpa gradien dekoratif.
  */
 export function FinanceHero({ name, subtitle, actions, children, kpiGridClassName }: FinanceHeroProps) {

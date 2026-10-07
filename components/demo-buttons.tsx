@@ -36,7 +36,7 @@ export function DemoButtons({ variant = "default" }: { variant?: DemoVariant }) 
           onClick={() => handleLogin("admin")}
           className={`mt-3 w-full rounded-xl px-3 py-2 text-xs font-semibold transition disabled:opacity-60 ${buttonClass}`}
         >
-          {isPending ? "Memproses…" : "Masuk Admin →"}
+          {isPending ? "Memproses…" : "Masuk Admin"}
         </button>
       </div>
 
@@ -52,7 +52,7 @@ export function DemoButtons({ variant = "default" }: { variant?: DemoVariant }) 
           onClick={() => handleLogin("staff")}
           className={`mt-3 w-full rounded-xl px-3 py-2 text-xs font-semibold transition disabled:opacity-60 ${buttonClass}`}
         >
-          {isPending ? "Memproses…" : "Masuk Staf →"}
+          {isPending ? "Memproses…" : "Masuk Staf"}
         </button>
       </div>
 
@@ -68,7 +68,7 @@ export function DemoButtons({ variant = "default" }: { variant?: DemoVariant }) 
           onClick={() => handleLogin("orang_tua")}
           className={`mt-3 w-full rounded-xl px-3 py-2 text-xs font-semibold transition disabled:opacity-60 ${buttonClass}`}
         >
-          {isPending ? "Memproses…" : "Masuk Orang Tua →"}
+          {isPending ? "Memproses…" : "Masuk Orang Tua"}
         </button>
       </div>
     </div>
@@ -91,7 +91,7 @@ export function DemoRoleCardAction({ role, label, variant = "default" }: { role:
       onClick={handleLogin}
       className={`mt-4 inline-flex items-center gap-1.5 rounded-sm text-sm font-semibold underline underline-offset-4 disabled:opacity-60 "text-primary hover:decoration-2 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"`}
     >
-      {isPending ? "Memproses..." : `${label} →`}
+      {isPending ? "Memproses..." : `${label}`}
     </button>
   );
 }

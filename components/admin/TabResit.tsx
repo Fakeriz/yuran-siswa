@@ -234,7 +234,7 @@ export function TabResit() {
               <Receipt className="size-5" />
             </div>
           </div>
-          <p className="mt-3 text-2xl font-bold text-foreground">{receipts.length} Rekod</p>
+          <p className="mt-3 text-2xl font-bold text-foreground">{receipts.length} Catatan</p>
           <p className="mt-1 text-xs text-muted-foreground">Bagi sesi kutipan semasa</p>
         </div>
       </div>

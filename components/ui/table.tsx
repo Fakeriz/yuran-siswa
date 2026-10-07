@@ -1,7 +1,7 @@
 import type { HTMLAttributes, TdHTMLAttributes, ThHTMLAttributes } from "react";
 
 /**
- * Primitif Table tempatan — gaya selari dengan tabel sedia ada aplikasi.
+ * Primitif Table tempatan — gaya selari dengan tabel yang ada aplikasi.
  */
 
 export function Table({ className = "", ...props }: HTMLAttributes<HTMLTableElement>) {

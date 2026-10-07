@@ -10,7 +10,7 @@ interface DataTableColumnHeaderProps<TData extends RowData, TValue> {
   align?: "left" | "center" | "right";
 }
 
-/** Kepala lajur boleh-susun — klik untuk susun menaik/menurun. */
+/** Kepala kolom boleh-susun — klik untuk susun menaik/menurun. */
 export function DataTableColumnHeader<TData extends RowData, TValue>({
   column,
   title,
@@ -22,7 +22,7 @@ export function DataTableColumnHeader<TData extends RowData, TValue>({
     <button
       type="button"
       onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-      title={`Susun mengikut ${title}`}
+      title={`Susun sesuai ${title}`}
       className={`inline-flex items-center gap-1.5 transition-colors hover:text-foreground ${
         align === "center" ? "w-full justify-center" : ""
       } ${align === "right" ? "w-full justify-end" : ""}`}

@@ -12,7 +12,7 @@ interface DataTableProps<TData extends RowData> {
   emptyState?: ReactNode;
 }
 
-/** Tabel data generik berkuasa TanStack Table (v9) — susunan lajur + baris klik. */
+/** Tabel data generik berkuasa TanStack Table (v9) — susunan kolom + baris klik. */
 export function DataTable<TData extends RowData>({
   columns,
   data,
@@ -69,7 +69,7 @@ export function DataTable<TData extends RowData>({
               <TableCell colSpan={columns.length} className="px-6 py-0">
                 {emptyState ?? (
                   <p className="py-12 text-center text-sm text-muted-foreground">
-                    Tiada rekod dijumpai.
+                    Tidak ada catatan dijumpai.
                   </p>
                 )}
               </TableCell>

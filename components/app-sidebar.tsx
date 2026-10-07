@@ -289,7 +289,7 @@ export function AppSidebar({
       >
         {filteredSections.length === 0 ? (
           <p className="px-3 py-6 text-center text-xs text-muted-foreground">
-            Tiada menu sepadan.
+            Tidak ada menu sepadan.
           </p>
         ) : (
           filteredSections.map((section, sIndex) => (

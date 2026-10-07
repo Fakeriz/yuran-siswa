@@ -315,7 +315,7 @@ export function TabPenyata() {
         <div className="rounded-2xl border border-border bg-card shadow-xs p-5">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-base font-bold text-foreground">Senarai Tindakan Susulan Tunggakan</h2>
+              <h2 className="text-base font-bold text-foreground">Daftar Tindakan Susulan Tunggakan</h2>
               <p className="mt-0.5 text-xs text-muted-foreground">Siswa yang masih belum melunaskan yuran {selectedBulan}.</p>
             </div>
             <span className="text-xs font-bold text-rose-700 bg-rose-50 px-2 py-0.5 rounded-md border border-rose-200">

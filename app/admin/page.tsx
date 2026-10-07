@@ -99,7 +99,7 @@ function LencanaStatus({ status }: { status: SiswaRecord["status"] }) {
   );
 }
 
-/** Lencana status untuk varian senarai siswa (Lunas hijau, selebihnya merah). */
+/** Lencana status untuk varian daftar siswa (Lunas hijau, sisanya merah). */
 function LencanaStatusSiswa({ status }: { status: SiswaRecord["status"] }) {
   if (status === "Lunas") {
     return (
@@ -187,7 +187,7 @@ function AdminContent() {
   const recordCloseTimer = useRef<number | null>(null);
   const [showBayarModal, setShowBayarModal] = useState(false);
   const [bayarSiswa, setBayarSiswa] = useState<SiswaRingkas | null>(null);
-  // Senarai unik siswa (nama + grup) untuk combobox — diperoleh dari rekod sedia ada
+  // Daftar unik siswa (nama + grup) untuk combobox — diperoleh dari catatan yang ada
   // Data bulanan untuk chart — agregasi jumlahBayar per bulan dari records
   const dataBulananChart = useMemo(() => {
     const bulanMap: Record<string, number> = {
@@ -231,7 +231,7 @@ function AdminContent() {
   // Parse CSV import siswa: Nama,Grup,Kelas,Yuran Bulanan (RM),Aktif (Ya/Tidak),Sesi
   const parseImportCSV = (text: string): SiswaRecord[] => {
     const lines = text.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
-    if (lines.length < 2) throw new Error("Fail kosong atau tiada data.");
+    if (lines.length < 2) throw new Error("Fail kosong atau tidak ada data.");
     const rows: SiswaRecord[] = [];
     for (let i = 1; i < lines.length; i++) {
       // Split CSV menghormati tanda petik
@@ -296,7 +296,7 @@ function AdminContent() {
 
   // Parse data Excel template Data Siswa: ID, Nama, Kelas, Grup, Yuran Bulanan, Pendaftaran, Status
   const parseImportExcel = (json: Record<string, any>[]): SiswaRecord[] => {
-    if (json.length === 0) throw new Error("Fail kosong atau tiada data.");
+    if (json.length === 0) throw new Error("Fail kosong atau tidak ada data.");
     const rows: SiswaRecord[] = [];
     json.forEach((row, i) => {
       const nama = String(row["Nama"] ?? "").trim();
@@ -390,7 +390,7 @@ function AdminContent() {
     [],
   );
 
-  // Penapisan rekod Siswa secara dinamik
+  // Penapisan catatan Siswa secara dinamik
   const filteredRecords = useMemo(() => {
     return records.filter((item) => {
       const matchSearch =
@@ -406,7 +406,7 @@ function AdminContent() {
     });
   }, [records, searchQuery, selectedGroup, selectedStatus, selectedMonth]);
 
-  // Definisi lajur TanStack Table — varian transaksi
+  // Definisi kolom TanStack Table — varian transaksi
   const transaksiColumns = useMemo(
     () =>
       columnHelper.columns([
@@ -499,7 +499,7 @@ function AdminContent() {
     []
   );
 
-  // Definisi lajur TanStack Table — varian senarai siswa
+  // Definisi kolom TanStack Table — varian daftar siswa
   const siswaColumns = useMemo(
     () =>
       columnHelper.columns([
@@ -709,7 +709,7 @@ function AdminContent() {
         <FinanceHero name="Admin" subtitle="Dapatkan gambaran jelas tentang kinerja keuangan dan transaksi terkini." actions={quickActions}
         >
           <FinanceKpi icon={TrendingUp}
-            tone="violet" value={formatRM(totalPemasukan)}
+            tone="neutral" value={formatRM(totalPemasukan)}
             label="Total pemasukan bulan ini"
           >
             <div className="flex items-center gap-2">
@@ -720,13 +720,13 @@ function AdminContent() {
             </div>
           </FinanceKpi>
           <FinanceKpi icon={Target}
-            tone="green" value={formatRM(totalTarget)}
+            tone="success" value={formatRM(totalTarget)}
             label="Target pemasukan bulanan"
           >
             <p className="text-xs text-muted-foreground">Target dasar: {dataBulanIni.length} Siswa</p>
           </FinanceKpi>
           <FinanceKpi icon={AlertCircle}
-            tone="pink" value={formatRM(totalTunggakan)}
+            tone="warning" value={formatRM(totalTunggakan)}
             label="Total tunggakan"
           >
             <span className="inline-flex w-fit rounded-full bg-rose-100 px-2.5 py-1 text-xs font-semibold text-rose-700">
@@ -734,7 +734,7 @@ function AdminContent() {
             </span>
           </FinanceKpi>
           <FinanceKpi icon={PieChart}
-            tone="blue" value={`${persentaseKutipan.toFixed(1)}%`}
+            tone="neutral" value={`${persentaseKutipan.toFixed(1)}%`}
             label="Tingkat penagihan yuran"
           >
             <div className="h-1.5 overflow-hidden rounded-full bg-muted" role="progressbar" aria-valuenow={Number(persentaseKutipan.toFixed(1))}
@@ -1081,7 +1081,7 @@ function AdminContent() {
         >
             <h2 className="text-lg font-bold text-foreground">Impor Data Siswa</h2>
             <p className="mt-1 text-xs text-muted-foreground">
-              Muat naik fail Excel mengikut template.{" "}
+              Muat naik fail Excel sesuai template.{" "}
               <a
                 href="/templates/template-yuran-datasiswa.xlsx"
                 download="template-yuran-datasiswa.xlsx"
@@ -1098,7 +1098,7 @@ function AdminContent() {
                 onRetry={handleImportRetry}
                 accept=".xlsx,.xls" multiple={false}
                 maxFiles={1}
-                variant="centered" title="Seret & letak fail Excel di sini" description="atau klik untuk pilih fail mengikut template" browseLabel="Pilih Fail"
+                variant="centered" title="Seret & letak fail Excel di sini" description="atau klik untuk pilih fail sesuai template" browseLabel="Pilih Fail"
               />
               {importPreview.length > 0 && (
                 <div className="mt-3 max-h-48 overflow-y-auto rounded-xl border border-border">

@@ -88,15 +88,15 @@ export default async function StaffPage({ searchParams }: {
           }
         >
           <FinanceKpi icon={CheckCircle2}
-            tone="green" value={String(students.length - unpaid.length)}
+            tone="success" value={String(students.length - unpaid.length)}
             label="Siswa sudah bayar"
           />
           <FinanceKpi icon={AlertCircle}
-            tone="pink" value={String(unpaid.length)}
+            tone="warning" value={String(unpaid.length)}
             label="Siswa belum bayar"
           />
           <FinanceKpi icon={Users}
-            tone="blue" value={String(students.length)}
+            tone="neutral" value={String(students.length)}
             label="Total siswa aktif"
           />
         </FinanceHero>

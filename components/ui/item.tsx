@@ -1,7 +1,7 @@
 import type { HTMLAttributes } from "react";
 
 /**
- * Primitif Item — baris kandungan berstruktur untuk senarai
+ * Primitif Item — baris kandungan berstruktur untuk daftar
  * (tajuk + deskripsi), gaya selari dengan aplikasi.
  */
 

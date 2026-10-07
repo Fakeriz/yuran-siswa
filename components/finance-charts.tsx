@@ -66,7 +66,7 @@ export function CartaTahunan({ dataBulanan }: { dataBulanan?: number[] }) {
                         : "bg-transparent"
                   }`}
                   style={{ height: `${tinggi}%` }}
-                  title={nilai > 0 ? `${BULAN_PENDEK[i]}: ${formatRM(nilai)}` : `${BULAN_PENDEK[i]}: tiada data`}
+                  title={nilai > 0 ? `${BULAN_PENDEK[i]}: ${formatRM(nilai)}` : `${BULAN_PENDEK[i]}: tidak ada data`}
                 />
               </div>
               <span className={`text-[10px] sm:text-[11px] ${aktif ? "font-bold text-primary" : "text-muted-foreground"}`}>

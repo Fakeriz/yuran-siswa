@@ -3,7 +3,6 @@ import { ReceiptText } from "lucide-react";
 import { getProfile, myStudentIds } from "../../../lib/auth";
 import { createClient } from "../../../lib/supabase/server";
 import { RegisterForm } from "./register-form";
-import { GlowBackground } from "../../../components/glow-background";
 
 export const metadata = { title: "Daftar orang tua | YuranKu" };
 
@@ -25,7 +24,6 @@ export default async function RegisterPage() {
     }
   } catch { unavailable = true; }
   return <main className="relative min-h-dvh bg-background px-6 py-12 text-foreground">
-    <GlowBackground />
     <div className="relative mx-auto max-w-lg">
       <Link href="/" className="flex w-fit items-center gap-2 rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" aria-label="Kembali ke halaman utama"
       >

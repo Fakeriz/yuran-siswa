@@ -135,7 +135,7 @@ export function TabAliranKas() {
     };
 
     setTransactions([newTx, ...transactions]);
-    showToast(`Perbelanjaan RM ${amount.toLocaleString()} berhasil direkodkan.`);
+    showToast(`Perbelanjaan RM ${amount.toLocaleString()} berhasil dicatat.`);
     setShowModal(false);
     setFormKeterangan("");
     setFormJumlah("");
@@ -188,7 +188,7 @@ export function TabAliranKas() {
             </span>
           </div>
           <p className="mt-1 text-sm text-muted-foreground">
-            Penyata aliran tunai masuk yuran asrama dan rekod perbelanjaan operasi bulanan.
+            Penyata aliran tunai masuk yuran asrama dan catatan perbelanjaan operasi bulanan.
           </p>
         </div>
 
@@ -338,7 +338,7 @@ export function TabAliranKas() {
             <div className="flex items-center justify-between border-b border-border pb-3">
               <div>
                 <h3 className="font-bold text-lg text-foreground">Catat Perbelanjaan Asrama</h3>
-                <p className="text-xs text-muted-foreground">Rekod aliran tunai keluar bagi operasi asrama.</p>
+                <p className="text-xs text-muted-foreground">Catatan aliran tunai keluar bagi operasi asrama.</p>
               </div>
             </div>
 

@@ -59,11 +59,11 @@ export default async function ParentPage() {
           <FinanceHero name="Orang Tua" subtitle={`Pantau status yuran anak Anda, riwayat pembayaran tahun ${tahun}.`}
           >
             <FinanceKpi icon={Users}
-              tone="blue" value={String(students.length)}
+              tone="neutral" value={String(students.length)}
               label="Anak terdaftar"
             />
             <FinanceKpi icon={CheckCircle2}
-              tone="green" value={String(students.filter((s) => paymentStatusFor(payments, s.id, currentMonth, tahun) === "sudah").length)}
+              tone="success" value={String(students.filter((s) => paymentStatusFor(payments, s.id, currentMonth, tahun) === "sudah").length)}
               label={`Lunas bulan ${months[currentMonth - 1]}`}
             />
           </FinanceHero>

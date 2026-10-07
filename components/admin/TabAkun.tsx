@@ -13,6 +13,7 @@ import {
   User,
   Key,
 } from "lucide-react";
+import { TableFilterDropdown } from "../table-filter-dropdown";
 
 export interface AccountItem {
   id: string;
@@ -276,29 +277,26 @@ export function TabAkun() {
             />
           </div>
 
-          <div className="flex items-center gap-1 rounded-xl bg-muted p-1 border border-border/80">
-            {(
-              [
-                ["semua", "Semua Peran"],
-                ["orang_tua", "Orang Tua"],
-                ["staff", "Staf"],
-                ["admin", "Admin"],
-              ] as const
-            ).map(([val, label]) => (
-              <button
-                key={val}
-                type="button"
-                onClick={() => setFilterRole(val)}
-                className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-all ${
-                  filterRole === val
-                    ? "bg-card text-[var(--success)] shadow-2xs"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
+          <TableFilterDropdown
+            label="Filter Peran"
+            align="right"
+            onReset={() => setFilterRole("semua")}
+            sections={[
+              {
+                id: "role",
+                label: "Peran Pengguna",
+                defaultValue: "semua",
+                selected: filterRole,
+                onChange: (val) => setFilterRole(val as any),
+                options: [
+                  { value: "semua", label: "Semua Peran" },
+                  { value: "orang_tua", label: "Orang Tua" },
+                  { value: "staff", label: "Staf Asrama" },
+                  { value: "admin", label: "Admin" },
+                ],
+              },
+            ]}
+          />
         </div>
 
         {/* Jadual Akun */}

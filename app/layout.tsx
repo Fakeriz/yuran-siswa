@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import { ThemeProvider } from "../components/theme-provider";
 import "./globals.css";
 
 export const runtime = "edge";
 
-const geist = Geist({
+const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  variable: "--font-geist-sans",
+  variable: "--font-plus-jakarta-sans",
   display: "swap",
+  weight: ["300", "400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
@@ -39,8 +40,8 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="id" suppressHydrationWarning>
-      <body className={`${geist.variable} antialiased bg-card text-foreground transition-colors duration-150`}>
+    <html lang="id" suppressHydrationWarning className={plusJakartaSans.variable}>
+      <body className={`${plusJakartaSans.className} antialiased bg-card text-foreground transition-colors duration-150`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

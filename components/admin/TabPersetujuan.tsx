@@ -14,6 +14,7 @@ import {
   ShieldCheck,
   Info,
 } from "lucide-react";
+import { TableFilterDropdown } from "../table-filter-dropdown";
 
 export interface ParentClaim {
   id: string;
@@ -222,26 +223,25 @@ export function TabPersetujuan() {
             />
           </div>
 
-          <div className="flex items-center gap-1 rounded-xl bg-muted p-1 border border-border/80">
-            {(
-              [
-                ["pending", `Menunggu (${pendingCount})`],
-                ["approved", `Disahkan (${approvedCount})`],
-                ["semua", "Semua"],
-              ] as const
-            ).map(([val, label]) => (
-              <button key={val}
-                type="button" onClick={() => setFilterStatus(val)}
-                className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-all ${
-                  filterStatus === val
-                    ? "bg-card text-[var(--success)] shadow-2xs"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
+          <TableFilterDropdown
+            label="Filter Status"
+            align="right"
+            onReset={() => setFilterStatus("pending")}
+            sections={[
+              {
+                id: "status",
+                label: "Status Permohonan",
+                defaultValue: "pending",
+                selected: filterStatus,
+                onChange: (val) => setFilterStatus(val as any),
+                options: [
+                  { value: "pending", label: `Menunggu (${pendingCount})` },
+                  { value: "approved", label: `Disahkan (${approvedCount})` },
+                  { value: "semua", label: "Semua Permohonan" },
+                ],
+              },
+            ]}
+          />
         </div>
 
         {/* Daftar Permohonan */}

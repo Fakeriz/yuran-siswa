@@ -8,6 +8,7 @@ import { PaymentForm } from "./payment-form";
 import { REAL_STUDENTS, REAL_PAYMENTS } from "../../lib/data/real-data";
 import { FinanceHero } from "../../components/finance-hero";
 import { FinanceKpi } from "../../components/finance-kpi";
+import { StaffFilterDropdown } from "../../components/staff-filter-dropdown";
 import { CheckCircle2, AlertCircle, Users, UsersRound, LayoutDashboard } from "lucide-react";
 
 export const metadata: Metadata = { title: "Dashboard staf | YuranKu" };
@@ -110,15 +111,10 @@ export default async function StaffPage({ searchParams }: {
         </form>
 
         <section className="mt-10" aria-labelledby="student-list">
-          <h2 id="student-list" className="text-xl font-semibold">Daftar siswa · {period}</h2>
-          <form aria-label="Filter pembayaran" className="my-5 flex flex-wrap gap-2" action="/staff" method="GET">
-            <input type="hidden" name="bulan" value={bulan} />
-            <input type="hidden" name="tahun" value={tahun} />
-            {([['semua', 'Semua'], ['sudah', 'Sudah bayar'], ['belum', 'Belum bayar']] as const).map(([value, label]) => (
-              <button key={value} type="submit" name="filter" value={value} aria-current={filter === value ? "page" : undefined}
-                className={`rounded-full px-4 py-3 text-sm font-medium transition duration-150 ${filter === value ? "bg-primary text-primary-foreground" : "border border-border bg-card hover:bg-muted"}`}>{label}</button>
-            ))}
-          </form>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 my-5">
+            <h2 id="student-list" className="text-xl font-semibold">Daftar siswa · {period}</h2>
+            <StaffFilterDropdown currentFilter={filter} bulan={bulan} tahun={tahun} />
+          </div>
           {!visible.length ? <p className="rounded-2xl border border-border p-6 text-muted-foreground">{!groups.length ? "Anda belum memiliki grup. Buka Pilih grup untuk memilih siswa Anda." : !students.length ? "Belum ada siswa aktif dalam grup Anda." : "Tidak ada siswa untuk filter ini."}</p> : (
             <div className="overflow-x-auto rounded-3xl border border-border/70 bg-card shadow-sm">
               <table className="w-full text-left text-sm">

@@ -1,4 +1,4 @@
-@import url('https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
@@ -49,7 +49,7 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-plus-jakarta-sans), "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
@@ -64,8 +64,8 @@
   --duration-base: 320ms;
   --duration-slow: 750ms;
   --easing: cubic-bezier(0.16, 1, 0.3, 1);
-  --font-display: "Clash Display", ui-sans-serif, system-ui, sans-serif;
-  --font-body: "Clash Display", ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-plus-jakarta-sans), "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-plus-jakarta-sans), "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   --success: #10B981;
   --success-bg: rgba(16, 185, 129, 0.12);
   --success-border: rgba(16, 185, 129, 0.3);

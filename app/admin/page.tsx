@@ -49,6 +49,8 @@ import type { DataTableFeatures } from "../../components/data-table/data-table-f
 import { FinanceHero } from "../../components/finance-hero";
 import { FinanceKpi } from "../../components/finance-kpi";
 import { CartaTahunan, PanelKemajuanGrup } from "../../components/finance-charts";
+import { TableFilterDropdown } from "../../components/table-filter-dropdown";
+import { CatatPembayaranDropdown } from "../../components/catat-pembayaran-dropdown";
 
 /** Ringkasan siswa untuk combobox (nama + grup) */
 interface SiswaRingkas {
@@ -636,70 +638,64 @@ function AdminContent() {
     : tab === "resit" ? "Daftar kuitansi yang telah diunggah."
     : "Sistem pengelolaan yuran bulanan asrama siswa, pencatatan penerimaan kas, dan persetujuan status pembayaran.";
 
+  const handleExportCSV = () => {
+    const header = ["ID", "No Transaksi", "Nama", "Grup", "Yuran Bulanan (RM)", "Jumlah Bayar (RM)", "Bulan", "Tanggal", "Metode", "Status"];
+    const rows = filteredRecords.map((r) => [
+      r.id, r.noTransaksi, r.nama, r.grup,
+      String(r.yuranBulanan), String(r.jumlahBayar),
+      r.bulanDibayar, r.tanggal, r.metodeBayar, r.status,
+    ]);
+    const csv = [header, ...rows]
+      .map((row) => row.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(","))
+      .join("\n");
+    const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `yuran-${selectedMonth.replace(/\s+/g, "-").toLowerCase()}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   const quickActions = (
-            <div className="flex flex-col sm:flex-row sm:items-center gap-2.5 sm:gap-3 w-full sm:w-auto">
-              <div className="w-full sm:w-auto">
-                <MorphSelect value={selectedMonth}
-                  onValueChange={setSelectedMonth}
-                  className="w-full text-xs font-semibold sm:w-auto sm:min-w-48"
-                >
-                  <MorphSelectTrigger>
-                    <MorphSelectValue placeholder="Pilih bulan" />
-                  </MorphSelectTrigger>
-                  <MorphSelectContent>
-                    <MorphSelectItem value="Desember 2026">Bulan: Desember 2026</MorphSelectItem>
-                    <MorphSelectItem value="November 2026">Bulan: November 2026</MorphSelectItem>
-                    <MorphSelectItem value="Oktober 2026">Bulan: Oktober 2026</MorphSelectItem>
-                    <MorphSelectItem value="September 2026">Bulan: September 2026</MorphSelectItem>
-                    <MorphSelectItem value="Agustus 2026">Bulan: Agustus 2026</MorphSelectItem>
-                    <MorphSelectItem value="Juli 2026">Bulan: Juli 2026</MorphSelectItem>
-                    <MorphSelectItem value="Juni 2026">Bulan: Juni 2026</MorphSelectItem>
-                    <MorphSelectItem value="Mei 2026">Bulan: Mei 2026</MorphSelectItem>
-                    <MorphSelectItem value="April 2026">Bulan: April 2026</MorphSelectItem>
-                    <MorphSelectItem value="Maret 2026">Bulan: Maret 2026</MorphSelectItem>
-                    <MorphSelectItem value="Februari 2026">Bulan: Februari 2026</MorphSelectItem>
-                    <MorphSelectItem value="Januari 2026">Bulan: Januari 2026</MorphSelectItem>
-                  </MorphSelectContent>
-                </MorphSelect>
-              </div>
+    <div className="flex flex-col sm:flex-row sm:items-center gap-2.5 sm:gap-3 w-full sm:w-auto">
+      {/* 1. Catat Pembayaran Dropdown (Aksi Utama dengan Menu Impor & Ekspor di dalamnya) */}
+      <CatatPembayaranDropdown
+        onCatatPembayaran={() => setShowBayarModal(true)}
+        onImpor={() => setShowImportModal(true)}
+        onEkspor={handleExportCSV}
+        selectedMonth={selectedMonth}
+        totalRecords={filteredRecords.length}
+        align="right"
+      />
 
-              <div className="flex items-center gap-2 w-full sm:w-auto">
-                <Button variant="secondary" size="sm" className="flex-1 sm:flex-initial" onClick={() => {
-                    const header = ["ID", "No Transaksi", "Nama", "Grup", "Yuran Bulanan (RM)", "Jumlah Bayar (RM)", "Bulan", "Tanggal", "Metode", "Status"];
-                    const rows = filteredRecords.map((r) => [
-                      r.id, r.noTransaksi, r.nama, r.grup,
-                      String(r.yuranBulanan), String(r.jumlahBayar),
-                      r.bulanDibayar, r.tanggal, r.metodeBayar, r.status,
-                    ]);
-                    const csv = [header, ...rows]
-                      .map((row) => row.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(","))
-                      .join("\n");
-                    const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8" });
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement("a");
-                    a.href = url;
-                    a.download = `yuran-${selectedMonth.replace(/\s+/g, "-").toLowerCase()}.csv`;
-                    a.click();
-                    URL.revokeObjectURL(url);
-                  }}
-                >
-                  <Download className="size-3.5" />
-                  <span>Ekspor</span>
-                </Button>
-
-                <Button variant="secondary" size="sm" className="flex-1 sm:flex-initial" onClick={() => setShowImportModal(true)}
-                >
-                  <Upload className="size-3.5" />
-                  <span>Impor</span>
-                </Button>
-              </div>
-
-              <Button variant="primary" size="sm" ripple className="w-full sm:w-auto whitespace-nowrap" onClick={() => setShowBayarModal(true)}
-              >
-                <Plus className="size-4" />
-                <span>Catat Pembayaran</span>
-              </Button>
-            </div>
+      {/* 2. Filter Bulan disamping Catat Pembayaran */}
+      <div className="w-full sm:w-auto">
+        <MorphSelect
+          value={selectedMonth}
+          onValueChange={setSelectedMonth}
+          className="w-full text-xs font-semibold sm:w-auto sm:min-w-44"
+        >
+          <MorphSelectTrigger>
+            <MorphSelectValue placeholder="Pilih bulan" />
+          </MorphSelectTrigger>
+          <MorphSelectContent>
+            <MorphSelectItem value="Desember 2026">Bulan: Desember 2026</MorphSelectItem>
+            <MorphSelectItem value="November 2026">Bulan: November 2026</MorphSelectItem>
+            <MorphSelectItem value="Oktober 2026">Bulan: Oktober 2026</MorphSelectItem>
+            <MorphSelectItem value="September 2026">Bulan: September 2026</MorphSelectItem>
+            <MorphSelectItem value="Agustus 2026">Bulan: Agustus 2026</MorphSelectItem>
+            <MorphSelectItem value="Juli 2026">Bulan: Juli 2026</MorphSelectItem>
+            <MorphSelectItem value="Juni 2026">Bulan: Juni 2026</MorphSelectItem>
+            <MorphSelectItem value="Mei 2026">Bulan: Mei 2026</MorphSelectItem>
+            <MorphSelectItem value="April 2026">Bulan: April 2026</MorphSelectItem>
+            <MorphSelectItem value="Maret 2026">Bulan: Maret 2026</MorphSelectItem>
+            <MorphSelectItem value="Februari 2026">Bulan: Februari 2026</MorphSelectItem>
+            <MorphSelectItem value="Januari 2026">Bulan: Januari 2026</MorphSelectItem>
+          </MorphSelectContent>
+        </MorphSelect>
+      </div>
+    </div>
   );
 
   return (
@@ -810,40 +806,50 @@ function AdminContent() {
             />
           </div>
 
-          {/* Kumpulan & Status Filter Controls */}
-          <div className="flex flex-wrap items-center gap-2 w-full lg:w-auto">
-            {/* Filter Kumpulan (Grup) */}
-            <div className="flex items-center gap-1 rounded-xl bg-muted p-1 border border-border/80 max-w-full overflow-x-auto scrollbar-none">
-              {(["Semua", "Adhwa HE", "Adnan HE ve Syukri HE", "Ameer HE", "Arif HE", "Azwar HE", "Herian HE", "Mevlana HE", "Razi HE", "Rizky HE", "Tamimi HE"] as const).map((group) => (
-                <button type="button" key={group}
-                  onClick={() => setSelectedGroup(group)}
-                  className={`shrink-0 rounded-lg px-2.5 py-1 text-xs font-semibold transition-colors ${
-                    selectedGroup === group
-                      ? "bg-card text-foreground shadow-2xs"
-                      : "text-muted-foreground hover:text-foreground"
-                  }`}
-                >
-                  {group}
-                </button>
-              ))}
-            </div>
-
-            {/* Filter Status Pembayaran */}
-            <div className="flex items-center gap-1 rounded-xl bg-muted p-1 border border-border/80 max-w-full overflow-x-auto scrollbar-none">
-              {(["Semua", "Lunas", "Tunggakan", "Sebagian"] as const).map((status) => (
-                <button type="button" key={status}
-                  onClick={() => setSelectedStatus(status)}
-                  className={`shrink-0 rounded-lg px-2.5 py-1 text-xs font-semibold transition-colors ${
-                    selectedStatus === status
-                      ? "bg-card text-foreground shadow-2xs"
-                      : "text-muted-foreground hover:text-foreground"
-                  }`}
-                >
-                  {status}
-                </button>
-              ))}
-            </div>
-          </div>
+          {/* Table Filter Dropdown dengan Motion & Animasi */}
+          <TableFilterDropdown
+            label="Filter Tabel"
+            align="right"
+            onReset={() => {
+              setSelectedGroup("Semua");
+              setSelectedStatus("Semua");
+            }}
+            sections={[
+              {
+                id: "status",
+                label: "Status Pembayaran",
+                defaultValue: "Semua",
+                selected: selectedStatus,
+                onChange: (val) => setSelectedStatus(val as any),
+                options: [
+                  { value: "Semua", label: "Semua Status" },
+                  { value: "Lunas", label: "Lunas" },
+                  { value: "Tunggakan", label: "Tunggakan" },
+                  { value: "Sebagian", label: "Sebagian" },
+                ],
+              },
+              {
+                id: "group",
+                label: "Grup Asrama / Kumpulan",
+                defaultValue: "Semua",
+                selected: selectedGroup,
+                onChange: (val) => setSelectedGroup(val as any),
+                options: [
+                  { value: "Semua", label: "Semua Grup" },
+                  { value: "Adhwa HE", label: "Adhwa HE" },
+                  { value: "Adnan HE ve Syukri HE", label: "Adnan HE ve Syukri HE" },
+                  { value: "Ameer HE", label: "Ameer HE" },
+                  { value: "Arif HE", label: "Arif HE" },
+                  { value: "Azwar HE", label: "Azwar HE" },
+                  { value: "Herian HE", label: "Herian HE" },
+                  { value: "Mevlana HE", label: "Mevlana HE" },
+                  { value: "Razi HE", label: "Razi HE" },
+                  { value: "Rizky HE", label: "Rizky HE" },
+                  { value: "Tamimi HE", label: "Tamimi HE" },
+                ],
+              },
+            ]}
+          />
         </div>
 
         {/* KPI Transaksi Masuk */}

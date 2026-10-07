@@ -13,6 +13,7 @@ import {
   Printer,
   Calendar,
 } from "lucide-react";
+import { TableFilterDropdown } from "../table-filter-dropdown";
 
 export interface ReceiptItem {
   id: string;
@@ -250,26 +251,25 @@ export function TabResit() {
             />
           </div>
 
-          <div className="flex items-center gap-1 rounded-xl bg-muted p-1 border border-border/80">
-            {(
-              [
-                ["semua", "Semua"],
-                ["uploaded", "Ada Kwitansi"],
-                ["pending", `Menunggu (${pendingKwitansiCount})`],
-              ] as const
-            ).map(([val, label]) => (
-              <button key={val}
-                type="button" onClick={() => setFilterType(val)}
-                className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-all ${
-                  filterType === val
-                    ? "bg-card text-[var(--success)] shadow-2xs"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
+          <TableFilterDropdown
+            label="Filter Kwitansi"
+            align="right"
+            onReset={() => setFilterType("semua")}
+            sections={[
+              {
+                id: "type",
+                label: "Status Berkas",
+                defaultValue: "semua",
+                selected: filterType,
+                onChange: (val) => setFilterType(val as any),
+                options: [
+                  { value: "semua", label: "Semua Kwitansi" },
+                  { value: "uploaded", label: "Ada Kwitansi" },
+                  { value: "pending", label: `Menunggu (${pendingKwitansiCount})` },
+                ],
+              },
+            ]}
+          />
         </div>
 
         {/* Jadual Resit */}

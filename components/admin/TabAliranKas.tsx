@@ -13,6 +13,7 @@ import {
   DollarSign,
   TrendingUp,
 } from "lucide-react";
+import { TableFilterDropdown } from "../table-filter-dropdown";
 
 export interface CashTransaction {
   id: string;
@@ -263,26 +264,25 @@ export function TabAliranKas() {
             />
           </div>
 
-          <div className="flex items-center gap-1 rounded-xl bg-muted p-1 border border-border/80">
-            {(
-              [
-                ["semua", "Semua Aliran"],
-                ["masuk", "Tunai Masuk"],
-                ["keluar", "Tunai Keluar"],
-              ] as const
-            ).map(([val, label]) => (
-              <button key={val}
-                type="button" onClick={() => setFilterJenis(val)}
-                className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-all ${
-                  filterJenis === val
-                    ? "bg-card text-[var(--success)] shadow-2xs"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
+          <TableFilterDropdown
+            label="Filter Aliran"
+            align="right"
+            onReset={() => setFilterJenis("semua")}
+            sections={[
+              {
+                id: "jenis",
+                label: "Jenis Aliran Kas",
+                defaultValue: "semua",
+                selected: filterJenis,
+                onChange: (val) => setFilterJenis(val as any),
+                options: [
+                  { value: "semua", label: "Semua Aliran" },
+                  { value: "masuk", label: "Tunai Masuk" },
+                  { value: "keluar", label: "Tunai Keluar" },
+                ],
+              },
+            ]}
+          />
         </div>
 
         {/* Tabel Lejer */}
